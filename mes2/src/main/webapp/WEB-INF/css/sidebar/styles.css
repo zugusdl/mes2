@@ -1,0 +1,31 @@
+.logo{
+    transform: translateY(-2px);
+   
+}
+
+.navbar {
+    background-color:  #B2EBDB;
+}
+
+.menu{
+    margin-left: 5px;
+}
+
+
+.navbar-brand{
+    font-family: 'MaplestoryOTFBold';
+    color: black;
+}
+
+
+.member-icon {
+    margin-right: 30px; 
+}
+
+
+@font-face {
+    font-family: 'MaplestoryOTFBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

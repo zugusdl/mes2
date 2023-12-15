@@ -9,5 +9,5 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 			locations= {"file:src/main/webapp/WEB-INF/spring/root-context.xml"}
 		)
 public class test {
-
+	
 }
