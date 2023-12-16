@@ -33,7 +33,7 @@ html {
 }
 
 body {
-  background: var(--grey);
+  background: #fafafa;
   overflow-x: hidden;
 }
 
@@ -432,7 +432,8 @@ body.dark {
 
 .content main .table-data > div {
   border-radius: 20px;
-  background: var(--light);
+  background: #fafafa;
+  border: 3px solid #a2c6a8;
   padding: 24px;
   overflow-x: auto;
 }
@@ -513,6 +514,11 @@ body.dark {
   background: var(--blue);
 }
 
+.content main .table-data .chart {
+  flex-grow: 1;
+  flex-basis: 500px;
+}
+
 .content main .todo {
   flex-grow: 1;
   flex-basis: 300px;
@@ -561,6 +567,14 @@ body.dark {
 ::-webkit-scrollbar-thumb {
   background: var(--blue);
   border-radius: 5rem;
+}
+.chartjs-legend ul li span {
+    width: 1.562rem;
+    height: 0.312rem;
+    margin-right: 0.4rem;
+    display: inline-block;
+    font-size: 0.875rem;
+    border-radius: 3px;
 }
 
 @media (max-width: 768px) {
