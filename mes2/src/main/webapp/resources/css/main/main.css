@@ -167,8 +167,8 @@ body.dark {
 
 .content {
   position: relative;
-  width: calc(100% - 280px);
-  left: 280px;
+  width: ;
+  left: ; /* 나중에 사이드바 보고 변경 */
   transition: 0.3s ease;
 }
 
@@ -433,7 +433,7 @@ body.dark {
 .content main .table-data > div {
   border-radius: 20px;
   background: #fafafa;
-  border: 3px solid #a2c6a8;
+  border: 2px solid #a2c6a8;
   padding: 24px;
   overflow-x: auto;
 }
@@ -574,18 +574,12 @@ body.dark {
     font-size: 1em;
 }
 
-.content main .calendar-table {
-	border: 1px solid #a2c6a8;
-}
 
 .content main .fc-view, .fc-view>table {
     position: relative;
     z-index: 1;
 }
 
-.fc td, .fc th {
-	border: 1px solid #a2c6a8;
-}
 
 ::-webkit-scrollbar {
   width: 0.5rem;
