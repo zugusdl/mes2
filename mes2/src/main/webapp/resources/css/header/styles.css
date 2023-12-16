@@ -18,8 +18,13 @@
 }
 
 
-.member-icon {
-    margin-right: 30px; 
+.company-name{
+	width: 150px;
+}
+
+.header-icon{
+	 float: left; 
+	 margin-top:15px;
 }
 
 
