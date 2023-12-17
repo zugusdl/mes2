@@ -31,7 +31,7 @@ public class PlatformController {
 		logger.debug("platform.loginGET() 호출");
 	}
 	
-	@PostMapping(value="/platform//login")
+	@PostMapping(value="/platform/login")
 	public String loginPOST(mdbDTO mdbDTO, HttpSession session) throws Exception {
 		logger.debug("platform.loginPOST() 호출");
 		
