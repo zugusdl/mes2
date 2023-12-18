@@ -19,7 +19,7 @@ public class PlatformServiceImpl implements PlatformService {
 	
 	@Override
 	public mdbDTO customerLogin(mdbDTO mdto) throws Exception {
-		
+		logger.debug("customerLogin() 호출");
 		return pdao.customerLogin(mdto);
 	}
 

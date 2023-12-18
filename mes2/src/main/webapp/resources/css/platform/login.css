@@ -1,14 +1,7 @@
 @charset "UTF-8";
 
-@font-face {
-    font-family: 'MaplestoryOTFBold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
 
 * {
-  font-family: 'MaplestoryOTFBold';
   text-decoration: none;
   margin: 0;
   padding: 0;
@@ -61,7 +54,7 @@
 
 .btn {
   padding: 6px 24px;
-  background: #B2EBDB;
+  background: #6e9888;
   border: 2px solid #fff;
   color: #fff;
   cursor: pointer;
@@ -155,7 +148,7 @@
 }
 
 .home .form-container form .input-box input:focus {
-  border-color: #7d2ae8;
+  border-color: #6e9888;
 }
 
 .home .form-container form .input-box i {
@@ -191,7 +184,7 @@
 }
 
 .home .form-container form .options-field .checkbox input {
-  accent-color: #7d2ae8;
+  accent-color: #6e9888;
 }
 
 .home .form-container form .options-field .checkbox label {
@@ -212,7 +205,7 @@
 }
 
 .home .form-container form .btn {
-  background: #7d2ae8;
+  background: #6e9888;
   margin-top: 30px;
   width: 100%;
   padding: 10px 0;

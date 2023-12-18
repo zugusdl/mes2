@@ -17,12 +17,12 @@ public class PlatformDAOImpl implements PlatformDAO {
 	@Inject
 	private SqlSession sqlSession;
 	
-	private static final String NAMESPACE = "매퍼설정";
+	private static final String NAMESPACE = "com.mes2.mapper.platformMapper";
 
 	@Override
 	public mdbDTO customerLogin(mdbDTO mdto) throws Exception {
-
-		return null;
+		logger.debug("customerLogin() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".login", mdto);
 	}
 
 }

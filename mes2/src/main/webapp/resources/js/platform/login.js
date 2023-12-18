@@ -8,6 +8,7 @@ let signup = document.querySelector(".signup");
 let formContainer = document.querySelector(".form-container");
 let login = document.querySelector(".login");
 
+
 showBtn.addEventListener("click", () => {
   home.classList.add("show");
 });
@@ -39,3 +40,7 @@ signup.addEventListener("click", () => {
 login.addEventListener("click", () => {
   formContainer.classList.remove("active");
 });
+
+if(result == "loginFail") {
+	alert("회사 정보를 확인하세요");
+}

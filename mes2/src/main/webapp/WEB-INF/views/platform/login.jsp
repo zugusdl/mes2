@@ -32,65 +32,37 @@
 			<i class="fas fa-xmark close-form"></i>
 
 			<div class="form login-form">
-				<form action="#">
+				<form method="post">
 					<h2>로그인</h2>
 					<div class="input-box">
-						<input type="text" placeholder="아이디를 입력하세요" /> <i
-							class="fas fa-envelope email"></i>
+						<input type="text" name="mdb_code" placeholder="아이디를 입력하세요" />
+						<i class="fas fa-envelope email"></i>
 					</div>
 
 					<div class="input-box">
-						<input type="password" placeholder="패스워드를 입력하세요" /> <i
-							class="fas fa-lock password"></i> <i
-							class="fas fa-eye-slash pass-hide"></i>
+						<input type="password" name="mdb_pw" placeholder="패스워드를 입력하세요" />
+						<i class="fas fa-lock password"></i>
+						<i class="fas fa-eye-slash pass-hide"></i>
 					</div>
 
 					<div class="options-field">
-						<span class="checkbox"> <input type="checkbox" id="check" />
-							<label for="check">아이디기억하기</label>
-						</span> <a href="#" class="forgot-pass" style="color: black;">비밀번호
-							잊으셨나요?</a>
+						<a href="#" class="forgot-pass" style="color: black;">아이디 찾기</a>
+						<a href="#" class="forgot-pass" style="color: black;">비밀번호 찾기</a>
 					</div>
 
-					<button class="btn" style="background: #B2EBDB;">로그인하기</button>
-
-					<div class="login-signup">
-						사원이 아니신가요? <a href="#" class="signup" style="color: black;">사원등록</a>
-					</div>
-				</form>
-			</div>
-
-			<div class="form signup-form">
-				<form action="#">
-					<h2>Sign Up</h2>
-					<div class="input-box">
-						<input type="email" placeholder="Email Address" /> <i
-							class="fas fa-envelope email"></i>
-					</div>
-
-					<div class="input-box">
-						<input type="password" placeholder="Create Password" /> <i
-							class="fas fa-lock password"></i> <i
-							class="fas fa-eye-slash pass-hide"></i>
-					</div>
-
-					<div class="input-box">
-						<input type="password" placeholder="Confirm Password" /> <i
-							class="fas fa-lock password"></i> <i
-							class="fas fa-eye-slash pass-hide"></i>
-					</div>
-
-					<button class="btn">Signup</button>
-
-					<div class="login-signup">
-						Already have an account? <a href="#" class="login">Log In</a>
-					</div>
+					<input type="submit" value="로그인하기" class="btn">
 				</form>
 			</div>
 		</div>
 	</section>
 
 	<script src="/resources/js/platform/login.js"></script>
+	<script>
+		var result = "${result}";
+		if(result == "loginFail") {
+			alert('로그인 정보를 확인하세요');
+		}
+	</script>
 
 </body>
 </html>
