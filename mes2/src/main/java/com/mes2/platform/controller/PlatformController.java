@@ -18,7 +18,7 @@ import com.mes2.platform.domain.mdbDTO;
 import com.mes2.platform.service.PlatformService;
 import com.mes2.platform.service.PlatformServiceImpl;
 
-// http://localhost:8088/login
+// http://localhost:8088/platform/login
 @Controller
 @RequestMapping(value="/platform/*")
 public class PlatformController {
@@ -42,7 +42,7 @@ public class PlatformController {
 		mdbDTO mdto = pService.customerLogin(mdbDTO);
 		
 		if(mdto != null) {
-			session.setAttribute("mdb_code", mdbDTO.getMdb_code());
+			session.setAttribute("mdb_code", mdbDTO.getCompany_code());
 			return "redirect:/platform/main";
 		}
 		
@@ -54,5 +54,10 @@ public class PlatformController {
 	@GetMapping(value="/main")
 	public void main() {
 		
+	}
+	
+	@GetMapping(value="/insertOrder")
+	public void insertOrder() {
+		logger.debug("insertOrder() 호출");
 	}
 }

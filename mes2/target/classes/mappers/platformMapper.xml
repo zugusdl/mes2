@@ -8,6 +8,6 @@
 <mapper namespace="com.mes2.mapper.platformMapper">
 	<select id="login" resultType="com.mes2.platform.domain.mdbDTO">
 		select * from meta_data_business 
-		where mdb_code = #{mdb_code} and mdb_pw = #{mdb_pw} and mdb_company_status = 'Y'
+		where company_code = #{company_code} and pw = #{pw} and contract_status = 1
 	</select>
 </mapper>

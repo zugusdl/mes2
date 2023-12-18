@@ -35,12 +35,12 @@
 				<form method="post">
 					<h2>로그인</h2>
 					<div class="input-box">
-						<input type="text" name="mdb_code" placeholder="아이디를 입력하세요" />
+						<input type="text" name="company_code" placeholder="아이디를 입력하세요" />
 						<i class="fas fa-envelope email"></i>
 					</div>
 
 					<div class="input-box">
-						<input type="password" name="mdb_pw" placeholder="패스워드를 입력하세요" />
+						<input type="password" name="pw" placeholder="패스워드를 입력하세요" />
 						<i class="fas fa-lock password"></i>
 						<i class="fas fa-eye-slash pass-hide"></i>
 					</div>
