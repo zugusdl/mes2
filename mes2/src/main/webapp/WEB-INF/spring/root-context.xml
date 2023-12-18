@@ -2,26 +2,29 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
-		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- hikariCP: 연결정보 저장객체 -->
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
-		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://itwillbs.com:3306/c7d2307t2_2" />
-		<property name="username" value="c7d2307t2" />
-		<property name="password" value="1234" />
-	</bean>
-	<!-- hikariCP: 연결정보 저장객체 -->
-
-	<!-- dataSource(CP): 디비연결 -->
+	
+	
+			<!-- HikariCP : 연결정보 저장객체 -->
+		
+	
+		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+			<property name="driverClassName"
+				value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+			<property name="jdbcUrl"
+				value="jdbc:log4jdbc:mysql://itwillbs.com:3306/c7d2307t2_2" />
+			<property name="username" value="c7d2307t2" />
+			<property name="password" value="1234" />
+		</bean>
+	
+			<!-- HikariCP : 연결정보 저장객체 -->
+	
+	
+	
+	<!--dataSource(CP) : 디비연결 -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
+		<constructor-arg ref="hikariConfig"/>
 	</bean>
 	<!-- dataSource(CP): 디비연결 -->
 
