@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: swa_a
+=======
+Built-By: ITWILL
+>>>>>>> 3e31ee3dd84836c8b04139ed3c9e006bbb92f907
 Build-Jdk: 11.0.15
 Created-By: Maven Integration for Eclipse
 
