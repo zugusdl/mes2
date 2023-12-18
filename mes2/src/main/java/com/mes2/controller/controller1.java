@@ -73,6 +73,7 @@ public class controller1 {
 		
 	}
 	
+<<<<<<< HEAD
 		// 로그아웃 하기
 		@RequestMapping(value="/logout", method=RequestMethod.GET)
 		public String logout(HttpServletRequest request) {
@@ -304,4 +305,11 @@ public class controller1 {
 	
 	
 	
+=======
+	@RequestMapping(value="/main", method=RequestMethod.GET)
+	public String main(){
+		return "/main/main";
+	}
+	
+>>>>>>> 3536ebab15ecc64f9681086a65e0299e026329a3
 }
