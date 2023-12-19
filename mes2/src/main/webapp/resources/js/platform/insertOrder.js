@@ -31,8 +31,8 @@ function inqueryList() {
 	$.ajax({
 		url : "/restPlatform/inqueryProduct",
 		method : "GET",
-		contextType : "",
 		data : {"searchType" : searchType, "search" : search},
+		dataType : 'json',
 		success : function(data) {
 			console.log(data);
 		},

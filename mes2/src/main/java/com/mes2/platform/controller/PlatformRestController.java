@@ -33,7 +33,7 @@ public class PlatformRestController {
 	@Inject
 	private PlatformService pService;
 	
-	@GetMapping(value="/inqueryProduct")
+	@RequestMapping(value="/inqueryProduct", method=RequestMethod.GET, produces = "application/json; charset=utf8")
 	public List<mdpDTO> inqueryProduct(@RequestParam("searchType") String searchType, @RequestParam("search") String search) throws Exception {
 		logger.debug("inqueryProduct() 호출");
 		List<mdpDTO> mdpDTO = pService.inqueryProduct(searchType, search);
