@@ -35,10 +35,7 @@
 			<a href="/login/update">		
 				<h3>사원정보수정(info)</h3>
 			</a>
-	
-			<a href="/login/delete">		
-				<h3>사원정보삭제(delete)</h3>
-			</a>
+
 			
 			<c:if test="${!empty id && id.equals('admin')}">
 				<!--  관리자(admin) 전용메뉴 -->
@@ -48,7 +45,7 @@
 				<a href="/login/join">
 					<h3>사원등록</h3>
 				</a>
-				<a href="/login/commoncode">
+				<a href="/login/commoncodelist">
 					<h3>공통코드목록</h3>
 				</a>
 				<a href="/login/commoncodejoin">

@@ -12,21 +12,21 @@
   	<!-- 로그인 -->
   		<select id ="loginMember" resultType="com.mes2.domain.MemberDTO">
   			select * from employees
-  			where emp_id=#{emp_id} and emp_pw=#{emp_pw}
+  			where user_id=#{user_id} and user_pw=#{user_pw}
   		</select>
   
   
   	<!-- 사원정보조회  -->
   		<select id="getMember" resultType="com.mes2.domain.MemberDTO">
   			select * from employees
-  			where emp_id=#{emp_id}
+  			where user_id=#{user_id}
   		</select>
   
   
   	<!-- 사원정보수정 -->
   	<update id="updateMember">
-  		update employees set emp_name=#{emp_name},emp_department=#{emp_department},emp_position=#{emp_position},emp_tel=#{emp_tel},emp_auth=#{emp_auth},emp_update_date=now()
-  		where emp_pw=#{emp_pw} and emp_id=#{emp_id}
+  		update employees set user_name=#{user_name},user_department=#{user_department},user_position=#{user_position},user_tel=#{user_tel},user_auth=#{user_auth},user_updatedate=now()
+  		where user_pw=#{user_pw} and user_id=#{user_id}
   	</update>
   
   
@@ -34,15 +34,15 @@
     <!-- 사원정보삭제 -->
   	<delete id="deleteMember">
   		delete from employees 
-  		where emp_pw =#{emp_pw} and emp_id=#{emp_id}
+  		where user_pw =#{user_pw} and user_id=#{user_id}
   	</delete>
   
    
   	
   	<!-- 사원등록 -->
   	<insert id="insertMember">
-  		insert into employees(emp_id,emp_pw,emp_name,emp_department,emp_position,emp_jumin,emp_joindate,emp_tel,emp_auth)
-  		values(#{emp_id},#{emp_pw},#{emp_name},#{emp_department},#{emp_position},#{emp_jumin},#{emp_joindate},#{emp_tel},#{emp_auth})	
+  		insert into employees(user_id,user_pw,user_name,user_department,user_position,user_jumin,user_joindate,user_tel,user_auth)
+  		values(#{user_id},#{user_pw},#{user_name},#{user_department},#{user_position},#{user_jumin},#{user_joindate},#{user_tel},#{user_auth})	
   	</insert>
   	
   

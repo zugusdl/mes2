@@ -1,21 +1,28 @@
 package com.mes2.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mes2.domain.CommonCodeDTO;
 import com.mes2.domain.MemberDTO;
+import com.mes2.service.CommonCodeService;
 import com.mes2.service.MemberService;
 
 
@@ -30,15 +37,19 @@ public class controller1 {
 	@Inject
 	private MemberService mService;
 	
-
+	@Inject
+	private CommonCodeService cService;
+	
 	
 	
 	
 	// http://localhost:8088/login/login
 	// 로그인 페이지호출
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public void login(){
+	public String login(Model model, @CookieValue(value = "rememberedId", required = false) String rememberedId){
+	    model.addAttribute("rememberedId", rememberedId);		
 		logger.debug("loginget() 호출!");
+		return "login/login";
 	}
 	
 	
@@ -46,7 +57,7 @@ public class controller1 {
 	
 	
 	@RequestMapping(value="/login",method = RequestMethod.POST)
-	public String login(MemberDTO dto,HttpSession session) {
+	public String login(MemberDTO dto,HttpSession session, HttpServletResponse response, @RequestParam(value = "remember", required = false) String remember) {
 			logger.debug("loginpost() 호출!");
 			logger.debug("전달정보 :" + dto);
 			
@@ -55,12 +66,20 @@ public class controller1 {
 			
 			if(resultDTO != null) {
 				
-				session.setAttribute("id", resultDTO.getEmp_id());
-				session.setAttribute("pw", resultDTO.getEmp_pw());
-				session.setAttribute("name", resultDTO.getEmp_name());
-				session.setAttribute("jumin", resultDTO.getEmp_jumin());
-				session.setAttribute("position", resultDTO.getEmp_position());
-				session.setAttribute("tel", resultDTO.getEmp_tel());
+				session.setAttribute("id", resultDTO.getUser_id());
+				session.setAttribute("pw", resultDTO.getUser_pw());
+				session.setAttribute("name", resultDTO.getUser_name());
+				session.setAttribute("jumin", resultDTO.getUser_jumin());
+				session.setAttribute("position", resultDTO.getUser_position());
+				session.setAttribute("tel", resultDTO.getUser_tel());
+				
+				
+				if (remember != null && remember.equals("chk")) {
+		            // 쿠키 7 일간 보존
+		            Cookie cookie = new Cookie("rememberedId", resultDTO.getUser_id());
+		            cookie.setMaxAge(604800);
+		            response.addCookie(cookie);
+		        }
 				
 				return "redirect:/login/main";
 			}
@@ -73,7 +92,6 @@ public class controller1 {
 		
 	}
 	
-<<<<<<< HEAD
 		// 로그아웃 하기
 		@RequestMapping(value="/logout", method=RequestMethod.GET)
 		public String logout(HttpServletRequest request) {
@@ -219,7 +237,7 @@ public class controller1 {
 		
 		
 		//아이디 정보저장 (세션영역)
-		String id = request.getParameter("emp_id");
+		String id = request.getParameter("user_id");
 		// 서비스 -> 아이디에 해당하는 회원정보 조회
 		// 연결된 뷰페이지(/members/adminupdate.jsp)에 정보전달
 		model.addAttribute(mService.memberInfo(id));
@@ -266,7 +284,7 @@ public class controller1 {
 		logger.debug("/login/admindelete -> memberDeleteGET()");
 		logger.debug("/login/admindelect.jsp 페이지이동");
 		
-		String id = request.getParameter("emp_id");
+		String id = request.getParameter("user_id");
 		model.addAttribute(mService.memberInfo(id));
 		
 	}
@@ -301,15 +319,43 @@ public class controller1 {
 	
 	
 	
+	// 공통코드리스트 출력하기 GET
+	
+	@RequestMapping(value="/commoncodelist",method = RequestMethod.GET)
+	public String commoncodelistGET(CommonCodeDTO dto, Model model) {
+		logger.debug("/login/commoncodelist 호출!");
+		
+		List<CommonCodeDTO> resultDTO = cService.getCommoncodeList(dto);
+		model.addAttribute("commoncodelist", resultDTO);
+		
+		
+		logger.debug("commoncodelist.jsp 이동!");
+		
+		
+		return "/login/commoncodelist";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// http://localhost:8088/login/login
 
 	
 	
 	
-=======
-	@RequestMapping(value="/main", method=RequestMethod.GET)
-	public String main(){
-		return "/main/main";
-	}
-	
->>>>>>> 3536ebab15ecc64f9681086a65e0299e026329a3
 }

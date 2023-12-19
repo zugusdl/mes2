@@ -2,6 +2,7 @@ package com.mes2.service;
 
 import java.util.List;
 
+
 import com.mes2.domain.MemberDTO;
 
 public interface MemberService {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,19 +57,19 @@
           <form action="" method="post">
             <img src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg" id="login-icon">
             <div class="input-box">
-              <input type="text" id="id" name="emp_id" placeholder="아이디를 입력하세요" />
+              <input type="text" id="id" name="user_id" placeholder="아이디를 입력하세요" value="${rememberedId != null ? rememberedId : ''}" />
               <i class="fas fa-envelope email"></i>
             </div>
 
             <div class="input-box">
-              <input type="password" name="emp_pw" placeholder="패스워드를 입력하세요" />
+              <input type="password" name="user_pw" placeholder="패스워드를 입력하세요" />
               <i class="fas fa-lock password"></i>
               <i class="fas fa-eye-slash pass-hide"></i>
             </div>
 
             <div class="options-field">
               <span class="checkbox">
-                <input type="checkbox" id="checkid" name="checkid"/>
+                <input type="checkbox" id="checkid" name="remember" value="chk" ${rememberedId != null ? 'checked' : ''}/>
                 <label for="checkid">아이디기억하기</label>
               </span>
             </div>

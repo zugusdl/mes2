@@ -68,39 +68,39 @@ body{
 	   	<form method="post">
 		  <div class="mb-3">
 		    <label for="exampleInputEmail1" class="form-label">아이디</label>
-		    <input type="text" class="form-control" placeholder="아이디를입력하세요" name="emp_id" id="exampleInputEmail1" aria-describedby="emailHelp">
+		    <input type="text" class="form-control" placeholder="아이디를입력하세요" name="user_id" id="exampleInputEmail1" aria-describedby="emailHelp">
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">비밀번호</label>
-		    <input type="password" class="form-control" placeholder="비밀번호를입력하세요" name="emp_pw" id="exampleInputPassword1">
+		    <input type="password" class="form-control" placeholder="비밀번호를입력하세요" name="user_pw" id="exampleInputPassword1">
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">이름</label>
-		    <input type="text" class="form-control" placeholder="이름을입력하세요" name="emp_name" id="exampleInputPassword1">
+		    <input type="text" class="form-control" placeholder="이름을입력하세요" name="user_name" id="exampleInputPassword1">
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">부서</label>
-		    <input type="text" class="form-control" placeholder="부서를입력하세요" name="emp_department" id="exampleInputPassword1">
+		    <input type="text" class="form-control" placeholder="부서를입력하세요" name="user_department" id="exampleInputPassword1">
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">직급</label>
-		    <input type="text" class="form-control" placeholder="직급을입력하세요" name="emp_position" id="exampleInputPassword1">
+		    <input type="text" class="form-control" placeholder="직급을입력하세요" name="user_position" id="exampleInputPassword1">
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">주민번호</label>
-		    <input type="text" class="form-control" placeholder="주민번호를입력하세요" name="emp_jumin" id="exampleInputPassword1">
+		    <input type="text" class="form-control" placeholder="주민번호를입력하세요" name="user_jumin" id="exampleInputPassword1">
 		  </div>
 		   <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">입사일</label>
-		    <input type="text" class="form-control" placeholder="입사일을입력하세요" name="emp_joindate" id="exampleInputPassword1">
+		    <input type="text" class="form-control" placeholder="입사일을입력하세요" name="user_joindate" id="exampleInputPassword1">
 		  </div>
 		   <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">전화번호</label>
-		    <input type="text" class="form-control" placeholder="전화번호를입력하세요" name="emp_tel" id="exampleInputPassword1">
+		    <input type="text" class="form-control" placeholder="전화번호를입력하세요" name="user_tel" id="exampleInputPassword1">
 		  </div>
 		    <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">사원관리권한</label>
-		    <input type="text" class="form-control" placeholder="권한을입력하세요 Y/N" name="emp_auth" id="exampleInputPassword1">
+		    <input type="text" class="form-control" placeholder="권한을입력하세요 Y/N" name="user_auth" id="exampleInputPassword1">
 		  </div>		
 		  <button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">사원등록</button>
 		</form>

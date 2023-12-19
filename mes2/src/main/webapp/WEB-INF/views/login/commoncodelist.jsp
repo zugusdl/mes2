@@ -8,42 +8,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<title>MemberlistPage</title>
+<title>CommoncodeList</title>
 </head>
 	<body>
-	 <h1 style ="text-align : center;">사원목록</h1>
+	 <h1 style ="text-align : center;">공통코드목록</h1>
 		<div class="container">
 			<table class="table" style="text-align: center; border : 1px solid #dddddd">
 				<thead>
-					<th style="background-color: #fafafa; text-align: center;">아이디</th>
-					<th style="background-color: #fafafa; text-align: center;">비밀번호</th>
-					<th style="background-color: #fafafa; text-align: center;">이름</th>
-					<th style="background-color: #fafafa; text-align: center;">부서</th>
-					<th style="background-color: #fafafa; text-align: center;">직급</th>
-					<th style="background-color: #fafafa; text-align: center;">주민번호</th>
-					<th style="background-color: #fafafa; text-align: center;">입사일</th>
-					<th style="background-color: #fafafa; text-align: center;">전화번호</th>
+					<th style="background-color: #fafafa; text-align: center;">코드그룹</th>
+					<th style="background-color: #fafafa; text-align: center;">코드그룹명</th>
+					<th style="background-color: #fafafa; text-align: center;">세부코드</th>
+					<th style="background-color: #fafafa; text-align: center;">세부코드명</th>
 					<th style="background-color: #fafafa; text-align: center;">수정</th>
 					<th style="background-color: #fafafa; text-align: center;">삭제</th>
 				</thead>
-				<c:forEach var="member" items="${memberlist}">
+				<c:forEach var="commoncode" items="${commoncodelist}">
 				<tbody>
-					<td>${member.user_id}</td>
-					<td>${member.user_pw}</td>
-					<td>${member.user_name}</td>
-					<td>${member.user_department}</td>
-					<td>${member.user_position}</td>
-					<td>${member.user_jumin}</td>
-					<td>${member.user_joindate}</td>
-					<td>${member.user_tel}</td>
+					<td>${commoncode.code_group}</td>
+					<td>${commoncode.code_group_name}</td>
+					<td>${commoncode.code_code}</td>
+					<td>${commoncode.code_name}</td>
 					   <form method="post">
 					<td>
-						<a href="/login/adminupdate?user_id=${member.user_id}">
+						<a href="/login/commoncodeupdate?code_group=${commoncode.code_group}">
 							<button type="button" class="btn btn-primary">수정</button>
 						</a>
 					</td>
 					<td>
-						<a href="/login/admindelete?user_id=${member.user_id}">
+						<a href="/login/commoncodedelete?code_group=${commoncode.code_group}">
 							<button type="button" class="btn btn-danger">삭제</button>
 						</a>					
 					</td>
