@@ -33,7 +33,7 @@ html {
 }
 
 body {
-  background: var(--grey);
+  background: #fafafa;
   overflow-x: hidden;
 }
 
@@ -167,8 +167,8 @@ body.dark {
 
 .content {
   position: relative;
-  width: calc(100% - 280px);
-  left: 280px;
+  width: ;
+  left: ; /* 나중에 사이드바 보고 변경 */
   transition: 0.3s ease;
 }
 
@@ -432,7 +432,8 @@ body.dark {
 
 .content main .table-data > div {
   border-radius: 20px;
-  background: var(--light);
+  background: #fafafa;
+  border: 2px solid #a2c6a8;
   padding: 24px;
   overflow-x: auto;
 }
@@ -513,6 +514,11 @@ body.dark {
   background: var(--blue);
 }
 
+.content main .table-data .chart {
+  flex-grow: 1;
+  flex-basis: 500px;
+}
+
 .content main .todo {
   flex-grow: 1;
   flex-basis: 300px;
@@ -549,18 +555,52 @@ body.dark {
   margin-bottom: 0;
 }
 
+.content main .calendar {
+  flex-grow: 1;
+  flex-basis: 300px;
+}
+
+.content main .fc {
+    direction: ltr;
+    text-align: left;
+}
+
+.content main .fc table {
+    width: 100%;
+    box-sizing: border-box;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 1em;
+}
+
+
+.content main .fc-view, .fc-view>table {
+    position: relative;
+    z-index: 1;
+}
+
+
 ::-webkit-scrollbar {
   width: 0.5rem;
   height: 0.5rem;
 }
 
 ::-webkit-scrollbar-track {
-  background: #d9d9d9;
+  background: #fafafa;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--blue);
+  background: #a2c6a8;
   border-radius: 5rem;
+}
+.chartjs-legend ul li span {
+    width: 1.562rem;
+    height: 0.312rem;
+    margin-right: 0.4rem;
+    display: inline-block;
+    font-size: 0.875rem;
+    border-radius: 3px;
 }
 
 @media (max-width: 768px) {
