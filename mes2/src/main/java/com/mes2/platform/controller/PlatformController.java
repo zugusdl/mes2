@@ -43,7 +43,7 @@ public class PlatformController {
 		
 		if(mdto != null) {
 			session.setAttribute("company_code", mdbDTO.getCompany_code());
-			return "redirect:/platform/main";
+			return "redirect:/platform/orderList";
 		}
 		
 		rttr.addFlashAttribute("result", "loginFail");
@@ -54,6 +54,9 @@ public class PlatformController {
 	@GetMapping(value="/orderList")
 	public String orderList(HttpSession session) {
 		String company_code = (String) session.getAttribute("company_code");
+		
+		logger.debug("company_code: " + company_code);
+		
 		if (company_code == null) {
 			return "redirect:/platform/login";
 		}

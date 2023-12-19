@@ -1,18 +1,24 @@
 /* Created by Tivotal */
 
 function insertOrder() {
-	loadAddOrderPage();
-}
-
-function loadAddOrderPage() {
 	$.ajax({
-		url: "/platform/insertOrder",
-		method: "GET",
-		success: function(response) {
+		url : "/platform/insertOrder",
+		method : "GET",
+		success : function(response) {
 			$("#bottomContent").html(response);
 		},
-		error: function() {
+		error : function() {
 			alert("fail");
 		}
 	});
+}
+
+const plModal = document.getElementById('productList');
+
+function openProductList() {
+	plModal.style.display = 'block';
+}
+
+function closeProductList() {
+	plModal.style.display = 'none';
 }

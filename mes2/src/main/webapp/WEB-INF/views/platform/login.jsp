@@ -40,7 +40,7 @@
 		<div class="form-container">
 			<i class="fas fa-xmark close-form"></i>
 			<div class="form login-form">
-				<form action="/platform/orderList" method="post">
+				<form method="post">
 					<img
 						src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg"
 						id="login-icon">
