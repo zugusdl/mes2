@@ -22,3 +22,27 @@ function openProductList() {
 function closeProductList() {
 	plModal.style.display = 'none';
 }
+
+function inqueryList() {
+	// 품목 조회
+	var searchType = document.getElementById('searchType').value;
+	var search = document.getElementById('search').value;
+	console.log('품목 조회!!');
+	$.ajax({
+		url : "/restPlatform/inqueryProduct",
+		method : "GET",
+		contextType : "",
+		data : {"searchType" : searchType, "search" : search},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function() {
+			alert("fail");
+		}
+	});
+}
+
+function registProduct() {
+	// 품목 등록
+	
+}

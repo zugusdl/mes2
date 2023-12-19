@@ -6,13 +6,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Document</title>
-
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-
 <link rel="stylesheet" href="/resources/css/platform/insertOrder.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -39,15 +37,15 @@
 
 		<!-- 모달 내용 -->
 		<h3 id="h3">발주 품목 등록</h3>
-		<select>
-			<option>검색 구분</option>
-			<option>품목명</option>
-			<option>품목코드</option>
+		<select name="searchType" id="searchType">
+			<option value="default">구분</option>
+			<option value="품목코드">품목코드</option>
+			<option value="품목명">품목명</option>
 		</select>
-		<input type="text" placeholder="검색어를 입력하세요">
+		<input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
 		<button onclick="inqueryList()">조회</button>
 		<button onclick="registProduct()">등록</button>
-
+		
 	</div>
 	<!-- 품목 선택 모달 종료 -->
 	<script
