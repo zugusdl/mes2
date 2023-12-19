@@ -1,10 +1,6 @@
 /* Created by Tivotal */
 
 function insertOrder() {
-	loadAddOrderPage();
-}
-
-function loadAddOrderPage() {
 	$.ajax({
 		url: "/platform/insertOrder",
 		method: "GET",

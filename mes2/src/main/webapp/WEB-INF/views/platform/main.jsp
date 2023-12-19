@@ -21,7 +21,7 @@
 	<!-- 검색창 -->
 	<div class="container">
 		<section class="section1">
-			<form class="search">
+			<form class="search" action="/platform/search">
 				<select id="boundary">
 					<option value="">-- 검색선택 --</option>
 					<option value="order">주문번호</option>
@@ -29,14 +29,14 @@
 				</select>
 
 				<div>
-					<span class="search-font">검색시작일</span> <input id="dtIp" type="date"
-						min="2023-12-01" max="2024-12-31" /> <span class="search-font">검색종료일</span>
-					<input id="dtIp" type="date" min="2020-01-01" max="2030-12-31"
-						width="100px" />
+					<span class="search-font">검색시작일</span>
+					<input id="dtIp" type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
+					<span class="search-font">검색종료일</span>
+					<input id="dtIp" type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px" />
 				</div>
 
-				<input type="text" name="search" placeholder="검색어를 입력하세요" /> <input
-					type="submit" value="검색" />
+				<input type="text" name="search" placeholder="검색어를 입력하세요" />
+				<input type="submit" value="검색" />
 			</form>
 
 			<!-- 표 -->
@@ -72,7 +72,6 @@
 		</section>
 
 		<div id="bottomContent"></div>
-
 	</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

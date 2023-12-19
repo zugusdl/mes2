@@ -60,4 +60,5 @@ public class PlatformController {
 	public void insertOrder() {
 		logger.debug("insertOrder() 호출");
 	}
+	
 }

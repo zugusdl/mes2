@@ -1,12 +1,6 @@
 @charset "UTF-8";
 
 
-* {
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
 .header {
   position: fixed;
@@ -54,7 +48,7 @@
 
 .btn {
   padding: 6px 24px;
-  background: #6e9888;
+  background: #577D71;
   border: 2px solid #fff;
   color: #fff;
   cursor: pointer;
@@ -65,11 +59,20 @@
   transform: scale(0.98);
 }
 
+#login-icon{
+	width:200px;
+	height:30px;
+	text-align : center;
+	margin-left: 30px;
+}
+
+
+
 .home {
   position: relative;
   height: 100vh;
   width: 100%;
-  background: url(bg3.jpg);
+  background: url("/resources/img/platform/bg.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -148,7 +151,7 @@
 }
 
 .home .form-container form .input-box input:focus {
-  border-color: #6e9888;
+  border-color: green;
 }
 
 .home .form-container form .input-box i {
@@ -184,7 +187,7 @@
 }
 
 .home .form-container form .options-field .checkbox input {
-  accent-color: #6e9888;
+  accent-color: #7d2ae8;
 }
 
 .home .form-container form .options-field .checkbox label {
@@ -205,12 +208,22 @@
 }
 
 .home .form-container form .btn {
-  background: #6e9888;
+  background: #577D71;
   margin-top: 30px;
   width: 100%;
   padding: 10px 0;
   border-radius: 10px;
 }
+
+
+
+.home .form-container form .options-field .checkbox input {
+    accent-color: green;
+}
+
+
+
+
 
 .home .form-container form .login-signup {
   font-size: 12px;
