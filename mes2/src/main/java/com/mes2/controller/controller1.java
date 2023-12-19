@@ -20,7 +20,7 @@ import com.mes2.service.MemberService;
 
 
 @Controller
-@RequestMapping("/login/*")
+@RequestMapping("/sidehead/*")
 public class controller1 {
 
 	 
@@ -294,5 +294,12 @@ public class controller1 {
 		// 메인페이지로 이동
 		return "redirect:/login/memberlist";
 	}
+	
+	// http://localhost:8088/sidehead/sidehead
+		// 로그인 페이지호출
+		@RequestMapping(value="/sidehead", method=RequestMethod.GET)
+		public void sidehead(){
+			logger.debug("sidehead() 호출!");
+		}
 
 }
