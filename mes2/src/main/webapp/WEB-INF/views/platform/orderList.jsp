@@ -13,11 +13,12 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 
-<link rel="stylesheet" href="/resources/css/platform/main.css">
+<link rel="stylesheet" href="/resources/css/platform/orderList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
+	<%@ include file="../sidehead/sidehead.jsp" %>
 	<!-- 검색창 -->
 	<div class="container">
 		<section class="section1">
@@ -78,6 +79,6 @@
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous">
 	</script>
-	<script src="/resources/js/platform/main.js"></script>
+	<script src="/resources/js/platform/orderList.js"></script>
 </body>
 </html>

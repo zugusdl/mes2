@@ -40,7 +40,7 @@
 		<div class="form-container">
 			<i class="fas fa-xmark close-form"></i>
 			<div class="form login-form">
-				<form action="" method="post">
+				<form action="/platform/orderList" method="post">
 					<img
 						src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg"
 						id="login-icon">
@@ -56,15 +56,10 @@
 					</div>
 
 					<button class="btn" id="btn-post" type="submit">로그인하기</button>
-
-
 				</form>
 			</div>
 		</div>
 	</section>
-
-
-
 
 	<!-- 자바스크립트 동작 불러오기 (경로설정 중요!!) -->
 

@@ -42,7 +42,7 @@ public class PlatformController {
 		mdbDTO mdto = pService.customerLogin(mdbDTO);
 		
 		if(mdto != null) {
-			session.setAttribute("mdb_code", mdbDTO.getCompany_code());
+			session.setAttribute("company_code", mdbDTO.getCompany_code());
 			return "redirect:/platform/main";
 		}
 		
@@ -51,9 +51,14 @@ public class PlatformController {
 		return "redirect:/platform/login";
 	}
 	
-	@GetMapping(value="/main")
-	public void main() {
+	@GetMapping(value="/orderList")
+	public String orderList(HttpSession session) {
+		String company_code = (String) session.getAttribute("company_code");
+		if (company_code == null) {
+			return "redirect:/platform/login";
+		}
 		
+		return "/platform/orderList";
 	}
 	
 	@GetMapping(value="/insertOrder")
