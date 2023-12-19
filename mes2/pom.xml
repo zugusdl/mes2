@@ -175,6 +175,18 @@
 			<version>1.16</version>
 		</dependency>
 		<!-- 외부라이브러리 -->
+		
+		<!-- 개인용 추가 -->
+<!-- 		
+		<dependency>
+    		<groupId>ch.qos.logback</groupId>
+    		<artifactId>logback-classic</artifactId>
+    		<version>1.2.3</version> 최신 버전으로 업데이트 가능
+		</dependency>
+		 -->
+		
+		 <!-- 개인용 추가 -->
+		
 	</dependencies>
 	<build>
 		<plugins>

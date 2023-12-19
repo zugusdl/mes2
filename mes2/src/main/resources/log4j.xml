@@ -11,7 +11,11 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.mes2.controller">
+	<logger name="com.mes2.*">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.mes2.product">
 		<level value="debug" />
 	</logger>
 	
@@ -34,7 +38,7 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="debug" />
 		<appender-ref ref="console" />
 	</root>
 	

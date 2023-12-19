@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- InstructionsMapper.xml -->
+  
+<mapper namespace="com.mes2.mapper.DateTestMapper">
+	
+	<insert id ="insertDateTest">
+		insert into date_test (test_date1, test_date2)
+		values (#{date1}, #{date2})
+	</insert>
+
+	<select id="selectDate" resultType="com.mes2.test.domain.DateTest">
+		select *
+		from date_test
+		where test_date1 between #{date1} and #{date2}
+	</select>
+
+</mapper>

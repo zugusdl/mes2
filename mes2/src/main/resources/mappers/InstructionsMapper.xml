@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- InstructionsMapper.xml -->
+  
+<mapper namespace="com.mes2.mapper.InstructionsMapper">
+	
+	<insert id ="insertInstructionForStandBy">
+		insert into instructions
+		(code, line, mdp_code, type, soi_code, start_time, emp_id, state)
+		values (#{code},#{line},#{mdpCode},#{type},#{soiCode},#{startTime}, #{empNum}, #{state})
+	</insert>
+	
+	<select id="selectByCode" resultType="com.mes2.production.domain.InstructionsDTO">
+		select * 
+		from instructions
+		where code = #{code}
+	</select>
+	
+	<update id="updateStart">
+		update instructions
+		set start_time = now(), state = 'start', quantity = #{quantity}, fault = #{fault}
+		where code = #{code}
+	</update>
+	
+	
+	<update id="updateClose">
+		update instructions
+		set end_time = now(), state = 'close', quantity = #{quantity}, fault = #{fault}
+		where code = #{code}
+	</update>
+	
+
+
+</mapper>
