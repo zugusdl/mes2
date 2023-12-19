@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- produceMapper.xml -->
+  
+<mapper namespace="com.mes2.mapper.platformMapper">
+	<select id="login" resultType="com.mes2.platform.domain.mdbDTO">
+		select * from meta_data_business 
+		where company_code = #{company_code} and pw = #{pw} and contract_status = 1
+	</select>
+</mapper>

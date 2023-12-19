@@ -1,18 +1,13 @@
-@charset "UTF-8";
-
-@font-face {
-    font-family: 'MaplestoryOTFBold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
+/* Google Fonts Import Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'MaplestoryOTFBold';
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  overflow: hidden;
 }
 .sidebar{
   position: fixed;
@@ -90,10 +85,10 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.sidebar .nav-links li.showMenu i.arrow{
+.sidebar .nav-links li.showMenu i.fa-arrow-down{ /* 드롭다운할 때 여기도 아이콘명 변경해야함 */
   transform: rotate(-180deg);
 }
-.sidebar.close .nav-links i.arrow{
+.sidebar.close .nav-links i.fa-arrow-down{ /* 드롭다운할 때 여기도 아이콘명 변경해야함 */
   display: none;
 }
 .sidebar .nav-links li a{
@@ -219,50 +214,66 @@
 .home-section{
   position: relative;
   background: #E4E9F7;
-  height: 100vh;
+  /*height: 100vh; 본문넓이 줄였음*/
   left: 260px;
   width: calc(100% - 260px);
   transition: all 0.5s ease;
+  padding: 12px;
 }
 .sidebar.close ~ .home-section{
   left: 78px;
   width: calc(100% - 78px);
 }
-.home-section .home-content{
-  height: 60px;
+.home-content{
   display: flex;
-  align-items: center;
+  justify-content: space-between; /*헤더를 각각 떨어지게끔 배치 */
+  flex-wrap: wrap;
 }
-.home-section .home-content .bx-menu,
+.home-section .home-content .fa-bars, /* 햄버거클릭할 때 여기도 아이콘명 변경해야함 */
 .home-section .home-content .text{
   color: #11101d;
   font-size: 35px;
 }
-.home-section .home-content .bx-menu{
-  margin: 0 15px;
+.home-section .home-content .fa-bars{ /* 햄버거클릭할 때 여기도 아이콘명 변경해야함 */
   cursor: pointer;
+  margin-right: 10px;
 }
 .home-section .home-content .text{
   font-size: 26px;
   font-weight: 600;
 }
-@media (max-width: 400px) {
-  .sidebar.close .nav-links li .sub-menu{
-    display: none;
-  }
+
+@media screen and (max-width: 400px){
   .sidebar{
-    width: 78px;
+    width: 240px;
   }
   .sidebar.close{
-    width: 0;
+    width: 78px;
+  }
+  .sidebar .profile-details{
+    width: 240px;
+  }
+  .sidebar.close .profile-details{
+    background: none;
+  }
+  .sidebar.close .profile-details{
+    width: 78px;
   }
   .home-section{
-    left: 78px;
-    width: calc(100% - 78px);
-    z-index: 100;
+    left: 240px;
+    width: calc(100% - 240px);
   }
   .sidebar.close ~ .home-section{
-    width: 100%;
-    left: 0;
+    left: 78px;
+    width: calc(100% - 78px);
   }
+}
+
+.link_name {
+  /* 다른 스타일 속성은 필요에 따라 추가 또는 조절하세요 */
+  
+  display: inline-block; /* 요소를 인라인 블록으로 설정하여 너비 조절 가능하도록 함 */
+  white-space: nowrap; /* 텍스트 줄 바꿈 금지 */
+  overflow: hidden; /* 내용이 너무 길면 숨김 처리 */
+  text-overflow: ellipsis; /* 내용이 숨겨질 경우 마지막 부분을 생략 부호(...)로 표시 */
 }
