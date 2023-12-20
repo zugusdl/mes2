@@ -21,7 +21,7 @@
   <div class="sidebar close">
     <div class="logo-details">
       <i class="fa-solid fa-bars"></i>
-      <span class="logo_name">어써매틱</span>
+      <span class="logo_name">AWESOMETIC</span>
     </div>
     <ul class="nav-links">
       <li>

@@ -28,7 +28,7 @@
 					<option value="품목명">품목명</option>
 				</select> <input type="text" name="search" id="search"
 					placeholder="검색어를 입력하세요">
-				<button type="submit" class="button">조회</button>
+				<button type="submit" class="btn btn-secondary">조회</button>
 			</form>
 			<c:if test="${!empty mdpDTO }">
 				<form action="/platform/insertProduct" method="post" class="pList">
@@ -48,7 +48,7 @@
 							<span class="pPrice"> <fmt:formatNumber value="${mdpDTO.price}"/>원</span>					
 							</div>
 						</c:forEach>
-						<button type="submit" class="button regist">등록</button>
+						<button type="submit" class="btn btn-secondary regist">등록</button>
 				</form>
 			</c:if>
 		</div>
