@@ -10,4 +10,16 @@
 		select * from meta_data_business 
 		where company_code = #{company_code} and pw = #{pw} and contract_status = 1
 	</select>
+	
+	<select id="inqueryProduct" resultType="com.mes2.platform.domain.mdpDTO">
+		select * from meta_data_product 
+		<where>
+			<if test="searchType.equals('품목코드')">
+				and product_code like concat('%' , #{search}, '%')
+			</if>
+			<if test="searchType.equals('품목명')">
+				and name like concat('%' , #{search}, '%')
+			</if>
+		</where>
+	</select>
 </mapper>

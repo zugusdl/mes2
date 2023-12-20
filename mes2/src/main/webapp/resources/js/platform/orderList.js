@@ -2,13 +2,14 @@
 
 function insertOrder() {
 	$.ajax({
-		url: "/platform/insertOrder",
-		method: "GET",
-		success: function(response) {
+		url : "/platform/insertOrder",
+		method : "GET",
+		success : function(response) {
 			$("#bottomContent").html(response);
 		},
-		error: function() {
+		error : function() {
 			alert("fail");
 		}
 	});
+
 }

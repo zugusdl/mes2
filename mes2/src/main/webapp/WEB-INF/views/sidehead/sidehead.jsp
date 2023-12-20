@@ -156,9 +156,7 @@
     </div>
   </section>
 
-  본문내용을 입력하세용
-
-  <script src="../../../resources/js/sidehead/sideheadscript.js"></script> <!-- 사이드바 script -->
+  <script src="/resources/js/sidehead/sideheadscript.js"></script> <!-- 사이드바 script -->
 
   <!-- 부트스트랩 js 추가-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
