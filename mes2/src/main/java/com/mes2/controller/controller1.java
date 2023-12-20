@@ -34,7 +34,7 @@ public class controller1 {
 	
 	
 	
-	// http://localhost:8088/login/login
+	// http://localhost:8080/login/login
 	// 로그인 페이지호출
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public void login(){
