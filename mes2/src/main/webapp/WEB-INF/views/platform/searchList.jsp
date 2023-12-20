@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,10 +18,10 @@
 </head>
 
 <body>
-	<div id="productList" class="section1">
-		<div class="content">
-			<h3 id="h3">발주 품목 등록</h3>
-			<form method="post">
+	<div class="container2">
+		<h3 id="h3">발주 품목 등록</h3>
+		<section class="section1">
+			<form method="post" class="search">
 				<select name="searchType" id="searchType">
 					<option value="default">구분</option>
 					<option value="품목코드">품목코드</option>
@@ -30,28 +30,44 @@
 					placeholder="검색어를 입력하세요">
 				<button type="submit" class="btn btn-secondary">조회</button>
 			</form>
-			<c:if test="${!empty mdpDTO }">
-				<form action="/platform/insertProduct" method="post" class="pList">
-						<div class="listTitle">
-							<span class="pCode">품목코드</span>
-							<span class="pImage">형상정보</span>
-							<span class="pName">품목명</span>
-							<span class="pPrice">단가</span>
-						</div>
-						<c:forEach var="mdpDTO" items="${mdpDTO }">
-							<div>
-							<hr>
-							<input type="radio" name="product_code" value="${mdpDTO.product_code} ">
-							<span class="pCode">${mdpDTO.product_code} </span>						
-							<span class="pImage"><img alt="" src=""> </span>					
-							<span class="pName">${mdpDTO.name}	</span>					
-							<span class="pPrice"> <fmt:formatNumber value="${mdpDTO.price}"/>원</span>					
-							</div>
-						</c:forEach>
-						<button type="submit" class="btn btn-secondary regist">등록</button>
-				</form>
-			</c:if>
-		</div>
+
+			<!-- 표 -->
+			<div class="list">
+				<div class="list-box">
+					<c:if test="${!empty mdpDTO }">
+						<form action="#" class="list-form">
+						<!-- 폼태그로 주소 매핑해서 데이터 담아서 orderList에 전송? 전송되면 제이쿼리로 표에 객체 정보 추가하기..?
+						아니면 ajax로 데이터 담아서 해당 데이터를 orderList에 html로 추가? -->
+							<table class="table table-hover">
+								<thead>
+									<tr class="table-success">
+										<th></th>
+										<th scope="col">품목코드</th>
+										<th scope="col">형상정보</th>
+										<th scope="col">품목명</th>
+										<th scope="col">단가</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="mdpDTO" items="${mdpDTO }">
+										<tr>
+											<td scope="row"><input type="radio" name="product_code"
+												value="${mdpDTO.product_code} "></td>
+											<td>${mdpDTO.product_code}</td>
+											<td><img alt="" src=""></td>
+											<td>${mdpDTO.name}</td>
+											<td><fmt:formatNumber value="${mdpDTO.price}" />원</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+							<button class="btn btn-secondary regist">등록</button>
+							<button class="btn btn-secondary regist">취소</button>
+						</form>
+					</c:if>
+				</div>
+			</div>
+		</section>
 	</div>
 
 	<script

@@ -61,8 +61,6 @@ public class PlatformController {
 	public String orderList(HttpSession session) throws Exception {
 		String company_code = (String) session.getAttribute("company_code");
 		
-		logger.debug("company_code: " + company_code);
-		
 		if (company_code == null) {
 			return "redirect:/platform/login";
 		}
