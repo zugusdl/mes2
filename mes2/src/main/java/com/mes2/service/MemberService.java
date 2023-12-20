@@ -2,8 +2,7 @@ package com.mes2.service;
 
 import java.util.List;
 
-
-import com.mes2.domain.MemberDTO;
+import com.mes2.system.domain.MemberDTO;
 
 public interface MemberService {
 	
@@ -11,7 +10,7 @@ public interface MemberService {
 	public MemberDTO memberLogin(MemberDTO dto);
 	
 	//사원정보조회 동작
-	public MemberDTO memberInfo(String emp_id);
+	public MemberDTO memberInfo(String user_id);
 	
 	//사원정보수정 동작
 	public void memberUpdate(MemberDTO dto);

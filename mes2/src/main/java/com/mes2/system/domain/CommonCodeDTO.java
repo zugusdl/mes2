@@ -1,4 +1,4 @@
-package com.mes2.domain;
+package com.mes2.system.domain;
 
 import java.sql.Timestamp;
 
@@ -14,6 +14,6 @@ public class CommonCodeDTO {
 	private Timestamp code_insertdate;
 	private Timestamp code_updatedate;
 	private int code_usestatus;
-	
+	private int code_index;
 
 }

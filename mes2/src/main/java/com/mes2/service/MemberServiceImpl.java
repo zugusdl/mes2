@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.mes2.domain.MemberDTO;
 import com.mes2.persistence.MemberDAO;
+import com.mes2.system.domain.MemberDTO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -39,10 +39,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	//사원정보조회
 	@Override
-	public MemberDTO memberInfo(String emp_id) {
+	public MemberDTO memberInfo(String user_id) {
 		logger.debug("Service 조회처리");
 
-		return mdao.getMember(emp_id);
+		return mdao.getMember(user_id);
 	}
 
 

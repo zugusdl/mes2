@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.mes2.domain.CommonCodeDTO;
+import com.mes2.system.domain.CommonCodeDTO;
 
 
 @Repository
@@ -36,6 +36,55 @@ public class CommonCodeDAOImpl implements CommonCodeDAO {
 		List<CommonCodeDTO> resultDTO = sqlSession.selectList(NAMESPACE+".getCommoncodeList",dto);
 		
 		return resultDTO;
+	}
+
+	
+	
+	
+	
+	
+	//공통코드조회
+
+	@Override
+	public CommonCodeDTO getCommoncode(int code_index) {
+		logger.debug("DAO - 공통코드 조회 하기!");
+	
+		return sqlSession.selectOne(NAMESPACE+".getCommoncode",code_index);
+	}
+
+
+
+
+
+	//공통코드 수정
+	@Override
+	public void updateCommonCode(CommonCodeDTO dto) {
+		logger.debug("DAO - 공통코드수정실행!");
+		sqlSession.update(NAMESPACE+".updateCommonCode",dto);
+		
+	}
+
+
+
+
+
+	// 공통코드 등록
+	@Override
+	public void insertCommonCode(CommonCodeDTO dto) {
+		logger.debug("DAO - 공통코드등록실행!");
+		sqlSession.insert(NAMESPACE+".insertCommoncode",dto);
+		
+	}
+
+
+
+
+	
+	// 공통코드 삭제
+	@Override
+	public int deleteCommonCode(CommonCodeDTO dto) {
+		logger.debug("DAO - 공통코드삭제실행!");
+		return sqlSession.delete(NAMESPACE+".deleteCommonCode",dto);
 	}
 
 	

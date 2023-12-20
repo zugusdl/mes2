@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <title>JoinForm</title>
 <style type = "text/css">
@@ -55,8 +56,8 @@ body{
 
 </style>
 </head>
-
 <body>
+
 	<h1>/login/update.jsp</h1>
 	
  
@@ -69,7 +70,8 @@ body{
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">비밀번호</label>
-		    <input type="password" class="form-control" placeholder="비밀번호를입력하세요" name="user_pw" id="exampleInputPassword1">
+		    <input type="password" class="form-control" placeholder="비밀번호를입력하세요" name="user_pw" id="passwordinput">
+		    <i class="fas fa-eye pass-hide" style="cursor: pointer;"></i>
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">이름</label>
@@ -97,8 +99,23 @@ body{
 </div>
 	
 
- 		
+	<!-- 패스워드 눈 모양 (보이기/안보이기 기능!) -->
+<script>
+  var passHide = document.querySelectorAll(".pass-hide");
 
+  passHide.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      let passInput = icon.parentElement.querySelector("input");
+      if (passInput.type === "password") {
+        passInput.type = "text";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+      } else {
+        passInput.type = "password";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+      }
+    });
+  });
+</script>
 	
 	
 

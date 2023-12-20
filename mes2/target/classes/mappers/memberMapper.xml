@@ -48,7 +48,7 @@
   
  	<!--사원목록리스트--> 	
   	<select id="getMemberList" resultType="com.mes2.domain.MemberDTO">
-  		select*from employees
+  		select*from employees order by user_num asc
   	</select>
   	
   	

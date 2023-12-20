@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.mes2.domain.MemberDTO;
+import com.mes2.system.domain.MemberDTO;
 
 
 @Repository
@@ -44,10 +44,10 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	// 사원정보조회
 	@Override
-	public MemberDTO getMember(String emp_id) {
+	public MemberDTO getMember(String user_id) {
 		logger.debug("DAO- 회원정보조회 getMember(String emp_id)");
 
-		return sqlSession.selectOne(NAMESPACE+".getMember",emp_id);
+		return sqlSession.selectOne(NAMESPACE+".getMember",user_id);
 	}
 
 	

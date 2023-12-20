@@ -1,4 +1,4 @@
-package com.mes2.domain;
+package com.mes2.system.domain;
 
 import java.sql.Timestamp;
 

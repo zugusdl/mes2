@@ -2,8 +2,7 @@ package com.mes2.persistence;
 
 import java.util.List;
 
-
-import com.mes2.domain.MemberDTO;
+import com.mes2.system.domain.MemberDTO;
 
 public interface MemberDAO {
 	

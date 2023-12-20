@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.9.0/datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.9.0/datepicker.min.js"></script>
 <title>JoinForm</title>
 <style type = "text/css">
 
@@ -58,7 +60,7 @@ body{
 
 <body>
 	<h1>/login/join.jsp</h1>
-	
+
  
 	<div class="JoinForm">
 			<h3 class="text-center text-primary mt-2 mb-4">
@@ -92,11 +94,11 @@ body{
 		  </div>
 		   <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">입사일</label>
-		    <input type="text" class="form-control" placeholder="입사일을입력하세요" name="user_joindate" id="exampleInputPassword1">
+		    <input type="date" class="form-control" placeholder="입사일을입력하세요" name="user_joindate" id="joinDate">
 		  </div>
 		   <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">전화번호</label>
-		    <input type="text" class="form-control" placeholder="전화번호를입력하세요" name="user_tel" id="exampleInputPassword1">
+		    <input type="tel" class="form-control" placeholder="전화번호를입력하세요" name="user_tel" id="exampleInputPassword1">
 		  </div>
 		    <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">사원관리권한</label>
@@ -107,7 +109,8 @@ body{
    </div>
 </div>
 	
-
+	
+	
  		
 
 	

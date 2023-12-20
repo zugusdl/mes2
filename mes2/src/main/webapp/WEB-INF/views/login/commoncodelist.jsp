@@ -19,6 +19,7 @@
 					<th style="background-color: #fafafa; text-align: center;">코드그룹명</th>
 					<th style="background-color: #fafafa; text-align: center;">세부코드</th>
 					<th style="background-color: #fafafa; text-align: center;">세부코드명</th>
+					<th style="background-color: #fafafa; text-align: center;">코드인덱스</th>
 					<th style="background-color: #fafafa; text-align: center;">수정</th>
 					<th style="background-color: #fafafa; text-align: center;">삭제</th>
 				</thead>
@@ -28,14 +29,15 @@
 					<td>${commoncode.code_group_name}</td>
 					<td>${commoncode.code_code}</td>
 					<td>${commoncode.code_name}</td>
+					<td>${commoncode.code_index}</td>
 					   <form method="post">
 					<td>
-						<a href="/login/commoncodeupdate?code_group=${commoncode.code_group}">
+						<a href="/login/commoncodeupdate?code_index=${commoncode.code_index}">
 							<button type="button" class="btn btn-primary">수정</button>
 						</a>
 					</td>
 					<td>
-						<a href="/login/commoncodedelete?code_group=${commoncode.code_group}">
+						<a href="/login/commoncodedelete?code_index=${commoncode.code_index}">
 							<button type="button" class="btn btn-danger">삭제</button>
 						</a>					
 					</td>

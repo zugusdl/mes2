@@ -75,7 +75,6 @@
             </div>
 
             <button class="btn" id="btn-post" type="submit" style="background: #3CB371;">로그인하기</button>
-
             
           </form>
         </div>

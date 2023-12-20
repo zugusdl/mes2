@@ -1,6 +1,8 @@
 package com.mes2.controller;
 
 import java.util.Collections;
+
+
 import java.util.List;
 
 
@@ -20,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mes2.domain.CommonCodeDTO;
-import com.mes2.domain.MemberDTO;
 import com.mes2.service.CommonCodeService;
 import com.mes2.service.MemberService;
+import com.mes2.system.domain.CommonCodeDTO;
+import com.mes2.system.domain.MemberDTO;
 
 
 @Controller
@@ -313,8 +315,8 @@ public class controller1 {
 		// 메인페이지로 이동
 		return "redirect:/login/memberlist";
 	}
-		
 	
+
 	
 	
 	
@@ -338,15 +340,136 @@ public class controller1 {
 	
 	
 	
+	// 공통코드정보 수정하기 GET
+	
+	@RequestMapping(value="/commoncodeupdate",method = RequestMethod.GET)
+	public void commoncodeUpdateGET(CommonCodeDTO dto,Model model,HttpServletRequest request) {
+		logger.debug("/login/commoncodeupdate -> commoncodeUpdateGET()");
+		logger.debug("/login/update 호출!");
+		
+		
+		
+		//아이디 정보저장 (세션영역)
+		int code_index = Integer.parseInt(request.getParameter("code_index"));
+		
+		// 서비스 -> 아이디에 해당하는 회원정보 조회
+		// 연결된 뷰페이지(/members/adminupdate.jsp)에 정보전달
+		model.addAttribute(cService.CommoncodeInfo(code_index));
+			
+		logger.debug("세션 값 : " + code_index);
+		
+		logger.debug("/login/commoncodeupdate.jsp 페이지이동");
+		
+		
+	}
 	
 	
+	// 공통코드 수정하기 POST
+	
+		@RequestMapping(value="/commoncodeupdate",method = RequestMethod.POST)
+		public String commonCodeUpdatePOST(CommonCodeDTO dto,HttpServletRequest request,Model model) {
+			logger.debug("/login/commoncodeupdate -> commoncodeUpdatePOST()");
+			// 한글처리(인코딩 - 필터에서 처리함!)
+			// 전달정보 저장(폼태그 - 파라미터)
+			logger.debug("수정할 정보 :" + dto);
+			
+			
+
+
+			logger.debug("넘어온 url : " +request.getPathInfo());
+			
+			
+		    // 서비스 - 회원정보 수정하는 동작	
+		    cService.commoncodeUpdate(dto);
+		    
+			
+			// 메인페이지로 이동
+			return "redirect:/login/commoncodelist";
+		}
 	
 	
+		//공통코드등록하기-GET
+		@RequestMapping(value="/commoncodejoin",method= RequestMethod.GET)
+		public void commonCodeJoinGET() {
+			logger.debug("commonCodeJoinGET() 호출");
+			// 연결된 뷰페이지로 이동
+			logger.debug("/views/login/commoncodejoin.jsp");
+		}
+		
+		
+		//공통코드등록하기-POST
+		@RequestMapping(value="/commoncodejoin",method= RequestMethod.POST)
+		public String commonCodeJoinPOST(CommonCodeDTO dto) {
+			logger.debug("memberJoinPOST() 호출");
+			
+			//한글처리(인코딩 설정) => 필터사용
+			
+			// 전달정보 저장
+			logger.debug("dto :" + dto);
+			
+			// DB에 정보를 저장 ( 기존 JSP => new MemberDAO().method() 호출; / 지금 Service 객체사용 ) 
+			logger.debug("서비스 사원등록 동작을 호출 ! - 시작");
+			cService.insertCommonCode(dto);
+			
+			logger.debug("서비스 사원등록 동작을 호출 ! - 끝");
+			
+			// 페이지 이동 (로그인-/members/login)
+			return "redirect:/login/main";
+		}
 	
+		
+		
+		
+		// 공통코드삭제하기 GET
+		
+		@RequestMapping(value="/commoncodedelete",method = RequestMethod.GET)
+		public void commoncodeDeleteGET(CommonCodeDTO dto,Model model,HttpServletRequest request) {
+			logger.debug("/login/commoncodedelete -> commoncodeDeleteGET()");
+			logger.debug("/login/delete 호출!");
+			
+			
+			
+			//아이디 정보저장 (세션영역)
+			int code_index = Integer.parseInt(request.getParameter("code_index"));
+			
+			// 서비스 -> 아이디에 해당하는 회원정보 조회
+			// 연결된 뷰페이지(/members/adminupdate.jsp)에 정보전달
+			model.addAttribute(cService.CommoncodeInfo(code_index));
+				
+			logger.debug("세션 값 : " + code_index);
+			
+			logger.debug("/login/commoncodeupdate.jsp 페이지이동");
+			
+			
+		}
+		
+		
+		
+		// 공통코드삭제하기 POST
+		
+		
+		@RequestMapping(value="/commoncodedelete",method = RequestMethod.POST)
+		public String commonCodeDeletePOST(CommonCodeDTO dto,HttpServletRequest request,Model model) {
+			logger.debug("/login/commoncodeupdate -> commoncodeUpdatePOST()");
+			// 한글처리(인코딩 - 필터에서 처리함!)
+			// 전달정보 저장(폼태그 - 파라미터)
+			logger.debug("수정할 정보 :" + dto);
+			
+			
+
+
+			logger.debug("넘어온 url : " +request.getPathInfo());
+			
+			
+		    // 서비스 - 회원정보 수정하는 동작	
+		    cService.deleteCommonCode(dto);
+		    
+			
+			// 메인페이지로 이동
+			return "redirect:/login/commoncodelist";
+		}
 	
-	
-	
-	
+		
 	
 	
 	
@@ -355,7 +478,7 @@ public class controller1 {
 	
 	// http://localhost:8088/login/login
 
-	
+
 	
 	
 }
