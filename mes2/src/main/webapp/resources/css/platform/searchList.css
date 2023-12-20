@@ -1,6 +1,9 @@
 @charset "UTF-8";
 
 @charset "UTF-8";
+.body {
+	background-color: #fafafa;
+}
 
 .search {
 	display: flex;
@@ -13,11 +16,7 @@
 
 .section1 {
 	padding: 1px;
-	background-color: #e6e6e6;
-	width: 1000px;
-	height: 500px;
 	margin: 0 auto;
-	margin-top: 30px;
 }
 
 .list-box {
@@ -48,4 +47,53 @@
 	align-items: center;
 	gap: 20px;
 	flex-direction: column;
+}
+
+.content {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.pList {
+	margin-top: 10px;
+}
+
+.listTitle {
+	margin-left: 15px;
+	text-align: center;
+}
+
+.pCode {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+.pImage {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+.pName {
+	width: 300px;
+	display: inline-block;
+}
+
+.pPrice {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+.button {
+	border: none;
+	background-color: #a2c6a8;
+	width: 80px;
+	height: 30px;
+	border-radius: 10px;
+}
+
+.regist {
+	margin-top: 10px;
 }
