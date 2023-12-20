@@ -35,6 +35,7 @@ function inqueryList() {
 		dataType : 'json',
 		success : function(data) {
 			console.log(data);
+			document.getElementById('plist');
 		},
 		error : function() {
 			alert("fail");

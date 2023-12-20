@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,14 +46,20 @@
 		<input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
 		<button onclick="inqueryList()">조회</button>
 		<button onclick="registProduct()">등록</button>
-		
+		<div id="plist">
+		<c:if test="${!empty mdpDTO }">
+		<c:forEach var="mdpDTO" items="${mdpDTO }">
+			품목명 <input type="text" value="${mdpDTO.name} " readonly>
+			수량 <input type="number" >
+		</c:forEach>
+		</c:if>
+		</div>
 	</div>
 	<!-- 품목 선택 모달 종료 -->
-	<scriptS
+	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous">
-		
 	</script>
 	<script src="/resources/js/platform/insertOrder.js"></script>
 </body>
