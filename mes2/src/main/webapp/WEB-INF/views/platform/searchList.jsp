@@ -32,12 +32,12 @@
 			</form>
 			<c:if test="${!empty mdpDTO }">
 				<form action="/platform/insertProduct" method="post" class="pList">
-						<span class="listTitle">
-						<span class="pCode">품목코드</span>
-						<span class="pImage">형상정보</span>
-						<span class="pName">품목명</span>
-						<span class="pPrice">단가</span>
-						</span>
+						<div class="listTitle">
+							<span class="pCode">품목코드</span>
+							<span class="pImage">형상정보</span>
+							<span class="pName">품목명</span>
+							<span class="pPrice">단가</span>
+						</div>
 						<c:forEach var="mdpDTO" items="${mdpDTO }">
 							<div>
 							<hr>
