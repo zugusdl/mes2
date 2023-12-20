@@ -85,10 +85,10 @@ body{
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.sidebar .nav-links li.showMenu i.fa-arrow-down{ /* 드롭다운할 때 여기도 아이콘명 변경해야함 */
+.sidebar .nav-links li.showMenu i.fa-chevron-down{ /* 드롭다운할 때 여기도 아이콘명 변경해야함 */
   transform: rotate(-180deg);
 }
-.sidebar.close .nav-links i.fa-arrow-down{ /* 드롭다운할 때 여기도 아이콘명 변경해야함 */
+.sidebar.close .nav-links i.fa-chevron-down{ /* 드롭다운할 때 여기도 아이콘명 변경해야함 */
   display: none;
 }
 .sidebar .nav-links li a{

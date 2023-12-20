@@ -65,6 +65,54 @@
 									<td>발주일자</td>
 									<td>납기요청일</td>
 								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
 							</tbody>
 						</table>
 					</form>

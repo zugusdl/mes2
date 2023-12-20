@@ -17,17 +17,43 @@
 </head>
 
 <body>
-	<!-- 검색창 -->
 	<div class="container">
-		<section class="section1">
+		<section class="section2">
 			<h1>발주 신청</h1>
 			<form method="post">
-				<button type="submit">신청</button>
-				<button type="button">취소</button>
-				<br> 납품 요청일: <input id="dtIp" type="date" name="startDate" min="2023-12-01" max="2024-12-31" /><br>
-				발주 품목
-				<button type="button" id="addBtn" onclick="openProductList()">품목 추가</button>
-				<br> 형상정보 이름 수량 가격
+				<span class="list-btn2">
+					<button type="button" class="btn btn-secondary" id="addBtn"
+						onclick="openProductList()">품목 추가</button>
+					<button type="submit" class="btn btn-secondary">신청</button>
+					<button type="button" class="btn btn-secondary">취소</button>
+				</span> <br> 납품 요청일: <input id="dtIp" type="date" name="startDate"
+					min="2023-12-01" max="2024-12-31" /><br> 발주 품목 <br>
+				<div class="list">
+					<div class="list-box">
+						<table class="table table-hover">
+							<thead>
+								<tr class="table-success">
+									<th></th>
+									<th scope="col">품목코드</th>
+									<th scope="col">품목명</th>
+									<th scope="col">단가</th>
+									<th scope="col">수량</th>
+									<th scope="col">합계</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td>품목코드</td>
+									<td>품목명</td>
+									<td>단가</td>
+									<td>수량</td>
+									<td>합계</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</form>
 		</section>
 	</div>
