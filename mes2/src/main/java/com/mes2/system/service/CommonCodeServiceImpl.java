@@ -1,4 +1,4 @@
-package com.mes2.service;
+package com.mes2.system.service;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.mes2.persistence.CommonCodeDAO;
 import com.mes2.system.domain.CommonCodeDTO;
+import com.mes2.system.persistence.CommonCodeDAO;
 
 
 

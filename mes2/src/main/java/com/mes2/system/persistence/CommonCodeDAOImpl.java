@@ -1,4 +1,4 @@
-package com.mes2.persistence;
+package com.mes2.system.persistence;
 
 import java.util.List;
 

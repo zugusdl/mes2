@@ -1,4 +1,4 @@
-package com.mes2.persistence;
+package com.mes2.system.persistence;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface MemberDAO {
 	
 	
 	//사원정보조회
-	public MemberDTO getMember(String emp_id);
+	public MemberDTO getMember(String user_id);
 	
 	
 	
@@ -34,6 +34,10 @@ public interface MemberDAO {
 	
 	//사원리스트출력하기
 	public List<MemberDTO> getMemberList(MemberDTO dto);
+	
+	
+	//아이디중복 확인
+	public String isDuplicateId(String user_id);
 	
 	
 	

@@ -1,4 +1,4 @@
-package com.mes2.service;
+package com.mes2.system.service;
 
 import java.util.List;
 
@@ -23,6 +23,10 @@ public interface MemberService {
 	
 	//사원리스트 출력
 	public List<MemberDTO> getMemberList(MemberDTO dto);
+	
+	//아이디중복 확인
+	public String isDuplicateId(String user_id);
+	
 	
 	
 }

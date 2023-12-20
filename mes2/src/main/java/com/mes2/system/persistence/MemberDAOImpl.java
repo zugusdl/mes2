@@ -1,4 +1,4 @@
-package com.mes2.persistence;
+package com.mes2.system.persistence;
 
 import java.util.List;
 
@@ -92,6 +92,17 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		
 		return resultDTO;
+	}
+
+
+
+	// 아이디중복 확인
+	@Override
+	public String isDuplicateId(String user_id) {
+		logger.debug("DAO - 아이디중복체크 메서드 출력");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+sqlSession.selectOne(NAMESPACE+".duplicateId",user_id).getClass()+"@@@@@@@@@@@@");
+
+		return sqlSession.selectOne(NAMESPACE+".duplicateId",user_id);
 	}
 	
 	

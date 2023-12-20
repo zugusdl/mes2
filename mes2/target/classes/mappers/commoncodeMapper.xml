@@ -9,13 +9,13 @@
 			
 			
 		<!-- 공통코드 리스트 출력 -->
-		<select id="getCommoncodeList" resultType="com.mes2.domain.CommonCodeDTO">
+		<select id="getCommoncodeList" resultType="com.mes2.system.domain.CommonCodeDTO">
 			select*from common_code order by code_index asc
 		</select>
 	
 		
 		<!-- 공통코드 조회  -->
-		<select id ="getCommoncode" resultType="com.mes2.domain.CommonCodeDTO">
+		<select id ="getCommoncode" resultType="com.mes2.system.domain.CommonCodeDTO">
 			select * from common_code
 			where code_index=#{code_index}
 		</select>

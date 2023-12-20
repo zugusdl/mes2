@@ -1,4 +1,4 @@
-package com.mes2.service;
+package com.mes2.system.service;
 
 import java.util.List;
 

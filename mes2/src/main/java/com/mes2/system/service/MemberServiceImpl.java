@@ -1,4 +1,4 @@
-package com.mes2.service;
+package com.mes2.system.service;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.mes2.persistence.MemberDAO;
 import com.mes2.system.domain.MemberDTO;
+import com.mes2.system.persistence.MemberDAO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -89,6 +89,15 @@ public class MemberServiceImpl implements MemberService {
 		
 		
 		return resultDTO;
+	}
+
+
+	//아이디 중복확인
+
+	@Override
+	public String isDuplicateId(String user_id) {
+		logger.debug("DAO 아이디중복확인 메서드호출");
+		return mdao.isDuplicateId(user_id);
 	}
 
 	
