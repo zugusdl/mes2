@@ -15,7 +15,7 @@ body{
   left: 0;
   height: 100%;
   width: 260px;
-  background: #11101d;
+  background: #577D71;
   z-index: 100;
   transition: all 0.5s ease;
 }
@@ -65,7 +65,7 @@ body{
   transition: all 0.4s ease;
 }
 .sidebar .nav-links li:hover{
-  background: #1d1b31;
+  background: #6e9888;
 }
 .sidebar .nav-links li .iocn-link{
   display: flex;
@@ -109,7 +109,7 @@ body{
 .sidebar .nav-links li .sub-menu{
   padding: 6px 6px 14px 80px;
   margin-top: -10px;
-  background: #1d1b31;
+  background: #6e9888;
   display: none;
 }
 .sidebar .nav-links li.showMenu .sub-menu{
@@ -170,7 +170,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #1d1b31;
+  background: #6E9888;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
@@ -190,7 +190,7 @@ body{
   object-fit: cover;
   border-radius: 16px;
   margin: 0 14px 0 12px;
-  background: #1d1b31;
+  background: #6e9888;
   transition: all 0.5s ease;
 }
 .sidebar.close .profile-details img{
@@ -213,7 +213,7 @@ body{
 }
 .home-section{
   position: relative;
-  background: #E4E9F7;
+  background: #a2c6a8;
   /*height: 100vh; 본문넓이 줄였음*/
   left: 260px;
   width: calc(100% - 260px);

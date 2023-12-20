@@ -1,6 +1,7 @@
 package com.mes2.platform.domain;
 
-import java.sql.Timestamp;
+
+import java.sql.Date;
 
 import lombok.Data;
 
@@ -13,5 +14,5 @@ public class mdpDTO {
 	private double cost; // 원가
 	private double price; // 단가(판매가)
 	private int production_status; // 생산유무
-	private Timestamp regdate; // 등록일자
+	private Date regdate; // 등록일자
 }

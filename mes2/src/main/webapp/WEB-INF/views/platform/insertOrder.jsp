@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,40 +26,17 @@
 				<button type="button">취소</button>
 				<br> 납품 요청일: <input id="dtIp" type="date" name="startDate" min="2023-12-01" max="2024-12-31" /><br>
 				발주 품목
-				<button type="button" id="addBtn" onclick="openProductList()">품목 추가</button><br>
-				형상정보 이름 수량 가격
+				<button type="button" id="addBtn" onclick="openProductList()">품목 추가</button>
+				<br> 형상정보 이름 수량 가격
 			</form>
 		</section>
 	</div>
 
-	<!-- 품목 선택 모달 -->
-	<div id="productList" class="modal">
-		<span onclick="closeProductList()">닫기</span>
-
-		<!-- 모달 내용 -->
-		<h3 id="h3">발주 품목 등록</h3>
-		<select name="searchType" id="searchType">
-			<option value="default">구분</option>
-			<option value="품목코드">품목코드</option>
-			<option value="품목명">품목명</option>
-		</select>
-		<input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
-		<button onclick="inqueryList()">조회</button>
-		<button onclick="registProduct()">등록</button>
-		<div id="plist">
-		<c:if test="${!empty mdpDTO }">
-		<c:forEach var="mdpDTO" items="${mdpDTO }">
-			품목명 <input type="text" value="${mdpDTO.name} " readonly>
-			수량 <input type="number" >
-		</c:forEach>
-		</c:if>
-		</div>
-	</div>
-	<!-- 품목 선택 모달 종료 -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous">
+		
 	</script>
 	<script src="/resources/js/platform/insertOrder.js"></script>
 </body>
