@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,14 +132,13 @@ public class ProductController {
 		
 		return "/product/main";
 	}
-	
 
 	
-	// http://localhost:8088/product/searchTest2
-	@GetMapping("/dateTest")
-	public String testDateGET() {
+	// http://localhost:8088/product/delete
+	@GetMapping("/delete")
+	public String deleteGET(@RequestParam("lot") List<String> lotList){
 				
-		return "/test/dateTest";
+		return null;
 	}
 	
 	@PostMapping("/dateTest")

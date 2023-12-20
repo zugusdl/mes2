@@ -96,9 +96,9 @@
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
-          <button type="button" class="btn btn-secondary">추가</button>
-          <button type="button" class="btn btn-secondary">삭제</button>
-          <button type="button" class="btn btn-secondary">수정</button>
+          <button type="button" class="btn btn-secondary" id="input-btn">추가</button>
+          <button type="button" class="btn btn-secondary" id="delete-btn">삭제</button>
+          <button type="button" class="btn btn-secondary" id="update-btn">수정</button>
         </div>
 
         <div class="list-box">
@@ -168,7 +168,14 @@
     	
     });
     
-    var formObj = document.getElementById('startDate')
+    var formObj = document.getElementById('main-form')
+    
+    $("#delete-btn").click(function(){
+    	formObj.attr("action","/product/delete")
+    	formObj.attr("method", "GET");
+    	formObj.sumbit();
+    });
+    
     
     
     </script>
