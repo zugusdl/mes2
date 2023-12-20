@@ -45,12 +45,12 @@ public class PlatformController {
 			session.setAttribute("company_code", mdbDTO.getCompany_code());
 			return "redirect:/platform/main";
 		}
-		
+
 		rttr.addFlashAttribute("result", "loginFail");
 		
 		return "redirect:/platform/login";
 	}
-	
+
 	@GetMapping(value="/orderList")
 	public String orderList(HttpSession session) {
 		String company_code = (String) session.getAttribute("company_code");
