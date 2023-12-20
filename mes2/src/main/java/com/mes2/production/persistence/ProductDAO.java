@@ -11,4 +11,6 @@ public interface ProductDAO {
 	public List<ProductDTO> selectBySearch(SearchParam searchParam);
 	
 	public ProductDTO selectByLot(String Lot);
+	
+	public int deleteByLot(List<String> lotList);
 }

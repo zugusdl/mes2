@@ -12,4 +12,6 @@ public interface ProductService {
 	public List<ProductDTO> selectBySearch(SearchParam searchParam);
 	
 	public ProductDTO selectByLot(String Lot);
+	
+	public int deleteByLot(List<String> lotList);
 }

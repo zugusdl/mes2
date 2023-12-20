@@ -31,6 +31,12 @@ public class ProductServiceImpl implements ProductService{
 		return productDAO.selectByLot(Lot);
 	}
 
+	@Override
+	public int deleteByLot(List<String> lotList) {
+		return productDAO.deleteByLot(lotList);
+	}
+
+	
 	
 	
 }

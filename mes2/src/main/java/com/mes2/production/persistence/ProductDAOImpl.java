@@ -39,8 +39,16 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 
 	@Override
-	public ProductDTO selectByLot(String Lot) {
-		return sqlSession.selectOne(NAMESPACE+".selectByLot", Lot);
+	public ProductDTO selectByLot(String lot) {
+		log.debug("ProductDAO : selectByLot 호출");
+		return sqlSession.selectOne(NAMESPACE+".selectByLot", lot);
+	}
+
+	
+	@Override
+	public int deleteByLot(List<String> lotList) {
+		log.debug("ProductDAO : deleteByLot 호출");
+		return sqlSession.delete(NAMESPACE+".deleteByLot", lotList);
 	}
 	
 	

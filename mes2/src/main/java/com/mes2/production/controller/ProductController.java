@@ -138,6 +138,7 @@ public class ProductController {
 	@GetMapping("/delete")
 	public String deleteGET(@RequestParam("lot") List<String> lotList){
 				
+		//log.debug(msg);
 		return null;
 	}
 	
