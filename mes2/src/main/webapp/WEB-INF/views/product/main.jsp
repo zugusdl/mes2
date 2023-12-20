@@ -102,7 +102,7 @@
         </div>
 
         <div class="list-box">
-          <form action="test" class="list-form">
+          <form id="main-form" class="list-form">
             <table class="table table-hover">
               <thead>
                 <tr class="table-success">
@@ -119,7 +119,7 @@
               <tbody>
               <c:forEach var="product" items="${productList}">
               	<tr>
-                  <td scope="row"><input type="checkbox" class="ck" /></td>
+                  <td scope="row"><input type="checkbox" class="ck" name="lot" value="${product.pd_lot}"/></td>
                   <td><a href="상세보기확인">${product.pd_lot}</a></td>
                   <td>${product.pd_mdp_code}</td>
                   <td>${product.pd_soi_id}</td>
@@ -163,6 +163,14 @@
         endDateInput.valueAsDate = currentDate;
       }
     }; */
+    
+    $(document).ready(function(){
+    	
+    });
+    
+    var formObj = document.getElementById('startDate')
+    
+    
     </script>
   </body>
 </html>

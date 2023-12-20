@@ -41,17 +41,14 @@
          </where>
 
 	</select>
-<!-- 	
-	<delete id="deleteProduct" parameterType="java.util.list">
+	
+	<delete id="deleteProduct" parameterType="java.util.List">
 		delete from product
 		<where>
-			<if test="list.size()>=1" >
-				<foreach collection="list" item="productList" separator=",">
-					pd_lot = #{pd_lot} , pd_mdp_code = #{pd_mdp_code}
-				</foreach>
-			</if>
+			<foreach collection="list" item="lot" separator=",">
+				pd_lot = #{lot}
+			</foreach>
 		</where>
-	
 	</delete>
- -->
+
 </mapper>
