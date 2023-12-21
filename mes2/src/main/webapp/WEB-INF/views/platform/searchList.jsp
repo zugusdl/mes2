@@ -51,12 +51,13 @@
 								<tbody>
 									<c:forEach var="mdpDTO" items="${mdpDTO }">
 										<tr>
-											<td scope="row"><input type="radio"
-												name="product_code" value="${mdpDTO.product_code}"></td>
+											<td scope="row"><input type="radio" name="product_code" value="${mdpDTO.product_code}"></td>
 											<td>${mdpDTO.product_code}</td>
 											<td><img alt="" src=""></td>
 											<td>${mdpDTO.name}</td>
 											<td><fmt:formatNumber value="${mdpDTO.price}" />원</td>
+<%-- 											<td><input type="hidden" name="name" value="${mdpDTO.name}">${mdpDTO.name}</td> --%>
+<%-- 											<td><input type="hidden" name="price" value="${mdpDTO.price}"><fmt:formatNumber value="${mdpDTO.price}" />원</td> --%>
 										</tr>
 									</c:forEach>
 								</tbody>

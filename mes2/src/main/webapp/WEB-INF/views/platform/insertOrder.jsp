@@ -30,26 +30,19 @@
 					min="2023-12-01" max="2024-12-31" /><br> 발주 품목 <br>
 				<div class="list">
 					<div class="list-box">
-						<table class="table table-hover" id="insertProductList">
+						<table class="table table-hover" >
 							<thead>
 								<tr class="table-success">
-									<th></th>
 									<th scope="col">품목코드</th>
 									<th scope="col">품목명</th>
 									<th scope="col">단가</th>
 									<th scope="col">수량</th>
 									<th scope="col">합계</th>
+									<th></th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td>품목코드</td>
-									<td>품목명</td>
-									<td>단가</td>
-									<td>수량</td>
-									<td>합계</td>
-								</tr>
+							<tbody id="insertProductList">
+								
 							</tbody>
 						</table>
 					</div>
