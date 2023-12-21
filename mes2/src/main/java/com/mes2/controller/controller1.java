@@ -301,5 +301,6 @@ public class controller1 {
 		public void sidehead(){
 			logger.debug("sidehead() 호출!");
 		}
+		
 
 }
