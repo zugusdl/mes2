@@ -32,18 +32,12 @@ public class PlatformRestController {
 	@Inject
 	private PlatformService pService;
 	
-//	@RequestMapping(value="/inqueryProduct", method=RequestMethod.GET, produces = "application/json; charset=utf8")
-//	public List<MdpDTO> inqueryProduct(@RequestParam("searchType") String searchType, @RequestParam("search") String search) throws Exception {
-//		logger.debug("inqueryProduct() 호출");
-//		List<MdpDTO> mdpDTO = pService.inqueryProduct(searchType, search);
-//		return mdpDTO;
-//	}
-	
-	@GetMapping(value ="registProduct")
+	@PostMapping(value ="/registProduct")
 	public MdpDTO registProduct(@RequestParam("product_code") String product_code) throws Exception {
 		logger.debug("registProduct() 호출");
 		logger.debug("product_code" + product_code);
 		MdpDTO mdpDTO = pService.registProduct(product_code);
+		logger.debug("@@@@@mdpDTO@@@@@" +  mdpDTO);
 		return mdpDTO;
 	}
 	

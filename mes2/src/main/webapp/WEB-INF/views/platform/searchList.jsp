@@ -13,7 +13,8 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/searchList.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/platform/searchList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -34,10 +35,9 @@
 			<!-- 표 -->
 			<div class="list">
 				<div class="list-box">
-					<c:if test="${!empty mdpDTO }">
-						<form action="/restPlatform/registProduct" class="list-form">
-						<!-- 폼태그로 주소 매핑해서 데이터 담아서 orderList에 전송? 전송되면 제이쿼리로 표에 객체 정보 추가하기..?
-						아니면 ajax로 데이터 담아서 해당 데이터를 orderList에 html로 추가? -->
+					<form class="list-form">
+						<c:if test="${!empty mdpDTO }">
+							<!-- ajax로 데이터 담아서 해당 데이터를 orderList에 html로 추가? -->
 							<table class="table table-hover">
 								<thead>
 									<tr class="table-success">
@@ -51,7 +51,8 @@
 								<tbody>
 									<c:forEach var="mdpDTO" items="${mdpDTO }">
 										<tr>
-											<td scope="row"><input type="radio" name="product_code" value="${mdpDTO.product_code}"></td>
+											<td scope="row"><input type="radio"
+												name="product_code" value="${mdpDTO.product_code}"></td>
 											<td>${mdpDTO.product_code}</td>
 											<td><img alt="" src=""></td>
 											<td>${mdpDTO.name}</td>
@@ -60,10 +61,11 @@
 									</c:forEach>
 								</tbody>
 							</table>
-							<button class="btn btn-secondary regist" onclick="registProduct()">등록</button>
+							<button class="btn btn-secondary regist"
+								onclick="registProduct();">등록</button>
 							<button class="btn btn-secondary regist">취소</button>
-						</form>
-					</c:if>
+						</c:if>
+					</form>
 				</div>
 			</div>
 		</section>
@@ -75,6 +77,7 @@
 		crossorigin="anonymous">
 		
 	</script>
-	<script src="${pageContext.request.contextPath}/resources/js/platform/searchList.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/platform/searchList.js"></script>
 </body>
 </html>

@@ -30,7 +30,7 @@
 					min="2023-12-01" max="2024-12-31" /><br> 발주 품목 <br>
 				<div class="list">
 					<div class="list-box">
-						<table class="table table-hover">
+						<table class="table table-hover" id="insertProductList">
 							<thead>
 								<tr class="table-success">
 									<th></th>

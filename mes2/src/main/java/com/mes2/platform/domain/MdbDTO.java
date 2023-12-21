@@ -13,5 +13,5 @@ public class MdbDTO {
 	private String call; // 전화번호
 	private String fax; // 팩스번호
 	private String email; // 이메일
-	private int contract_status; // 거래유무
+	private boolean contract_status; // 거래유무
 }
