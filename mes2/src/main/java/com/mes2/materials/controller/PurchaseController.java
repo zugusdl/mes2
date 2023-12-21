@@ -19,7 +19,7 @@ public class PurchaseController {
 	@Inject
 	private PurchaseService pService;
 
-	// http://localhost:8080/materials/purchase
+	// http://localhost:8088/materials/purchase
 	@GetMapping(value = "/purchase")
 	public String purchaseGET() throws Exception {
 		logger.debug("/materials/purchase -> purchaseGET 호출 ");

@@ -20,10 +20,10 @@
 </head>
 
 <body>
-	<script src="/resources/js/materials/inout/btn.js"></script>
-	<script src="/resources/js/materials/inout/details.js"></script>
-	<script src="/resources/js/materials/inout/list.js"></script>
-	<script src="/resources/js/materials/inout/search.js"></script>
+	<script src="/resources/js/materials/in/btn.js"></script>
+	<script src="/resources/js/materials/in/details.js"></script>
+	<script src="/resources/js/materials/in/list.js"></script>
+	<script src="/resources/js/materials/in/search.js"></script>
 
 	<div class="container">
 		<section class="section1">

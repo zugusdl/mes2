@@ -1,5 +1,5 @@
 package com.mes2.materials.service;
 
-public interface InOutService {
+public interface OutService {
 
 }

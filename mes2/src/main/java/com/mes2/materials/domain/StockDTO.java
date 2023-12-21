@@ -5,14 +5,12 @@ import lombok.Data;
 @Data
 public class StockDTO {
 
-	private int stock_index;
-	private String pd_lot;
-	private String product_code;
-	private String name;
-	private int quantity;
-	private String status;
-	private String category;
-	private String out_code;
-	private String in_code;
-	private String warehouse_code;
+	private String pd_lot; //로트번호 
+	private String product_code; //품목코드 **
+	private String name; //품목명 **
+	private int quantity; //품목수량 
+	private String category; //자재유형 **
+	private String out_code; //출고코드 
+	private String in_code; //입고코드
+	private String warehouse_code; //창고코드
 }

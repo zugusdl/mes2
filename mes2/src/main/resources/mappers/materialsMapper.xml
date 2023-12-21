@@ -5,16 +5,8 @@
   
   <mapper namespace="com.mes2.mapper.MaterialsMapper">
   
-  <select id ="" resultType=""> 
-  </select>
-  
-  <select id ="" resultType=""> 
-  </select>
-  
-  <select id ="" resultType=""> 
-  </select>
-  
-  <select id ="" resultType=""> 
-  </select>
-  
+  <select id="getList" resultType="com.mes2.materials.domain.InDTO">
+	select * from in_warehouse;
+ 	</select>
+	
   </mapper>
