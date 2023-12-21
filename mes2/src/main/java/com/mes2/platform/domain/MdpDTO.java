@@ -6,7 +6,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class mdpDTO {
+public class MdpDTO {
 	private String product_code; // 품목코드
 	private String name; // 품목명
 	private String category; // 카테고리(완제품/부자재/원재료)

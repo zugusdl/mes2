@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class soiDTO {
+public class SoiDTO {
 	private String soi_order_code;
 	private String soi_mdb_code;
 	private String soi_customer_name;

@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.mes2.platform.domain.mdbDTO;
-import com.mes2.platform.domain.mdpDTO;
+import com.mes2.platform.domain.MdbDTO;
+import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.persistence.PlatformDAO;
 
 @Service
@@ -21,15 +21,21 @@ public class PlatformServiceImpl implements PlatformService {
 	private PlatformDAO pdao;
 	
 	@Override
-	public mdbDTO customerLogin(mdbDTO mdto) throws Exception {
-		logger.debug("customerLogin() 호출");
+	public MdbDTO customerLogin(MdbDTO mdto) throws Exception {
+		logger.debug("S: customerLogin() 호출");
 		return pdao.customerLogin(mdto);
 	}
 
 	@Override
-	public List<mdpDTO> inqueryProduct(String searchType, String search) throws Exception {
-		logger.debug("inqueryProduct() 호출");
+	public List<MdpDTO> inqueryProduct(String searchType, String search) throws Exception {
+		logger.debug("S: inqueryProduct() 호출");
 		return pdao.inqueryProduct(searchType, search);
+	}
+
+	@Override
+	public MdpDTO registProduct(String product_code) throws Exception {
+		logger.debug("S: registProduct() 호출");
+		return pdao.registProduct(product_code);
 	}
 	
 }

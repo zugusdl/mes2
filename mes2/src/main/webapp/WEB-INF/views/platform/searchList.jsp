@@ -35,7 +35,7 @@
 			<div class="list">
 				<div class="list-box">
 					<c:if test="${!empty mdpDTO }">
-						<form action="#" class="list-form">
+						<form action="/restPlatform/registProduct" class="list-form">
 						<!-- 폼태그로 주소 매핑해서 데이터 담아서 orderList에 전송? 전송되면 제이쿼리로 표에 객체 정보 추가하기..?
 						아니면 ajax로 데이터 담아서 해당 데이터를 orderList에 html로 추가? -->
 							<table class="table table-hover">
@@ -51,8 +51,7 @@
 								<tbody>
 									<c:forEach var="mdpDTO" items="${mdpDTO }">
 										<tr>
-											<td scope="row"><input type="radio" name="product_code"
-												value="${mdpDTO.product_code} "></td>
+											<td scope="row"><input type="radio" name="product_code" value="${mdpDTO.product_code}"></td>
 											<td>${mdpDTO.product_code}</td>
 											<td><img alt="" src=""></td>
 											<td>${mdpDTO.name}</td>
@@ -61,7 +60,7 @@
 									</c:forEach>
 								</tbody>
 							</table>
-							<button class="btn btn-secondary regist">등록</button>
+							<button class="btn btn-secondary regist" onclick="registProduct()">등록</button>
 							<button class="btn btn-secondary regist">취소</button>
 						</form>
 					</c:if>
