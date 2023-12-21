@@ -12,10 +12,13 @@
 	
 	<form action="" method="post">
 		<table border ="1">
-		<tr>
-			<th>프사</th>
-			<td>프사창</td>
-		</tr>
+	 <tr>
+		<th>프사</th>
+		 <form action ="" method="POST" enctype="multipart/form-data">
+			<td><input type="file" name="user_img"></td>
+		 </form>
+	 </tr>
+	 
 		<tr>
 			<th>사원번호</th>
 			<td>${memberDTO.user_num}</td>

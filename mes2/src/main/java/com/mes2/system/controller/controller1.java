@@ -13,11 +13,14 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -299,11 +302,11 @@ public class controller1 {
 		logger.debug("/login/commoncodeupdate -> commoncodeUpdateGET()");
 		logger.debug("/login/update 호출!");
 
-		// 아이디 정보저장 (세션영역)
+		// 코드정보 저장
 		int code_index = Integer.parseInt(request.getParameter("code_index"));
 
-		// 서비스 -> 아이디에 해당하는 회원정보 조회
-		// 연결된 뷰페이지(/members/adminupdate.jsp)에 정보전달
+		// 서비스 -> 코드인덱스에 해당하는 정보 조회
+		// 연결된 뷰페이지에 정보전달
 		model.addAttribute(cService.CommoncodeInfo(code_index));
 
 		logger.debug("세션 값 : " + code_index);
@@ -317,16 +320,16 @@ public class controller1 {
 	@RequestMapping(value = "/commoncodeupdate", method = RequestMethod.POST)
 	public String commonCodeUpdatePOST(CommonCodeDTO dto, HttpServletRequest request, Model model) {
 		logger.debug("/login/commoncodeupdate -> commoncodeUpdatePOST()");
-		// 한글처리(인코딩 - 필터에서 처리함!)
+
 		// 전달정보 저장(폼태그 - 파라미터)
 		logger.debug("수정할 정보 :" + dto);
 
 		logger.debug("넘어온 url : " + request.getPathInfo());
 
-		// 서비스 - 회원정보 수정하는 동작
+		// 서비스 - 공통코드 수정하는 동작
 		cService.commoncodeUpdate(dto);
 
-		// 메인페이지로 이동
+		// 코드리스트로 이동
 		return "redirect:/system/commoncodelist";
 	}
 
@@ -343,7 +346,6 @@ public class controller1 {
 	public String commonCodeJoinPOST(CommonCodeDTO dto) {
 		logger.debug("memberJoinPOST() 호출");
 
-		// 한글처리(인코딩 설정) => 필터사용
 
 		// 전달정보 저장
 		logger.debug("dto :" + dto);
@@ -365,11 +367,11 @@ public class controller1 {
 		logger.debug("/login/commoncodedelete -> commoncodeDeleteGET()");
 		logger.debug("/login/delete 호출!");
 
-		// 아이디 정보저장 (세션영역)
+		// 코드정보저장 (파라미터로)
 		int code_index = Integer.parseInt(request.getParameter("code_index"));
 
-		// 서비스 -> 아이디에 해당하는 회원정보 조회
-		// 연결된 뷰페이지(/members/adminupdate.jsp)에 정보전달
+		// 서비스 -> index 에 해당하는 코드를조회
+		// 연결된 뷰페이지에 정보전달
 		model.addAttribute(cService.CommoncodeInfo(code_index));
 
 		logger.debug("세션 값 : " + code_index);
@@ -382,8 +384,8 @@ public class controller1 {
 
 	@RequestMapping(value = "/commoncodedelete", method = RequestMethod.POST)
 	public String commonCodeDeletePOST(CommonCodeDTO dto, HttpServletRequest request, Model model) {
-		logger.debug("/login/commoncodeupdate -> commoncodeUpdatePOST()");
-		// 한글처리(인코딩 - 필터에서 처리함!)
+		logger.debug("/system/commoncodeupdate -> commoncodeUpdatePOST()");
+
 		// 전달정보 저장(폼태그 - 파라미터)
 		logger.debug("수정할 정보 :" + dto);
 
@@ -396,33 +398,56 @@ public class controller1 {
 		return "redirect:/system/commoncodelist";
 	}
 
-	// 아이디중복체크 GET
-	@ResponseBody
-	@RequestMapping(value = "/duplicateid", method = RequestMethod.GET)
-	public boolean duplicateId(@RequestParam("user_id") String test, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	
+	// 아이디 중복체크 get
+	
+	  @GetMapping("/checkID")
+	  @ResponseBody
+	    public String checkIDGet(@RequestParam("user_id") String user_id) {
+	        boolean result = mService.checkID(user_id);
 
-		// String user_id = request.getParameter("user_id");
+	        if (result) {
+	            return "duplicate";
+	        } else {
+	            return "not-duplicate";
+	        }
+	    }
 
-		logger.debug(" ajax 호출");
-		// logger.debug("넘겨받은 user_id : " + user_id);
-		logger.debug("넘겨받은 test : " + test);
+	 // 아이디 중복체크 post
 
-		
-		  boolean result;
-		  
-		  if(mService.isDuplicateId(test).isEmpty()) {
-			  result= false;
-		  }else {
-			  result= true;
-		  }
-		 
-		 
-		 
-		return result;
+	  
+	    @PostMapping("/checkID")
+	    public void checkIDPost(@RequestParam("user_id") String user_id, HttpServletResponse response) throws IOException {
+	        boolean result = mService.checkID(user_id);
 
-	}
+	        if (result) {
+	            response.getWriter().write("duplicate");
+	        } else {
+	            response.getWriter().write("not-duplicate");
+	        }
+	    }
+	
+	
+	
+	 // http://localhost:8088/system/sidehead
+	
+	    // 테스트용 사이드헤드.jsp
+		@RequestMapping(value = "/sidehead", method = RequestMethod.GET)
+		public String sideGET() {
+			logger.debug(" /main/login 호출 -> mainGET() 실행");
 
+			logger.debug("연결된 뷰페이지(/views/login/main.jsp) 이동 ");
+			return "/system/sidehead";
+		}
+	    
+	    
+	    
+	
+	
+	
+	
+	
+	
 	// http://localhost:8088/system/login
 
 }

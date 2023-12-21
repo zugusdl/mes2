@@ -22,5 +22,6 @@ public class MemberDTO {
 	private Timestamp user_insertdate;
 	private Timestamp user_updatedate;
 	private String user_auth;
+	private int count;
 
 }

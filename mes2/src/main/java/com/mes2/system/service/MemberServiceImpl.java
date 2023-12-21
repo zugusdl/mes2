@@ -92,16 +92,26 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+
 	//아이디 중복확인
 
 	@Override
-	public String isDuplicateId(String user_id) {
-		logger.debug("DAO 아이디중복확인 메서드호출");
-		return mdao.isDuplicateId(user_id);
+	public boolean checkID(String user_id) {
+		logger.debug("S : 아이디중복확인 메서드 호출");
+		return mdao.checkID(user_id);
 	}
 
+
+
+	
+	
+	
+	
 	
 
+
+
+	
 	
 	
 	

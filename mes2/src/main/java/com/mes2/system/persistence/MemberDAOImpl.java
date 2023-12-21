@@ -38,7 +38,7 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		return resultDTO;
 	}
-
+	
 	
 	
 	
@@ -97,13 +97,15 @@ public class MemberDAOImpl implements MemberDAO {
 
 
 	// 아이디중복 확인
-	@Override
-	public String isDuplicateId(String user_id) {
-		logger.debug("DAO - 아이디중복체크 메서드 출력");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+sqlSession.selectOne(NAMESPACE+".duplicateId",user_id).getClass()+"@@@@@@@@@@@@");
 
-		return sqlSession.selectOne(NAMESPACE+".duplicateId",user_id);
+	@Override
+	public boolean checkID(String user_id) {
+		logger.debug("DAO - checkID 호출");
+
+		return sqlSession.selectOne(NAMESPACE+".checkID",user_id);
 	}
+
+
 	
 	
 	

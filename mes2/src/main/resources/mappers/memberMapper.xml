@@ -54,9 +54,9 @@
   	
   
   	<!-- 아이디중복체크  -->
-  	<select id="duplicateId" resultType="com.mes2.system.domain.MemberDTO">
-  		select user_id from employees where user_id=#{user_id}
-  	</select>
+ 	<select id="checkID" resultType="boolean">
+   		 SELECT COUNT(*) > 0 FROM employees WHERE user_id=#{user_id}
+ 	</select>
   
   
   

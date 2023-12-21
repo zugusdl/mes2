@@ -37,7 +37,7 @@ public interface MemberDAO {
 	
 	
 	//아이디중복 확인
-	public String isDuplicateId(String user_id);
+	public boolean checkID(String user_id);
 	
 	
 	

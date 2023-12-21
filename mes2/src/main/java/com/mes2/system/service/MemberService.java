@@ -25,8 +25,7 @@ public interface MemberService {
 	public List<MemberDTO> getMemberList(MemberDTO dto);
 	
 	//아이디중복 확인
-	public String isDuplicateId(String user_id);
-	
+	public boolean checkID(String user_id);
 	
 	
 }
