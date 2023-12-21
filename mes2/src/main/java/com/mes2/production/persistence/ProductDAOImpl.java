@@ -51,7 +51,7 @@ public class ProductDAOImpl implements ProductDAO{
 		return sqlSession.delete(NAMESPACE+".deleteByLot", lotList);
 	}
 	
-	
+	//
 	
 	
 	

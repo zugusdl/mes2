@@ -14,4 +14,5 @@ public interface InstructionsDAO {
 	public InstructionsDTO selectByCode(String code);
 	
 	public List<InstructionsDTO> selectByParam(InstructionsSearchParam param);
+	//
 }

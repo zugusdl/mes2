@@ -14,4 +14,5 @@ public interface ProductService {
 	public ProductDTO selectByLot(String Lot);
 	
 	public int deleteByLot(List<String> lotList);
+	//
 }

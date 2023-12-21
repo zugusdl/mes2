@@ -13,4 +13,5 @@ public interface ProductDAO {
 	public ProductDTO selectByLot(String Lot);
 	
 	public int deleteByLot(List<String> lotList);
+	//
 }

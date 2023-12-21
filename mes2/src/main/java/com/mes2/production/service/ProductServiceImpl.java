@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService{
 		return productDAO.deleteByLot(lotList);
 	}
 
-	
+	//
 	
 	
 }

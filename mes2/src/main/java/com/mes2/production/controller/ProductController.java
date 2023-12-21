@@ -82,7 +82,7 @@ public class ProductController {
 		
 		productSearchParam.setName(name);
 		
-		
+		//
 		
 		
 		log.debug("입력받은 시작날짜 : "+ productSearchParam.getStartDate());

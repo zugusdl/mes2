@@ -29,5 +29,5 @@ public class ProductSearchParam {
 		this.endDate = endDate;
 	}
 	
-	
+	//
 }

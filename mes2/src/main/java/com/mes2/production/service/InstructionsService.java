@@ -15,5 +15,6 @@ public interface InstructionsService {
 	public InstructionsDTO findByCode(String code);
 	
 	public InstructionsState transType(String enumType);
+	//
 	
 }
