@@ -5,7 +5,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class SearchParam {
+public class ProductSearchParam {
 	private String name;
 	private Date startDate;
 	private Date endDate;

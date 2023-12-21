@@ -32,6 +32,28 @@
 		where code = #{code}
 	</update>
 	
+	<select id="selectBySearch">
+		select * 
+		from instructions 
+		<where>
+            <if test="code !=null and !code.equals('')">
+                and code like concat('%',#{code},'%')
+            </if>
+            
+            <if test="state !=null and !state.equals('')">
+                and state_code like concat('%',#{state},'%')
+            </if>
+           
+            <if test="startDate != null  and endDate != null ">
+                AND pd_date BETWEEN #{startDate} AND #{endDate}
+            </if>	
+            
+            <if test="startDate != null  and endDate != null ">
+                AND pd_date BETWEEN #{startDate} AND #{endDate}
+            </if>	
+
+         </where>
+	</select>
 
 
 </mapper>

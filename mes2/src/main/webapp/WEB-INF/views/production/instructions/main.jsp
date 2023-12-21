@@ -63,14 +63,12 @@
 
     <section class="section1">
       <form action="/product/search" class="search" method="GET">
-        <select id="boundary">
-          <option value="">-- 검색선택 --</option>
-          <option value="ship">수주번호</option>
-          <option value="order">주문번호</option>
-          <option value="order">거래항목</option>
-          <option value="order">수주처</option>
-          <option value="order">수주일</option>
-          <option value="order">납기요청일</option>
+        <select id="boundary" name="state">
+          <option value="all">-- 검색선택 --</option>
+          <option value="REQUESTED">요청</option>
+          <option value="WAITING">생산대기</option>
+          <option value="PROGRESSING">생산중</option>
+          <option value="COMPLETE">생산완료</option>
         </select>
 
         <div>
@@ -96,7 +94,7 @@
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
-          <button type="button" class="btn btn-secondary" id="input-btn">추가</button>
+          <button type="button" class="btn btn-secondary" id="input-btn" onclick="openInput();">추가</button>
           <button type="button" class="btn btn-secondary" id="delete-btn">삭제</button>
           <button type="button" class="btn btn-secondary" id="update-btn">수정</button>
         </div>
@@ -107,25 +105,29 @@
               <thead>
                 <tr class="table-success">
                   <th></th>
-                  <th scope="col">LOT No.</th>
-                  <th scope="col">생산품</th>
+                  <th scope="col">작업코드</th>
+                  <th scope="col">생산라인</th>
+                  <th scope="col">제품코드</th>
                   <th scope="col">수주번호</th>
-                  <th scope="col">수량</th>
-                  <th scope="col">사용기한</th>
-                  <th scope="col">생산날짜</th>
+                  <th scope="col">시작날짜</th>
+                  <th scope="col">종료날짜</th>
+                  <th scope="col">양품수량</th>
+                  <th scope="col">불량품 수량</th>
               
                 </tr>
               </thead>
               <tbody>
-              <c:forEach var="product" items="${productList}">
+              <c:forEach var="dto" items="${instructionsDTOs}">
               	<tr>
-                  <td scope="row"><input type="checkbox" class="ck" name="lot" value="${product.pd_lot}"/></td>
-                  <td><a href="상세보기확인">${product.pd_lot}</a></td>
-                  <td>${product.pd_mdp_code}</td>
-                  <td>${product.pd_soi_id}</td>
-                  <td>${product.pd_quantity}</td>
-                  <td>${product.pd_period}</td>
-                  <td>${product.pd_date}</td>
+                  <td scope="row"><input type="checkbox" class="ck" name="code" >${product.pd_lot}"/></td>
+                  <td><a href="상세보기확인">${dto.code}</a></td>
+                  <td>${dto.line}</td>
+                  <td>${dto.mdpCode}</td>
+                  <td>${dto.soiCode}</td>
+                  <td>${dto.startTime}</td>
+                  <td>${dto.endTime}</td>
+                  <td>${dto.quantity}</td>
+                  <td>${dto.fault}</td>
                 </tr>
               </c:forEach>
               </tbody>
@@ -141,28 +143,7 @@
     ></script>
     
     <script>
-/*     document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);
-    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10); */
-/* 
-    // 페이지 로드 시 실행되는 함수
-    window.onload = function() {
-      // 현재 날짜를 얻기
-      var currentDate = new Date();
-
-      // startDate 값이 없을 때, 초기값 설정: 현재 날짜보다 1주일 전
-      var startDateInput = document.getElementById('startDate');
-      if (!startDateInput.value) {
-        var oneWeekAgo = new Date(currentDate);
-        oneWeekAgo.setDate(currentDate.getDate() - 7);
-        startDateInput.valueAsDate = oneWeekAgo;
-      }
-
-      // endDate 값이 없을 때, 초기값 설정: 현재 날짜
-      var endDateInput = document.getElementById('endDate');
-      if (!endDateInput.value) {
-        endDateInput.valueAsDate = currentDate;
-      }
-    }; */
+    
     
     $(document).ready(function(){
     	
@@ -176,6 +157,9 @@
     	formObj.sumbit();
     });
     
+    function openInput(){
+        window.open("/product","save","width=800px, height=640px")
+    }
     
     
     </script>

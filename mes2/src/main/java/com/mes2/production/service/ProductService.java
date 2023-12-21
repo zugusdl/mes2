@@ -3,13 +3,13 @@ package com.mes2.production.service;
 import java.util.List;
 
 import com.mes2.production.domain.ProductDTO;
-import com.mes2.production.etc.SearchParam;
+import com.mes2.production.etc.ProductSearchParam;
 
 public interface ProductService {
 
 	public String getTime();
 
-	public List<ProductDTO> selectBySearch(SearchParam searchParam);
+	public List<ProductDTO> selectBySearch(ProductSearchParam productSearchParam);
 	
 	public ProductDTO selectByLot(String Lot);
 	

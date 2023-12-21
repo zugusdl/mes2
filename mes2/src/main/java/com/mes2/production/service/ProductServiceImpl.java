@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.mes2.production.domain.ProductDTO;
-import com.mes2.production.etc.SearchParam;
+import com.mes2.production.etc.ProductSearchParam;
 import com.mes2.production.persistence.ProductDAO;
 
 @Service
@@ -22,8 +22,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<ProductDTO> selectBySearch(SearchParam searchParam) {
-		return productDAO.selectBySearch(searchParam);
+	public List<ProductDTO> selectBySearch(ProductSearchParam productSearchParam) {
+		return productDAO.selectBySearch(productSearchParam);
 	}
 
 	@Override

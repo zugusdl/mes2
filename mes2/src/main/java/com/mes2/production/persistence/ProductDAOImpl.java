@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mes2.production.domain.ProductDTO;
-import com.mes2.production.etc.SearchParam;
+import com.mes2.production.etc.ProductSearchParam;
 
 @Repository
 public class ProductDAOImpl implements ProductDAO{
@@ -28,14 +28,14 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 
 	@Override
-	public List<ProductDTO> selectBySearch(SearchParam searchParam){
+	public List<ProductDTO> selectBySearch(ProductSearchParam productSearchParam){
 		
 		
-		log.debug("ProductDAO : 입력받은 서치 시작 날짜 : " + searchParam.getStartDate());
-		log.debug("ProductDAO : 입력받은 서치 마지막 날짜 : " + searchParam.getEndDate());
-		log.debug("ProductDAO : 입력받은 서치 mdp_code : " + searchParam.getName());
+		log.debug("ProductDAO : 입력받은 서치 시작 날짜 : " + productSearchParam.getStartDate());
+		log.debug("ProductDAO : 입력받은 서치 마지막 날짜 : " + productSearchParam.getEndDate());
+		log.debug("ProductDAO : 입력받은 서치 mdp_code : " + productSearchParam.getName());
 		
-		return sqlSession.selectList(NAMESPACE+".selectBySearch", searchParam);
+		return sqlSession.selectList(NAMESPACE+".selectBySearch", productSearchParam);
 	}
 
 	@Override
