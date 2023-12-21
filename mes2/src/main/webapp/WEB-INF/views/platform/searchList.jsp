@@ -13,7 +13,7 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-<link rel="stylesheet" href="/resources/css/platform/searchList.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/searchList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -76,6 +76,6 @@
 		crossorigin="anonymous">
 		
 	</script>
-	<script src="/resources/js/platform/searchList.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/platform/searchList.js"></script>
 </body>
 </html>
