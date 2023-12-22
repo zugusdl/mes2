@@ -19,11 +19,6 @@ public interface PlatformService {
 	// 품목 하나 선택
 	public MdpDTO registProduct(String product_code) throws Exception;
 	
-	/*
-	 * // 주문 번호 생성 public String makeOrderCode(String date, String company_code)
-	 * throws Exception;
-	 */
-	
-	// 주문 넣기
-	public void insertOrder(SoiDTO soiDTO, SopDTO sopDTO, HttpSession session) throws Exception;
+	// 발주 신청
+	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList, HttpSession session) throws Exception;
 }

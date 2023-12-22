@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
+import com.mes2.platform.domain.SoiDTO;
+import com.mes2.platform.domain.SopDTO;
 
 @Repository
 public class PlatformDAOImpl implements PlatformDAO {
@@ -50,11 +52,20 @@ public class PlatformDAOImpl implements PlatformDAO {
 		return sqlSession.selectOne(NAMESPACE + ".selectProduct", product_code);
 	}
 
+	// 발주 신청
+	@Override
+	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList) {
+		logger.debug("DAO: insertOrder() 호출");
+		sqlSession.insert(NAMESPACE + ".insertOrder", soiDTO);
+		sqlSession.insert(NAMESPACE + ".insertOrderProduct", sopList);
+	}
+	
 	// 금일 주문건 개수
 	@Override
 	public int countTodayOrder(String todayDate) throws Exception {
 		logger.debug("DAO: countTodayOrder() 호출");
 		return sqlSession.selectOne(NAMESPACE + ".countTodayOrder", todayDate);
 	}
+
 
 }

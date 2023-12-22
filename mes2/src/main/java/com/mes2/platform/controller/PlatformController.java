@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,10 +100,11 @@ public class PlatformController {
 	
 	// 발주(주문) 추가 페이지
 	@PostMapping(value="/insertOrder")
-	public String insertOrderPOST(SoiDTO soiDTO, SopDTO sopDTO, HttpSession session) throws Exception {
+	public String insertOrderPOST(SoiDTO soiDTO, @RequestBody List<SopDTO> sopList, HttpSession session) throws Exception {
 		logger.debug("insertOrderPOST() 호출");
-		pService.insertOrder(soiDTO, sopDTO, session);
-		return "";
+		logger.debug("@@@@sopList" + sopList.toString());
+		pService.insertOrder(soiDTO, sopList, session);
+		return "redirect:/platform/orderList";
 	}
 	
 	// 품목 추가 페이지에서 품목 찾기

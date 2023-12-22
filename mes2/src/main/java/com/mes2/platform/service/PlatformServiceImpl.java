@@ -46,14 +46,19 @@ public class PlatformServiceImpl implements PlatformService {
 		return pdao.registProduct(product_code);
 	}
 
+	// 발주 신청
 	@Override
-	public void insertOrder(SoiDTO soiDTO, SopDTO sopDTO, HttpSession session) throws Exception {
+	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList, HttpSession session) throws Exception {
 		String order_code = makeOrderCode(session);
 		soiDTO.setOrder_code(order_code);
-		sopDTO.setOrder_code(order_code);
+		soiDTO.setCompany_code((String)session.getAttribute("company_code"));
+		for(SopDTO sopDTO : sopList) {
+			sopDTO.setOrder_code(order_code);
+		}
+		pdao.insertOrder(soiDTO, sopList);
 	}
 	
-	// 주문 번호 생성
+	// 주문코드 생성
 	private String makeOrderCode(HttpSession session) throws Exception {
 		// 날짜 계산
 		LocalDate today = LocalDate.now();
@@ -61,10 +66,9 @@ public class PlatformServiceImpl implements PlatformService {
 		String dtfToday = today.format(dtf);
 		
 		// 인덱스 계산(디비에 오늘날짜 포함된 행이 있는지?)
-		pdao.countTodayOrder(dtfToday);
+		int index = pdao.countTodayOrder(dtfToday) + 1;
 		
-		
-		String order_code = "OD" + session.getAttribute("company_code") + dtfToday + "인덱스";
+		String order_code = "OD-" + dtfToday + "-" + session.getAttribute("company_code") + "-" + index;
 		return order_code;
 	}
 

@@ -21,13 +21,13 @@
 	<div class="container">
 		<section class="section2">
 			<h1>발주 신청</h1>
-			<form method="post">
+			<form action="/platform/insertOrder", method="post">
 				<span class="list-btn2">
 					<button type="button" class="btn btn-secondary" id="addBtn" onclick="openProductList()">품목 추가</button>
 					<button type="submit" class="btn btn-secondary" >신청</button>
 					<button type="button" class="btn btn-secondary">취소</button>
 				</span> <br>
-				납품 요청일: <input id="dtIp" type="date" name="startDate" min="${minDay }" max="${maxDay }"/><br>
+				납품 요청일: <input type="date" id="dtIp" name="order_date" min="${minDay }" max="${maxDay }"/><br>
 				발주 품목 <br>
 				<div class="list">
 					<div class="list-box">

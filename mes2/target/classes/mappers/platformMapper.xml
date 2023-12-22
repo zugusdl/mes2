@@ -28,4 +28,24 @@
 		select * from meta_data_product 
 		where product_code = #{product_code}
 	</select>
+	
+	<!-- 금일 주문건 개수 -->
+	<select id="countTodayOrder" resultType="int">
+		select count(*) from sales_order_info 
+		where order_code like concat('%', #{todayDate}, '%')
+	</select>
+	
+	<!-- 발주 신청 -->
+	<insert id="insertOrder" >
+		insert into sales_order_info (order_code, company_code, order_date) 
+		values (#{order_code}, #{company_code}, #{order_date})
+	</insert>
+	
+	<!-- 발주 신청 품목 입력 -->
+	<insert id="insertOrderProduct">
+		insert into sales_order_product (order_code, product_code, sales_quantity) 
+		<foreach collection="list" item="sopDTO">
+		 values (#{order_code}, #{product_code}, #{sales_quantity})
+		</foreach>	
+	</insert>
 </mapper>
