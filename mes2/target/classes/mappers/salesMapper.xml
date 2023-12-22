@@ -5,4 +5,39 @@
   
   <mapper namespace="com.mes2.mapper.SalesMapper">
   
+  
+  <select id="getPlanSalesList" resultType="com.mes2.sales.domain.SalesDTO" >
+    select I.order_code, B.name AS company_name, M.name AS product_name, I.order_date, 
+    I.request_date 
+    from sales_order_info I 
+    join meta_data_business B 
+    on I.company_code = B.company_code 
+    join sales_order_product P 
+    on I.order_code = P.order_code 
+    join meta_data_product M 
+    on M.product_code = P.product_code
+    where sales_status = 'requested'
+  </select>
+  
+    <select id="getPlanContent" resultType="com.mes2.sales.domain.SalesDTO">
+    select P.product_code , M.name AS product_name , P.sales_quantity ,I.order_code 
+    from sales_order_product P 
+    join meta_data_product M 
+    on M.product_code = P.product_code 
+    join sales_order_info I 
+    on I.order_code = P.order_code 
+    where I.order_code = #{order_code} and sales_status = 'requested'
+    </select>
+    
+    <update id="rejectSales">
+    update sales_order_info 
+    set sales_status = 'reject' 
+    where order_code = #{order_code} 
+    </update>
+  
+  
+  
+  
+  
+  
   </mapper>
