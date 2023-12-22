@@ -15,16 +15,14 @@ import com.mes2.materials.persistence.InDAO;
 public class InServiceImpl implements InService {
 
 	private static final Logger logger = LoggerFactory.getLogger(InServiceImpl.class);
-	
+
 	@Inject
 	private InDAO idao;
 
 	@Override
-	public List<InDTO> inSelect(InDTO in) throws Exception {
-		return idao.inSelect(in);
-		
+	public List<InDTO> inSelect() throws Exception {
+
+		return idao.inSelect();
 	}
-	
-	
-	
+
 }

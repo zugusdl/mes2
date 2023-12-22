@@ -26,18 +26,21 @@ public class InController {
 
 	
 	@RequestMapping(value="/in")
-	public String inSelect() {
+	public String inSelectPOST() {
 		return "/materials/in";
 	}
 	
-	// http://localhost:8088/materials/in
+	// http://localhost:8080/materials/in
 	@GetMapping(value = "/inlist")
-	public @ResponseBody List<InDTO> inSelect(InDTO in) throws Exception {
+	public @ResponseBody List<InDTO> inSelect() throws Exception {
 		
-		List<InDTO> list = iService.inSelect(in);
-		
+		List<InDTO> list = iService.inSelect();
 		logger.debug("/materials/in -> inGET() 호출 ");
 		logger.debug("/materials/in.jsp 뷰페이지로 이동");
+
+		for(InDTO in : list) {
+			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@ " + in.getIn_regdate().toString());
+		}
 		
 		return list;
 	}

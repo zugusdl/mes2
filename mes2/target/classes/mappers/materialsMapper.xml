@@ -5,8 +5,8 @@
   
   <mapper namespace="com.mes2.mapper.MaterialsMapper">
   
-  <select id="getList" resultType="com.mes2.materials.domain.InDTO">
-	select * from in_warehouse;
- 	</select>
+  <select id="inList" resultType="com.mes2.materials.domain.InDTO">
+	 select * from in_warehouse where category='완제품' and in_code = 'I' 
+  </select>
 	
   </mapper>

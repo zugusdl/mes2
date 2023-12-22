@@ -22,11 +22,12 @@ public class InDAOImpl implements InDAO {
 	private static final String NAMESPACE ="com.mes2.mapper.MaterialsMapper";
 
 	@Override
-	public List<InDTO> inSelect(InDTO in) throws Exception {
+	public List<InDTO> inSelect() throws Exception {
 		
-		return sqlSession.selectOne(NAMESPACE +".getList", in);
-		
+		return sqlSession.selectList(NAMESPACE + ".inList");
 	}
+
+
 	
 	
 }

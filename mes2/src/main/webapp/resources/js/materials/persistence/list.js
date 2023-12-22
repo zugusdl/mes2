@@ -6,7 +6,7 @@
  
  $(document).ready(function(){
 	  loadList();
-  })
+  });
 
 
   function loadList(){
@@ -57,5 +57,4 @@ listHtml += "<td><a href='javascript:goContent("+obj.idx+")'>" + obj.title + "</
 	// 위 리스트가 들어갈 곳의 아이디를 가져와서 넣어주기 
 	  
 	  $("#view").html(listHtml);
-  } 
   }

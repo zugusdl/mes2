@@ -1,20 +1,15 @@
-/**
- * 
- */
-
-  var updateBtn = false;
+var updateBtn = false;
  
  $(document).ready(function(){
 	  loadList();
-  })
+  });
 
 
   function loadList(){
 	  
-	 alert("ㅇㅇ");
 	 
 	  $.ajax({
-		  url:"/materials/inlist", //목록 담아오기 (리스트 DTO랑 연결)
+		  url:"inlist", //목록 담아오기 (리스트 DTO랑 연결)
 		  type:"get",
 		  dataType:"json",
 		  success: list,
@@ -28,16 +23,29 @@
  function list(data){
 	 // loadList()에서 가져온 데이터로 리스트만들기
 	 
-	  var listHtml = "<table class='table table-hover'>";
+	  var listHtml = "<colgroup>";
+	  listHtml = "<col style='width: 10%'/>";
+	  listHtml = "<col style='width: 7%'/>";
+	  listHtml = "<col style='width: 7%'/>";
+	  listHtml = "<col style='width: 7%'/>";
+	  listHtml = "<col style='width: 7%'/>";
+	  listHtml = "<col style='width: 7%'/>";
+	  listHtml = "<col style='width: 7%'/>";
+	  listHtml = "<col style='width: 7%'/>";
+	  listHtml = "</colgroup>";
+	  listHtml += "<table class='table table-hover'>";
 	  listHtml += "<thead>";
 	  listHtml += "<tr class='table-success'>";
 	  listHtml += "<th></th>";
+	  listHtml += "<th></th>";
 	  listHtml += "<th scope='col'>입고코드</th>";
-	  listHtml += "<th scope='col'>입고수량</th>";
-	  listHtml += "<th scope='col'>상품코드</th>";
-	  listHtml += "<th scope='col'>상품등록일</th>";
 	  listHtml += "<th scope='col'>로트번호</th>";
-      
+	  listHtml += "<th scope='col'>품목코드</th>";
+	  listHtml += "<th scope='col'>품목명</th>";
+	  listHtml += "<th scope='col'>수량</th>";
+	  listHtml += "<th scope='col'>카테고리</th>";
+	  listHtml += "<th scope='col'>입고등록일</th>";
+	  listHtml += "<th scope='col'>입고담당자</th>";
 	  listHtml += "</tr>";
 	  listHtml += "</thead>";
 	  listHtml += "<tbody>";
@@ -46,17 +54,18 @@
 	// 반복문 돌면서 가져온 데이터 넣어주기 obj.변수명으로 입력하면 된다. 
 	  $.each(data,function(index,obj){
 		  listHtml += "<tr>";
-		  listHtml += "<td scope='row'><input type='checkbox' class='ck' name='idx' value='"+obj.in_index+"' id='"+obj.idx+"'/></td>";
+		  listHtml += "<td scope='row'><input type='checkbox' class='ck' name='idx' value='"+obj.in_index+"' id='"+obj.in_index+"'/></td>";
+		  listHtml += "<td>"+obj.in_index+"</td>";
 		  listHtml += "<td>"+obj.in_code+"</td>";
-		  listHtml += "<td>"+obj.in_quantity+"</td>";
-		  listHtml += "<td>"+obj.product_code+"</td>";
-		  listHtml += "<td>"+obj.in_regdate+"</td>";
 		  listHtml += "<td>"+obj.pd_lot+"</td>";
-	// 상세보기 클릭하면 goContetn함수 호출 
+		  listHtml += "<td><a href='javascript:goContent("+obj.product_code+")'>" + obj.product_code+ "</a></td>";
+		  listHtml += "<td>"+obj.name+"</td>";
+		  listHtml += "<td>"+obj.in_quantity+"</td>";
+		  listHtml += "<td>"+obj.category+"</td>";
+		  listHtml += "<td>"+obj.in_regdate+"</td>";
+	// 상세보기 클릭하면 goContent 함수 호출 
 	// 매개변수로 고유값을 넣어주면 된다.(obj.idx) 		  
-listHtml += "<td><a href='javascript:goContent("+obj.idx+")'>" + obj.title + "</a></td>";
-		  listHtml += "<td>"+obj.writer+"</td>";
-		  
+		  listHtml += "<td>"+obj.user_id+"</td>";
 		  listHtml += "</tr>";
 	  });
 	  listHtml += "</tbody>"; 
@@ -65,5 +74,4 @@ listHtml += "<td><a href='javascript:goContent("+obj.idx+")'>" + obj.title + "</
 	// 위 리스트가 들어갈 곳의 아이디를 가져와서 넣어주기 
 	  
 	  $("#view").html(listHtml);
-  } 
-  }
+	  }
