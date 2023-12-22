@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.mes2.mapper.metadataMapper">
+  
+  	<!-- 모든 글 조회(ALL) -->
+  	<select id="listALL" resultType="com.mes2.metadata.domain.productDTO">
+  		select * from meta_data_product
+  	</select>
+
+  </mapper>
+  

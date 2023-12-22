@@ -5,8 +5,5 @@
   
   <!-- mybatis 설정 파일 -->
   <configuration>
-  	<typeAliases>
-  		<package name="com.mes2.domain"/>
-  	</typeAliases>
   </configuration>
 
