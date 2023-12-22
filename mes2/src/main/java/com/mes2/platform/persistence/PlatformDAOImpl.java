@@ -24,12 +24,14 @@ public class PlatformDAOImpl implements PlatformDAO {
 	
 	private static final String NAMESPACE = "com.mes2.mapper.platformMapper";
 
+	// 로그인
 	@Override
 	public MdbDTO customerLogin(MdbDTO mdto) throws Exception {
 		logger.debug("DAO: customerLogin() 호출");
 		return sqlSession.selectOne(NAMESPACE + ".login", mdto);
 	}
 
+	// 발주 신청 시 품목 목록 조회
 	@Override
 	public List<MdpDTO> inqueryProduct(String searchType, String search) throws Exception {
 		logger.debug("DAO: inqueryProduct() 호출");
@@ -41,10 +43,18 @@ public class PlatformDAOImpl implements PlatformDAO {
 		return sqlSession.selectList(NAMESPACE + ".inqueryProduct", searchMap);
 	}
 
+	// 품목 하나 등록
 	@Override
 	public MdpDTO registProduct(String product_code) throws Exception {
 		logger.debug("DAO: registProduct() 호출");
 		return sqlSession.selectOne(NAMESPACE + ".selectProduct", product_code);
+	}
+
+	// 금일 주문건 개수
+	@Override
+	public int countTodayOrder(String todayDate) throws Exception {
+		logger.debug("DAO: countTodayOrder() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".countTodayOrder", todayDate);
 	}
 
 }

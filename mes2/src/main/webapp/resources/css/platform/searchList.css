@@ -91,6 +91,12 @@
 	text-align: center;
 }
 
+.pQuantity {
+	width: 80px;
+}
+
+
+
 .button {
 	border: none;
 	background-color: #a2c6a8;

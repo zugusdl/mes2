@@ -46,25 +46,26 @@
 										<th scope="col">형상정보</th>
 										<th scope="col">품목명</th>
 										<th scope="col">단가</th>
+										<th scope="col">수량</th>
+										<th scope="col">합계</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="mdpDTO" items="${mdpDTO }">
+									<c:forEach var="mdpDTO" items="${mdpDTO }" varStatus="loop">
 										<tr>
-											<td scope="row"><input type="radio" name="product_code" value="${mdpDTO.product_code}"></td>
-											<td>${mdpDTO.product_code}</td>
-											<td><img alt="" src=""></td>
-											<td>${mdpDTO.name}</td>
-											<td><fmt:formatNumber value="${mdpDTO.price}" />원</td>
-<%-- 											<td><input type="hidden" name="name" value="${mdpDTO.name}">${mdpDTO.name}</td> --%>
-<%-- 											<td><input type="hidden" name="price" value="${mdpDTO.price}"><fmt:formatNumber value="${mdpDTO.price}" />원</td> --%>
+											<td scope="row"><input type="radio" name="idx" value="${loop.index}"></td>
+											<td><input type="hidden" name="product_code${loop.index}" value="${mdpDTO.product_code}">${mdpDTO.product_code}</td>
+											<td><input type="hidden" name="image${loop.index}" ><img alt="" src=""></td>
+											<td><input type="hidden" name="name${loop.index}" value="${mdpDTO.name}">${mdpDTO.name}</td>
+											<td><input type="hidden" name="price${loop.index}" value="${mdpDTO.price}"><fmt:formatNumber value="${mdpDTO.price}" />원</td>
+											<td><input type="number" name="sales_quantity${loop.index}" id="sales_quantity${loop.index}"  class="pQuantity" step="100" min="100"></td>
+											<td><input type="text" name="sum${loop.index}" id="sum${loop.index}" style="width: 150px" readonly>원</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
-							<button class="btn btn-secondary regist"
-								onclick="registProduct();">등록</button>
-							<button class="btn btn-secondary regist">취소</button>
+							<button class="btn btn-secondary regist" onclick="registProduct();">등록</button>
+							<button class="btn btn-secondary regist" onclick="window.close();">취소</button>
 						</c:if>
 					</form>
 				</div>

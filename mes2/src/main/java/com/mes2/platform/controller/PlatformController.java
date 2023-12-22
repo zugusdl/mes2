@@ -2,6 +2,9 @@ package com.mes2.platform.controller;
 
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
+import com.mes2.platform.domain.SoiDTO;
+import com.mes2.platform.domain.SopDTO;
 import com.mes2.platform.service.PlatformService;
 import com.mes2.platform.service.PlatformServiceImpl;
 
@@ -61,7 +66,7 @@ public class PlatformController {
 
 	// 발주(주문) 목록 페이지
 	@GetMapping(value="/orderList")
-	public String orderList(HttpSession session) throws Exception {
+	public String orderListGET(HttpSession session) throws Exception {
 		String company_code = (String) session.getAttribute("company_code");
 		
 		if (company_code == null) {
@@ -73,20 +78,43 @@ public class PlatformController {
 	
 	// 발주(주문) 추가 페이지
 	@GetMapping(value="/insertOrder")
-	public void insertOrder() throws Exception {
-		logger.debug("insertOrder() 호출");
+	public void insertOrderGET(Model model) throws Exception {
+		logger.debug("insertOrderGET() 호출");
+		
+		// 현재 날짜
+		Calendar minDay = Calendar.getInstance();
+		Calendar maxDay = Calendar.getInstance();
+		minDay.add(Calendar.DATE, 14);
+		maxDay.add(Calendar.DATE, 44);
+		Date minDate = new Date(minDay.getTimeInMillis());
+		Date maxDate = new Date(maxDay.getTimeInMillis());
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		String formatMinDate = sdf.format(minDate);
+		String formatMaxDate = sdf.format(maxDate);
+		
+		model.addAttribute("minDay", formatMinDate);
+		model.addAttribute("maxDay", formatMaxDate);
+	}
+	
+	// 발주(주문) 추가 페이지
+	@PostMapping(value="/insertOrder")
+	public String insertOrderPOST(SoiDTO soiDTO, SopDTO sopDTO, HttpSession session) throws Exception {
+		logger.debug("insertOrderPOST() 호출");
+		pService.insertOrder(soiDTO, sopDTO, session);
+		return "";
 	}
 	
 	// 품목 추가 페이지에서 품목 찾기
 	@GetMapping(value="/searchList")
-	public void searchList(Model model) throws Exception {
-		logger.debug("searchList() 호출");
+	public void searchListGET(Model model) throws Exception {
+		logger.debug("searchListGET() 호출");
 	}
 	
 	// 품목 추가 페이지에서 검색
 	@PostMapping(value="/searchList")
-	public void searchList(@RequestParam("searchType") String searchType, @RequestParam("search") String search, Model model) throws Exception {
-		logger.debug("searchList() 호출");
+	public void searchListPOST(@RequestParam("searchType") String searchType, @RequestParam("search") String search, Model model) throws Exception {
+		logger.debug("searchListPOST() 호출");
 		List<MdpDTO> mdpDTO = pService.inqueryProduct(searchType, search);
 		model.addAttribute("mdpDTO", mdpDTO);
 	}

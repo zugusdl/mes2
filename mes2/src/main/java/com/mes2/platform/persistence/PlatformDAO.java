@@ -14,4 +14,7 @@ public interface PlatformDAO {
 	
 	// 품목 하나 등록
 	public MdpDTO registProduct(String product_code) throws Exception;
+	
+	// 금일 주문건 개수
+	public int countTodayOrder(String todayDate) throws Exception;
 }

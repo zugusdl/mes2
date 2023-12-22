@@ -7,9 +7,13 @@ import lombok.Data;
 
 @Data
 public class SoiDTO {
-	private String soi_order_code;
-	private String soi_mdb_code;
-	private String soi_customer_name;
-	private Date soi_order_date;
-	private Date soi_update_date;
+	private int sales_index;
+	private String order_code;
+	private String company_code;
+	private Date request_date;
+	private Date order_date;
+	private Date update_date;
+	private Date acceptance_date;
+	private int user_id;
+	private String sales_status;
 }
