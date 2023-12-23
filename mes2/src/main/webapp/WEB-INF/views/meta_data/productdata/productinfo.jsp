@@ -42,7 +42,7 @@
 		<div class="son_serch">
 			
 			
-			<form id="dateForm" action="" onsubmit="delete_all()">
+			<form id="dateForm" action="" onsubmit="delete_all()" method="POST">
 				<span class="son_search-font">등록기간</span>
 				<input id="dtIp" type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
 				<input id="dtIp" type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px" onchange="submitForm()" />		
@@ -86,8 +86,8 @@
 								
 								
 								<!-- 모든물품 검색하기 productList를 가져오면 실행됨 -->
-								<c:if test="${!empty productList_all }">
-								<c:forEach var="plist" items="${productList_all }">
+								<c:if test="${!empty productList }">
+								<c:forEach var="plist" items="${productList }">
 								<tr>
 									<td scope="row"><input type="checkbox" class="ck" /></td>
 									<td>${plist.product_code }</td>
@@ -102,34 +102,6 @@
 								</c:forEach>
 								</c:if>
 								<!-- 모든물품 검색하기 productList를 가져오면 실행됨 -->
-								
-								
-								
-								
-								<!-- 날짜로 필터한 데이터만 표로 가져오는 방법 -->
-								<c:if test="${!empty productList_date }">
-								<c:forEach var="dlist" items="${productList_date}">
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td>${dlist.product_code }</td>
-									<td>${dlist.name }</td>
-									<td>${dlist.category }</td>
-									<td>${dlist.unit }</td>
-									<td>${dlist.cost }</td>
-									<td>${dlist.price }</td>
-									<td>${dlist.production_status }</td>
-									<td>${dlist.regdate }</td>
-								</tr>
-								</c:forEach>
-								</c:if>
-								<!-- 날짜로 필터한 데이터만 표로 가져오는 방법 -->
-								
-								
-								
-								
-								
-								
-								
 							</tbody>
 						</table>
 					</form>
