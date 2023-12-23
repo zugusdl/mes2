@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- produceMapper.xml -->
+  
+<mapper namespace="com.mes2.mapper.ProductionLine">
+	
+	<insert id="insertLine">
+		insert into code, line, mdp_code, type, soi_code, start_time, close_time, emp_id, state 
+		value #{code}, #{line}, #{mdp_code}, #{type}, #{soiCode}, #{starDate}, #{closeDate}, #{empNum} , #{state}
+	</insert>
+	
+	
+	<select id="selectByDateForList" parameterType="java.sql.Date">
+		SELECT * 
+		FROM production_line
+		WHERE start BETWEEN ${selectDate} AND date_add(${selectDate, INTERVAL 3 DAY) 
+	</select>
+<!-- 	
+	<update id="updateResult">
+		update instructions
+		set close_date =#{}, 
+	</update>
+	 -->
+</mapper>
