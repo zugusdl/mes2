@@ -8,6 +8,7 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.domain.orderRequestDTO;
 
 public interface PlatformService {
 	// 로그인
@@ -20,5 +21,5 @@ public interface PlatformService {
 	public MdpDTO registProduct(String product_code) throws Exception;
 	
 	// 발주 신청
-	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList, HttpSession session) throws Exception;
+	public void insertOrder(orderRequestDTO orDTO, HttpSession session) throws Exception;
 }

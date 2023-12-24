@@ -43,9 +43,9 @@
 	
 	<!-- 발주 신청 품목 입력 -->
 	<insert id="insertOrderProduct">
+		<foreach collection="list" item="sopDTO" separator=";">
 		insert into sales_order_product (order_code, product_code, sales_quantity) 
-		<foreach collection="list" item="sopDTO">
-		 values (#{order_code}, #{product_code}, #{sales_quantity})
+		values (#{sopDTO.order_code}, #{sopDTO.product_code}, #{sopDTO.sales_quantity})
 		</foreach>	
 	</insert>
 </mapper>

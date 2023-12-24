@@ -24,7 +24,7 @@
 			<form action="/platform/insertOrder", method="post">
 				<span class="list-btn2">
 					<button type="button" class="btn btn-secondary" id="addBtn" onclick="openProductList()">품목 추가</button>
-					<button type="submit" class="btn btn-secondary" >신청</button>
+					<button type="button" class="btn btn-secondary" onclick="insertOrder();">신청</button>
 					<button type="button" class="btn btn-secondary">취소</button>
 				</span> <br>
 				납품 요청일: <input type="date" id="dtIp" name="order_date" min="${minDay }" max="${maxDay }"/><br>
@@ -59,5 +59,6 @@
 		
 	</script>
 	<script src="${pageContext.request.contextPath}/resources/js/platform/insertOrder.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/platform/insertOrder2.js"></script>
 </body>
 </html>

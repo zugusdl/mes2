@@ -16,4 +16,12 @@ public class SoiDTO {
 	private Date acceptance_date;
 	private int user_id;
 	private String sales_status;
+	
+	@Override
+	public String toString() {
+		return "SoiDTO [sales_index=" + sales_index + ", order_code=" + order_code + ", company_code=" + company_code
+				+ ", request_date=" + request_date + ", order_date=" + order_date + ", update_date=" + update_date
+				+ ", acceptance_date=" + acceptance_date + ", user_id=" + user_id + ", sales_status=" + sales_status
+				+ "]";
+	}
 }

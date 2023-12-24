@@ -56,6 +56,8 @@ public class PlatformDAOImpl implements PlatformDAO {
 	@Override
 	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList) {
 		logger.debug("DAO: insertOrder() 호출");
+		logger.debug("@@@ soiDTO: " + soiDTO.toString());
+		logger.debug("@@@ sopList: " + sopList.toString());
 		sqlSession.insert(NAMESPACE + ".insertOrder", soiDTO);
 		sqlSession.insert(NAMESPACE + ".insertOrderProduct", sopList);
 	}

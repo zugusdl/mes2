@@ -5,7 +5,7 @@ $(".pQuantity").click(function(){
 		var idx = selectedIdx.value;
 		var price = document.querySelector("input[name='price" + idx + "']").value;
 		var quantityId = $(this).attr('id');
-		var quantityIdx = quantityId.substring(quantityId.length - 1);
+		var quantityIdx = quantityId.substring(quantityId.length - idx.length);
 		if(idx == quantityIdx) {
 			$("#" + quantityId).on("input", function(){
 				var quantity = $("#" + quantityId).val();

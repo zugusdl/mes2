@@ -1,5 +1,7 @@
 package com.mes2.platform.service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -15,6 +17,7 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.domain.orderRequestDTO;
 import com.mes2.platform.persistence.PlatformDAO;
 
 @Service
@@ -48,10 +51,17 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 발주 신청
 	@Override
-	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList, HttpSession session) throws Exception {
+	public void insertOrder(orderRequestDTO orDTO, HttpSession session) throws Exception {
 		String order_code = makeOrderCode(session);
+		Date order_date = Date.valueOf(orDTO.getOrder_date());
+		
+		SoiDTO soiDTO = new SoiDTO();
+		soiDTO.setOrder_date(order_date);
 		soiDTO.setOrder_code(order_code);
 		soiDTO.setCompany_code((String)session.getAttribute("company_code"));
+		
+		List<SopDTO> sopList = orDTO.getSopList();
+		
 		for(SopDTO sopDTO : sopList) {
 			sopDTO.setOrder_code(order_code);
 		}

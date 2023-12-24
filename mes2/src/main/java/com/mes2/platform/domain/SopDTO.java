@@ -14,4 +14,11 @@ public class SopDTO {
 	private String product_status;
 	private String processing_reg;
 	private String order_code;
+
+	@Override
+	public String toString() {
+		return "SopDTO [sales_product_index=" + sales_product_index + ", sales_code=" + sales_code + ", product_code="
+				+ product_code + ", sales_quantity=" + sales_quantity + ", product_status=" + product_status
+				+ ", processing_reg=" + processing_reg + ", order_code=" + order_code + "]";
+	}
 }

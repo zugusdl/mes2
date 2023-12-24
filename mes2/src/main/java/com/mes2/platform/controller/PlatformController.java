@@ -27,6 +27,7 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.domain.orderRequestDTO;
 import com.mes2.platform.service.PlatformService;
 import com.mes2.platform.service.PlatformServiceImpl;
 
@@ -100,10 +101,10 @@ public class PlatformController {
 	
 	// 발주(주문) 추가 페이지
 	@PostMapping(value="/insertOrder")
-	public String insertOrderPOST(SoiDTO soiDTO, @RequestBody List<SopDTO> sopList, HttpSession session) throws Exception {
+	public String insertOrderPOST(@RequestBody orderRequestDTO orDTO, HttpSession session) throws Exception {
 		logger.debug("insertOrderPOST() 호출");
-		logger.debug("@@@@sopList" + sopList.toString());
-		pService.insertOrder(soiDTO, sopList, session);
+		logger.debug("@@@@orDTO" + orDTO.toString());
+		pService.insertOrder(orDTO, session);
 		return "redirect:/platform/orderList";
 	}
 	
