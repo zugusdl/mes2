@@ -33,7 +33,6 @@ function insertOrder() {
 	console.log(order_date, jsonSopList);
 	
 	if(jsonSopList != null) {
-		console.log(typeof formatOrder_date);
 		$.ajax({
 			url : "/platform/insertOrder",
 			method : "post",
