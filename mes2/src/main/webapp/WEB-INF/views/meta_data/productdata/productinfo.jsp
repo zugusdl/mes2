@@ -42,15 +42,14 @@
 		<div class="son_serch">
 			
 			
-			<form id="dateForm" action="" onsubmit="delete_all()" method="POST">
+			<form id="dateForm" action="" onsubmit="" method="POST">
 				<span class="son_search-font">등록기간</span>
 				<input id="dtIp" type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
-				<input id="dtIp" type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px" onchange="submitForm()" />		
-			</form>
-			<form action="">				
+				<input id="dtIp" type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px"/>					
 				<input type="text" name="search" placeholder="검색어를 입력하세요" />
-				<input type="submit" value="검색" />
+				<input type="submit" value="검색" onchange="submitForm()"/>
 			</form>
+			
 			<form class="son_list-btn" action="">
 				<button type="button" class="btn btn-secondary" id="addbtn">추가</button>
 				<button type="button" class="btn btn-secondary" id="updatebtn">수정</button>

@@ -13,7 +13,19 @@
   	<!-- 날짜 필터 조회(datefilter) -->
   	<select id="listDATE" resultType="com.mes2.metadata.domain.md_productDTO" parameterType="java.util.Map">
   		select * from meta_data_product
-  		where regdate between #{start} and #{end}
+  		
+  		<where>
+            <if test="searchName !=null and !searchName.equals('')">
+                and name like '%${searchName}%'
+            </if>
+           
+            <if test="start !=null and end !=null ">
+                and regdate between #{start} and #{end}
+            </if>
+            
+         </where>
+  		
+
   	</select>
 
   </mapper>

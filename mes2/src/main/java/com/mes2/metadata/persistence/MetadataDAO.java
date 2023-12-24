@@ -10,6 +10,6 @@ public interface MetadataDAO {
 	
 	public List<md_productDTO> getproductListAll() throws Exception;
 	
-	public List<md_productDTO> getproductdatefilter(Date start, Date end) throws Exception;
+	public List<md_productDTO> getproductdatefilter(Date start, Date end, String searchName) throws Exception;
 	
 }

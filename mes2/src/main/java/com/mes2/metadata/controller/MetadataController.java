@@ -49,18 +49,33 @@ public class  MetadataController{
 	@PostMapping("/productdata/productinfo")
 	public String productdataPOST(Model model,
 			@RequestParam("startDate") String startDate,
-			@RequestParam("endDate") String endDate) throws Exception{
+			@RequestParam("endDate") String endDate,
+			@RequestParam("search") String search) throws Exception{
+	
 		
+		Date start;
+		Date end;
+		String searchName = search;
 		
+		if(startDate.equals("")) {
+			  start = null;
+		}else {
+			start = Date.valueOf(startDate);
+		}
 		
-		Date start = Date.valueOf(startDate);
-		Date end = Date.valueOf(endDate);
-	   
-		logger.debug(""+start.getClass());
-		logger.debug("날짜필터 컨트롤러 실행 성공");
-		logger.debug("확인" + startDate + endDate);
+		if(endDate.equals("")) {
+			  end = null;
+		}else {
+			end = Date.valueOf(endDate);
+		}
+		
+		//logger.debug(""+search.getClass());
+		//logger.debug(""+start.getClass());
+		//logger.debug(""+end.getClass());
+		//logger.debug("날짜필터 컨트롤러 실행 성공");
+		//logger.debug("확인" + startDate + endDate + search);
 
-		List<md_productDTO> productList = mService.productdatefilter(start, end);
+		List<md_productDTO> productList = mService.productdatefilter(start, end, searchName);
 		logger.debug("@@@" + productList);
 		
 		model.addAttribute("productList", productList);

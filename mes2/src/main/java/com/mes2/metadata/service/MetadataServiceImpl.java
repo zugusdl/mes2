@@ -28,9 +28,9 @@ public class MetadataServiceImpl implements MetadataService {
 	}
 
 	@Override
-	public List<md_productDTO> productdatefilter(Date start, Date end) throws Exception {
+	public List<md_productDTO> productdatefilter(Date start, Date end, String searchName) throws Exception {
 		logger.debug("S : productdatefilter()");
-		return mdao.getproductdatefilter(start, end);
+		return mdao.getproductdatefilter(start, end, searchName);
 	}
 	
 	
