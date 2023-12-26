@@ -1,11 +1,16 @@
 package com.mes2.metadata.persistence;
 
+
+import java.sql.Date;
 import java.util.List;
 
-import com.mes2.metadata.domain.productDTO;
+import com.mes2.metadata.domain.md_productDTO;
 
 public interface MetadataDAO {
 	
-	public List<productDTO> getproductListAll() throws Exception;
+	public List<md_productDTO> getproductListAll() throws Exception;
 	
+	public List<md_productDTO> getproductdatefilter(Date start, Date end, String search) throws Exception;
+	
+	public int productinsert(md_productDTO dto) throws Exception;
 }
