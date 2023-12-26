@@ -27,6 +27,11 @@ public class InDAOImpl implements InDAO {
 		return sqlSession.selectList(NAMESPACE + ".inList");
 	}
 
+	@Override
+	public List<InDTO> detailSelect() throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".detailList");
+	}
+
 
 	
 	

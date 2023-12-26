@@ -1,6 +1,7 @@
 package com.mes2.materials.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mes2.materials.domain.InDTO;
@@ -38,14 +40,24 @@ public class InController {
 		logger.debug("/materials/in -> inGET() 호출 ");
 		logger.debug("/materials/in.jsp 뷰페이지로 이동");
 
-		for(InDTO in : list) {
-			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@ " + in.getIn_regdate().toString());
-		}
+//		for(InDTO in : list) {
+//			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@ " + in.getIn_regdate().toString());
+//		}
 		
 		return list;
 	}
 
-
+//	@RequestMapping(value = "/detailList")
+//	public @ResponseBody List<InDTO> detailList() throws Exception {
+//		List<InDTO> list = iService.detailList();
+//		
+//		return list;
+//	}
 	
+	@RequestMapping(value = "/detailList")
+	public @ResponseBody List<InDTO> detailList(@RequestParam("in_code") String in_code) throws Exception {
+	   List<InDTO> list = iService.detailList(in_code);
+	   return list;
+	}
 
 }

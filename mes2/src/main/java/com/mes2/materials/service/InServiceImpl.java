@@ -25,4 +25,10 @@ public class InServiceImpl implements InService {
 		return idao.inSelect();
 	}
 
+	@Override
+	public List<InDTO> detailList(String in_code) throws Exception {
+		return idao.detailSelect();
+	}
+
+	
 }

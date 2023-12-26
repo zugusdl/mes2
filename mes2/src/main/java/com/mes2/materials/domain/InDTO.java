@@ -13,6 +13,8 @@ public class InDTO {
 	private int in_quantity; //입고수량
 	private String product_code; //품목코드 **
 	private int quantity; //품목수량 **
+	private String unit; // 단위 **
+
 	private Date in_regdate; //입고등록일 
 	
 	private String pd_lot; //로트번호 ** 

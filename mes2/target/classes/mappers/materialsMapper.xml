@@ -2,11 +2,18 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.mes2.mapper.MaterialsMapper">
-  
-  <select id="inList" resultType="com.mes2.materials.domain.InDTO">
-	 select * from in_warehouse where category='완제품' and in_code = 'I' 
-  </select>
-	
-  </mapper>
+
+<mapper namespace="com.mes2.mapper.MaterialsMapper">
+
+	<select id="inList" resultType="com.mes2.materials.domain.InDTO">
+		SELECT CONCAT(i.in_code, p.pd_lot) AS in_code, i.product_code, m.name, m.category, CONCAT(i.in_quantity, i.unit) AS quantity, 
+		i.in_regdate FROM in_warehouse i JOIN meta_data_product m ON i.product_code = m.product_code JOIN product p ON i.pd_lot = p.pd_lot
+	</select>
+
+
+	<select id="detailList"
+		resultType="com.mes2.materials.domain.InDTO">
+ SELECT CONCAT(in_code, pd_lot) AS in_code, product_code, name, in_quantity, unit, category, in_regdate FROM in_warehouse WHERE CONCAT(in_code, pd_lot) = #{in_code}
+	</select>
+
+</mapper>

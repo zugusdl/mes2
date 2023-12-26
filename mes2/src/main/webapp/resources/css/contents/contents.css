@@ -49,3 +49,9 @@
       gap: 20px;
       flex-direction: column;
     }
+    
+    .btn-info { 
+color : #fff;
+background-color: #36b9cc; }
+
+

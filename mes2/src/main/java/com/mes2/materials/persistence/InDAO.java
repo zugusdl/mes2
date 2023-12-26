@@ -8,5 +8,6 @@ public interface InDAO {
 
 
 	public List<InDTO> inSelect() throws Exception;
-	
+
+	public List<InDTO> detailSelect() throws Exception;
 }

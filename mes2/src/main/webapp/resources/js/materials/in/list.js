@@ -24,7 +24,7 @@ var updateBtn = false;
 	 // loadList()에서 가져온 데이터로 리스트만들기
 	 
 	  var listHtml = "<colgroup>";
-	  listHtml = "<col style='width: 10%'/>";
+	  listHtml = "<col style='width: 7%'/>";
 	  listHtml = "<col style='width: 7%'/>";
 	  listHtml = "<col style='width: 7%'/>";
 	  listHtml = "<col style='width: 7%'/>";
@@ -39,13 +39,14 @@ var updateBtn = false;
 	  listHtml += "<th></th>";
 	  listHtml += "<th></th>";
 	  listHtml += "<th scope='col'>입고코드</th>";
-	  listHtml += "<th scope='col'>로트번호</th>";
+	  listHtml += "<th scope='col'>발주코드</th>";
 	  listHtml += "<th scope='col'>품목코드</th>";
 	  listHtml += "<th scope='col'>품목명</th>";
 	  listHtml += "<th scope='col'>수량</th>";
+	  listHtml += "<th scope='col'>단위</th>";
 	  listHtml += "<th scope='col'>카테고리</th>";
 	  listHtml += "<th scope='col'>입고등록일</th>";
-	  listHtml += "<th scope='col'>입고담당자</th>";
+	  listHtml += "<th scope='col'>진행상황</th>";
 	  listHtml += "</tr>";
 	  listHtml += "</thead>";
 	  listHtml += "<tbody>";
@@ -54,18 +55,18 @@ var updateBtn = false;
 	// 반복문 돌면서 가져온 데이터 넣어주기 obj.변수명으로 입력하면 된다. 
 	  $.each(data,function(index,obj){
 		  listHtml += "<tr>";
+		  listHtml += "<td>";
 		  listHtml += "<td scope='row'><input type='checkbox' class='ck' name='idx' value='"+obj.in_index+"' id='"+obj.in_index+"'/></td>";
-		  listHtml += "<td>"+obj.in_index+"</td>";
-		  listHtml += "<td>"+obj.in_code+"</td>";
-		  listHtml += "<td>"+obj.pd_lot+"</td>";
-		  listHtml += "<td><a href='javascript:goContent("+obj.product_code+")'>" + obj.product_code+ "</a></td>";
+		  listHtml += "<td><a href='javascript:void(0);' onclick='goContent(\"" + obj.in_code + "\")'>" + obj.in_code + "</a></td>";
+		  listHtml += "<td></td>";
+	/*	  listHtml += "<td><a href='javascript:goContent("+obj.product_code+")'>" + obj.product_code+ "</a></td>";*/
+		  listHtml += "<td>"+obj.product_code+"</td>";
 		  listHtml += "<td>"+obj.name+"</td>";
-		  listHtml += "<td>"+obj.in_quantity+"</td>";
+		  listHtml += "<td>"+obj.quantity+"</td>";
 		  listHtml += "<td>"+obj.category+"</td>";
-		  listHtml += "<td>"+obj.in_regdate+"</td>";
+		  listHtml += "<td>"+new Date(obj.in_regdate).toLocaleDateString()+"</td>";
 	// 상세보기 클릭하면 goContent 함수 호출 
 	// 매개변수로 고유값을 넣어주면 된다.(obj.idx) 		  
-		  listHtml += "<td>"+obj.user_id+"</td>";
 		  listHtml += "</tr>";
 	  });
 	  listHtml += "</tbody>"; 
