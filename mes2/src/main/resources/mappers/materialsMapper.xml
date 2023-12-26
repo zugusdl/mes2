@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<<<<<<< HEAD
 
 <mapper namespace="com.mes2.mapper.MaterialsMapper">
 
@@ -17,3 +18,9 @@
 	</select>
 
 </mapper>
+=======
+  
+  <mapper namespace="com.mes2.mapper.MaterialsMapper">
+
+  </mapper>
+>>>>>>> 1dc8f42cf6d4b54f7f241515cd98d56917aa85e1
