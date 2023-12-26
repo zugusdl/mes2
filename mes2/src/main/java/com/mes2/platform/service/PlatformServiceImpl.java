@@ -95,7 +95,7 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 주문 상세 조회
 	@Override
-	public List<OrderDetailDTO> getOrderDetail(String order_code) throws Exception {
+	public List<SopDTO> getOrderDetail(String order_code) throws Exception {
 		logger.debug("S: getOrderDetail() 호출");
 		return pdao.getOrderDetail(order_code);
 	}

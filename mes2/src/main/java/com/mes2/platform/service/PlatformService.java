@@ -28,5 +28,5 @@ public interface PlatformService {
 	public List<SoiDTO> getOrderList(String company_code) throws Exception;
 	
 	// 주문 상세 조회
-	public List<OrderDetailDTO> getOrderDetail(String order_code) throws Exception;
+	public List<SopDTO> getOrderDetail(String order_code) throws Exception;
 }

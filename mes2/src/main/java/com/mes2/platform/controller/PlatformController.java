@@ -128,11 +128,21 @@ public class PlatformController {
 	}
 	
 	// 주문 상세 페이지
-	@GetMapping(value="orderDetail")
-	public void orderDetailGet(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
-		logger.debug("orderDetail() 호출");
-		List<OrderDetailDTO> odDTO = pService.getOrderDetail(order_code);
+	@GetMapping(value="/orderDetail")
+	public void orderDetailGET(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
+		logger.debug("orderDetailGET() 호출");
+		List<SopDTO> sopDTO = pService.getOrderDetail(order_code);
+		model.addAttribute("order_code", order_code);
 		model.addAttribute("order_date", order_date);
-		model.addAttribute("odDTO", odDTO);
+		model.addAttribute("sopDTO", sopDTO);
+	}
+	
+	// 주문 수정 페이지
+	@GetMapping(value="/modifyOrder")
+	public void orderModifyGET(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
+		logger.debug("orderModifyGET() 호출");
+		List<SopDTO> sopDTO = pService.getOrderDetail(order_code);
+		model.addAttribute("order_date", order_date);
+		model.addAttribute("sopDTO", sopDTO);
 	}
 }

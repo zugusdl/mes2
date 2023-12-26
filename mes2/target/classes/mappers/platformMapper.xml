@@ -4,6 +4,18 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.mes2.mapper.platformMapper">
+	<resultMap type="com.mes2.platform.domain.SopDTO" id="detail">
+		<result property="product_code" column="product_code" />
+		<result property="sales_quantity" column="sales_quantity" />
+		<association property="mdpDTO" resultMap="product" />
+	</resultMap>
+	
+	<resultMap type="com.mes2.platform.domain.MdpDTO" id="product">
+		<result property="name" column="name" />
+		<result property="price" column="price" />
+	</resultMap>
+	
+	
 	<!-- 로그인 -->
 	<select id="login" resultType="com.mes2.platform.domain.MdbDTO">
 		select * from meta_data_business 
@@ -57,7 +69,7 @@
 	</select>
 	
 	<!-- 주문 상세 조회(주문 품목 조회) -->
-	<select id="getOrderDetail" resultType="com.mes2.platform.domain.OrderDetailDTO">
+	<select id="getOrderDetail" resultType="com.mes2.platform.domain.SopDTO" resultMap="detail">
 		SELECT sop.product_code, name, price, sales_quantity 
 		FROM sales_order_product sop JOIN meta_data_product mdp 
 		ON sop.product_code = mdp.product_code 

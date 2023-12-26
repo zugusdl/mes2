@@ -79,7 +79,7 @@ public class PlatformDAOImpl implements PlatformDAO {
 
 	// 주문 상세 조회
 	@Override
-	public List<OrderDetailDTO> getOrderDetail(String order_code) throws Exception {
+	public List<SopDTO> getOrderDetail(String order_code) throws Exception {
 		logger.debug("DAO: getOrderDetail() 호출");
 		return sqlSession.selectList(NAMESPACE + ".getOrderDetail", order_code);
 	}
