@@ -33,7 +33,7 @@ public class MetadataDAOImpl implements MetadataDAO{
 
 	
 	@Override
-	public List<md_productDTO> getproductdatefilter(Date start, Date end, String searchName) throws Exception {
+	public List<md_productDTO> getproductdatefilter(Date start, Date end, String search) throws Exception {
 		logger.debug(" DAO : getproductdatefilter() ");
 		//logger.debug("날짜확인" + start);
 		//logger.debug("이름확인" + searchName);
@@ -41,9 +41,16 @@ public class MetadataDAOImpl implements MetadataDAO{
 		Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("start", start);
         paramMap.put("end", end);
-        paramMap.put("searchName", searchName);
+        paramMap.put("searchName", search);
 
         return sqlSession.selectList(NAMESPACE + ".listDATE", paramMap);
+	}
+
+
+	@Override
+	public int productinsert(md_productDTO dto) throws Exception {
+		logger.debug(" DAO : productinsert() " + dto);
+		return sqlSession.insert(NAMESPACE + ".insert", dto);
 	}
 	
 	
