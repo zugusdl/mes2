@@ -57,64 +57,29 @@
 									<th></th>
 									<th scope="col">주문번호</th>
 									<th scope="col">발주일자</th>
-									<th scope="col">납기요청일</th>
+									<th scope="col">납품요청일</th>
+									<th scope="col">진행상태</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
-								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td><a href="">주문번호</a></td>
-									<td>발주일자</td>
-									<td>납기요청일</td>
-								</tr>
+								<c:forEach var="soiDTO" items="${soiDTO }">
+									<tr>
+										<td scope="row"><input type="checkbox" class="ck" /></td>
+										<td onclick="getOrderDetail('${soiDTO.order_code }','${soiDTO.order_date }')">${soiDTO.order_code }</td>
+										<td>${soiDTO.request_date }</td>
+										<td>${soiDTO.order_date }</td>
+										<td>
+											<c:choose>
+												<c:when test="${soiDTO.sales_status eq 'requested' }">
+													신청중
+												</c:when>
+												<c:when test="${soiDTO.sales_status eq 'accept' }">
+													진행중
+												</c:when>
+											</c:choose>
+										</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</form>

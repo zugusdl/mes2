@@ -29,15 +29,15 @@ function insertOrder() {
 		sopList.push(sopDTO);
 	}
 	
-	var jsonSopList = JSON.stringify(sopList);
-	console.log(order_date, jsonSopList);
+//	var jsonSopList = JSON.stringify(sopList);
+	console.log(order_date, sopList);
 	
-	if(jsonSopList != null) {
+	if(sopList != null) {
 		$.ajax({
 			url : "/platform/insertOrder",
 			method : "post",
 			data : JSON.stringify({
-					"sopList": JSON.parse(jsonSopList),
+					"sopList": sopList,
 					"order_date" : order_date
 					}),
 			contentType : 'application/json; charset=utf-8',
@@ -51,4 +51,9 @@ function insertOrder() {
 			}
 		});
 	}
+}
+
+function trRemove(ths) {
+	var $tr = $(ths).parents("tr");
+	$tr.remove();
 }

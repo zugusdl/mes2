@@ -2,6 +2,15 @@
 
 @charset "UTF-8";
 
+th {
+	text-align: center;
+	position: sticky;
+}
+
+td{
+	text-align: center;
+}
+
 .search {
 	display: flex;
 	justify-content: center;

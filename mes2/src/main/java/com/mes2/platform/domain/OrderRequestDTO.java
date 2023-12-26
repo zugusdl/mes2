@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class orderRequestDTO {
+public class OrderRequestDTO {
 	private String order_date;
 	private List<SopDTO> sopList;
 	

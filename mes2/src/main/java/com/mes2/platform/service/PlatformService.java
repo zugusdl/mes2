@@ -6,9 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
+import com.mes2.platform.domain.OrderDetailDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
-import com.mes2.platform.domain.orderRequestDTO;
+import com.mes2.platform.domain.OrderRequestDTO;
 
 public interface PlatformService {
 	// 로그인
@@ -21,5 +22,11 @@ public interface PlatformService {
 	public MdpDTO registProduct(String product_code) throws Exception;
 	
 	// 발주 신청
-	public void insertOrder(orderRequestDTO orDTO, HttpSession session) throws Exception;
+	public void insertOrder(OrderRequestDTO orDTO, HttpSession session) throws Exception;
+	
+	// 주문 목록 조회
+	public List<SoiDTO> getOrderList(String company_code) throws Exception;
+	
+	// 주문 상세 조회
+	public List<OrderDetailDTO> getOrderDetail(String order_code) throws Exception;
 }

@@ -6,6 +6,7 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.domain.OrderDetailDTO;
 
 public interface PlatformDAO {
 	// 로그인
@@ -20,6 +21,12 @@ public interface PlatformDAO {
 	// 발주 신청
 	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList);
 	
-	// 금일 주문건 개수
-	public int countTodayOrder(String todayDate) throws Exception;
+	// 금일 마지막 주문번호
+	public String countTodayOrder(String todayDate) throws Exception;
+	
+	// 주문 목록 조회
+	public List<SoiDTO> getOrderList(String company_code) throws Exception;
+	
+	// 주문 상세 조회
+	public List<OrderDetailDTO> getOrderDetail(String order_code) throws Exception;
 }

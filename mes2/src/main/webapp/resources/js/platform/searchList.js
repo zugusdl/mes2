@@ -40,7 +40,8 @@ function registProduct() {
 			"<td><input type='hidden' name='name' value='"+name+"'>"+name+"</td>" +
 			"<td><input type='hidden' name='price' value='"+price+"'>"+formattedPrice+"원</td>" +
 			"<td><input type='hidden' name='sales_quantity' value='"+sales_quantity+"'>"+sales_quantity+"EA</td>" +
-			"<td>"+sum+"원</td></tr>"
+			"<td>"+sum+"원</td>" +
+			"<td><button type='button' onclick='trRemove(this);' class='btn btn-secondary'>x</button></td></tr>"
 		);
 		window.close();
 

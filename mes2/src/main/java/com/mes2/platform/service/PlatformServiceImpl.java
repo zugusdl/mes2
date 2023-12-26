@@ -15,9 +15,10 @@ import org.springframework.stereotype.Service;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
+import com.mes2.platform.domain.OrderDetailDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
-import com.mes2.platform.domain.orderRequestDTO;
+import com.mes2.platform.domain.OrderRequestDTO;
 import com.mes2.platform.persistence.PlatformDAO;
 
 @Service
@@ -51,7 +52,7 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 발주 신청
 	@Override
-	public void insertOrder(orderRequestDTO orDTO, HttpSession session) throws Exception {
+	public void insertOrder(OrderRequestDTO orDTO, HttpSession session) throws Exception {
 		String order_code = makeOrderCode(session);
 		Date order_date = Date.valueOf(orDTO.getOrder_date());
 		
@@ -75,11 +76,28 @@ public class PlatformServiceImpl implements PlatformService {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 		String dtfToday = today.format(dtf);
 		
-		// 인덱스 계산(디비에 오늘날짜 포함된 행이 있는지?)
-		int index = pdao.countTodayOrder(dtfToday) + 1;
+		// 금일 마지막 주문번호
+		String lastOrder_code = pdao.countTodayOrder(dtfToday);
+		
+		// 마지막 주문번호 인덱스 계산
+		int index = Integer.parseInt(lastOrder_code.substring(lastOrder_code.lastIndexOf("-")+1)) + 1;
 		
 		String order_code = "OD-" + dtfToday + "-" + session.getAttribute("company_code") + "-" + index;
 		return order_code;
+	}
+
+	// 주문 목록 조회
+	@Override
+	public List<SoiDTO> getOrderList(String company_code) throws Exception {
+		logger.debug("S: getOrderList() 호출");
+		return pdao.getOrderList(company_code);
+	}
+
+	// 주문 상세 조회
+	@Override
+	public List<OrderDetailDTO> getOrderDetail(String order_code) throws Exception {
+		logger.debug("S: getOrderDetail() 호출");
+		return pdao.getOrderDetail(order_code);
 	}
 
 

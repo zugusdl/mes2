@@ -29,9 +29,9 @@
 		where product_code = #{product_code}
 	</select>
 	
-	<!-- 금일 주문건 개수 -->
-	<select id="countTodayOrder" resultType="int">
-		select count(*) from sales_order_info 
+	<!-- 금일 주문건 중 마지막 주문번호 -->
+	<select id="countTodayOrder" resultType="String">
+		select max(order_code) from sales_order_info 
 		where order_code like concat('%', #{todayDate}, '%')
 	</select>
 	
@@ -49,4 +49,18 @@
 		(#{sopDTO.order_code}, #{sopDTO.product_code}, #{sopDTO.sales_quantity})
 		</foreach>	
 	</insert>
+	
+	<!-- 주문(발주) 목록 조회 -->
+	<select id="getOrderList" resultType="com.mes2.platform.domain.SoiDTO">
+		select * from sales_order_info 
+		where company_code = #{company_code}
+	</select>
+	
+	<!-- 주문 상세 조회(주문 품목 조회) -->
+	<select id="getOrderDetail" resultType="com.mes2.platform.domain.OrderDetailDTO">
+		SELECT sop.product_code, name, price, sales_quantity 
+		FROM sales_order_product sop JOIN meta_data_product mdp 
+		ON sop.product_code = mdp.product_code 
+		WHERE order_code = #{order_code}
+	</select>
 </mapper>

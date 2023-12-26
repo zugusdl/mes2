@@ -14,7 +14,7 @@ public class SoiDTO {
 	private Date order_date;
 	private Date update_date;
 	private Date acceptance_date;
-	private int user_id;
+	private String user_id;
 	private String sales_status;
 	
 	@Override

@@ -15,6 +15,7 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.domain.OrderDetailDTO;
 
 @Repository
 public class PlatformDAOImpl implements PlatformDAO {
@@ -62,11 +63,25 @@ public class PlatformDAOImpl implements PlatformDAO {
 		sqlSession.insert(NAMESPACE + ".insertOrderProduct", sopList);
 	}
 	
-	// 금일 주문건 개수
+	// 금일 마지막 주문번호(주문번호에 사용)
 	@Override
-	public int countTodayOrder(String todayDate) throws Exception {
+	public String countTodayOrder(String todayDate) throws Exception {
 		logger.debug("DAO: countTodayOrder() 호출");
 		return sqlSession.selectOne(NAMESPACE + ".countTodayOrder", todayDate);
+	}
+
+	// 주문 목록 조회
+	@Override
+	public List<SoiDTO> getOrderList(String company_code) throws Exception {
+		logger.debug("DAO: getOrderList() 호출");
+		return sqlSession.selectList(NAMESPACE + ".getOrderList", company_code);
+	}
+
+	// 주문 상세 조회
+	@Override
+	public List<OrderDetailDTO> getOrderDetail(String order_code) throws Exception {
+		logger.debug("DAO: getOrderDetail() 호출");
+		return sqlSession.selectList(NAMESPACE + ".getOrderDetail", order_code);
 	}
 
 

@@ -25,9 +25,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
+import com.mes2.platform.domain.OrderDetailDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
-import com.mes2.platform.domain.orderRequestDTO;
+import com.mes2.platform.domain.OrderRequestDTO;
 import com.mes2.platform.service.PlatformService;
 import com.mes2.platform.service.PlatformServiceImpl;
 
@@ -68,12 +69,16 @@ public class PlatformController {
 
 	// 발주(주문) 목록 페이지
 	@GetMapping(value="/orderList")
-	public String orderListGET(HttpSession session) throws Exception {
+	public String orderListGET(HttpSession session, Model model) throws Exception {
 		String company_code = (String) session.getAttribute("company_code");
 		
 		if (company_code == null) {
 			return "redirect:/platform/login";
 		}
+		
+		// 주문 목록 조회
+		List<SoiDTO> soiDTO = pService.getOrderList(company_code);
+		model.addAttribute("soiDTO", soiDTO);
 		
 		return "/platform/orderList";
 	}
@@ -101,7 +106,7 @@ public class PlatformController {
 	
 	// 발주(주문) 추가 페이지
 	@PostMapping(value="/insertOrder")
-	public String insertOrderPOST(@RequestBody orderRequestDTO orDTO, HttpSession session) throws Exception {
+	public String insertOrderPOST(@RequestBody OrderRequestDTO orDTO, HttpSession session) throws Exception {
 		logger.debug("insertOrderPOST() 호출");
 		logger.debug("@@@@orDTO" + orDTO.toString());
 		pService.insertOrder(orDTO, session);
@@ -120,5 +125,14 @@ public class PlatformController {
 		logger.debug("searchListPOST() 호출");
 		List<MdpDTO> mdpDTO = pService.inqueryProduct(searchType, search);
 		model.addAttribute("mdpDTO", mdpDTO);
+	}
+	
+	// 주문 상세 페이지
+	@GetMapping(value="orderDetail")
+	public void orderDetailGet(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
+		logger.debug("orderDetail() 호출");
+		List<OrderDetailDTO> odDTO = pService.getOrderDetail(order_code);
+		model.addAttribute("order_date", order_date);
+		model.addAttribute("odDTO", odDTO);
 	}
 }
