@@ -16,8 +16,9 @@
 
 	<!--dataSource(CP) : 디비연결 -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
-	</bean>
+      <constructor-arg ref="hikariConfig" />
+   </bean>
+
 	<!-- dataSource(CP): 디비연결 -->
 
 	<!-- sqlSessionFactory: 디비연결, 데이터처리(sql 실행, MyBatis 설정) -->

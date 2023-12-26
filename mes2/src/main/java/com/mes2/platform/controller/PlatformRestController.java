@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mes2.platform.domain.mdbDTO;
-import com.mes2.platform.domain.mdpDTO;
+import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.service.PlatformService;
 import com.mes2.platform.service.PlatformServiceImpl;
 
@@ -33,10 +32,12 @@ public class PlatformRestController {
 	@Inject
 	private PlatformService pService;
 	
-	@RequestMapping(value="/inqueryProduct", method=RequestMethod.GET, produces = "application/json; charset=utf8")
-	public List<mdpDTO> inqueryProduct(@RequestParam("searchType") String searchType, @RequestParam("search") String search) throws Exception {
-		logger.debug("inqueryProduct() 호출");
-		List<mdpDTO> mdpDTO = pService.inqueryProduct(searchType, search);
+	@PostMapping(value ="/registProduct")
+	public MdpDTO registProduct(@RequestParam("product_code") String product_code) throws Exception {
+		logger.debug("registProduct() 호출");
+		logger.debug("product_code" + product_code);
+		MdpDTO mdpDTO = pService.registProduct(product_code);
+		logger.debug("@@@@@mdpDTO@@@@@" +  mdpDTO);
 		return mdpDTO;
 	}
 	

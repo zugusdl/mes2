@@ -11,8 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.mes2.platform.domain.mdbDTO;
-import com.mes2.platform.domain.mdpDTO;
+import com.mes2.platform.domain.MdbDTO;
+import com.mes2.platform.domain.MdpDTO;
+import com.mes2.platform.domain.SoiDTO;
+import com.mes2.platform.domain.SopDTO;
 
 @Repository
 public class PlatformDAOImpl implements PlatformDAO {
@@ -24,22 +26,48 @@ public class PlatformDAOImpl implements PlatformDAO {
 	
 	private static final String NAMESPACE = "com.mes2.mapper.platformMapper";
 
+	// 로그인
 	@Override
-	public mdbDTO customerLogin(mdbDTO mdto) throws Exception {
+	public MdbDTO customerLogin(MdbDTO mdto) throws Exception {
 		logger.debug("DAO: customerLogin() 호출");
 		return sqlSession.selectOne(NAMESPACE + ".login", mdto);
 	}
 
+	// 발주 신청 시 품목 목록 조회
 	@Override
-	public List<mdpDTO> inqueryProduct(String searchType, String search) throws Exception {
+	public List<MdpDTO> inqueryProduct(String searchType, String search) throws Exception {
 		logger.debug("DAO: inqueryProduct() 호출");
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("searchType", searchType);
 		searchMap.put("search", search);
 		
 		logger.debug("DAO: inqueryProduct() 종료");
-		logger.debug("DAO DAO DAO : "+sqlSession.selectList(NAMESPACE + ".inqueryProduct", searchMap).getClass());
 		return sqlSession.selectList(NAMESPACE + ".inqueryProduct", searchMap);
 	}
+
+	// 품목 하나 등록
+	@Override
+	public MdpDTO registProduct(String product_code) throws Exception {
+		logger.debug("DAO: registProduct() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".selectProduct", product_code);
+	}
+
+	// 발주 신청
+	@Override
+	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList) {
+		logger.debug("DAO: insertOrder() 호출");
+		logger.debug("@@@ soiDTO: " + soiDTO.toString());
+		logger.debug("@@@ sopList: " + sopList.toString());
+		sqlSession.insert(NAMESPACE + ".insertOrder", soiDTO);
+		sqlSession.insert(NAMESPACE + ".insertOrderProduct", sopList);
+	}
+	
+	// 금일 주문건 개수
+	@Override
+	public int countTodayOrder(String todayDate) throws Exception {
+		logger.debug("DAO: countTodayOrder() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".countTodayOrder", todayDate);
+	}
+
 
 }

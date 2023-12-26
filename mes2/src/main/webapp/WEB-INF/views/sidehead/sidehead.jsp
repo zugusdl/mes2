@@ -6,7 +6,7 @@
   <head>
     <meta charset="UTF-8">
     <title> Drop Down Sidebar Menu | CodingLab </title>
-    <link rel="stylesheet" href="../../../resources/css/sidehead/sideheadstyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidehead/sideheadstyle.css">
     <!-- Boxiocns CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
@@ -155,7 +155,7 @@
     </div>
   </section>
 
-  <script src="/resources/js/sidehead/sideheadscript.js"></script> <!-- 사이드바 script -->
+  <script src="${pageContext.request.contextPath}/resources/js/sidehead/sideheadscript.js"></script> <!-- 사이드바 script -->
 
   <!-- 부트스트랩 js 추가-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
