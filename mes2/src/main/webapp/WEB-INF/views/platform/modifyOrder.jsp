@@ -23,15 +23,14 @@
 			<h1>발주 수정</h1>
 			<form method="post">
 				<span class="list-btn2">
-<!-- 					<button type="button" class="btn btn-secondary" id="addBtn" onclick="openProductList2()">품목 추가</button> -->
-					<button type="button" class="btn btn-secondary" onclick="modifyOrder();">수정</button>
-					<button type="button" class="btn btn-secondary">취소</button>
+					<button type="button" class="btn btn-secondary" onclick="modifyOrder('${soiList[0].order_code}');">수정하기</button>
+					<button type="button" class="btn btn-secondary" onclick="cancleModify();">수정 취소</button>
 				</span> <br>
-				납품 요청일: <input type="date" id="dtIp" name="order_date" min="${minDay }" max="${maxDay }" value="${order_date }"/><br>
+				납품 요청일: <input type="date" id="dtIp" name="order_date" min="${minDay }" max="${maxDay }" value="${order_date }" readonly/><br>
 				발주 품목 <br>
 				<div class="list">
 					<div class="list-box">
-						<table class="table table-hover" >
+						<table class="table table-hover">
 							<thead>
 								<tr class="table-success">
 									<th scope="col">품목코드</th>
@@ -42,9 +41,9 @@
 									<th scope="col"></th>
 								</tr>
 							</thead>
-							<tbody id="insertProductList">
-								<c:forEach var="soiDTO" items="${soiDTO }">
-									<c:forEach var="sopList" items="${soiDTO.sopList }">
+							<tbody id="modifyProductList">
+								<c:forEach var="soiList" items="${soiList }">
+									<c:forEach var="sopList" items="${soiList.sopList }">
 										<tr>
 											<td><input type="hidden" name="product_code" value="${sopList.product_code }">${sopList.product_code }</td>
 											<td>${sopList.mdpDTO.name }</td>

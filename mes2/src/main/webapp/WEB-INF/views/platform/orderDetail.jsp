@@ -22,8 +22,8 @@
 			<hr>
 			<h1>상세 조회</h1>
 				<span class="list-btn2">
-					<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${soiDTO[0].order_code}', '${soiDTO[0].order_date }', '${soiDTO[0].sales_status }')">수정하기</button>
-					<button type="button" class="btn btn-secondary" id="addBtn" onclick="deleteOrder('${soiDTO[0].order_code}', '${soiDTO[0].sales_status }')">취소하기</button>
+					<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${soiList[0].order_code}', '${soiList[0].order_date }', '${soiList[0].sales_status }')">발주 수정</button>
+					<button type="button" class="btn btn-secondary" id="addBtn" onclick="deleteOrder('${soiList[0].order_code}', '${soiList[0].sales_status }')">발주 취소</button>
 				</span> <br>
 				납품 요청일: <input type="date" id="dtIp" name="order_date" value="${order_date }" readonly/><br>
 				<br>
@@ -40,9 +40,8 @@
 								</tr>
 							</thead>
 							<tbody>
-<%-- 								<c:forEach var="i" begin="0" end="${soiDTO.length - 1 }" step="1"> --%>
-								<c:forEach var="soiDTO" items="${soiDTO }">
-									<c:forEach var="sopList" items="${soiDTO.sopList }">
+								<c:forEach var="soiList" items="${soiList }">
+									<c:forEach var="sopList" items="${soiList.sopList }">
 									<tr>
 										<td>${sopList.product_code }</td>
 										<td>${sopList.mdpDTO.name }</td>

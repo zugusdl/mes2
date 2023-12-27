@@ -1,5 +1,6 @@
 /* Created by Tivotal */
 
+// 수정하기
 function modifyOrder(order_code, order_date, sales_status) {
 	console.log(sales_status);
 
@@ -22,6 +23,8 @@ function modifyOrder(order_code, order_date, sales_status) {
 		}
 	});
 }
+
+// 취소하기
 function deleteOrder(order_code, sales_status) {
 	console.log(sales_status);
 
@@ -37,14 +40,16 @@ function deleteOrder(order_code, sales_status) {
 		return false;
 	}
 	
-	$.ajax({
-		url : "/platform/deleteOrder?order_code=" + order_code,
-		method : "GET",
-		success : function(response) {
-			location.reload();
-		},
-		error : function() {
-			alert("fail");
-		}
-	}); // 굳이 ajax 안 쓰고 location.href로 delete 페이지로 보내도 될듯?? 컨트롤러에서 redirect
+	location.href = "/platform/deleteOrder?order_code=" + order_code;
+	
+//	$.ajax({
+//		url : "/platform/deleteOrder?order_code=" + order_code,
+//		method : "GET",
+//		success : function(response) {
+//			location.reload();
+//		},
+//		error : function() {
+//			alert("fail");
+//		}
+//	}); // 굳이 ajax 안 쓰고 location.href로 delete 페이지로 보내도 될듯?? 컨트롤러에서 redirect
 }

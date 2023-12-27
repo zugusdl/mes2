@@ -105,6 +105,13 @@ public class PlatformServiceImpl implements PlatformService {
 		return pdao.getOrderDetail(order_code);
 	}
 
+	// 주문 수정
+	@Override
+	public void modifyOrder(List<SopDTO> sopList) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 	// 주문 삭제
 	@Override
 	public void deleteOrder(String order_code) throws Exception {

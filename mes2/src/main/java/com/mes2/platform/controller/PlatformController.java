@@ -130,8 +130,8 @@ public class PlatformController {
 	@GetMapping(value="/orderDetail")
 	public void orderDetailGET(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
 		logger.debug("orderDetailGET() 호출");
-		List<SoiDTO> soiDTO = pService.getOrderDetail(order_code);
-		model.addAttribute("soiDTO", soiDTO);
+		List<SoiDTO> soiList = pService.getOrderDetail(order_code);
+		model.addAttribute("soiList", soiList);
 		model.addAttribute("order_date", order_date);
 	}
 	
@@ -139,17 +139,18 @@ public class PlatformController {
 	@GetMapping(value="/modifyOrder")
 	public void orderModifyGET(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
 		logger.debug("orderModifyGET() 호출");
-		List<SoiDTO> soiDTO = pService.getOrderDetail(order_code);
-		model.addAttribute("soiDTO", soiDTO);
+		List<SoiDTO> soiList = pService.getOrderDetail(order_code);
+		model.addAttribute("soiList", soiList);
 		model.addAttribute("order_date", order_date);
 	}
 	
 	// 주문 수정 페이지
 	@PostMapping(value="/modifyOrder")
-	public String orderModifyPOST(@RequestBody OrderRequestDTO orDTO, HttpSession session) throws Exception {
+	public void orderModifyPOST(@RequestBody List<SopDTO> sopList) throws Exception {
 		logger.debug("orderModifyPOST() 호출");
-		logger.debug("@@@@orDTO" + orDTO.toString());
-		return "";
+		logger.debug("@@@@sopList" + sopList.toString());
+		pService.modifyOrder(sopList);
+//		return "";
 	}
 	
 	// 주문 삭제 페이지

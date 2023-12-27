@@ -29,6 +29,9 @@ public interface PlatformService {
 	// 주문 상세 조회
 	public List<SoiDTO> getOrderDetail(String order_code) throws Exception;
 	
+	// 주문 수정
+	public void modifyOrder(List<SopDTO> sopList) throws Exception;
+	
 	// 주문 삭제
 	public void deleteOrder(String order_code) throws Exception;
 }

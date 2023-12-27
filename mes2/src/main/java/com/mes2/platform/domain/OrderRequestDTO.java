@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class OrderRequestDTO {
 	private String order_date;
+	private String order_code;
 	private List<SopDTO> sopList;
 	
 	@Override
