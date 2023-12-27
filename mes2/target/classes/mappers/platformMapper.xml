@@ -4,6 +4,13 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.mes2.mapper.platformMapper">
+	<resultMap type="com.mes2.platform.domain.SoiDTO" id="order">
+		<result property="order_code" column="order_code" />
+		<result property="order_date" column="order_date" />
+		<result property="sales_status" column="sales_status" />
+		<collection property="sopList" resultMap="detail" />
+	</resultMap>
+	
 	<resultMap type="com.mes2.platform.domain.SopDTO" id="detail">
 		<result property="product_code" column="product_code" />
 		<result property="sales_quantity" column="sales_quantity" />
@@ -69,10 +76,15 @@
 	</select>
 	
 	<!-- 주문 상세 조회(주문 품목 조회) -->
-	<select id="getOrderDetail" resultType="com.mes2.platform.domain.SopDTO" resultMap="detail">
-		SELECT sop.product_code, name, price, sales_quantity 
-		FROM sales_order_product sop JOIN meta_data_product mdp 
-		ON sop.product_code = mdp.product_code 
-		WHERE order_code = #{order_code}
+	<select id="getOrderDetail" resultType="com.mes2.platform.domain.SoiDTO" resultMap="order">
+		SELECT soi.order_code, soi.order_date, sales_status, sop.product_code, sop.sales_quantity, mdp.name, mdp.price
+		FROM sales_order_info soi 
+		JOIN sales_order_product sop
+		ON soi.order_code = sop.order_code
+		JOIN meta_data_product mdp
+		ON sop.product_code = mdp.product_code
+		WHERE soi.order_code = #{order_code}
 	</select>
+	
+	<!-- 주문 취소 -->
 </mapper>

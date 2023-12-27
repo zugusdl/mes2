@@ -1,5 +1,5 @@
 /* Created by Tivotal */
-function insertOrder() {
+function modifyOrder() {
 	var order_date = document.querySelector('[name="order_date"]').value;
 	var allProduct_code = document.querySelectorAll('[name="product_code"]');
 

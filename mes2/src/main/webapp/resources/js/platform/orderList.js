@@ -16,10 +16,10 @@ function insertOrder() {
 function getOrderDetail(order_code, order_date) {
 	$.ajax({
 		url : "/platform/orderDetail?order_code=" + order_code,
-		data : {
-				"order_date" : order_date
-				},
 		method : "GET",
+		data : {
+			"order_date" : order_date
+		},
 		success : function(response) {
 			$("#bottomContent").html(response);
 		},

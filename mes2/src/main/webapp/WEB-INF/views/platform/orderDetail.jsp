@@ -22,7 +22,8 @@
 			<hr>
 			<h1>상세 조회</h1>
 				<span class="list-btn2">
-					<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${order_code}', '${order_date }')">수정하기</button>
+					<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${soiDTO[0].order_code}', '${soiDTO[0].order_date }', '${soiDTO[0].sales_status }')">수정하기</button>
+					<button type="button" class="btn btn-secondary" id="addBtn" onclick="deleteOrder('${soiDTO[0].order_code}', '${soiDTO[0].sales_status }')">취소하기</button>
 				</span> <br>
 				납품 요청일: <input type="date" id="dtIp" name="order_date" value="${order_date }" readonly/><br>
 				<br>
@@ -39,14 +40,17 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="sopDTO" items="${sopDTO }">
+<%-- 								<c:forEach var="i" begin="0" end="${soiDTO.length - 1 }" step="1"> --%>
+								<c:forEach var="soiDTO" items="${soiDTO }">
+									<c:forEach var="sopList" items="${soiDTO.sopList }">
 									<tr>
-										<td>${sopDTO.product_code }</td>
-										<td>${sopDTO.mdpDTO.name }</td>
-										<td><fmt:formatNumber value="${sopDTO.mdpDTO.price }"/> 원</td>
-										<td>${sopDTO.sales_quantity }EA</td>										
-										<td><fmt:formatNumber value="${sopDTO.mdpDTO.price * sopDTO.sales_quantity }"/>원</td>										
+										<td>${sopList.product_code }</td>
+										<td>${sopList.mdpDTO.name }</td>
+										<td><fmt:formatNumber value="${sopList.mdpDTO.price }"/> 원</td>
+										<td>${sopList.sales_quantity }EA</td>										
+										<td><fmt:formatNumber value="${sopList.mdpDTO.price * sopList.sales_quantity }"/>원</td>										
 									</tr>
+									</c:forEach>
 								</c:forEach>
 							</tbody>
 						</table>

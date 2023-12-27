@@ -59,3 +59,11 @@ td{
 	gap: 20px;
 	flex-direction: column;
 }
+
+.deleteBtn {
+	border: none;
+	width: 20px;
+	height: 20px;
+	background-color: #afafaf;
+	border-radius: 5px;
+}

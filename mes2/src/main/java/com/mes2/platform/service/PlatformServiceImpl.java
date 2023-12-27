@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
-import com.mes2.platform.domain.OrderDetailDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
 import com.mes2.platform.domain.OrderRequestDTO;
@@ -80,9 +79,15 @@ public class PlatformServiceImpl implements PlatformService {
 		String lastOrder_code = pdao.countTodayOrder(dtfToday);
 		
 		// 마지막 주문번호 인덱스 계산
-		int index = Integer.parseInt(lastOrder_code.substring(lastOrder_code.lastIndexOf("-")+1)) + 1;
+		int index = 0;
 		
-		String order_code = "OD-" + dtfToday + "-" + session.getAttribute("company_code") + "-" + index;
+		if(lastOrder_code == null) {
+			index = 1;
+		} else {
+			index = Integer.parseInt(lastOrder_code.substring(lastOrder_code.lastIndexOf("-")+1)) + 1;
+		}
+		
+		String order_code = "ORD-" + dtfToday + "-" + session.getAttribute("company_code") + "-" + index;
 		return order_code;
 	}
 
@@ -95,10 +100,19 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 주문 상세 조회
 	@Override
-	public List<SopDTO> getOrderDetail(String order_code) throws Exception {
+	public List<SoiDTO> getOrderDetail(String order_code) throws Exception {
 		logger.debug("S: getOrderDetail() 호출");
 		return pdao.getOrderDetail(order_code);
 	}
+
+	// 주문 삭제
+	@Override
+	public void deleteOrder(String order_code) throws Exception {
+		logger.debug("S: deleteOrder() 호출");
+		pdao.deleteOrder(order_code);
+	}
+	
+	
 
 
 	

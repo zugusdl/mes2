@@ -15,7 +15,6 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
-import com.mes2.platform.domain.OrderDetailDTO;
 
 @Repository
 public class PlatformDAOImpl implements PlatformDAO {
@@ -79,10 +78,16 @@ public class PlatformDAOImpl implements PlatformDAO {
 
 	// 주문 상세 조회
 	@Override
-	public List<SopDTO> getOrderDetail(String order_code) throws Exception {
+	public List<SoiDTO> getOrderDetail(String order_code) throws Exception {
 		logger.debug("DAO: getOrderDetail() 호출");
 		return sqlSession.selectList(NAMESPACE + ".getOrderDetail", order_code);
 	}
 
+	// 주문 삭제
+	@Override
+	public void deleteOrder(String order_code) throws Exception {
+		logger.debug("DAO: deleteOrder() 호출");
+		sqlSession.delete(NAMESPACE + ".deleteOrder", order_code);
+	}
 
 }

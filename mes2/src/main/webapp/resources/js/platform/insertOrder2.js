@@ -1,5 +1,5 @@
 /* Created by Tivotal */
-function insertOrder() {
+function insertOrder2() {
 	var order_date = document.querySelector('[name="order_date"]').value;
 	var allProduct_code = document.querySelectorAll('[name="product_code"]');
 
@@ -21,7 +21,7 @@ function insertOrder() {
 		var row = productTable.rows[i];
 		var sopDTO = {
 			product_code: row.querySelector('[name="product_code"]').value,
-			name: row.querySelector('[name="name"]').value,
+//			name: row.querySelector('[name="name"]').value,
 			price: row.querySelector('[name="price"]').value,
 			sales_quantity: row.querySelector('[name="sales_quantity"]').value
 		};
@@ -51,6 +51,10 @@ function insertOrder() {
 			}
 		});
 	}
+}
+
+function cancleOrder() {
+	location.reload();
 }
 
 function trRemove(ths) {

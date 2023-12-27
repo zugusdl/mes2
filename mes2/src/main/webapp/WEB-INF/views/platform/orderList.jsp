@@ -39,14 +39,14 @@
 				</div>
 
 				<input type="text" name="search" placeholder="검색어를 입력하세요" />
-				<input type="submit" value="검색" />
+				<input type="submit" class="btn btn-secondary" value="검색" />
 			</form>
 
 			<!-- 표 -->
 			<div class="list">
 				<div class="list-btn">
-					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">추가</button>
-					<button type="button" class="btn btn-secondary" id="deletebtn">삭제</button>
+					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button>
+<!-- 					<button type="button" class="btn btn-secondary" id="deletebtn">삭제</button> -->
 				</div>
 
 				<div class="list-box">
@@ -54,7 +54,7 @@
 						<table class="table table-hover">
 							<thead>
 								<tr class="table-success">
-									<th></th>
+<!-- 									<th></th> -->
 									<th scope="col">주문번호</th>
 									<th scope="col">발주일자</th>
 									<th scope="col">납품요청일</th>
@@ -64,8 +64,8 @@
 							<tbody>
 								<c:forEach var="soiDTO" items="${soiDTO }">
 									<tr>
-										<td scope="row"><input type="checkbox" class="ck" /></td>
-										<td onclick="getOrderDetail('${soiDTO.order_code }','${soiDTO.order_date }')">${soiDTO.order_code }</td>
+<!-- 										<td scope="row"><input type="checkbox" class="ck" /></td> -->
+										<td onclick="getOrderDetail('${soiDTO.order_code }','${soiDTO.order_date }')" class="selectOrder">${soiDTO.order_code }</td>
 										<td>${soiDTO.request_date }</td>
 										<td>${soiDTO.order_date }</td>
 										<td>

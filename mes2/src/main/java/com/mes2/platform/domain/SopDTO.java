@@ -15,11 +15,13 @@ public class SopDTO {
 	private String product_status; // 생산 진행상태
 	private String processing_reg; // 처리형태(출하지시, 생산지시, 복합처리)
 	private MdpDTO mdpDTO; // 품목코드에 해당하는 품목 정보(품목명, 단가 등)
-
 	@Override
 	public String toString() {
-		return "SopDTO [sales_product_index=" + sales_product_index + ", sales_code=" + sales_code + ", product_code="
-				+ product_code + ", sales_quantity=" + sales_quantity + ", product_status=" + product_status
-				+ ", processing_reg=" + processing_reg + ", order_code=" + order_code + "]";
+		return "SopDTO [sales_product_index=" + sales_product_index + ", sales_code=" + sales_code + ", order_code="
+				+ order_code + ", product_code=" + product_code + ", sales_quantity=" + sales_quantity
+				+ ", product_status=" + product_status + ", processing_reg=" + processing_reg + ", mdpDTO=" + mdpDTO
+				+ "]";
 	}
+
+	
 }

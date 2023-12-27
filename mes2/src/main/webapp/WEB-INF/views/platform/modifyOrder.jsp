@@ -13,7 +13,7 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/orderModify.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/modifyOrder.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
@@ -23,8 +23,8 @@
 			<h1>발주 수정</h1>
 			<form method="post">
 				<span class="list-btn2">
-					<button type="button" class="btn btn-secondary" id="addBtn" onclick="openProductList()">품목 추가</button>
-					<button type="button" class="btn btn-secondary" onclick="insertOrder(${order_code});">수정</button>
+<!-- 					<button type="button" class="btn btn-secondary" id="addBtn" onclick="openProductList2()">품목 추가</button> -->
+					<button type="button" class="btn btn-secondary" onclick="modifyOrder();">수정</button>
 					<button type="button" class="btn btn-secondary">취소</button>
 				</span> <br>
 				납품 요청일: <input type="date" id="dtIp" name="order_date" min="${minDay }" max="${maxDay }" value="${order_date }"/><br>
@@ -43,15 +43,17 @@
 								</tr>
 							</thead>
 							<tbody id="insertProductList">
-								<c:forEach var="sopDTO" items="${sopDTO }">
-									<tr>
-										<td>${sopDTO.product_code }</td>
-										<td>${sopDTO.mdpDTO.name }</td>
-										<td><fmt:formatNumber value="${sopDTO.mdpDTO.price }"/> 원</td>
-										<td>${sopDTO.sales_quantity }EA</td>										
-										<td><fmt:formatNumber value="${sopDTO.mdpDTO.price * sopDTO.sales_quantity }"/>원</td>
-										<td><button type='button' onclick='trRemove(this);' class='btn btn-secondary'>x</button></td>								
-									</tr>
+								<c:forEach var="soiDTO" items="${soiDTO }">
+									<c:forEach var="sopList" items="${soiDTO.sopList }">
+										<tr>
+											<td><input type="hidden" name="product_code" value="${sopList.product_code }">${sopList.product_code }</td>
+											<td>${sopList.mdpDTO.name }</td>
+											<td><input type="hidden" name="price" value="${sopList.mdpDTO.price }"><fmt:formatNumber value="${sopList.mdpDTO.price }"/>원</td>
+											<td><input type="number" name="sales_quantity" step="100" min="300" oninput="cal(this);" value="${sopList.sales_quantity }">EA</td>
+											<td><input type="text" id="s${sopList.product_code }" value="<fmt:formatNumber value="${sopList.mdpDTO.price * sopList.sales_quantity }"/>"readonly>원</td>
+											<td><button type="button" onclick="trRemove(this);" class="deleteBtn">x</button></td>
+										</tr>
+									</c:forEach>
 								</c:forEach>
 							</tbody>
 						</table>

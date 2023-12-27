@@ -6,7 +6,6 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
-import com.mes2.platform.domain.OrderDetailDTO;
 
 public interface PlatformDAO {
 	// 로그인
@@ -28,5 +27,8 @@ public interface PlatformDAO {
 	public List<SoiDTO> getOrderList(String company_code) throws Exception;
 	
 	// 주문 상세 조회
-	public List<SopDTO> getOrderDetail(String order_code) throws Exception;
+	public List<SoiDTO> getOrderDetail(String order_code) throws Exception;
+	
+	// 주문 삭제
+	public void deleteOrder(String order_code) throws Exception;
 }

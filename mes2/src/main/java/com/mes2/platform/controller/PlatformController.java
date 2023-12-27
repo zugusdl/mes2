@@ -25,7 +25,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
-import com.mes2.platform.domain.OrderDetailDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
 import com.mes2.platform.domain.OrderRequestDTO;
@@ -131,18 +130,32 @@ public class PlatformController {
 	@GetMapping(value="/orderDetail")
 	public void orderDetailGET(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
 		logger.debug("orderDetailGET() 호출");
-		List<SopDTO> sopDTO = pService.getOrderDetail(order_code);
-		model.addAttribute("order_code", order_code);
+		List<SoiDTO> soiDTO = pService.getOrderDetail(order_code);
+		model.addAttribute("soiDTO", soiDTO);
 		model.addAttribute("order_date", order_date);
-		model.addAttribute("sopDTO", sopDTO);
 	}
 	
 	// 주문 수정 페이지
 	@GetMapping(value="/modifyOrder")
 	public void orderModifyGET(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
 		logger.debug("orderModifyGET() 호출");
-		List<SopDTO> sopDTO = pService.getOrderDetail(order_code);
+		List<SoiDTO> soiDTO = pService.getOrderDetail(order_code);
+		model.addAttribute("soiDTO", soiDTO);
 		model.addAttribute("order_date", order_date);
-		model.addAttribute("sopDTO", sopDTO);
+	}
+	
+	// 주문 수정 페이지
+	@PostMapping(value="/modifyOrder")
+	public String orderModifyPOST(@RequestBody OrderRequestDTO orDTO, HttpSession session) throws Exception {
+		logger.debug("orderModifyPOST() 호출");
+		logger.debug("@@@@orDTO" + orDTO.toString());
+		return "";
+	}
+	
+	// 주문 삭제 페이지
+	@GetMapping(value="/deleteOrder")
+	public void deleteOrderGET(@RequestParam("order_code") String order_code) throws Exception {
+		logger.debug("deleteOrder() 호출");
+		pService.deleteOrder(order_code);
 	}
 }

@@ -22,14 +22,14 @@
 	<div class="container2">
 		<h3 id="h3">발주 품목 등록</h3>
 		<section class="section1">
-			<form method="post" class="search">
+			<form method="post" class="search" id="searchForm">
 				<select name="searchType" id="searchType">
 					<option value="default">구분</option>
 					<option value="품목코드">품목코드</option>
 					<option value="품목명">품목명</option>
-				</select> <input type="text" name="search" id="search"
-					placeholder="검색어를 입력하세요">
-				<button type="submit" class="btn btn-secondary">조회</button>
+				</select>
+				<input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
+				<button type="button" class="btn btn-secondary" onclick="searchProduct();">조회</button>
 			</form>
 
 			<!-- 표 -->
@@ -46,21 +46,21 @@
 										<th scope="col">형상정보</th>
 										<th scope="col">품목명</th>
 										<th scope="col">단가</th>
-										<th scope="col">수량</th>
-										<th scope="col">합계</th>
+<!-- 										<th scope="col">수량</th> -->
+<!-- 										<th scope="col">합계</th> -->
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach var="mdpDTO" items="${mdpDTO }" varStatus="loop">
-										<tr>
-											<td scope="row"><input type="radio" name="idx" value="${loop.index}"></td>
-											<td><input type="hidden" name="product_code${loop.index}" value="${mdpDTO.product_code}">${mdpDTO.product_code}</td>
-											<td><input type="hidden" name="image${loop.index}" ><img alt="" src=""></td>
-											<td><input type="hidden" name="name${loop.index}" value="${mdpDTO.name}">${mdpDTO.name}</td>
-											<td><input type="hidden" name="price${loop.index}" value="${mdpDTO.price}"><fmt:formatNumber value="${mdpDTO.price}" />원</td>
-											<td><input type="number" name="sales_quantity${loop.index}" id="sales_quantity${loop.index}"  class="pQuantity" step="100" min="100"></td>
-											<td><input type="text" name="sum${loop.index}" id="sum${loop.index}" style="width: 150px" readonly>원</td>
-										</tr>
+											<tr>
+												<td scope="row"><input type="radio" name="idx" value="${loop.index}"></td>
+												<td><input type="hidden" name="product_code${loop.index}" value="${mdpDTO.product_code}">${mdpDTO.product_code}</td>
+												<td><input type="hidden" name="image${loop.index}" ><img alt="" src=""></td>
+												<td><input type="hidden" name="name${loop.index}" value="${mdpDTO.name}">${mdpDTO.name}</td>
+												<td><input type="hidden" name="price${loop.index}" value="${mdpDTO.price}"><fmt:formatNumber value="${mdpDTO.price}" />원</td>
+<%-- 												<td><input type="number" name="sales_quantity${loop.index}" id="sales_quantity${loop.index}"  class="pQuantity" step="100" min="300"></td> --%>
+<%-- 												<td><input type="text" name="sum${loop.index}" id="sum${loop.index}" style="width: 150px" readonly>원</td> --%>
+											</tr>
 									</c:forEach>
 								</tbody>
 							</table>
