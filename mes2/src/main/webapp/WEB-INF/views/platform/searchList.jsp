@@ -37,7 +37,6 @@
 				<div class="list-box">
 					<form class="list-form">
 						<c:if test="${!empty mdpDTO }">
-							<!-- ajax로 데이터 담아서 해당 데이터를 orderList에 html로 추가? -->
 							<table class="table table-hover">
 								<thead>
 									<tr class="table-success">
@@ -46,8 +45,6 @@
 										<th scope="col">형상정보</th>
 										<th scope="col">품목명</th>
 										<th scope="col">단가</th>
-<!-- 										<th scope="col">수량</th> -->
-<!-- 										<th scope="col">합계</th> -->
 									</tr>
 								</thead>
 								<tbody>
@@ -58,8 +55,6 @@
 												<td><input type="hidden" name="image${loop.index}" ><img alt="" src=""></td>
 												<td><input type="hidden" name="name${loop.index}" value="${mdpDTO.name}">${mdpDTO.name}</td>
 												<td><input type="hidden" name="price${loop.index}" value="${mdpDTO.price}"><fmt:formatNumber value="${mdpDTO.price}" />원</td>
-<%-- 												<td><input type="number" name="sales_quantity${loop.index}" id="sales_quantity${loop.index}"  class="pQuantity" step="100" min="300"></td> --%>
-<%-- 												<td><input type="text" name="sum${loop.index}" id="sum${loop.index}" style="width: 150px" readonly>원</td> --%>
 											</tr>
 									</c:forEach>
 								</tbody>
@@ -72,14 +67,7 @@
 			</div>
 		</section>
 	</div>
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-		crossorigin="anonymous">
-		
-	</script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/platform/searchList.js"></script>
+	
+	<script src="${pageContext.request.contextPath}/resources/js/platform/searchList.js"></script>
 </body>
 </html>

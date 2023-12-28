@@ -22,8 +22,13 @@
 			<hr>
 			<h1>상세 조회</h1>
 				<span class="list-btn2">
-					<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${soiList[0].order_code}', '${soiList[0].order_date }', '${soiList[0].sales_status }')">발주 수정</button>
-					<button type="button" class="btn btn-secondary" id="addBtn" onclick="deleteOrder('${soiList[0].order_code}', '${soiList[0].sales_status }')">발주 취소</button>
+					<c:if test="${soiList[0].sales_status eq 'requested'}">
+						<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${soiList[0].order_code}', '${soiList[0].order_date }', '${soiList[0].sales_status }');">발주 수정</button>
+						<button type="button" class="btn btn-secondary" id="addBtn" onclick="deleteOrder('${soiList[0].order_code}', '${soiList[0].sales_status }');">발주 취소</button>
+					</c:if>
+					<c:if test="${soiList[0].sales_status ne 'requested'}">
+						<button type="button" class="btn btn-secondary" id="addBtn" onclick="completeOrder('${soiList[0].order_code}');">수령 완료</button>
+					</c:if>
 				</span> <br>
 				납품 요청일: <input type="date" id="dtIp" name="order_date" value="${order_date }" readonly/><br>
 				<br>
@@ -58,11 +63,6 @@
 		</section>
 	</div>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-		crossorigin="anonymous">
-	</script>
 	<script src="${pageContext.request.contextPath}/resources/js/platform/orderDetail.js"></script>
 </body>
 </html>

@@ -150,13 +150,25 @@ public class PlatformController {
 		logger.debug("orderModifyPOST() 호출");
 		logger.debug("@@@@sopList" + sopList.toString());
 		pService.modifyOrder(sopList);
-//		return "";
 	}
 	
 	// 주문 삭제 페이지
 	@GetMapping(value="/deleteOrder")
-	public void deleteOrderGET(@RequestParam("order_code") String order_code) throws Exception {
-		logger.debug("deleteOrder() 호출");
+	public String deleteOrderGET(@RequestParam("order_code") String order_code) throws Exception {
+		logger.debug("deleteOrderGET() 호출");
 		pService.deleteOrder(order_code);
+		return "redirect:/platform/orderList";
+	}
+	
+	// 완료 처리 페이지
+	@GetMapping(value="/completeOrder")
+	public void completeOrderGET(@RequestParam("order_code") String order_code) {
+		logger.debug("completeOrderGET()호출");
+	}
+	
+	// 완료 처리 페이지
+	@PostMapping(value="/completeOrder")
+	public void completeOrderPOST(@RequestParam("order_code") String order_code) {
+		logger.debug("completeOrderPOST()호출");
 	}
 }

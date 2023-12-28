@@ -1,6 +1,9 @@
 @charset "UTF-8";
 
 @charset "UTF-8";
+.body {
+	background-color: #fafafa;
+}
 
 th {
 	text-align: center;
@@ -11,34 +14,34 @@ td{
 	text-align: center;
 }
 
+.container2 {
+	padding: 10px;
+}
+
 .search {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 30px;
-	padding: 20px; /* 원래 2px */
-	margin-top: 40px;
+	padding: 5px; /* 원래 2px */
+	margin: 10px auto;
 	border: solid 2px #a2c6a8; /* 원래 없었음 */
 	border-radius: 10px;
 }
 
-.section2 {
+.section1 {
 	padding: 1px;
-	width: 1500px;
-	height: 500px;
-	/* margin: 0 auto; */
-	margin-top: 30px;
+	margin: 0 auto;
 }
 
 .list-box {
-/* 	width: 800px; */
-	height: 300px;
+	height: 450px;
 	margin: 0 auto;
 	overflow-y: auto; /* auto로 설정하여 필요할 때만 수직 스크롤바를 표시합니다 */
 	overflow-x: hidden; /* hidden으로 설정하여 수평 스크롤바를 숨깁니다 */
 }
 
-.list-btn2 {
+.list-btn {
 	display: flex;
 	justify-content: flex-end;
 	gap: 20px;
@@ -60,10 +63,62 @@ td{
 	flex-direction: column;
 }
 
-.deleteBtn {
+.content {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.pList {
+	margin-top: 10px;
+}
+
+.listTitle {
+	margin-left: 15px;
+	text-align: center;
+}
+
+.pCode {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+.pImage {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+.pName {
+	width: 300px;
+	display: inline-block;
+}
+
+.pPrice {
+	width: 100px;
+	display: inline-block;
+	text-align: center;
+}
+
+.pQuantity {
+	width: 80px;
+}
+
+
+
+.button {
 	border: none;
-	width: 20px;
-	height: 20px;
-	background-color: #afafaf;
-	border-radius: 5px;
+	background-color: #a2c6a8;
+	width: 80px;
+	height: 30px;
+	border-radius: 10px;
+}
+
+.regist {
+	margin-top: 10px;
+}
+
+.canvas {
+	display: flex;
+	justify-content: center;
 }

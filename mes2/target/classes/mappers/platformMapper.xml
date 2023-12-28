@@ -44,14 +44,22 @@
 	
 	<!-- 품목 하나 선택 -->
 	<select id="selectProduct" resultType="com.mes2.platform.domain.MdpDTO">
-		select * from meta_data_product 
-		where product_code = #{product_code}
+		SELECT * from meta_data_product 
+		WHERE product_code = #{product_code}
+	</select>
+	
+	<!-- 발주 공통코드 -->
+	<select id="getCommonCode" resultType="String">
+		SELECT code_group FROM common_code 
+		WHERE code_group_name = '발주'
 	</select>
 	
 	<!-- 금일 주문건 중 마지막 주문번호 -->
 	<select id="countTodayOrder" resultType="String">
-		select max(order_code) from sales_order_info 
-		where order_code like concat('%', #{todayDate}, '%')
+		SELECT order_code FROM sales_order_info 
+		WHERE order_code like concat('%', #{checkCode}, '%') 
+		ORDER BY sales_index DESC 
+		LIMIT 1
 	</select>
 	
 	<!-- 발주 신청 -->
@@ -86,5 +94,38 @@
 		WHERE soi.order_code = #{order_code}
 	</select>
 	
+	<!-- 주문번호에 해당하는 주문번호, 품목코드만 조회(수정할 때 사용) -->
+	<select id="getOrderProduct" resultType="com.mes2.platform.domain.SopDTO">
+		SELECT order_code, product_code FROM sales_order_product
+		WHERE order_code = #{order_code}
+	</select>
+	
+	<!-- 취소 품목 삭제 -->
+	<delete id="deleteOrderProduct">
+			DELETE FROM sales_order_product
+			WHERE order_code = #{order_code} AND product_code = #{product_code} AND product_status = 'requested'
+	</delete>
+	
+	<!-- 주문 수량 변경 -->
+	<update id="modifyOrder">
+<!-- 	    <foreach collection="list" item="sopDTO" separator=";"> -->
+	        UPDATE sales_order_product 
+	        SET sales_quantity = #{sales_quantity} 
+	        WHERE order_code = #{order_code} AND product_code = #{product_code} AND product_status = 'requested'
+<!-- 	    </foreach> -->
+	</update>
+
+	
+	<!-- 주문 수정 일자 업데이트 -->
+	<update id="updateOrderDate">
+		UPDATE sales_order_info 
+		SET update_date = now() 
+		WHERE order_code = #{order_code}
+	</update>
+	
 	<!-- 주문 취소 -->
+	<delete id="deleteOrder">
+		DELETE FROM sales_order_info 
+		WHERE order_code = #{order_code}
+	</delete>
 </mapper>

@@ -41,15 +41,4 @@ function deleteOrder(order_code, sales_status) {
 	}
 	
 	location.href = "/platform/deleteOrder?order_code=" + order_code;
-	
-//	$.ajax({
-//		url : "/platform/deleteOrder?order_code=" + order_code,
-//		method : "GET",
-//		success : function(response) {
-//			location.reload();
-//		},
-//		error : function() {
-//			alert("fail");
-//		}
-//	}); // 굳이 ajax 안 쓰고 location.href로 delete 페이지로 보내도 될듯?? 컨트롤러에서 redirect
 }

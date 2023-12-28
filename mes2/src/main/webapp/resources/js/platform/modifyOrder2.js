@@ -1,12 +1,15 @@
 /* Created by Tivotal */
 
 // 수정하기
-function modifyOrder(order_code) {
+function modifyOrder(order_code, sales_status) {
 	var allProduct_code = document.querySelectorAll('[name="product_code"]');
 
 	// 품목 1개 이상 선택 제어
 	if(allProduct_code.length === 0) {
-		alert('품목추가 버튼을 통해 품목을 1개 이상 선택하세요');
+		Swal.fire({
+			text: "품목추가 버튼을 통해 품목을 1개 이상 선택하세요",
+			confirmButtonColor: "#577D71"
+		});
 		return false;
 	}
 	
@@ -40,7 +43,8 @@ function modifyOrder(order_code) {
 				location.reload();
 			},
 			error : function() {
-				alert("fail");
+				alert("발주 수정에 실패했습니다.");
+				location.reload();
 			}
 		});
 	}

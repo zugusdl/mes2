@@ -52,21 +52,27 @@ public class PlatformDAOImpl implements PlatformDAO {
 		return sqlSession.selectOne(NAMESPACE + ".selectProduct", product_code);
 	}
 
-	// 발주 신청
+	// 발주 데이터 입력
 	@Override
-	public void insertOrder(SoiDTO soiDTO, List<SopDTO> sopList) {
+	public void insertOrder(SoiDTO soiDTO) throws Exception {
 		logger.debug("DAO: insertOrder() 호출");
 		logger.debug("@@@ soiDTO: " + soiDTO.toString());
-		logger.debug("@@@ sopList: " + sopList.toString());
 		sqlSession.insert(NAMESPACE + ".insertOrder", soiDTO);
+	}
+	
+	// 발주 품목 데이터 입력
+	@Override
+	public void insertOrderProduct(List<SopDTO> sopList) throws Exception {
+		logger.debug("DAO: insertOrderProduct() 호출");
+		logger.debug("@@@ sopList: " + sopList.toString());
 		sqlSession.insert(NAMESPACE + ".insertOrderProduct", sopList);
 	}
 	
 	// 금일 마지막 주문번호(주문번호에 사용)
 	@Override
-	public String countTodayOrder(String todayDate) throws Exception {
+	public String countTodayOrder(String checkCode) throws Exception {
 		logger.debug("DAO: countTodayOrder() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".countTodayOrder", todayDate);
+		return sqlSession.selectOne(NAMESPACE + ".countTodayOrder", checkCode);
 	}
 
 	// 주문 목록 조회
@@ -83,19 +89,51 @@ public class PlatformDAOImpl implements PlatformDAO {
 		return sqlSession.selectList(NAMESPACE + ".getOrderDetail", order_code);
 	}
 	
-	// 주문 수정
+	// 발주 공통코드
 	@Override
-	public void modifyOrder(List<SopDTO> sopList) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public String getCommonCode() throws Exception {
+		logger.debug("DAO: getCommonCode() 호출");
+		return sqlSession.selectOne(NAMESPACE+".getCommonCode");
 	}
 	
+	// 기존 주문 주문번호, 품목코드 조회(주문 수정에 사용)
+	@Override
+	public List<SopDTO> getOrderProduct(String order_code) throws Exception {
+		logger.debug("DAO: getOrderProduct() 호출");
+		return sqlSession.selectList(NAMESPACE + ".getOrderProduct", order_code);
+	}
+
+	// 주문 수정 시 삭제된 품목 delete
+	@Override
+	public void deleteOrderProduct(SopDTO sopDTO) throws Exception {
+		logger.debug("DAO: deleteOrderProduct() 호출");
+		sqlSession.delete(NAMESPACE + ".deleteOrderProduct", sopDTO);
+	}
+	
+	// 주문 수정
+	@Override
+	public void modifyOrder(SopDTO sopDTO) throws Exception {
+//		public void modifyOrder(List<SopDTO> sopList) throws Exception {
+		logger.debug("DAO: modifyOrder() 호출");
+		logger.debug("@@@@@@@sopList: " + sopDTO);
+		sqlSession.update(NAMESPACE + ".modifyOrder", sopDTO);
+	}
+	
+	// 주문 수정 일자 업데이트
+	@Override
+	public void updateOrderDate(String order_code) throws Exception {
+		logger.debug("DAO: updateOrderDate() 호출");
+		sqlSession.update(NAMESPACE + ".updateOrderDate", order_code);
+	}
+
 	// 주문 삭제
 	@Override
 	public void deleteOrder(String order_code) throws Exception {
 		logger.debug("DAO: deleteOrder() 호출");
 		sqlSession.delete(NAMESPACE + ".deleteOrder", order_code);
 	}
+
+
 
 
 }

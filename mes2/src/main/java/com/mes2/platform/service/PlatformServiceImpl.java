@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
@@ -51,6 +52,7 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 발주 신청
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void insertOrder(OrderRequestDTO orDTO, HttpSession session) throws Exception {
 		String order_code = makeOrderCode(session);
 		Date order_date = Date.valueOf(orDTO.getOrder_date());
@@ -65,18 +67,27 @@ public class PlatformServiceImpl implements PlatformService {
 		for(SopDTO sopDTO : sopList) {
 			sopDTO.setOrder_code(order_code);
 		}
-		pdao.insertOrder(soiDTO, sopList);
+		
+		pdao.insertOrder(soiDTO);
+		pdao.insertOrderProduct(sopList);
 	}
 	
 	// 주문코드 생성
 	private String makeOrderCode(HttpSession session) throws Exception {
+		logger.debug("S: makeOrderCode() 호출");
+		
+		// 발주 공통코드
+		String common_code = pdao.getCommonCode();
+		
 		// 날짜 계산
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 		String dtfToday = today.format(dtf);
+		String company_code = (String) session.getAttribute("company_code");
+		String checkCode = dtfToday + "-" + company_code;
 		
-		// 금일 마지막 주문번호
-		String lastOrder_code = pdao.countTodayOrder(dtfToday);
+		// 금일 주문번호 max
+		String lastOrder_code = pdao.countTodayOrder(checkCode);
 		
 		// 마지막 주문번호 인덱스 계산
 		int index = 0;
@@ -87,7 +98,8 @@ public class PlatformServiceImpl implements PlatformService {
 			index = Integer.parseInt(lastOrder_code.substring(lastOrder_code.lastIndexOf("-")+1)) + 1;
 		}
 		
-		String order_code = "ORD-" + dtfToday + "-" + session.getAttribute("company_code") + "-" + index;
+		String order_code = common_code + "-" + dtfToday + "-" + session.getAttribute("company_code") + "-" + index;
+		
 		return order_code;
 	}
 
@@ -107,9 +119,37 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 주문 수정
 	@Override
+	@Transactional(rollbackFor = Exception.class)/*롤백 하지 않을 예외 지정(rollbackFor = 예외발생 클래스명 )*/
 	public void modifyOrder(List<SopDTO> sopList) throws Exception {
-		// TODO Auto-generated method stub
+		logger.debug("S: modifyOrder() 호출");
 		
+		String order_code = sopList.get(0).getOrder_code();
+		
+		// 기존 주문 주문번호, 품목코드 가져오기
+		List<SopDTO> beforeList = pdao.getOrderProduct(order_code);
+			
+		// 수정 주문, 기존 주문 품목코드 비교해서 삭제된 품목은 delete
+		for(SopDTO bDTO : beforeList) {
+			boolean found = false; // 기본적으로 삭제
+			
+			for(SopDTO modifyDTO : sopList) {
+				if(bDTO.getProduct_code().equals(modifyDTO.getProduct_code())) {
+					found = true; // 같은 품목 있으면 true로 변경
+					pdao.modifyOrder(modifyDTO);
+					break;
+				}
+			}
+			
+			if(!found) { // 같은 품목이 없으면 삭제
+				pdao.deleteOrderProduct(bDTO);
+			}
+		}
+		
+//		// 나머지 수정된 품목 수량 update
+//		pdao.modifyOrder(sopList);
+		
+		// update_date 일자 수정
+		pdao.updateOrderDate(order_code);
 	}
 
 	// 주문 삭제
@@ -118,10 +158,6 @@ public class PlatformServiceImpl implements PlatformService {
 		logger.debug("S: deleteOrder() 호출");
 		pdao.deleteOrder(order_code);
 	}
-	
-	
-
-
 	
 	
 }

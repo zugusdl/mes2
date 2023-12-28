@@ -27,8 +27,9 @@
 			<form class="search" action="/platform/search">
 				<select id="boundary">
 					<option value="">-- 검색선택 --</option>
-					<option value="order">주문번호</option>
-					<option value="order">발주일자</option>
+					<option value="order_code">주문번호</option>
+					<option value="order_date">발주일자</option>
+					<option value="sales_status">진행상태</option>
 				</select>
 
 				<div>
@@ -46,7 +47,6 @@
 			<div class="list">
 				<div class="list-btn">
 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button>
-<!-- 					<button type="button" class="btn btn-secondary" id="deletebtn">삭제</button> -->
 				</div>
 
 				<div class="list-box">
@@ -54,7 +54,6 @@
 						<table class="table table-hover">
 							<thead>
 								<tr class="table-success">
-<!-- 									<th></th> -->
 									<th scope="col">주문번호</th>
 									<th scope="col">발주일자</th>
 									<th scope="col">납품요청일</th>
@@ -64,17 +63,25 @@
 							<tbody>
 								<c:forEach var="soiDTO" items="${soiDTO }">
 									<tr>
-<!-- 										<td scope="row"><input type="checkbox" class="ck" /></td> -->
 										<td onclick="getOrderDetail('${soiDTO.order_code }','${soiDTO.order_date }')" class="selectOrder">${soiDTO.order_code }</td>
 										<td>${soiDTO.request_date }</td>
 										<td>${soiDTO.order_date }</td>
 										<td>
 											<c:choose>
 												<c:when test="${soiDTO.sales_status eq 'requested' }">
-													신청중
+													<i class="fa-solid fa-circle fa-2xs" style="color: #ff9924;"></i> 신청중
 												</c:when>
 												<c:when test="${soiDTO.sales_status eq 'accept' }">
-													진행중
+													<i class="fa-solid fa-circle fa-2xs" style="color: #577D71;"></i> 생산중
+												</c:when>
+												<c:when test="${soiDTO.sales_status eq 'deliver' }">
+													<i class="fa-solid fa-circle fa-2xs" style="color: #416ca4;"></i> 배송중
+												</c:when>
+												<c:when test="${soiDTO.sales_status eq 'complete' }">
+													<i class="fa-solid fa-circle fa-2xs" style="color: #6b6b6b;"></i> 완료
+												</c:when>
+												<c:when test="${soiDTO.sales_status eq 'reject' }">
+													<i class="fa-solid fa-circle fa-2xs" style="color: #a44141;"></i> 발주 불가
 												</c:when>
 											</c:choose>
 										</td>
