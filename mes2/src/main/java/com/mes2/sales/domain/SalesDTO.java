@@ -10,7 +10,7 @@ public class SalesDTO {
 	private String company_name; // 거래처 회사명 - 수주처 (meta_data_business 테이블 / name)
 	private String product_name; // 품목명 (meta_data_product 테이블 / name)
 	private Date order_date; //납품요청일 (sales_order_info)
-	private String request_date; // 수주 신청일 (sales_order_info)
+	private Date request_date; // 수주 신청일 (sales_order_info)
 	private String product_code; //품목코드 (sales_order_product
 	private int sales_quantity; //제품수량 - 수주량 (sales_order_product)
 	private String user_id; // 사원id (employees테이블)

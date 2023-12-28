@@ -1,5 +1,5 @@
  function goContent(order_code){
-    alert("상세보기 함수 호출");
+ 
     
 	  $.ajax({
 		  url:"planContent", // 
