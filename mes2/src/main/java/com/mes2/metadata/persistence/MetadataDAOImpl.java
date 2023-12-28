@@ -52,6 +52,13 @@ public class MetadataDAOImpl implements MetadataDAO{
 		logger.debug(" DAO : productinsert() " + dto);
 		return sqlSession.insert(NAMESPACE + ".insert", dto);
 	}
+
+
+	@Override
+	public int productupdate(md_productDTO dto) throws Exception {
+		logger.debug(" DAO : productupdate() " + dto);
+		return sqlSession.update(NAMESPACE + ".update", dto);
+	}
 	
 	
 	

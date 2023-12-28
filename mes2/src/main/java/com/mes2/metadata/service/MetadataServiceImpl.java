@@ -38,6 +38,12 @@ public class MetadataServiceImpl implements MetadataService {
 		
 		return mdao.productinsert(dto);
 	}
+
+	@Override
+	public int productupdate(md_productDTO dto) throws Exception {
+		
+		return mdao.productupdate(dto);
+	}
 	
 	
 

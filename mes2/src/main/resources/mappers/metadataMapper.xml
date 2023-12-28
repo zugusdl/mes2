@@ -31,6 +31,20 @@
   		INSERT INTO meta_data_product (product_code, name, category, unit, cost, price)
     	VALUES (#{product_code}, #{name}, #{category}, #{unit}, #{cost}, #{price})
   	</insert>
+  	
+  	<update id="update" parameterType="com.mes2.metadata.domain.md_productDTO">
+  	
+  	UPDATE meta_data_product
+    SET
+        name = #{name},
+        category = #{category},
+        unit = #{unit},
+        cost = #{cost},
+        price = #{price},
+        production_status = #{production_status}
+    WHERE
+        product_code = #{product_code}
+  	</update>
 
   </mapper>
   
