@@ -6,7 +6,7 @@
   <!-- produceMapper.xml -->
   
 <mapper namespace="com.mes2.mapper.ProductMapper">
-	
+
 	<select id="getTime" resultType="java.sql.Date">
 		select now()
 	</select>
@@ -50,4 +50,13 @@
 			</foreach>
 		</where>
 	</delete>
+	
+	<select id="getLastLot" parameterType="String" resultType="String">
+		<![CDATA[
+		select max(pd_lot)
+		from product
+		where pd_lot like concat (#{searchLot}, '%')
+		]]>
+	</select>
+	
 </mapper>

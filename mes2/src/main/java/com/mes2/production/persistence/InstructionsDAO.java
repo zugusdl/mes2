@@ -13,6 +13,18 @@ public interface InstructionsDAO {
 	
 	public InstructionsDTO selectByCode(String code);
 	
-	public List<InstructionsDTO> selectByParam(InstructionsSearchParam param);
-	//
+	public List<InstructionsDTO> selectByParamCode(InstructionsSearchParam param);
+	public List<InstructionsDTO> selectByParamSoiCode(InstructionsSearchParam param);
+	public List<InstructionsDTO> selectByParamMdpCode(InstructionsSearchParam param);
+	
+	public List<InstructionsDTO> selectByStateAndDate(InstructionsSearchParam param);
+	
+	//작업지시용 최신작업지시코드 호출
+	public String searchLastIsCode(String searchIsCode);
+	
+	public int updateComplete(InstructionsDTO instructionsDTO);
+	
+	public int updateState(InstructionsDTO instructionsDTO);
+
+	
 }

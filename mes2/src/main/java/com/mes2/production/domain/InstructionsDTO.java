@@ -8,12 +8,14 @@ public class InstructionsDTO {
 	private String code;
 	private int line;
 	private String mdpCode;
-	private String type;
-	private String soiCode;
+	private String type; // 생산타입 ( 최초생산 F / 재생산 R)
+	private String sopCode;
+	private Date dueDate;
 	private Timestamp startTime;
-	private Timestamp closeTime;
+	private Timestamp endTime;
 	private int empNum;
-	private String state;
+	private String empName;
+	private String state; //상태 ( 요청 REQUESTED, 
 	private int quantity;
 	private int fault;
 	
@@ -42,26 +44,30 @@ public class InstructionsDTO {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getSoiCode() {
-		return soiCode;
-	}
-	public void setSoiCode(String soiCode) {
-		this.soiCode = soiCode;
-	}
 
+	
+
+	public String getSopCode() {
+		return sopCode;
+	}
+	public void setSopCode(String sopCode) {
+		this.sopCode = sopCode;
+	}
 	public Timestamp getStartTime() {
 		return startTime;
 	}
 	public void setStartTime(Timestamp startTime) {
 		this.startTime = startTime;
 	}
-	public Timestamp getCloseTime() {
-		return closeTime;
-	}
-	public void setCloseTime(Timestamp closeTime) {
-		this.closeTime = closeTime;
-	}
 
+	
+
+	public Timestamp getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Timestamp endTime) {
+		this.endTime = endTime;
+	}
 	public int getEmpNum() {
 		return empNum;
 	}
@@ -87,8 +93,28 @@ public class InstructionsDTO {
 		this.fault = fault;
 	}
 	
+	public Date getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
 	
 	
 	
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	@Override
+	public String toString() {
+		return "InstructionsDTO [code=" + code + ", line=" + line + ", mdpCode=" + mdpCode + ", type=" + type
+				+ ", soiCode=" + sopCode + ", dueDate=" + dueDate + ", startTime=" + startTime + ", endTime=" + endTime
+				+ ", empNum=" + empNum + ", state=" + state + ", requestQuantity=" + ", quantity="
+				+ quantity + ", fault=" + fault + "]";
+	}
+
 	
 }

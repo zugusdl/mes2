@@ -3,25 +3,65 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <!-- produceMapper.xml -->
+  <!-- productionLineMapper.xml -->
   
 <mapper namespace="com.mes2.mapper.ProductionLine">
+
+	<resultMap type="com.mes2.production.domain.ProductionLineDTO" id="productionLineDTOMap">
+		<result property="index" column="index"/>
+		<result property="line" column="line"/>
+		<result property="isCode" column="is_code"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="status" column="status"/>
+	</resultMap>
 	
 	<insert id="insertLine">
-		insert into code, line, mdp_code, type, soi_code, start_time, close_time, emp_id, state 
-		value #{code}, #{line}, #{mdp_code}, #{type}, #{soiCode}, #{starDate}, #{closeDate}, #{empNum} , #{state}
+		insert into line, is_code, start_date, end_date, status 
+		value #{line}, #{is_code}, #{starDate}, #{endDate}, #{status}
 	</insert>
-	
+<!-- 	
+	<select id="selectByDateForList" parameterType="java.util.Map">
+		SELECT * 
+		FROM production_line
+		WHERE start_date BETWEEN #{startDate} AND #{endDate} or end_date BETWEEN #{startDate} and #{endDate} 
+	</select>
+	 -->
 	
 	<select id="selectByDateForList" parameterType="java.sql.Date">
 		SELECT * 
 		FROM production_line
-		WHERE start BETWEEN ${selectDate} AND date_add(${selectDate, INTERVAL 3 DAY) 
+		WHERE start_date BETWEEN #{selectDate} AND date_add(#{selectDate, INTERVAL 3 DAY) 
 	</select>
-<!-- 	
-	<update id="updateResult">
-		update instructions
-		set close_date =#{}, 
+	
+	<update id="updateState">
+		update production_line
+		set status = #{status}
+		where is_code = #{isCode}
 	</update>
-	 -->
+	
+	<update id="updateComplete">
+		update production_line
+		set end_date = now() , status = 'COMPLETE'
+		where is_code =#{isCode} 
+	</update>
+	
+	<select id="selectByIsCode" resultMap="productionLineDTOMap" parameterType="String">
+		select *
+		from production_line pl 
+		join instructions iss
+		on pl.is_code = iss.code  
+		where pl.is_code = #{value}
+	</select>
+	
+	<select id ="selectByDateForLot" resultMap="productionLineDTOMap" parameterType="String">
+		<![CDATA[
+		select *
+		from production_line pl
+		join instructions is
+		on pl.is_code = is.code
+		where like concat(#{value}+'%')
+		]]>
+	</select>
+	
 </mapper>

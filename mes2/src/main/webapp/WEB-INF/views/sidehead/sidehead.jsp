@@ -64,12 +64,19 @@
         </ul>
       </li>
       <li>
-        <a href="#">
-          <i class="fa-solid fa-industry"></i>
-          <span class="link_name">생산관리</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Analytics</a></li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class="fa-solid fa-building"></i>
+            <span class="link_name">생산관리</span>
+          </a>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Posts</a></li>
+          <li><a href="/instructions/request">생산요청관리</a></li>
+          <li><a href="/instructions/search">작업지시관리</a></li>
+          <li><a href="/">라인관리</a></li>
+          <li><a href="/product/search">생산제품</a></li>
         </ul>
       </li>
       <li>
