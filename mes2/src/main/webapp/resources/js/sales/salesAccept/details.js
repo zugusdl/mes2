@@ -89,12 +89,14 @@
 	 $.ajax({
 		  url: "acceptSave",
 		  method: "POST",
-		  //dataType:"json",
+		  dataType:"text",
 		  data: data,
-		  success: function() {
-			  goContent(order);
-				//content(data, order);
+		  success: function(data) {
+			  goContent(data);
+			 
+			 
 			},
+		 
 			error: function(){alert("error 저장");}
 		});
  }
@@ -136,7 +138,7 @@
 		  listHtml += "<td>"+obj.product_status+"</td>";
 
 		  if(obj.processing_reg == 'N'){
-			  listHtml += "<td><select name='processing_reg' class='product-processing'>";
+			  listHtml += "<td class='back'><select name='processing_reg' class='product-processing'>";
 			  listHtml += "<option value='N' class='check-processing'>N</option>";
 			  listHtml += "<option value='stock' class='check-processing'>재고출하</option>";
 			  listHtml += "<option value='production' class='check-processing'>생산계획</option>";

@@ -160,6 +160,8 @@ public class SalesServiceImpl implements SalesService {
 		
 		// 값 변경
 		sdao.changeProductStatus(sd);
+		// 창고에서 빼기
+		sdao.updateStockQuan(sd);
 	}
 	
 	@Override
@@ -169,6 +171,14 @@ public class SalesServiceImpl implements SalesService {
 		// 값 변경
 		sdao.changeProductStatus(sd);
 		
+		
+		
+	}
+	
+	@Override
+	public void updateStockQuan(SalesDTO sd) {
+		logger.debug(" S :updateStockQuan(SalesDTO sd) ");
+		sdao.updateStockQuan(sd);
 		
 	}
 }

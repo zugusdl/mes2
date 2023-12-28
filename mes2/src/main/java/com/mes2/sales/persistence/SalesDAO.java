@@ -27,4 +27,5 @@ public interface SalesDAO {
 	public void stockReg(SalesDTO sd);
 	public void changeProductStatus(SalesDTO sd);
 	public void productInst(SalesDTO sd);
+	public void updateStockQuan(SalesDTO sd);
 }

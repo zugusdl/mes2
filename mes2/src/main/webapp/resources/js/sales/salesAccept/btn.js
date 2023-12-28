@@ -41,6 +41,12 @@ function cancle(){
   }
 
 
+function load(){
+	
+	location.href="salesAccept";
+}
+
+
 function del(){
 	  var ckArr = $(".ck");
 	    var count = ckArr.filter(":checked").length; 

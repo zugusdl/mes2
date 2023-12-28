@@ -67,11 +67,11 @@
   
  
   
-  <select id="getSalesPlanList" resultMap="SalesDTO" >
+   <select id="getSalesPlanList" resultMap="SalesDTO" >
     select I.order_code, B.name AS company_name ,I.order_date, I.request_date 
      <include refid="salesJoin"/> 
      <where>
-     sales_status = 'requested' 
+     I.sales_status = 'requested'
      </where>
      <include refid="salesGroup"/>
     order by I.request_date ASC
@@ -95,14 +95,11 @@
     </update>
     
     <select id="getStockQuantity"  resultMap="SalesDTO">
-  SELECT SUM(I.in_quantity) - IFNULL(SUM(O.out_quantity), 0) AS stock_quantity, I.product_code, M.name, 
-  (select sales_quantity from sales_order_product where 
-  order_code=#{order_code} and product_code=#{product_code}) AS sales_quantity 
-  FROM in_warehouse I 
-  LEFT JOIN out_warehouse O ON I.product_code = O.product_code 
-  join meta_data_product M on I.product_code = M.product_code 
-  GROUP BY I.product_code 
-  having I.product_code =#{product_code} 
+	 select SUM(quantity) AS stock_quantity, product_code, name 
+	 from stock 
+	 where product_code = #{product_code} 
+	 group by 
+	 product_code, name 
     </select>
     
     
@@ -111,7 +108,7 @@
     I.request_date 
     <include refid="salesJoin"/>
     <include refid="searchList"/>
-    and sales_status = 'requested' 
+    and sales_status = #{sales_status} 
     <include refid="salesGroup"/>
     order by I.request_date ASC
   </select>
@@ -140,7 +137,8 @@
     update sales_order_product P
     join sales_order_info I on I.order_code = P.order_code
     set P.sales_code = concat_ws('-',(select code_group from common_code where code_group_name='수주'), P.order_code, P.product_code,P.sales_quantity), 
-    I.acceptance_date = now()
+    I.acceptance_date = now(),
+    P.product_status = 'waiting'
     where (I.order_code, P.product_code) in
     <foreach collection="list" item="item"  open="(" close=")" separator=",">
         (#{item.order_code}, #{item.product_code})
@@ -182,8 +180,8 @@
   
   <insert id="stockReg">
   insert into out_warehouse 
-  (out_quantity,product_code,out_type,status) 
-  values (#{sales_quantity}, #{product_code}, 'S','waiting')
+  (out_quantity,product_code,out_type,status,order_code) 
+  values (#{stock_quantity}, #{product_code}, 'S','waiting',#{order_code})
   </insert>
   
   <update id='changeProductStatus'>
@@ -195,9 +193,15 @@
   
   <insert id="productInst">
   insert into instructions 
-  (sop_code, sales_quantity, mdp_code) 
+  (sop_code, sales_quantity, mdp_code, state) 
   values 
-  (#{sales_code},#{lack_quantity},#{product_code}) 
+  (#{sales_code},#{lack_quantity},#{product_code},'requested') 
   </insert>
+  
+  <update id="updateStockQuan">
+  update stock 
+  set quantity = (quantity - #{stock_quantity}) 
+  where product_code = #{product_code} 
+  </update>
   
   </mapper>

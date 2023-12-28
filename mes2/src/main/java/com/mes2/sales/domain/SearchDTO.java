@@ -19,6 +19,8 @@ public class SearchDTO {
 	
 	private String search;
 	
+	private String sales_status;
+	
 	
 	
 	

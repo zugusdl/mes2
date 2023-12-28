@@ -16,7 +16,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/resources/css/sales/salesAccept.css">  
+    <link rel="stylesheet" href="/resources/css/contents/contents.css">  
     
     <style>
     .mo {
@@ -32,9 +32,9 @@
   
   <body>
   
-  <script src="/resources/js/sales/salesAccept/btn.js"></script>
-  <script src="/resources/js/sales/salesAccept/details.js"></script>
-
+  <script src="/resources/js/sales/salesPlan/btn.js"></script>
+  <script src="/resources/js/sales/salesPlan/details.js"></script>
+  <script src="/resources/js/sales/salesPlan/search.js"></script>
   
 <!-- Modal -->
 <div id="modalcon">
@@ -59,7 +59,7 @@
     <!-- 검색창 -->
     <div class="container">
     <section class="section1">
-      <form action="searchAccept" method="post" class="search" onsubmit="return checkSearchSub()">
+      <form action="searchPlan" method="post" class="search" onsubmit="return checkSearchSub()">
       	 <select name="type" id="searchType">
           <option value="">-- 검색선택 --</option>
           <option value="order_code">주문번호</option>
@@ -75,7 +75,12 @@
           <input  type="date" min="2023-12-01" name="startDay" />
 
           <span class="search-font">검색종료일</span>
-          <input type="date" max="2030-12-31" name="endDay" />
+          <input
+            
+            type="date"
+            max="2030-12-31"
+            name="endDay"
+          />
         </div>
 		
 
@@ -86,9 +91,9 @@
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
-        <!--  <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' id="reg-mo-btn" onclick="return register()">등록모</button> -->
-          <!-- <button type="button" class="btn btn-secondary" onclick="return register()">등록</button> -->
-          <!-- <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절모</button> -->
+         <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' id="reg-mo-btn" onclick="return register()">등록모</button>
+          <button type="button" class="btn btn-secondary" onclick="return register()">등록</button>
+          <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절모</button>
           <button type="button" class="btn btn-secondary" onclick="load()">로드</button>         
         </div>
 
@@ -130,7 +135,7 @@
     </section>
 
     <section class="section1" >
-      <form class='list-form' id="salesAcceptContent" action="acceptSave">
+      <form class='list-form' id="view2">
       
       </form>
       </section>

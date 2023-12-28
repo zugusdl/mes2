@@ -26,6 +26,7 @@ public class SalesDAOImpl implements SalesDAO {
 	
 	@Override
 	public List<SalesDTO> getSalesPlanList() {
+		
 		logger.debug(" DAO : getPlanSalesList() ");
 		return sqlSession.selectList(NAMESPACE+".getSalesPlanList");
 	}
@@ -123,6 +124,14 @@ public class SalesDAOImpl implements SalesDAO {
 		logger.debug(" DAO :productInst(SalesDTO sd)");
 		
 		sqlSession.insert(NAMESPACE+".productInst",sd);
+		
+	}
+	
+	@Override
+	public void updateStockQuan(SalesDTO sd) {
+		logger.debug(" DAO :updateStockQuan(SalesDTO sd");
+		
+		sqlSession.update(NAMESPACE+".updateStockQuan",sd);
 		
 	}
 }

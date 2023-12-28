@@ -45,12 +45,14 @@ public class SalesController {
 		return "/sales/sales";
 	}
 	// http://localhost:8080/sales/salesPlanTest
+	// http://localhost:8088/sales/salesPlanTest
 	@RequestMapping(value = "/salesPlanTest")
 	public String salesPlanTest(HttpSession session, Model model) {	
 		//--------------------------------------//
 		String user_id ="sawon4";
 		session.setAttribute("user_id",user_id );
 		//--------------------------------------//
+		//String status = "requested";
 		List<SalesDTO> list = sService.salesPlanList();	
 		model.addAttribute("list", list);
 		return "/sales/salesPlan";
@@ -58,7 +60,7 @@ public class SalesController {
 	
 	@RequestMapping(value = "salesPlanList", method=RequestMethod.GET)
 	public @ResponseBody List<SalesDTO> PlanListGet() {
-		
+		//String status = "requested";
 		List<SalesDTO> list = sService.salesPlanList();	
 		return list;
 	}
@@ -89,9 +91,21 @@ public class SalesController {
 	@RequestMapping(value="searchPlan")
 	public String searchPlan(SearchDTO sed, Model model){
 		
+		String sales_status = "requested";
+		sed.setSales_status(sales_status);
 		List<SalesDTO> list =sService.searchListPlan(sed);
 		model.addAttribute("list", list);
 		return "/sales/salesPlan";
+	}
+	
+	@RequestMapping(value="searchAccept")
+	public String searchAccept(SearchDTO sed, Model model){
+		
+		String sales_status = "accept";
+		sed.setSales_status(sales_status);
+		List<SalesDTO> list =sService.searchListPlan(sed);
+		model.addAttribute("list", list);
+		return "/sales/salesAccept";
 	}
 	
 	@RequestMapping(value="planRegister", method = RequestMethod.POST)
@@ -120,6 +134,7 @@ public class SalesController {
 	
 	
 	// http://localhost:8080/sales/salesAccept
+	// http://localhost:8088/sales/salesAccept
 	@RequestMapping (value = "/salesAccept" )
 	public String salesAccept(HttpSession session, Model model) {	
 		//--------------------------------------//
@@ -140,17 +155,22 @@ public class SalesController {
 	}
 	
 	@RequestMapping(value = "acceptSave")
-		public void acceptSave(SalesDTO dto){
+		public @ResponseBody String acceptSave(SalesDTO dto){
 		// 주문번호 수주번호 상품번호 수주량 처리등록여부
 		//dto를 받아서 processing_reg가 뭐인지에 따라서 재고출하면 재고출하업데이트
 		// 생산계획이면 생산계획쪽에 넣어주기 
 		//재고출하면 재고출하업데이트
 		// 복합이면 ... ㅗ^_^ㅗ 
-		
+		String order_code = dto.getOrder_code();
 		if(dto != null && dto.getProcessing_reg().equals("stock")) {
 			// 출고테이블 - 출고수량, 품목코드, 출고유형(S)입력
-			
+			// 수주량만큼 창고에서 수량빼주기 (상품번호 가져가면 됨)
 			dto.setProduct_status("complete");
+			// 1. stock_quantity = sales_quantity
+			// sales_quantity의 값을 stock_quantity에 넣어주기 
+			dto.setStock_quantity(dto.getSales_quantity());
+			// 2. stock_quantity > sales_quantity
+			// sales_quantity의 값을 stock_quantity에 넣어주고 stock_quantity로 계산하기 (sales_quantity로 받으면 안됨)
 			sService.stockReg(dto);
 			
 		}
@@ -162,24 +182,27 @@ public class SalesController {
 		}
 		if(dto.getProcessing_reg().equals("multi")) {
 			
+			// 4. stock_quantity < sales_quantity 
 			dto.setProduct_status("progressing");
-			int stock_quantity = sService.stockQuantity(dto).getStock_quantity();			
+			// 현재고 가져오기 
+			int stock_quantity = sService.stockQuantity(dto).getStock_quantity();
+			// 부족재고 가져오기 
 			int lack_quantity =(dto.getSales_quantity() - stock_quantity);
-			// 자재팀한테는 stock_quantity 만큼 생산하라고 하고
-			// 생산팀한테는 lack_quantity 만큼 생산하라고 알리기
+			// 자재팀한테는 stock_quantity 만큼 준비지시 (무조건)
+			// 생산팀한테는 lack_quantity 만큼 생산하라고 알리기		 
 			dto.setSales_quantity(stock_quantity);
 			dto.setLack_quantity(lack_quantity);
+			// 수주량만큼 창고에서 수량빼주기 (상품번호 가져가면 됨)
 			
 			sService.stockReg(dto);
 			sService.productInst(dto);
 		}
+		if(dto.getProcessing_reg().equals("N")) {
+			// 아무 동작이 필요하지 않은 경우
+		}
+	
 		
-		
-				
-		//dto.getordercode에서 가져와서 넣어주기 
-		//List<SalesDTO> list = sService.acceptContent(dto.getOrder_code());
-		//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+list);
-		//return list;
+		return order_code;
 	}
 	
 	
