@@ -2,6 +2,8 @@ package com.mes2.platform.controller;
 
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mes2.platform.domain.MdbDTO;
@@ -58,6 +61,7 @@ public class PlatformController {
 		
 		if(mdto != null) {
 			session.setAttribute("company_code", mdbDTO.getCompany_code());
+			session.setAttribute("mdto", mdto);
 			return "redirect:/platform/orderList";
 		}
 
@@ -162,13 +166,47 @@ public class PlatformController {
 	
 	// 완료 처리 페이지
 	@GetMapping(value="/completeOrder")
-	public void completeOrderGET(@RequestParam("order_code") String order_code) {
+	public void completeOrderGET(@RequestParam("order_code") String order_code) throws Exception {
 		logger.debug("completeOrderGET()호출");
 	}
 	
 	// 완료 처리 페이지
 	@PostMapping(value="/completeOrder")
-	public void completeOrderPOST(@RequestParam("order_code") String order_code) {
+	public void completeOrderPOST(@RequestParam("order_code") String order_code, MultipartFile uploadFile) throws Exception {
 		logger.debug("completeOrderPOST()호출");
+		logger.debug("@@@@@uploadFile: " + uploadFile);
+		String uploadFolder = "C:\\Users\\ITWILL\\Desktop\\upload";
+		String uploadFileName = order_code;
+		File signature = new File(uploadFolder+uploadFileName+".png");
+	}
+	
+	//test
+	@PostMapping(value="/testCompleteOrder")
+	public void testCompleteOrderPOST(@RequestParam("order_code") String order_code,MultipartFile formdata) throws Exception {
+		logger.debug("testCompleteOrderPOST()호출");
+		logger.debug("@@@@@uploadFile: " + formdata);
+		String uploadFolder = "C:\\Users\\ITWILL\\Desktop\\upload";
+		
+		logger.debug("@@@@@");
+		logger.debug(formdata.getOriginalFilename());
+		
+		
+		String path =uploadFolder + order_code + ".png";
+		try {
+			formdata.transferTo(new File(path));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	// test
+	@GetMapping(value="/test")
+	public void testGET() throws Exception {
+		
 	}
 }

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-	<%@ include file="../sidehead/sidehead.jsp" %>
+	<%@ include file="sidehead.jsp" %>
 	<!-- 검색창 -->
 	<div class="container">
 		<section class="section1">

@@ -108,14 +108,13 @@
 	
 	<!-- 주문 수량 변경 -->
 	<update id="modifyOrder">
-<!-- 	    <foreach collection="list" item="sopDTO" separator=";"> -->
+	    <foreach collection="list" item="sopDTO" separator=";">
 	        UPDATE sales_order_product 
 	        SET sales_quantity = #{sales_quantity} 
 	        WHERE order_code = #{order_code} AND product_code = #{product_code} AND product_status = 'requested'
-<!-- 	    </foreach> -->
+	    </foreach>
 	</update>
 
-	
 	<!-- 주문 수정 일자 업데이트 -->
 	<update id="updateOrderDate">
 		UPDATE sales_order_info 
