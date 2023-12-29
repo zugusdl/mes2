@@ -6,7 +6,7 @@
   <head>
     <meta charset="UTF-8">
     <title> Drop Down Sidebar Menu | CodingLab </title>
-    <link rel="stylesheet" href="../../../resources/css/sidehead/sideheadstyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidehead/sideheadstyle.css">
     <!-- Boxiocns CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
@@ -20,14 +20,14 @@
 <body>
   <div class="sidebar close">
     <div class="logo-details">
-      <i class="fa-solid fa-power-off"></i>
-      <span class="logo_name">어써매틱</span>
+      <i class="fa-solid fa-bars"></i>
+      <span class="logo_name">AWESOMETIC</span>
     </div>
     <ul class="nav-links">
       <li>
         <a href="#">
-          <i class="fa-brands fa-google-play"></i>
-          <span class="link_name">요구사항1</span>
+          <i class="fa-solid fa-gear"></i>
+          <span class="link_name">시스템관리</span>
         </a>
         <ul class="sub-menu blank">
           <li><a class="link_name" href="#">Category</a></li>
@@ -36,10 +36,10 @@
       <li>
         <div class="iocn-link">
           <a href="#">
-            <i class="fa-brands fa-google-play"></i>
-            <span class="link_name">요구사항2</span>
+            <i class="fa-solid fa-database"></i>
+            <span class="link_name">기준정보관리</span>
           </a>
-          <i class="fa-solid fa-arrow-down"></i> <!--드롭다운 아이콘 클래스명 지정하는 곳-->
+          <i class="fa-solid fa-chevron-down"></i> <!--드롭다운 아이콘 클래스명 지정하는 곳-->
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="#">Category</a></li>
@@ -51,10 +51,10 @@
       <li>
         <div class="iocn-link">
           <a href="#">
-            <i class="fa-brands fa-google-play"></i>
-            <span class="link_name">Posts</span>
+            <i class="fa-solid fa-building"></i>
+            <span class="link_name">영업관리</span>
           </a>
-          <i class="fa-solid fa-arrow-down"></i>
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="#">Posts</a></li>
@@ -65,8 +65,8 @@
       </li>
       <li>
         <a href="#">
-          <i class="fa-brands fa-google-play"></i>
-          <span class="link_name">Analytics</span>
+          <i class="fa-solid fa-industry"></i>
+          <span class="link_name">생산관리</span>
         </a>
         <ul class="sub-menu blank">
           <li><a class="link_name" href="#">Analytics</a></li>
@@ -74,8 +74,8 @@
       </li>
       <li>
         <a href="#">
-          <i class="fa-brands fa-google-play"></i>
-          <span class="link_name">Chart</span>
+          <i class="fa-solid fa-warehouse"></i>
+          <span class="link_name">자재관리</span>
         </a>
         <ul class="sub-menu blank">
           <li><a class="link_name" href="#">Chart</a></li>
@@ -87,7 +87,7 @@
             <i class="fa-brands fa-google-play"></i>
             <span class="link_name">Plugins</span>
           </a>
-          <i class="fa-solid fa-arrow-down"></i>
+          <i class="fa-solid fa-chevron-down"></i>
         </div>
         <ul class="sub-menu">
           <li><a class="link_name" href="#">Plugins</a></li>
@@ -139,7 +139,6 @@
   </div>
   <section class="home-section">
     <div class="home-content">
-      <i class="fa-solid fa-bars"></i>
       <span class="text">Drop Down Sidebar</span>
 
       <div class="dropdown">
@@ -156,9 +155,7 @@
     </div>
   </section>
 
-  본문내용을 입력하세용
-
-  <script src="../../../resources/js/sidehead/sideheadscript.js"></script> <!-- 사이드바 script -->
+  <script src="${pageContext.request.contextPath}/resources/js/sidehead/sideheadscript.js"></script> <!-- 사이드바 script -->
 
   <!-- 부트스트랩 js 추가-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

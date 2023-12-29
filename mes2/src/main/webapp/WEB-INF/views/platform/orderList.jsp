@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +15,7 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 
-<link rel="stylesheet" href="/resources/css/platform/orderList.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/orderList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -65,6 +67,54 @@
 									<td>발주일자</td>
 									<td>납기요청일</td>
 								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
+								<tr>
+									<td scope="row"><input type="checkbox" class="ck" /></td>
+									<td><a href="">주문번호</a></td>
+									<td>발주일자</td>
+									<td>납기요청일</td>
+								</tr>
 							</tbody>
 						</table>
 					</form>
@@ -79,6 +129,7 @@
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous">
 	</script>
-	<script src="/resources/js/platform/orderList.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/platform/orderList.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/platform/insertOrder.js"></script>
 </body>
 </html>

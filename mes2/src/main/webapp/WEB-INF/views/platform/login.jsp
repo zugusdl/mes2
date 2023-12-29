@@ -24,7 +24,7 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="stylesheet" href="/resources/css/platform/login.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/login.css">
 <!-- css 불러오기 (경로설정 중요!!) -->
 </head>
 
@@ -40,7 +40,7 @@
 		<div class="form-container">
 			<i class="fas fa-xmark close-form"></i>
 			<div class="form login-form">
-				<form action="/platform/orderList" method="post">
+				<form method="post">
 					<img
 						src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg"
 						id="login-icon">
@@ -63,7 +63,7 @@
 
 	<!-- 자바스크립트 동작 불러오기 (경로설정 중요!!) -->
 
-	<script src="/resources/js/platform/login.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/platform/login.js"></script>
 	<script>
 		var result = "${result}";
 		if(result == "loginFail") {

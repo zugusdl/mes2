@@ -3,11 +3,50 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <!-- produceMapper.xml -->
-  
 <mapper namespace="com.mes2.mapper.platformMapper">
-	<select id="login" resultType="com.mes2.platform.domain.mdbDTO">
+	<!-- 로그인 -->
+	<select id="login" resultType="com.mes2.platform.domain.MdbDTO">
 		select * from meta_data_business 
 		where company_code = #{company_code} and pw = #{pw} and contract_status = 1
 	</select>
+	
+	<!-- 품목 목록 조회 -->
+	<select id="inqueryProduct" resultType="com.mes2.platform.domain.MdpDTO">
+		select * from meta_data_product 
+		<where>
+			<if test="searchType.equals('품목코드')">
+				and product_code like concat('%' , #{search}, '%')
+			</if>
+			<if test="searchType.equals('품목명')">
+				and name like concat('%' , #{search}, '%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 품목 하나 선택 -->
+	<select id="selectProduct" resultType="com.mes2.platform.domain.MdpDTO">
+		select * from meta_data_product 
+		where product_code = #{product_code}
+	</select>
+	
+	<!-- 금일 주문건 개수 -->
+	<select id="countTodayOrder" resultType="int">
+		select count(*) from sales_order_info 
+		where order_code like concat('%', #{todayDate}, '%')
+	</select>
+	
+	<!-- 발주 신청 -->
+	<insert id="insertOrder" >
+		insert into sales_order_info (order_code, company_code, order_date) 
+		values (#{order_code}, #{company_code}, #{order_date})
+	</insert>
+	
+	<!-- 발주 신청 품목 입력 -->
+	<insert id="insertOrderProduct">
+		insert into sales_order_product (order_code, product_code, sales_quantity) 
+		values 
+		<foreach collection="list" item="sopDTO" separator=", ">
+		(#{sopDTO.order_code}, #{sopDTO.product_code}, #{sopDTO.sales_quantity})
+		</foreach>	
+	</insert>
 </mapper>
