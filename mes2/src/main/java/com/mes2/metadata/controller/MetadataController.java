@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mes2.metadata.domain.Criteria;
+import com.mes2.metadata.domain.PageVO;
 import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.metadata.service.MetadataService;
 
@@ -32,14 +34,26 @@ public class  MetadataController{
 	
 	// 품목관리 페이지, 모든 품목정보리스트 호출
 	@RequestMapping(value="/firstpage", method=RequestMethod.GET)
-	public String productdataGET(Model model) throws Exception{
-		logger.debug("모든품목정보 출력 컨트롤러 실행 성공");
+	public String productdataGET(Model model, Criteria cri) throws Exception{
+		
+		//서비스 - 디비에 저장된 글을 가져오기
+		List<md_productDTO> productList = mService.boardListPage(cri);
+		logger.debug(" @@@ " + productList);
+		
+		
+		// 페이지 블럭 정보 준비 -> view 페이지 전달
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(mService.totalBoardCount());
+		
+		logger.debug(" 확인 :"+pageVO);
+		model.addAttribute("pageVO", pageVO);
 		
 		
 		
-		List<md_productDTO> productList = mService.productListAll();
+		//List<md_productDTO> productList = mService.productListAll();
 		logger.debug("@@@" + productList);
-		
+		logger.debug("모든품목정보 출력 컨트롤러 실행 성공");
 		model.addAttribute("productList", productList);
 		
 		return "/meta_data/productdata/productinfo";
@@ -93,16 +107,42 @@ public class  MetadataController{
 	// 품목 추가 하는 곳
 	@RequestMapping(value="/insertproduct", method=RequestMethod.POST)
 	public String productinsertPOST(md_productDTO dto) throws Exception{
-		
+		logger.debug("추가까지왔다2");
 		
 		mService.productinsert(dto);
 		
-		logger.debug("추가까지왔다2");
+		
 		logger.debug(" dto : " + dto);
+		logger.debug("55555555555555555555555555");
 		
 		return "redirect:/meta_data/firstpage";
 		
 		
 	}
+	
+	// 품목 수정
+		@RequestMapping(value="/updateproduct", method=RequestMethod.POST)
+		public String productupdatePOST(md_productDTO dto) throws Exception{
+			
+			
+			mService.productupdate(dto);
+			logger.debug("왜 안되니~~~~~~~~~~~~~~~~~~~~~~~~");
+			logger.debug("왜 안되" + dto);
+			
+			return "redirect:/meta_data/firstpage";			
+		}
+		
+		
+	// 품목 삭제
+	@RequestMapping(value="/deleteproduct", method=RequestMethod.POST)
+	public String productdeletePOST(md_productDTO dto) throws Exception{
+		
+		
+		mService.productdelete(dto);
+		
+		return "redirect:/meta_data/firstpage";			
+		}
+		
+
 
 }
