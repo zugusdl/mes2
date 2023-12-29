@@ -25,9 +25,9 @@ public class SalesServiceImpl implements SalesService {
 	private SalesDAO sdao;
 	
 	@Override
-	public List<SalesDTO> salesPlanList() {
+	public List<SalesDTO> salesList(String sales_status) {
 		logger.debug(" S : salesList() ");
-		return sdao.getSalesPlanList();
+		return sdao.getSalesList(sales_status);
 	}
 	
 	@Override
@@ -92,11 +92,11 @@ public class SalesServiceImpl implements SalesService {
 		sdao.makeSalesCode(sd);
 	}
 	
-	@Override
-	public List<SalesDTO> salesAcceptList() {
-		logger.debug(" S : salesAcceptList() ");
-		return sdao.getSalesAcceptList();
-	}
+//	@Override
+//	public List<SalesDTO> salesAcceptList() {
+//		logger.debug(" S : salesAcceptList() ");
+//		return sdao.getSalesAcceptList();
+//	}
 	
 	@Override
 	public List<SalesDTO> acceptContent(String order_code) {

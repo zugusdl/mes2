@@ -52,16 +52,16 @@ public class SalesController {
 		String user_id ="sawon4";
 		session.setAttribute("user_id",user_id );
 		//--------------------------------------//
-		//String status = "requested";
-		List<SalesDTO> list = sService.salesPlanList();	
+		String sales_status = "requested";
+		List<SalesDTO> list = sService.salesList(sales_status);	
 		model.addAttribute("list", list);
 		return "/sales/salesPlan";
 	}
 	
 	@RequestMapping(value = "salesPlanList", method=RequestMethod.GET)
 	public @ResponseBody List<SalesDTO> PlanListGet() {
-		//String status = "requested";
-		List<SalesDTO> list = sService.salesPlanList();	
+		String sales_status = "requested";
+		List<SalesDTO> list = sService.salesList(sales_status);	
 		return list;
 	}
 	
@@ -141,7 +141,9 @@ public class SalesController {
 		String user_id ="sawon4";
 		session.setAttribute("user_id",user_id );
 		//--------------------------------------//
-		List<SalesDTO> list = sService.salesAcceptList();
+		String sales_status = "accept";
+		List<SalesDTO> list = sService.salesList(sales_status);	
+		//List<SalesDTO> list = sService.salesAcceptList();
 		model.addAttribute("list", list);
 		return "/sales/salesAccept";
 	}
@@ -204,6 +206,8 @@ public class SalesController {
 		
 		return order_code;
 	}
+	
+	
 	
 	
 	

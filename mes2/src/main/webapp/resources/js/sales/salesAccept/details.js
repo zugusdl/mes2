@@ -26,7 +26,9 @@
 		  type:"post",
 		  dataType:"json", // Jackson Databind사용해서 json으로 받기
 		  data: {"product_code": product_code , "order_code" : order_code}, // 받은 매개변수 전달
-		  success:moStock,
+		  success: function (data) {
+		      moStock(data, sales_quantity); // Pass sales_quantity to moStock
+		    },
 		  error: function(){
 			  $("#exampleModalLabel").html('재고조회');
 			  var listHtml = "<div>창고에 보유 재고 없음</div>";
@@ -39,15 +41,15 @@
 	  });
  }
  
- function moStock(data){
+ function moStock(data, sales_quantity) {
 	 $("#exampleModalLabel").html('재고조회');
 	 var listHtml = "<div>제품명 : <input type='text' value='"+data.product_name+"' readonly/></div>";
 		 listHtml += "<div>제품코드 : <input type='text' value='"+data.product_code+"' readonly/></div>";
 		 listHtml += "<div>보유수량 : <input type='text' value='"+data.stock_quantity+"' readonly/></div>";
-		 if((data.sales_quantity - data.stock_quantity)<0){
+		 if((sales_quantity - data.stock_quantity)<0){
 			 listHtml += "<div>부족수량 : <input type='text' value='0' readonly/></div>"; 
 		 }else{
-			 listHtml += "<div>부족수량 : <input type='text' value='"+(data.sales_quantity - data.stock_quantity )+"' readonly/></div>";	
+			 listHtml += "<div>부족수량 : <input type='text' value='"+(sales_quantity - data.stock_quantity )+"' readonly/></div>";	
 			 listHtml += "<button type='button' class='btn btn-danger'>재고부족</button>"; // 수정된 라인
 
 			 

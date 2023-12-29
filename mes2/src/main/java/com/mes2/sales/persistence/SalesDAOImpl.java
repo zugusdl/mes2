@@ -25,10 +25,10 @@ public class SalesDAOImpl implements SalesDAO {
 	private static final String NAMESPACE ="com.mes2.mapper.SalesMapper";
 	
 	@Override
-	public List<SalesDTO> getSalesPlanList() {
+	public List<SalesDTO> getSalesList(String sales_status) {
 		
 		logger.debug(" DAO : getPlanSalesList() ");
-		return sqlSession.selectList(NAMESPACE+".getSalesPlanList");
+		return sqlSession.selectList(NAMESPACE+".getSalesList",sales_status);
 	}
 	
 	@Override
@@ -83,11 +83,11 @@ public class SalesDAOImpl implements SalesDAO {
 		
 	}
 	
-	@Override
-	public List<SalesDTO> getSalesAcceptList() {
-		logger.debug(" DAO : getSalesAcceptList()");
-		return sqlSession.selectList(NAMESPACE+".getSalesAcceptList");
-	}
+//	@Override
+//	public List<SalesDTO> getSalesAcceptList() {
+//		logger.debug(" DAO : getSalesAcceptList()");
+//		return sqlSession.selectList(NAMESPACE+".getSalesAcceptList");
+//	}
 	
 	@Override
 	public List<SalesDTO> getAcceptContent(String order_code) {

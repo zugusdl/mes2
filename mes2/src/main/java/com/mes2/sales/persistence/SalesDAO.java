@@ -9,7 +9,7 @@ import com.mes2.sales.domain.SearchDTO;
 
 public interface SalesDAO {
 
-	public List<SalesDTO> getSalesPlanList();
+	public List<SalesDTO> getSalesList(String sales_status);
 	public List<SalesDTO> getPlanContent(String order_code);
 	public void rejectSales(List<String> odList);
 	public SalesDTO getStockQuantity(SalesDTO sd);
@@ -20,7 +20,7 @@ public interface SalesDAO {
 	public List<SalesDTO> getProdctCode(List<String>list);
 	public void makeSalesCode(List<SalesDTO> sd);
 	
-	public List<SalesDTO> getSalesAcceptList();
+	//public List<SalesDTO> getSalesAcceptList();
 	public List<SalesDTO> getAcceptContent(String order_code);
 	public void updateAcceptStatus(AcceptSaveDTO ad);
 	

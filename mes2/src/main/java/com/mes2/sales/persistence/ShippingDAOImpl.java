@@ -14,6 +14,6 @@ public class ShippingDAOImpl implements ShippingDAO {
 	private SqlSession sqlSession;
 	
 
-	private static final String NAMESPACE ="com.mes2.mapper.SalesMapper";
+	private static final String NAMESPACE ="com.mes2.mapper.shippingMapper";
 
 }
