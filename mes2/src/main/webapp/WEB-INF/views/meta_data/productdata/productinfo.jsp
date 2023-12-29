@@ -32,39 +32,22 @@
 <!-- 추가 js 입니다. -->
 <script src="/resources/js/metadata/productinfo.js"></script>
 
-
-<!-- 품목 저장 버튼 js 입니다. -->
-<script type="text/javascript">
- 	$(document).ready(function(){
- 		
- 		var formObj = $('form[role="insert"]');
- 		
- 		console.log(formObj);
- 		
- 		// 추가 후 저장 버튼 클릭시, 추가 품목 정보를 가지고 submit
- 		// 이동하는 페이지주소 변경, 전달방식 POST
- 		$("#submitbtn").click(function(){
- 					
- 			formObj.submit(); 			
- 		});
-
- 		
- 	});
-
-</script>
+<!-- 추가 페이징 css 입니다. -->
+<link rel="stylesheet" href="/resources/css/metadata/paging.css">
 
 
-<!-- 저장버튼을 클릭하면 (추,수,삭)3개버튼은 사라지고 저장,취소 버튼이 나오게 되는 js 입니다.  -->
+<!--  추가 버튼 스크립트 -->
+<!-- 저장버튼을 클릭하면 (추,수,삭)3개버튼은 사라지고 취소 버튼이 나오게 되는 js 입니다.  -->
 <!--  밑부분은  추가되는 행이 보이게 하거나 숨기는 js입니다. -->
 <script>
 		function replaceButton() {
             
             var addbtn = document.getElementById('addbtn');
             var updatebtn = document.getElementById('updatebtn');
-            var eletebtn = document.getElementById('eletebtn');
+            
             addbtn.style.display = 'none';
             updatebtn.style.display = 'none';
-            deletebtn.style.display = 'none';
+            
 
             // 두 번째 버튼을 보임
             var canclebtn = document.getElementById('canclebtn');
@@ -86,10 +69,234 @@
 </script>
 
 
+<!--  수정 버튼 스크립트 -->
+<!-- 저장버튼을 클릭하면 (추,수,삭)3개버튼은 사라지고 취소 버튼이 나오게 되는 js 입니다.  -->
+<!--  밑부분은  추가되는 체크박스를 보이게 하거나 숨기는 js입니다. -->
+<script>
+		function replaceButton2() {
+            
+            var addbtn = document.getElementById('addbtn');
+            var updatebtn = document.getElementById('updatebtn');
+            
+            addbtn.style.display = 'none';
+            updatebtn.style.display = 'none';
+            
+
+            
+            var canclebtn = document.getElementById('canclebtn');
+            var submitbtn2 = document.getElementById('submitbtn2');
+            var submitbtn3 = document.getElementById('submitbtn3');
+            
+            submitbtn2.style.display = 'inline-block'; // 또는 'block' 등을 사용할 수 있음
+            submitbtn3.style.display = 'inline-block';
+            canclebtn.style.display = 'inline-block';
+            
+            
+            //체크박스 보이게 하는 법!
+            var checkboxes = document.querySelectorAll(".updatecheckbox");
+            
+            
+            checkboxes.forEach(function(checkbox) {
+            	
+            	if (checkbox.style.display === "none") {
+                    checkbox.style.display = "block";
+                }
+            	else {
+                checkbox.style.display = "none";
+                }
+           
+            	
+            	checkbox.addEventListener('change', () => {
+            	      
+            	      checkboxes.forEach(otherCheckbox => {
+            	        
+            	    	  if (otherCheckbox !== checkbox) {
+            	          otherCheckbox.checked = false;
+            	          
+            	    	  }
+            	    	  
+            	      
+            	      });
+            	})
+            });
+           
+        }
+</script>
 
 
 
 
+<!--  다른체크박스 클릭시 창닫는 js -->
+<script>
+    function a(checkbox) {
+        var row = checkbox.closest('tr');
+
+        if (row) {
+            var classAElements = row.getElementsByClassName('a');
+            var classBElements = row.getElementsByClassName('b');
+
+            if (checkbox.checked) {
+                // 체크될 때
+                for (var i = 0; i < classAElements.length; i++) {
+                    classAElements[i].style.display = 'none';
+                }
+                for (var i = 0; i < classBElements.length; i++) {
+                    classBElements[i].style.display = 'table-cell'; // 또는 다른 display 값으로 설정
+                }
+            } else {
+                // 체크가 해제될 때
+                for (var i = 0; i < classAElements.length; i++) {
+                    classAElements[i].style.display = 'table-cell'; // 또는 다른 display 값으로 설정
+                }
+                for (var i = 0; i < classBElements.length; i++) {
+                    classBElements[i].style.display = 'none';
+                }
+            }
+        }
+        
+        var allRows = document.getElementsByTagName('tr');
+        for (var j = 0; j < allRows.length; j++) {
+            if (allRows[j] !== row) {
+                var otherClassAElements = allRows[j].getElementsByClassName('a');
+                var otherClassBElements = allRows[j].getElementsByClassName('b');
+
+                // class="a"인 열 보이게 설정
+                for (var i = 0; i < otherClassAElements.length; i++) {
+                    otherClassAElements[i].style.display = 'table-cell';
+                }
+
+                // class="b"인 열 감추기
+                for (var i = 0; i < otherClassBElements.length; i++) {
+                    otherClassBElements[i].style.display = 'none';
+                }
+            }
+        }
+        
+        
+    }
+</script>
+
+
+
+<!--  추가 ajax -->
+<script>
+function submitData() {
+    // 입력 필드의 값을 가져오기
+    var productCode = $('input[name="product_code"]').val();
+    var name = $('input[name="name"]').val();
+    var category = $('input[name="category"]').val();
+    var unit = $('input[name="unit"]').val();
+    var cost = $('input[name="cost"]').val();
+    var price = $('input[name="price"]').val();
+    var productionStatus = $('input[name="production_status"]').val();
+
+    // Ajax를 사용하여 서버에 데이터 전송
+    $.ajax({
+        url: '/meta_data/insertproduct',
+        type: 'POST',
+        data: {
+            product_code: productCode,
+            name: name,
+            category: category,
+            unit: unit,
+            cost: cost,
+            price: price,
+            production_status: productionStatus
+            // 추가 필요한 데이터가 있다면 여기에 추가
+        },
+        async: false,
+        success: function() {
+            
+
+            // 추가적인 동작 수행
+            // 예를 들어, 페이지 리로드 등
+            alert('추가완료');
+            location.reload();
+            
+        },
+        error: function(error) {
+            // 에러 처리
+        	console.error('에러 발생:', error);
+        }
+    });
+}    
+</script>
+
+
+<!-- 수정 ajax -->
+<script>
+    function submitData2(submitbtn2) {
+		
+    	var row = $(submitbtn2).closest('tr');
+
+        // 수정된 값 가져오기
+        var hiddenProductCode = row.find('.b:eq(0)').text();
+        var hiddenName = row.find('.b input[name="name"]').val();
+        var hiddenCategory = row.find('.b input[name="category"]').val();
+        var hiddenUnit = row.find('.b input[name="unit"]').val();
+        var hiddenCost = row.find('.b input[name="cost"]').val();
+        var hiddenPrice = row.find('.b input[name="price"]').val();
+        var hiddenProductionStatus = row.find('.b input[name="production_status"]').val();
+
+        // AJAX를 사용하여 서버로 데이터 전송
+        $.ajax({
+            url: '/meta_data/updateproduct', // 실제 서버 엔드포인트로 변경해야 합니다.
+            type: 'POST',
+            data: {
+                product_code: hiddenProductCode,
+                name: hiddenName,
+                category: hiddenCategory,
+                unit: hiddenUnit,
+                cost: hiddenCost,
+                price: hiddenPrice,
+                production_status: hiddenProductionStatus
+                // 나머지 필드들 추가
+            },
+            success: function(response) {
+                // 서버로부터의 응답 처리
+                alert('수정완료');
+                location.reload();
+            },
+            error: function(error) {
+                // 에러 처리
+                console.error(error);
+            }
+        });
+    	
+    }
+</script>
+
+<!-- 삭제 ajax -->
+<script>
+    function submitData3(submitbtn3) {
+		
+    	var row = $(submitbtn3).closest('tr');
+        var hiddenProductCode = row.find('.b:eq(0)').text();
+
+        $.ajax({
+            url: '/meta_data/deleteproduct',
+            type: 'POST',
+            data: {
+                product_code: hiddenProductCode,
+            },
+            success: function(response) {
+                alert('삭제완료');
+                location.reload();
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    	
+    }
+</script>
+
+<!-- 취소버튼 js -->
+<script>
+function redirectToFirstPage() {
+    window.location.href = '/meta_data/firstpage';
+}
+</script>
 
 
 </head>
@@ -119,23 +326,12 @@
 		</div>	
 		<div>
 			<form  action="">	
-				<button type="button" class="btn btn-secondary" id="updatebtn" onclick="">수정</button>
+				<button type="button" class="btn btn-secondary" id="updatebtn" onclick="replaceButton2()">수정</button>
 			</form>
 		</div>
+
 		<div>
-			<form  action="">	
-				<button type="button" class="btn btn-secondary" id="deletebtn" onclick="">삭제</button>
-			</form>
-		</div>	
-		<div>
-			<form  action="">	
-				<button type="button" class="btn btn-secondary" id="submitbtn" onclick="" style="display: none;">저장</button>
-			</form>
-		</div>
-		<div>
-			<form action="/meta_data/firstpage">	
-				<button type="submit" class="btn btn-secondary" id="canclebtn" onclick="" style="display: none;">취소</button>
-			</form>
+			<button type="button" class="btn btn-secondary" id="canclebtn" onclick="redirectToFirstPage()" style="display: none;">취소</button>
 		</div>
 
 			
@@ -148,12 +344,11 @@
 			<div class="list">
 				
 
-				<div class="son_list-box">
-						<form action="/meta_data/insertproduct" role="insert" method="post">
+				<div class="son_list-box">	
 						<table class="table table-hover">
 							<thead>
-								<tr class="table-success">
-									<th></th> <!-- 체크박스 -->
+								<tr class="table-success" >
+									<th scope="col">C</th> <!-- 체크박스 -->
 									<th scope="col">품목코드</th>
 									<th scope="col">품명</th>
 									<th scope="col">카테고리</th>
@@ -163,6 +358,8 @@
 									<th scope="col">취급유무</th>
 									<th scope="col">등록일</th>
 									<th scope="col">사진</th>
+									
+									
 								</tr>
 							</thead>
 							
@@ -171,6 +368,7 @@
 								
 								<!-- 품목추가버튼 누를시 나옴 -->
 								<tr id="inserthang" style="display: none;">	
+									
 									<td></td>							
 									<td><input type="text" name="product_code" size="5"></td>
 									<td><input type="text" name="name" size="5"></td>
@@ -180,7 +378,8 @@
 									<td><input type="text" name="price" size="5"></td>
 									<td><input type="text" name="production_status" size="5"></td>
 									<td></td>
-									<td>업로드 링크</td>
+									<td>사진 넣는 버튼 <button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">추가</button></td>
+									
 								</tr>	
 								
 								
@@ -189,35 +388,79 @@
 								<c:if test="${!empty productList }">
 								<c:forEach var="plist" items="${productList }">
 								<tr>
-									<td scope="row"><input type="checkbox" class="ck" /></td>
-									<td>${plist.product_code }</td>
-									<td>${plist.name }</td>
-									<td>${plist.category }</td>
-									<td>${plist.unit }</td>
-									<td>${plist.cost }</td>
-									<td>${plist.price }</td>
-									<td>${plist.production_status }</td>
-									<td>${plist.regdate }</td>
-									<td>${plist.regdate }</td> <!-- 사진 -->
+									<td><input type="checkbox" class="updatecheckbox" style="display: none;" onchange="a(this)"/></td>									
+									
+									
+									<td class="a">${plist.product_code }</td>
+									<td class="a">${plist.name }</td>
+									<td class="a">${plist.category }</td>
+									<td class="a">${plist.unit }</td>
+									<td class="a">${plist.cost }</td>
+									<td class="a">${plist.price }</td>
+									<td class="a">${plist.production_status }</td>
+									<td class="a">${plist.regdate }</td>
+									<td class="a">${plist.regdate }</td> <!-- 사진 -->
+									
+									
+															
+									<td class="b" style="display: none;">${plist.product_code }</td>
+									<td class="b" style="display: none;"><input type="text" name="name" size="5" value="${plist.name }"></td>
+									<td class="b" style="display: none;"><input type="text" name="category" size="5" value="${plist.category }"></td>
+									<td class="b" style="display: none;"><input type="text" name="unit" size="5" value="${plist.unit }"></td>
+									<td class="b" style="display: none;"><input type="text" name="cost" size="5" value="${plist.cost }"></td>
+									<td class="b" style="display: none;"><input type="text" name="price" size="5" value="${plist.price }"></td>
+									<td class="b" style="display: none;"><input type="text" name="production_status" size="5" value="${plist.production_status }"></td>
+									<td class="b" style="display: none;">${plist.regdate }</td>
+									<td class="b" style="display: none; width: ;">
+									업로드 링크
+									<button type="button" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button> 
+									<button type="button" class="btn btn-secondary" id="submitbtn3" onclick="submitData3(this)" >삭제</button> 									
+									</td>
+									
+								
+								
+								
+								
 								</tr>
+								
 								</c:forEach>
 								</c:if>
 								<!-- 모든물품 검색하기 productList를 가져오면 실행됨 -->
 							</tbody>
 							
 						</table>
-					</form>
 				</div>
 			</div>
-
-	
-	
-	
+		<!--  페이징 -->
+		<div class="box-footer clearfix">
+		<div style="margin: 0 auto; width: fit-content;">
+		<ul class="pagination pagination-sm no-margin pull-right">
+			
+			<c:if test="${pageVO.prev }">
+				<li><a href="/meta_data/firstpage?page=${pageVO.startPage - 1 }">«</a></li>
+			</c:if>
+			
+			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+				<li ${pageVO.cri.page == i?  "class='active'":"" }>
+					<a href="/meta_data/firstpage?page=${i }">
+						${i }
+					</a>
+				</li>
+			</c:forEach>
+			
+			<c:if test="${pageVO.next }">
+				<li><a href="/meta_data/first?page=${pageVO.endPage + 1 }">»</a></li>
+			</c:if>
+		</ul>
+		</div>
+		</div>
+		<!-- 페이징 끝 -->
 	</div>
+
 	
 	
 
-<br><br><br><br>
+
 
 </body>
 </html>
