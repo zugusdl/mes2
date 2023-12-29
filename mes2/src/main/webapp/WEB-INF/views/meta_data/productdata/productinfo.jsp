@@ -32,19 +32,22 @@
 <!-- 추가 js 입니다. -->
 <script src="/resources/js/metadata/productinfo.js"></script>
 
+<!-- 추가 페이징 css 입니다. -->
+<link rel="stylesheet" href="/resources/css/metadata/paging.css">
+
 
 <!--  추가 버튼 스크립트 -->
-<!-- 저장버튼을 클릭하면 (추,수,삭)3개버튼은 사라지고 저장,취소 버튼이 나오게 되는 js 입니다.  -->
+<!-- 저장버튼을 클릭하면 (추,수,삭)3개버튼은 사라지고 취소 버튼이 나오게 되는 js 입니다.  -->
 <!--  밑부분은  추가되는 행이 보이게 하거나 숨기는 js입니다. -->
 <script>
 		function replaceButton() {
             
             var addbtn = document.getElementById('addbtn');
             var updatebtn = document.getElementById('updatebtn');
-            var eletebtn = document.getElementById('eletebtn');
+            
             addbtn.style.display = 'none';
             updatebtn.style.display = 'none';
-            deletebtn.style.display = 'none';
+            
 
             // 두 번째 버튼을 보임
             var canclebtn = document.getElementById('canclebtn');
@@ -67,25 +70,27 @@
 
 
 <!--  수정 버튼 스크립트 -->
-<!-- 저장버튼을 클릭하면 (추,수,삭)3개버튼은 사라지고 저장,취소 버튼이 나오게 되는 js 입니다.  -->
+<!-- 저장버튼을 클릭하면 (추,수,삭)3개버튼은 사라지고 취소 버튼이 나오게 되는 js 입니다.  -->
 <!--  밑부분은  추가되는 체크박스를 보이게 하거나 숨기는 js입니다. -->
 <script>
 		function replaceButton2() {
             
             var addbtn = document.getElementById('addbtn');
             var updatebtn = document.getElementById('updatebtn');
-            var eletebtn = document.getElementById('eletebtn');
+            
             addbtn.style.display = 'none';
             updatebtn.style.display = 'none';
-            deletebtn.style.display = 'none';
+            
 
             
             var canclebtn = document.getElementById('canclebtn');
             var submitbtn2 = document.getElementById('submitbtn2');
+            var submitbtn3 = document.getElementById('submitbtn3');
             
-            canclebtn.style.display = 'inline-block'; // 또는 'block' 등을 사용할 수 있음
             submitbtn2.style.display = 'inline-block'; // 또는 'block' 등을 사용할 수 있음
-       		
+            submitbtn3.style.display = 'inline-block';
+            canclebtn.style.display = 'inline-block';
+            
             
             //체크박스 보이게 하는 법!
             var checkboxes = document.querySelectorAll(".updatecheckbox");
@@ -107,7 +112,9 @@
             	        
             	    	  if (otherCheckbox !== checkbox) {
             	          otherCheckbox.checked = false;
-            	          }
+            	          
+            	    	  }
+            	    	  
             	      
             	      });
             	})
@@ -115,6 +122,7 @@
            
         }
 </script>
+
 
 
 
@@ -258,10 +266,35 @@ function submitData() {
     }
 </script>
 
+<!-- 삭제 ajax -->
+<script>
+    function submitData3(submitbtn3) {
+		
+    	var row = $(submitbtn3).closest('tr');
+        var hiddenProductCode = row.find('.b:eq(0)').text();
+
+        $.ajax({
+            url: '/meta_data/deleteproduct',
+            type: 'POST',
+            data: {
+                product_code: hiddenProductCode,
+            },
+            success: function(response) {
+                alert('삭제완료');
+                location.reload();
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    	
+    }
+</script>
+
 <!-- 취소버튼 js -->
 <script>
 function redirectToFirstPage() {
-    window.location.href = '/meta_data/firstpage'; // 이동할 페이지의 URL로 변경
+    window.location.href = '/meta_data/firstpage';
 }
 </script>
 
@@ -296,24 +329,9 @@ function redirectToFirstPage() {
 				<button type="button" class="btn btn-secondary" id="updatebtn" onclick="replaceButton2()">수정</button>
 			</form>
 		</div>
+
 		<div>
-			<form  action="">	
-				<button type="button" class="btn btn-secondary" id="deletebtn" onclick="">삭제</button>
-			</form>
-		</div>
-			
-		<div>
-			
-				<button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">추가저장</button>
-			
-		</div>
-		<div>
-			<form  action="">	
-					
-			</form>
-		</div>
-		<div>
-			<button type="button" class="btn btn-secondary" id="canclebtn" onclick="redirectToFirstPage()" style="display: none; margin-right: 70px;" >돌아가기</button>
+			<button type="button" class="btn btn-secondary" id="canclebtn" onclick="redirectToFirstPage()" style="display: none;">취소</button>
 		</div>
 
 			
@@ -327,7 +345,7 @@ function redirectToFirstPage() {
 				
 
 				<div class="son_list-box">	
-						<table class="table table-hover" >
+						<table class="table table-hover">
 							<thead>
 								<tr class="table-success" >
 									<th scope="col">C</th> <!-- 체크박스 -->
@@ -360,8 +378,8 @@ function redirectToFirstPage() {
 									<td><input type="text" name="price" size="5"></td>
 									<td><input type="text" name="production_status" size="5"></td>
 									<td></td>
-									<td>업로드 링크</td>
-								
+									<td>사진 넣는 버튼 <button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">추가</button></td>
+									
 								</tr>	
 								
 								
@@ -384,7 +402,6 @@ function redirectToFirstPage() {
 									<td class="a">${plist.regdate }</td> <!-- 사진 -->
 									
 									
-									
 															
 									<td class="b" style="display: none;">${plist.product_code }</td>
 									<td class="b" style="display: none;"><input type="text" name="name" size="5" value="${plist.name }"></td>
@@ -394,11 +411,16 @@ function redirectToFirstPage() {
 									<td class="b" style="display: none;"><input type="text" name="price" size="5" value="${plist.price }"></td>
 									<td class="b" style="display: none;"><input type="text" name="production_status" size="5" value="${plist.production_status }"></td>
 									<td class="b" style="display: none;">${plist.regdate }</td>
-									<td class="b" style="display: none;">업로드 링크 </td>
-									<td class="b" style="display: none; width: 80px;">
-									<button type="button" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button>
-									
+									<td class="b" style="display: none; width: ;">
+									업로드 링크
+									<button type="button" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button> 
+									<button type="button" class="btn btn-secondary" id="submitbtn3" onclick="submitData3(this)" >삭제</button> 									
 									</td>
+									
+								
+								
+								
+								
 								</tr>
 								
 								</c:forEach>
@@ -409,15 +431,36 @@ function redirectToFirstPage() {
 						</table>
 				</div>
 			</div>
-
-	
-	
-	
+		<!--  페이징 -->
+		<div class="box-footer clearfix">
+		<div style="margin: 0 auto; width: fit-content;">
+		<ul class="pagination pagination-sm no-margin pull-right">
+			
+			<c:if test="${pageVO.prev }">
+				<li><a href="/meta_data/firstpage?page=${pageVO.startPage - 1 }">«</a></li>
+			</c:if>
+			
+			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+				<li ${pageVO.cri.page == i?  "class='active'":"" }>
+					<a href="/meta_data/firstpage?page=${i }">
+						${i }
+					</a>
+				</li>
+			</c:forEach>
+			
+			<c:if test="${pageVO.next }">
+				<li><a href="/meta_data/first?page=${pageVO.endPage + 1 }">»</a></li>
+			</c:if>
+		</ul>
+		</div>
+		</div>
+		<!-- 페이징 끝 -->
 	</div>
+
 	
 	
 
-<br><br><br><br>
+
 
 </body>
 </html>

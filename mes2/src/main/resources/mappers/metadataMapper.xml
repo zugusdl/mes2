@@ -5,7 +5,16 @@
   
   <mapper namespace="com.mes2.mapper.metadataMapper">
   
-
+	<resultMap type="com.mes2.metadata.domain.md_productDTO" id="board">
+    	<result property="product_code" column="product_code"/>
+    	<result property="name" column="name"/>
+    	<result property="category" column="category"/>
+    	<result property="unit" column="unit"/>
+    	<result property="cost" column="cost"/>
+    	<result property="price" column="price"/>
+    	<result property="production_status" column="production_status"/>
+    	<result property="regdate" column="regdate"/>
+    </resultMap>
   
   	<!-- 모든 글 조회(ALL) -->
   	<select id="listALL" resultType="com.mes2.metadata.domain.md_productDTO">
@@ -45,6 +54,29 @@
     WHERE
         product_code = #{product_code}
   	</update>
-
+  	
+  	
+  	<delete id="delete" parameterType="com.mes2.metadata.domain.md_productDTO">
+  	delete from meta_data_product
+  	where product_code = #{product_code} 	
+  	</delete>
+  	
+  	
+  	<!--글 목록 조회(page) -->
+  	<select id="listPage" resultType="com.mes2.metadata.domain.md_productDTO" resultMap="board">
+  		select * from meta_data_product
+<!--   		order by bno desc,regdate desc  -->
+  		<!-- limit #{page},#{pageSize} --> 	
+  		limit #{startPage},#{pageSize} 	
+  	</select>
+	
+	
+	<!-- 전체 글 개수 조회 -->
+  	<select id="countBoard" resultType="int">
+  	  <![CDATA[
+	  	  select count(*) from meta_data_product
+   	  ]]> 
+  	</select>
+	
   </mapper>
   

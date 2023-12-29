@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.mes2.metadata.domain.Criteria;
 import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.metadata.persistence.MetadataDAO;
 
@@ -45,8 +46,22 @@ public class MetadataServiceImpl implements MetadataService {
 		return mdao.productupdate(dto);
 	}
 	
-	
+	@Override
+	public int productdelete(md_productDTO dto) throws Exception {
+		
+		return mdao.productdelete(dto);
+	}
 
+	@Override
+	public List<md_productDTO> boardListPage(Criteria cri) throws Exception {
+		
+		return mdao.getBoardListPage(cri);
+	}
 
+	@Override
+	public int totalBoardCount() throws Exception {
+		logger.debug(" S : totalBoardCount()  ");
+		return mdao.getBoardCount();
+	}
 
 }
