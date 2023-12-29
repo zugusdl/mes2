@@ -83,7 +83,26 @@
 
 	<!-- 정보 수정 모달 -->
 	<div id="updateModal" class="modal">
-		<div>${mdto.name }</div>
+		<div>
+			<div>
+				회사명: <input type="text" name="name" value="${mdto.name }" readonly><br>
+			</div>
+			<div>
+				현재 비밀번호: <input type="password" name="pw" placehoder="현재 비밀번호를 입력하세요"><br>
+			</div>
+			<div>
+				수정 비밀번호: <input type="password" name="newPw" placehoder="수정할 비밀번호를 입력하세요"><br>
+			</div>
+			<div>
+				비밀번호 확인: <input type="password" name="checkPw" placehoder="수정 비밀번호 한번 더 입력하세요"><br>
+			</div>
+			<div>
+				담당자: <input type="text" name=manager value="${mdto.manager }" readonly><br>
+			</div>
+			<div>
+				주소: <input type="text" name="address" value="${mdto.address }" readonly><br>
+			</div>
+		</div>
 		<a href="#" rel="modal:close">닫기</a>
 	</div>
 
