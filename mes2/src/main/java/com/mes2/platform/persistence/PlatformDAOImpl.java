@@ -112,11 +112,11 @@ public class PlatformDAOImpl implements PlatformDAO {
 	
 	// 주문 수정
 	@Override
-	public void modifyOrder(SopDTO sopDTO) throws Exception {
-//		public void modifyOrder(List<SopDTO> sopList) throws Exception {
+//	public void modifyOrder(SopDTO sopDTO) throws Exception {
+	public void modifyOrder(List<SopDTO> sopList) throws Exception {
 		logger.debug("DAO: modifyOrder() 호출");
-		logger.debug("@@@@@@@sopList: " + sopDTO);
-		sqlSession.update(NAMESPACE + ".modifyOrder", sopDTO);
+		logger.debug("@@@@@@@sopList: " + sopList);
+		sqlSession.update(NAMESPACE + ".modifyOrder", sopList);
 	}
 	
 	// 주문 수정 일자 업데이트

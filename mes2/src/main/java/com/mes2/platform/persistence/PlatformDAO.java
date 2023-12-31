@@ -45,8 +45,8 @@ public interface PlatformDAO {
 	public void updateOrderDate(String order_code) throws Exception;
 
 	// 주문 수정
-	public void modifyOrder(SopDTO sopDTO) throws Exception;
-//	public void modifyOrder(List<SopDTO> sopList) throws Exception;
+//	public void modifyOrder(SopDTO sopDTO) throws Exception;
+	public void modifyOrder(List<SopDTO> sopList) throws Exception;
 	
 	// 주문 삭제
 	public void deleteOrder(String order_code) throws Exception;

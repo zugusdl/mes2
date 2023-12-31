@@ -5,6 +5,7 @@
   
 <mapper namespace="com.mes2.mapper.platformMapper">
 	<resultMap type="com.mes2.platform.domain.SoiDTO" id="order">
+		<id property="order_code" column="order_code" />
 		<result property="order_code" column="order_code" />
 		<result property="order_date" column="order_date" />
 		<result property="sales_status" column="sales_status" />
@@ -12,6 +13,7 @@
 	</resultMap>
 	
 	<resultMap type="com.mes2.platform.domain.SopDTO" id="detail">
+		<id property="product_code" column="product_code" />
 		<result property="product_code" column="product_code" />
 		<result property="sales_quantity" column="sales_quantity" />
 		<association property="mdpDTO" resultMap="product" />
@@ -84,7 +86,7 @@
 	</select>
 	
 	<!-- 주문 상세 조회(주문 품목 조회) -->
-	<select id="getOrderDetail" resultType="com.mes2.platform.domain.SoiDTO" resultMap="order">
+	<select id="getOrderDetail" resultMap="order">
 		SELECT soi.order_code, soi.order_date, sales_status, sop.product_code, sop.sales_quantity, mdp.name, mdp.price
 		FROM sales_order_info soi 
 		JOIN sales_order_product sop

@@ -135,7 +135,7 @@ public class PlatformServiceImpl implements PlatformService {
 			for(SopDTO modifyDTO : sopList) {
 				if(bDTO.getProduct_code().equals(modifyDTO.getProduct_code())) {
 					found = true; // 같은 품목 있으면 true로 변경
-					pdao.modifyOrder(modifyDTO);
+//					pdao.modifyOrder(modifyDTO);
 					break;
 				}
 			}
@@ -145,8 +145,8 @@ public class PlatformServiceImpl implements PlatformService {
 			}
 		}
 		
-//		// 나머지 수정된 품목 수량 update
-//		pdao.modifyOrder(sopList);
+		// 나머지 수정된 품목 수량 update
+		pdao.modifyOrder(sopList);
 		
 		// update_date 일자 수정
 		pdao.updateOrderDate(order_code);
