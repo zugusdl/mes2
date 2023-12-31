@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mes2.production.domain.InstructionsDTO;
 import com.mes2.production.etc.InstructionsSearchParam;
+import com.mes2.production.etc.RequestMaterialsDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +30,7 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public void insert(InstructionsDTO instructionsDTO) {
+	public int insert(InstructionsDTO instructionsDTO) {
 		log.debug("InstructionsDAO : insert 호출");
 		log.debug("입력된  instructionsDTO의 값 : " + instructionsDTO.getCode());
 		log.debug("입력된  instructionsDTO의 값 : " + instructionsDTO.getLine());
@@ -37,7 +38,7 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 		log.debug("입력된  instructionsDTO의 값 : " + instructionsDTO.getSopCode());
 		log.debug("입력된  instructionsDTO의 값 : " + instructionsDTO.getQuantity());
 		
-		sqlSession.insert(NAMESAPCE+".insertInstructionForStandBy", instructionsDTO);
+		return sqlSession.insert(NAMESAPCE+".insertInstructionForStandBy", instructionsDTO);
 
 	}
 	
@@ -67,6 +68,11 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 
 		log.debug("Param : " +param.getStartTime());
 		log.debug("@@@@@@@@@@@@@@@@@@@@@@@@Param : " +param.getEndTime());
+		log.debug("@@@@@@@@@@@@@@@@@@@@@@@@Param 상태값 : " +param.getState());
+		
+		if(sqlSession.selectList(NAMESAPCE+".selectBySearchParamCode", param)==null) {
+			log.debug("안에 아무것도 없음 -ㅅ-");
+		}
 		return sqlSession.selectList(NAMESAPCE+".selectBySearchParamCode", param);
 	}
 
@@ -123,6 +129,46 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 		
 		return sqlSession.update(NAMESAPCE+".updateState" , instructionsDTO);
 	}
+
+
+
+	@Override
+	public RequestMaterialsDTO selectBySopCodeForMaterials(String sopCode) {
+		log.debug("instructionsDAO : selectBySopCodeForMaterials 호출");
+		RequestMaterialsDTO rqml = sqlSession.selectOne(NAMESAPCE+".selectByisCodeForMaterials", sopCode);
+		log.debug(""+rqml.toString());
+		return rqml;
+	}
+
+
+
+	@Override
+	public int updateAccept(InstructionsDTO instructionsDTO) {
+		log.debug("instructionsDAO : updateAccept 호출");
+		int result = sqlSession.update(NAMESAPCE+".updateAccept",instructionsDTO);
+		log.debug("@@@@@@@@@@@@Update 결과값 : "+ result);
+		
+		return result;
+	}
+
+
+
+	@Override
+	public InstructionsDTO selectBySopCode(String sopCode, String state) {
+		Map<String, String> paramMap = new HashMap();
+		paramMap.put("sopCode", sopCode);
+		paramMap.put("state", state);
+		
+		return sqlSession.selectOne(NAMESAPCE+".selectBySopCode",paramMap);
+	}
+
+
+
+	@Override
+	public List<InstructionsDTO> selectByState(String state) {
+		return sqlSession.selectList(NAMESAPCE+".selectByState", state);
+	}
+	
 	
 	
 	

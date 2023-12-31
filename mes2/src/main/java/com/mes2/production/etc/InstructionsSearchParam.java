@@ -8,7 +8,7 @@ import com.mes2.production.vo.InstructionsState;
 public class InstructionsSearchParam {
 	
 	private String code;
-	private InstructionsState state;
+	private String state;
 	private Timestamp startTime;
 	private Timestamp endTime;
 	private String searchType;
@@ -24,15 +24,16 @@ public class InstructionsSearchParam {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public InstructionsState getState() {
-		return state;
-	}
-	public void setState(InstructionsState state) {
-		this.state = state;
-	}
 
 	
 	
+	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public Timestamp getStartTime() {
 		return startTime;
 	}

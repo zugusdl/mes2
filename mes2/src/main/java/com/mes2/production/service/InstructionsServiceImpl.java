@@ -2,6 +2,7 @@ package com.mes2.production.service;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,8 @@ public class InstructionsServiceImpl implements InstructionsService {
 	private ProductDAO productDAO;
 	
 	
-	@Transactional(rollbackFor = ValidationValueErrorException.class) // 트랜잭션 사용
+	//현재는 사용하지 않는 메서드
+	//@Transactional(rollbackFor = ValidationValueErrorException.class) // 트랜잭션 사용
 	@Override
 	public void saveInstructions(InstructionsDTO instructionsDTO) throws ValidationValueErrorException {
 		//작업지시 등록할때 생산라인도 같이 저장되어야함
@@ -57,6 +59,9 @@ public class InstructionsServiceImpl implements InstructionsService {
 		productionLine.setStartDate(instructionsDTO.getDueDate());
 		productionLine.setLine(instructionsDTO.getLine());
 		productionLine.setStatus("STANDBY");
+		
+		Date dueEndDate = calEndDate(instructionsDTO.getDueDate(), instructionsDTO.getSalesQuantity());
+		productionLine.setEndDate(dueEndDate);
 		
 		//instructionsDAO를 통해 DB에 저장
 		instructionsDAO.insert(instructionsDTO);
@@ -104,47 +109,47 @@ public class InstructionsServiceImpl implements InstructionsService {
 	
 	
 	
-	@Transactional(rollbackFor = UpdateFailException.class)
+	//@Transactional(rollbackFor = UpdateFailException.class)
 	@Override
-	public void acceptRequestedInstructions(String isCode) {
+	public void acceptRequestedInstructions(String sopCode, Date dueDate, int line) {
 		//그래서 뭐해야함?
 		//-> 수락시 isCode를 이용해서 작업지시, 생산라인 정보 모드 호출
 		// 그리고 상태를 전부 대기상태로 변경해야함
 		// 그럼 거절했을시에는? 삭제를 할것인가 아니면 Refuse로 둘것인가?
 		// -> 기록이 남아야하니까 refuse로 두는 것으로 생각중
 		
-		InstructionsDTO isDTO = instructionsDAO.selectByCode(isCode);
+		InstructionsDTO isDTO = instructionsDAO.selectBySopCode(sopCode, "REQUESTED");
 		log.debug(isDTO.toString());
+		isDTO.setCode(createIsCode(dueDate, line));
+		isDTO.setDueDate(dueDate);
+		isDTO.setLine(line);
+		log.debug("InstructionsService : saveInstructions : 새로 생성된 코드" +isDTO.getCode());
 		
-		ProductionLineDTO plDTO = productionLineDAO.selectByIsCode(isCode);
-		log.debug(plDTO.toString());
-		//여기서부터 다시 해야함
-		isDTO.setState("WAITING");
-		plDTO.setStatus("WAITING");
+		
+		//위에서 입력받은 InstructionsDTO를 기반으로 ProductionLineDTO 정보도 입력
+		ProductionLineDTO productionLine = new ProductionLineDTO();
+		productionLine.setIsCode(isDTO.getCode());
+		productionLine.setStartDate(isDTO.getDueDate());
+		productionLine.setLine(isDTO.getLine());
+		productionLine.setStatus("WAITING");
+		
 		
 	
 		try {
 			
 
-			int isUpdateResult = instructionsDAO.updateState(isDTO);
-			int plUpdateResult = productionLineDAO.updateState(plDTO);
-				
-			
+			int isUpdateResult = instructionsDAO.updateAccept(isDTO);
+			productionLineDAO.insertProductionLine(productionLine);
 			updateSuccessCheck(isUpdateResult);
-			updateSuccessCheck(plUpdateResult);
 		} catch (UpdateFailException e) {
 			e.printStackTrace();
 			log.debug("acceptRequestedInstructions 실행 중 예외 발생");
 		}
 
-	
-		
-		
-		
-		
-		
-		
 	}
+	
+	
+	
 
 	@Override
 	public InstructionsState transType(String enumType) {
@@ -243,11 +248,6 @@ public class InstructionsServiceImpl implements InstructionsService {
 		
 	}
 	
-	//[기존]작업종료날짜 = 시작날짜 +1  -> 수주 수량 1000개당 종료날짜 +1
-	private Date calEndDate(Date startDate) {
-		
-		return null;
-	}
 	
 	//LOT넘 
 	@Override
@@ -293,7 +293,7 @@ public class InstructionsServiceImpl implements InstructionsService {
 	}
 	
 	//작업 종료 -> 작업지시 상태 업데이트 + 생산품 저장 + 생산라인 업데이트
-	@Transactional
+	//@Transactional
 	@Override
 	public void completeInstructions(String isCode, int quantity, int fault) {
 		//기존 작업지시서 소환
@@ -310,13 +310,39 @@ public class InstructionsServiceImpl implements InstructionsService {
 		log.debug("instructionsService : 작업종료 완료 및 상태 변경 완료 ");
 	}
 	
+	
+	
+	
+	@Override
+	public List<InstructionsDTO> findByState(String state) {
+		return instructionsDAO.selectByState(state);
+	}
+
 	private void updateSuccessCheck(int result) throws UpdateFailException {
 		if(result==0) {
 			throw new UpdateFailException("상태 및 업데이트에 문제가 발생하였습니다.");
 		}
 	}
 
+	@Override
+	public InstructionsDTO findBySopCode(String sopCode, String state) {
+		return instructionsDAO.selectBySopCode(sopCode, state);
+	}
 
+
+	//[기존]작업종료날짜 = 시작날짜 +1  -> 수주 수량 1000개당 종료날짜 +1
+	private Date calEndDate(Date startDate, int count) {
+		
+		int num = (count/1000)+1;
+		
+        // 날짜에 일 더하기
+        
+        LocalDate futureLocalDate = startDate.toLocalDate().plusDays(num);
+        Date endDate = Date.valueOf(futureLocalDate);
+		
+		return endDate;
+	}
+	
 	
 	
 	

@@ -95,7 +95,7 @@ public class ProductController {
 		model.addAttribute("startDate" , productSearchParam.getStartDate());
 		model.addAttribute("endDate" , productSearchParam.getEndDate());
 		
-		return "/product/main";
+		return "/product/productList";
 	}
 
 	

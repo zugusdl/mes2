@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.mes2.production.domain.InstructionsDTO;
 import com.mes2.production.etc.InstructionsSearchParam;
+import com.mes2.production.etc.RequestMaterialsDTO;
 
 public interface InstructionsDAO {
 
-	public void insert(InstructionsDTO instructionsDTO);
+	public int insert(InstructionsDTO instructionsDTO);
 	
 	public int updateStart(InstructionsDTO instructionsDTO);
 	
@@ -26,5 +27,11 @@ public interface InstructionsDAO {
 	
 	public int updateState(InstructionsDTO instructionsDTO);
 
+	public RequestMaterialsDTO selectBySopCodeForMaterials(String sopCode);
 	
+	public int updateAccept(InstructionsDTO instructionsDTO);
+	
+	public InstructionsDTO selectBySopCode(String sopCode, String state);
+	
+	public List<InstructionsDTO> selectByState(String state);
 }

@@ -11,7 +11,7 @@ public interface ProductionLineService {
 	
 	public void save(ProductionLineDTO productionLineDTO);
 	
-	public List<ProductionLineDTO> findByDate(Date paramDate);
+	public List<ProductionLineDTO> findByDate(Date startDate , Date endDate);
 	
 	public ProductionLineDTO findByIsCode(String isCode);
 }

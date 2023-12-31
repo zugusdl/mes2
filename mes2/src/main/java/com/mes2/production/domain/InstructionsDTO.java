@@ -18,6 +18,7 @@ public class InstructionsDTO {
 	private String state; //상태 ( 요청 REQUESTED, 
 	private int quantity;
 	private int fault;
+	private int salesQuantity;
 	
 	
 	public String getCode() {
@@ -101,7 +102,12 @@ public class InstructionsDTO {
 	}
 	
 	
-	
+	public int getSalesQuantity() {
+		return salesQuantity;
+	}
+	public void setSalesQuantity(int salesQuantity) {
+		this.salesQuantity = salesQuantity;
+	}
 	public String getEmpName() {
 		return empName;
 	}

@@ -16,9 +16,9 @@
 		<result property="status" column="status"/>
 	</resultMap>
 	
-	<insert id="insertLine">
-		insert into line, is_code, start_date, end_date, status 
-		value #{line}, #{is_code}, #{starDate}, #{endDate}, #{status}
+	<insert id="insertProductionLine">
+		insert into production_line (line, is_code, start_date, end_date, status) 
+		values (#{line}, #{isCode}, #{startDate}, #{endDate}, #{status})
 	</insert>
 <!-- 	
 	<select id="selectByDateForList" parameterType="java.util.Map">
@@ -28,10 +28,10 @@
 	</select>
 	 -->
 	
-	<select id="selectByDateForList" parameterType="java.sql.Date">
+	<select id="selectByDateForList" resultMap="productionLineDTOMap" parameterType="java.util.Map">
 		SELECT * 
 		FROM production_line
-		WHERE start_date BETWEEN #{selectDate} AND date_add(#{selectDate, INTERVAL 3 DAY) 
+		WHERE start_date BETWEEN #{startDate} AND #{endDate} or end_date BETWEEN #{startDate} AND #{endDate}
 	</select>
 	
 	<update id="updateState">

@@ -20,15 +20,39 @@
 		<result property="state" column="state"/>
 		<result property="quantity" column="quantity"/>
 		<result property="fault" column="fault"/>
+		<result property="salesQuantity" column="sales_quantity"/>		
 	</resultMap>
 	
-
+	<resultMap type="com.mes2.production.etc.RequestMaterialsDTO" id="requestMaterialsDTOMap">
+		<result property="productCode" column="product_code"/>
+		<result property="name" column="name"/>
+		<result property="unit" column="unit"/>
+		<result property="cost" column="cost"/>
+		<result property="price" column="price"/>
+		<collection property="materialList" resultMap="requestMaterialDTOMap"/>
+	</resultMap>
+	
+	<resultMap type="com.mes2.production.etc.RequestMaterialDTO" id="requestMaterialDTOMap">
+		<result property="index" column="index" />
+		<result property="productCode" column="product_code" />
+		<result property="materialCode" column="material_code" />
+		<result property="amount" column="amount" />
+		<result property="amountUnit" column="amount_unit" />
+		<result property="registrationDate" column="registration_date" />
+	</resultMap>
 	
 	<insert id ="insertInstructionForStandBy">
 		insert into instructions
 		(code, line, mdp_code, type, sop_code, due_date, state)
 		values (#{code},#{line},#{mdpCode},#{type},#{sopCode},#{dueDate}, #{state})
 	</insert>
+	
+	<!-- 혹시 대비를 위한  -->
+	<update id="updateAccept">
+		update instructions
+		set code=#{code}, line=#{line}, due_date = #{dueDate}, type=#{type},  state = 'WAITING', emp_id = #{empNum}
+		where sop_code = #{sopCode}
+	</update>
 	
 	<select id="selectByCode" resultMap="instructionsDTOMap" parameterType="String">
 		select *
@@ -62,22 +86,32 @@
 		select * 
 		from instructions 
 		<where>
+			<if test="state !=null and !state.equals('')">
+				<![CDATA[
+            	and state = #{state}
+            	]]>   
+            </if>
 		
             <if test="code !=null and !code.equals('')">
                <![CDATA[
                	and code like concat('%',#{code},'%')
                ]]>    
             </if>
-<!-- 
-            <if test="startTime != null and endTime != null ">
-                AND start_time between #{startTime} AND #{endTime}
-            </if>	
+                
+            <if test="state == null or state.equals('')">
+            	and state != 'REQUESTED'
+            </if>
             
-            <if test="startTime != null  and endTime = null ">
+
+            <if test="startDate != null and endDate != null ">
+                AND due_Date between #{startDate} AND #{endDate}
+            </if>	
+<!--             
+            <if test="startTime != null  and endTime == null ">
                 <![CDATA[ AND start_time > #{startTime}]]>
             </if>	
 
-			<if test="startTime = null  and endTime != null ">
+			<if test="startTime == null  and endTime != null ">
                 <![CDATA[ AND end_time < #{endTime} ]]>
             </if>
              -->
@@ -162,6 +196,37 @@
 		where state = #{state} and due_date between #{startDate} and #{endDate} 
 	</select>
 	
+	<!-- 품목별 소요량 확인하기 -->
+	<select id="selectByisCodeForMaterials" resultMap="requestMaterialsDTOMap">
+		select *		
+		from meta_data_product mdp
+		join meta_data_required_amount mdra 
+		on mdra.product_code = mdp.product_code 
+		where mdp.product_code = (select mdp_code from instructions where sop_code = #{sopCode})
 		
+	</select>
+	
+	<!-- SOP 정보로 찾기 -->
+	<select id="selectBySopCode" resultMap="instructionsDTOMap" parameterType="java.util.Map">
+		select *
+		from instructions iss 
+		join sales_order_product sop 
+		on iss.sop_code = sop.sales_code 
+		where sop_code = #{sopCode} and state = #{state}
+	</select>
+	
+	<select id="selectByState" resultMap="instructionsDTOMap">
+		select *
+		from instructions iss 
+		join sales_order_product sop 
+		on iss.sop_code = sop.sales_code 
+		where state = #{state} 
+	</select>
+	
+	<update id="updateSaleOrderProduct">
+		update sales_order_product 
+		set product_code = #{status}
+		where order_code = (select sop_code from instructions where code = #{isCode})
+	</update>
 
 </mapper>

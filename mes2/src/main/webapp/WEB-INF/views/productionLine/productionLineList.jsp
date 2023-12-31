@@ -34,9 +34,9 @@
 				<input type="text" name="code" placeholder="작업지시코드" />
 				<div>
 					<span class="search-font">검색시작일</span>
-					<input id="dtIp" type="date" name="searchStartDate" min="2023-12-01" max="2024-12-31" />
+					<input id="dtIp" type="date" name="searchStartDate" min="2023-12-01" max="2024-12-31" value="${searchStartDate}"/>
 					<span class="search-font">검색종료일</span>
-					<input id="dtIp" type="date" name="searchEndDate" min="2020-01-01" max="2030-12-31" width="100px" />
+					<input id="dtIp" type="date" name="searchEndDate" min="2020-01-01" max="2030-12-31" value="${searchEndDate}" width="100px" />
 				</div>
 
 				
@@ -78,7 +78,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="item" items="${productionLine}">
+								<c:forEach var="item" items="${productionLineList}">
 									<tr>
 										<td scope="row"><input type="checkbox" class="ck" /></td>
 										<td>${item.index}</td>

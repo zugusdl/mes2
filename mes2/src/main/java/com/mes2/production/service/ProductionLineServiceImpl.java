@@ -23,8 +23,8 @@ public class ProductionLineServiceImpl implements ProductionLineService{
 	}
 
 	@Override
-	public List<ProductionLineDTO> findByDate(Date paramDate){
-		return productionalLineDAO.selectByDate(paramDate);
+	public List<ProductionLineDTO> findByDate(Date startDate, Date endDate){
+		return productionalLineDAO.selectByDate(startDate, endDate);
 	}
 	
 	private String createLotCode(Date date, String mdpCode) {
@@ -36,6 +36,8 @@ public class ProductionLineServiceImpl implements ProductionLineService{
 	public ProductionLineDTO findByIsCode(String isCode) {
 		return productionalLineDAO.selectByIsCode(isCode);
 	}
+	
+	
 	
 	
 

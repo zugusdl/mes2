@@ -25,10 +25,14 @@ public interface InstructionsService {
 	
 	public List<InstructionsDTO> findByStateAndDate(InstructionsSearchParam param);
 	
-	public void acceptRequestedInstructions(String isCode);
+	public void acceptRequestedInstructions(String sopCode , Date dueDate, int line);
 	
 	public String createLotCode(Date inputDate,int line , String mdpCode);
 	
 	public void completeInstructions(String isCode , int quantity, int fault);
+	
+	public List<InstructionsDTO> findByState(String state);
+	
+	public InstructionsDTO findBySopCode(String sopCode, String state);
 	
 }

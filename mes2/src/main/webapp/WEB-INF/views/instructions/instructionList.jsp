@@ -14,7 +14,7 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 
-<link rel="stylesheet" href="/resources/css/platform/orderList.css">
+<link rel="stylesheet" href="/resources/css/production/instructionList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -23,8 +23,16 @@
 	<!-- 검색창 -->
 	<div class="container">
 		<section class="section1">
-			<form class="search" action="/instructions/search">
-				<select id="boundary" name="searchType">
+			<form class="search" action="/instructions/search" onsubmit="return validateSearchForm()">
+				
+				<select id="state" name="searchState" >
+					<option value="">-- 검색선택 --</option>
+					<option value="WAITING">작업대기</option>
+					<option value="PROGRESSING">진행중</option>
+					<option value="COMPLETE">완료</option>
+				</select>
+				
+				<select id="boundary" name="searchType" >
 					<option value="">-- 검색선택 --</option>
 					<option value="isCode">작업지시코드</option>
 					<option value="soiCode">수주번호</option>
@@ -34,9 +42,9 @@
 				<input type="text" name="code" placeholder="작업지시코드" />
 				<div>
 					<span class="search-font">검색시작일</span>
-					<input id="dtIp" type="date" name="searchStartDate" min="2023-12-01" max="2024-12-31" />
+					<input id="dtIp" type="date" name="searchStartDate" min="2023-12-01" max="2024-12-31" value="${startDate}"/>
 					<span class="search-font">검색종료일</span>
-					<input id="dtIp" type="date" name="searchEndDate" min="2020-01-01" max="2030-12-31" width="100px" />
+					<input id="dtIp" type="date" name="searchEndDate" min="2020-01-01" max="2030-12-31" width="100px" value="${endDate}"/>
 				</div>
 
 				
@@ -115,7 +123,7 @@
 	</script>
 	<script src="/resources/js/platform/orderList.js"></script>
 	
-	<script>
+	<script type="text/javascript">
 	var isCode = '${item.code}'
 	
     function openIsSave(){
@@ -126,11 +134,25 @@
         window.open("/instructions/result?isCode"+isCode,"result","width=800px, height=640px")
     }
     */ 
-	</script>
-	
-	<script type="text/javascript">
 
-		}
+	
+	function validateSearchForm() {
+        var searchType = document.getElementById("boundary").value;
+        
+        if (searchType === "") {
+            alert("좋은말로 할 때 검색 타입을 선택하세요.");
+            return false; 
+        }
+        
+        return true; 
+    }
+    
+    var searchType = '${searchType}'; 
+
+    // JavaScript를 통해 동적으로 선택된 값을 설정
+    document.getElementById('boundary').value = searchType;
+		
+		
 	
 	</script>
 		

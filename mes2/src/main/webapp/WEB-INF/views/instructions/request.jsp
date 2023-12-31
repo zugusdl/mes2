@@ -14,7 +14,7 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 
-<link rel="stylesheet" href="/resources/css/platform/orderList.css">
+<link rel="stylesheet" href="/resources/css/production/request.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -73,20 +73,19 @@
 										<td scope="row"><input type="checkbox" class="ck" /></td>
 										<td><a href="">${item.code}</a></td>
 										<td>${item.line}</td>
-										<td>${item.mdpCode}</td>
-										<td>${item.sopCode}</td>
-										<td>
-											<form action="/instructions/accept" method="post">
-												<input type="hidden" name="isCode" value="${item.code}">
-												<button type="submit" class="btn btn-secondary" id="accept">수락</button>
-											</form>	
-										</td>
+										<td onclick="getMaterials('${item.mdpCode}')">${item.mdpCode}</td>
+										<td onclick="getMaterials('${item.sopCode}','${item.salesQuantity }')">${item.sopCode}</td>
 										<td>
 											<form action="/instructions/refuse"  method="post">
-												<input type="hidden" name="isCode" value="${item.code}">
-												<button type="button" class="btn btn-secondary" id="refuse" onclick="location.href='/instructions/refuse';">거절</button>
+												<input type="hidden" name="sopCode" value="${item.sopCode}">
+												<button type="button" class="btn btn-secondary" id="refuse" onclick="location.href='/instructions/refuse';">자재요청</button>
 											</form>	
 										</td>
+										<td>
+											<input type="hidden" name="sopCode" value="${item.sopCode}">
+											<button type="submit" class="btn btn-secondary" id="accept" onclick="window.open('/instructions/accept/${item.sopCode}','result','width=800px, height=640px')">수락</button>
+										</td>
+					
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -94,21 +93,31 @@
 				</div>
 			</div>
 		</section>
+		<section class="section1">
+			<div id="bottomContent">
+		
+		
+			</div>
+		</section>
 
-		<div id="bottomContent"></div>
 	</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous">
 	</script>
-	<script src="/resources/js/platform/orderList.js"></script>
+	<script src="/resources/js/instructions/request.js"></script>
 	
 	<script>
 	
     function openInput(){
         window.open("/instructions/save","save","width=800px, height=640px")
     }
+    function openAccept(){
+        window.open("/instructions/accept","accept","width=800px, height=640px")
+    }
+    
+   
 	</script>
 	
 </body>

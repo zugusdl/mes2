@@ -1,5 +1,7 @@
 package com.mes2.production.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -72,29 +74,41 @@ public class InstructionsController {
 		return null;
 	}
 	
+	//http://localhost:8088/instructions/search
 	@GetMapping("/search")
-	public String searchGET(Model model,@ModelAttribute(value = "searchStartDate") String searchStartDate,
+	public String searchGET(Model model,
+			@RequestParam(value="searchStartDate", required = false) Date searchStartDateDate,
+			@ModelAttribute(value = "searchStartDate") String searchStartDate,
 			@ModelAttribute(value="searchEndDate") String searchEndDate, 
 			@ModelAttribute(value = "searchCode") String searchCode,
-			@ModelAttribute(value="searchType") String searchType
-			/*@ModelAttribute(value="state") InstructionsState state */) {
+			@ModelAttribute(value="searchType") String searchType,
+			@RequestParam(value="searchState", required = false) String searchState ) {
 		
+		log.debug("isController : 넘겨받은 Date타입의 startDate : " + searchStartDateDate);
 		log.debug("isController : 넘겨받은 startDate : " + searchStartDate);
 		log.debug("isController : 넘겨받은 endDate : " + searchEndDate);
 		log.debug("isController : 넘겨받은 searchType : " + searchType);
 		log.debug("isController : 넘겨받은 code : " + searchCode);
+		log.debug("isController : 넘겨받은 searchState : " + searchState);
 		
 		
+		InstructionsSearchParam param = new InstructionsSearchParam();
+		if(!searchStartDate.equals("")) {
+			param.setStartDate(Date.valueOf(searchStartDate));
+		}
+		if(!searchEndDate.equals("")) {
+			param.setEndDate(Date.valueOf(searchEndDate));
+		}
 		
 		String defaultTime = " 00:00:00";
 		
 		//SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		
 		
-		InstructionsSearchParam param = new InstructionsSearchParam();
+		
 		
 	
-		
+		//@@@@@@@@@@@@@@@@@@날려버릴까 생각중인 것@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		if(searchStartDate==null || searchStartDate.equals("")) {
 			  param.setStartTime(null);
 		}else {
@@ -117,22 +131,37 @@ public class InstructionsController {
 		
 		log.debug("instruction Controller : startDate의 값 : " + param.getStartTime());
 		log.debug("instruction Controller : endDate의 값 : " + param.getEndTime());
+		//@@@@@@@@@@@@@@@@@@날려버릴까 생각중인 것@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		
+		
+		if(searchState==null ||searchState.equals("")) {
+			log.debug("@@@@@@@@@@@@@@뭐가 호출되는지 한번 보자 (위)@@@@@@@@@@@@@@@@@@@@");
+			param.setState(null);
+		}else {
+			param.setState(searchState);
+		}
 		param.setCode(searchCode);
-		//param.setState(state);
 		param.setSearchType(searchType);
 		
 		List<InstructionsDTO> instructions =   instructionsService.findBySearchParam(param);
 		
-		for(InstructionsDTO dto : instructions) {
-			log.debug("" + dto.toString());
-		}
+//		for(InstructionsDTO dto : instructions) {
+//			log.debug("" + dto.toString());
+//		}
 		
+		if(searchStartDate!=null && !searchStartDate.equals("")) {
+			model.addAttribute("startDate", searchStartDateDate);
+		}
+//		if(searchEndDate!=null && !searchEndDate.equals("")) {
+//			model.addAttribute("endDate", Date.valueOf(searchEndDate));
+//		}
 		
 		//log.debug("입력받은 state"+state.getClass());
 		
+		model.addAttribute("startDate", searchStartDate);
+		model.addAttribute("endDate", searchEndDate);
 		model.addAttribute("instructions", instructions);
-		
+		model.addAttribute("searchType", searchType);
 		return "/instructions/instructionList";
 	}
 	
@@ -164,43 +193,68 @@ public class InstructionsController {
 	}
 
 	
-	//생산요청 확인 페이지
+	//생산요청 확인 페이지 -> 날짜 조회 (구버전 ) 현재 미사용
+	//http://localhost:8088/instructions/request
+//	@GetMapping("/request")
+//	public String requestGET(
+//					@RequestParam(value ="searchStartDate" , required = false) Date searchStartDate,
+//					@RequestParam(value= "searchEndDate" , required = false) Date searchEndDate, 
+//					Model model) {
+//		if(searchStartDate==null) {
+//			searchStartDate = Date.valueOf(LocalDate.now());
+//		}
+//		if(searchEndDate==null) {
+//			searchEndDate = Date.valueOf(LocalDate.now().plusWeeks(1));
+//		}
+//		
+//		InstructionsSearchParam searchParam = new InstructionsSearchParam();
+//		searchParam.setStartDate(searchStartDate);
+//		searchParam.setEndDate(searchEndDate);
+//		searchParam.setState(InstructionsState.REQUESTED);
+//		
+//		model.addAttribute("instructions" , instructionsService.findByStateAndDate(searchParam));
+//		
+//		model.addAttribute("searchStartDate", searchStartDate);
+//		model.addAttribute("searchEndDate", searchEndDate);
+//
+//		return "/instructions/request";
+//	}
+	
 	//http://localhost:8088/instructions/request
 	@GetMapping("/request")
-	public String requestGET(
-					@RequestParam(value ="searchStartDate" , required = false) Date searchStartDate,
-					@RequestParam(value= "searchEndDate" , required = false) Date searchEndDate, 
-					Model model) {
-		if(searchStartDate==null) {
-			searchStartDate = Date.valueOf(LocalDate.now());
-		}
-		if(searchEndDate==null) {
-			searchEndDate = Date.valueOf(LocalDate.now().plusWeeks(1));
-		}
+	public String requestGET(Model model) {
+
+		String state="REQUESTED";
 		
-		InstructionsSearchParam searchParam = new InstructionsSearchParam();
-		searchParam.setStartDate(searchStartDate);
-		searchParam.setEndDate(searchEndDate);
-		searchParam.setState(InstructionsState.REQUESTED);
-		
-		model.addAttribute("instructions" , instructionsService.findByStateAndDate(searchParam));
-		
-		model.addAttribute("searchStartDate", searchStartDate);
-		model.addAttribute("searchEndDate", searchEndDate);
+		model.addAttribute("instructions" , instructionsService.findByState(state));
+
 
 		return "/instructions/request";
 	}
 	
+	@GetMapping("/accept/{sopCode}")
+	public String acceptGET(@PathVariable("sopCode") String sopCode , Model model) {
+		
+		InstructionsDTO findIsDTO = instructionsService.findBySopCode(sopCode,"REQUESTED");
+		
+		model.addAttribute("instructionDTO", findIsDTO);
+		
+		
+		return "/instructions/accept";
+	}
+	
+	
 	@PostMapping("/accept")
-	public String acceptPost(@RequestParam(value = "isCode") String isCode, HttpServletResponse response) {
+	public String acceptPost(@RequestParam(value = "sopCode") String sopCode,@RequestParam(value="dueDate")Date dueDate,
+			@RequestParam("line") int line ,HttpServletResponse response) {
 		
 		//수락 누를시 productionLine, instructions 전부 상태 변환 적용
-		instructionsService.acceptRequestedInstructions(isCode);
+		instructionsService.acceptRequestedInstructions(sopCode, dueDate, line);;
 		
 		try {
 			response.setContentType("text/html; charset=utf-8");
 			String msg = "<script>alert('작업요청이 수락되었습니다');</script>";
-			msg+="<script>location.href='/instructions/request';";
+			msg+="<script>location.href='/instructions/close';";
 			PrintWriter writer = response.getWriter();
 			
 			writer.print(msg);

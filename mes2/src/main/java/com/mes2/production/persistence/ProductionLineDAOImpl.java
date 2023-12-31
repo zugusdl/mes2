@@ -24,14 +24,18 @@ public class ProductionLineDAOImpl implements ProductionLineDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public void insertProductionLine(ProductionLineDTO lineDTO) {
-		sqlSession.insert(NAMESPACE+".insertProductionLine", lineDTO);
+	public int insertProductionLine(ProductionLineDTO lineDTO) {
+		return sqlSession.insert(NAMESPACE+".insertProductionLine", lineDTO);
 		
 	}
 
 	@Override
-	public List<ProductionLineDTO> selectByDate(Date date) {
-		return sqlSession.selectList(NAMESPACE+".selectByDate", date);
+	public List<ProductionLineDTO> selectByDate(Date startDate, Date endDate) {
+		
+		Map<String, Date> paramMap = new HashMap<String, Date>(); 
+		paramMap.put("startDate", startDate);
+		paramMap.put("endDate", endDate);
+		return sqlSession.selectList(NAMESPACE+".selectByDateForList", paramMap);
 	}
 
 	@Override

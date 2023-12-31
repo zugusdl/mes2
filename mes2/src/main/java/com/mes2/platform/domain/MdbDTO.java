@@ -3,7 +3,7 @@ package com.mes2.platform.domain;
 import lombok.Data;
 
 @Data
-public class mdbDTO {
+public class MdbDTO {
 	private String company_code; // 거래처 코드
 	private String category; // 발주처, 수주처
 	private String pw; // 플랫폼 비밀번호
@@ -13,5 +13,5 @@ public class mdbDTO {
 	private String call; // 전화번호
 	private String fax; // 팩스번호
 	private String email; // 이메일
-	private int contract_status; // 거래유무
+	private boolean contract_status; // 거래유무
 }

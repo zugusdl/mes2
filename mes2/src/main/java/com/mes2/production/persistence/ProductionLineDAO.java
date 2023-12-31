@@ -7,9 +7,9 @@ import com.mes2.production.domain.ProductionLineDTO;
 
 public interface ProductionLineDAO {
 	
-	public void insertProductionLine (ProductionLineDTO lineDTO);
+	public int insertProductionLine (ProductionLineDTO lineDTO);
 	
-	public List<ProductionLineDTO> selectByDate(Date date);
+	public List<ProductionLineDTO> selectByDate(Date startDate, Date endDate);
 	
 	public ProductionLineDTO selectByIsCode(String isCode);
 	
