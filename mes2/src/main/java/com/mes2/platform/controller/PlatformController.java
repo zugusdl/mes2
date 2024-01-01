@@ -151,10 +151,10 @@ public class PlatformController {
 	
 	// 주문 수정 페이지
 	@PostMapping(value="/modifyOrder")
-	public void orderModifyPOST(@RequestBody List<SopDTO> sopList) throws Exception {
+	public void orderModifyPOST(@RequestBody List<SopDTO> jsonSopList) throws Exception {
 		logger.debug("orderModifyPOST() 호출");
-		logger.debug("@@@@sopList" + sopList.toString());
-		pService.modifyOrder(sopList);
+		logger.debug("@@@@sopList" + jsonSopList.toString());
+		pService.modifyOrder(jsonSopList);
 	}
 	
 	// 주문 삭제 페이지

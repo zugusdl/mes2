@@ -112,8 +112,8 @@
 	<update id="modifyOrder">
 	    <foreach collection="list" item="sopDTO" separator=";">
 	        UPDATE sales_order_product 
-	        SET sales_quantity = #{sales_quantity} 
-	        WHERE order_code = #{order_code} AND product_code = #{product_code} AND product_status = 'requested'
+	        SET sales_quantity = #{sopDTO.sales_quantity} 
+	        WHERE order_code = #{sopDTO.order_code} AND product_code = #{sopDTO.product_code} AND product_status = 'requested'
 	    </foreach>
 	</update>
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!--  페이지도 인코딩 해줘야함 -->
 <!DOCTYPE html>
 <!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
@@ -75,7 +76,7 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item" href="#updateModal" rel="modal:open">정보 수정</a></li>
-					<li><a class="dropdown-item" href="#">로그아웃</a></li>
+					<li><a class="dropdown-item" href="/platform/logout">로그아웃</a></li>
 				</ul>
 			</div>
 		</div>
@@ -83,23 +84,24 @@
 
 	<!-- 정보 수정 모달 -->
 	<div id="updateModal" class="modal">
+		mdto: ${mdto }
 		<div>
-			<div>
+			<div class="list">
 				회사명: <input type="text" name="name" value="${mdto.name }" readonly><br>
 			</div>
-			<div>
+			<div class="list">
 				현재 비밀번호: <input type="password" name="pw" placehoder="현재 비밀번호를 입력하세요"><br>
 			</div>
-			<div>
+			<div class="list">
 				수정 비밀번호: <input type="password" name="newPw" placehoder="수정할 비밀번호를 입력하세요"><br>
 			</div>
-			<div>
+			<div class="list">
 				비밀번호 확인: <input type="password" name="checkPw" placehoder="수정 비밀번호 한번 더 입력하세요"><br>
 			</div>
-			<div>
+			<div class="list">
 				담당자: <input type="text" name=manager value="${mdto.manager }" readonly><br>
 			</div>
-			<div>
+			<div class="list">
 				주소: <input type="text" name="address" value="${mdto.address }" readonly><br>
 			</div>
 		</div>

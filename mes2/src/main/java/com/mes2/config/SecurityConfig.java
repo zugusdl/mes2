@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.mes2.security.CustomLoginSuccessHandler;
 import com.mes2.security.CustomUserDetailsService;
@@ -45,6 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("company_code")
 				.passwordParameter("pw")
 				.successHandler(loginSuccesshandler())
+				.permitAll()
+				.and()
+			.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/platform/logout"))
+				.logoutSuccessUrl("/platform/login")
+				.invalidateHttpSession(true)
 				.permitAll();
 	}
 	

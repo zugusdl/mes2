@@ -8,8 +8,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Document</title>
-<sec:csrfMetaTags/>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -27,6 +28,7 @@
 			<hr>
 			<h1>발주 수정</h1>
 			<form method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<span class="list-btn2">
 					<button type="button" class="btn btn-secondary" onclick="modifyOrder('${soiList[0].order_code}','${soiList[0].sales_status}');">수정하기</button>
 					<button type="button" class="btn btn-secondary" onclick="cancleModify();">수정 취소</button>

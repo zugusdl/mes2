@@ -53,6 +53,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			mdbDTO.setCompany_code(company_code);
 			try {
 				mdbDTO = pService.customerLogin(mdbDTO);
+				logger.debug("@@@@@mdbDTO: " + mdbDTO);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -30,7 +30,7 @@ public class PlatformDAOImpl implements PlatformDAO {
 	@Override
 	public MdbDTO customerLogin(MdbDTO mdto) throws Exception {
 		logger.debug("DAO: customerLogin() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".login", mdto);
+		return sqlSession.selectOne(NAMESPACE + ".read", mdto);
 	}
 
 	// 발주 신청 시 품목 목록 조회

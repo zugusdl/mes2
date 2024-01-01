@@ -26,21 +26,22 @@
 	<div class="container">
 		<section class="section1">
 			<form class="search" action="/platform/search">
-				<select id="boundary">
-					<option value="">-- 검색선택 --</option>
-					<option value="order_code">주문번호</option>
-					<option value="order_date">발주일자</option>
-					<option value="sales_status">진행상태</option>
-				</select>
-
 				<div>
-					<span class="search-font">검색시작일</span>
+					<span class="search-font">발주일자</span>
 					<input id="dtIp" type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
-					<span class="search-font">검색종료일</span>
+					<span> ~ </span>
 					<input id="dtIp" type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px" />
 				</div>
 
-				<input type="text" name="search" placeholder="검색어를 입력하세요" />
+				<select id="boundary">
+					<option value="">-- 진행상태 --</option>
+					<option value="order_code">신청중</option>
+					<option value="order_date">생산중</option>
+					<option value="sales_status">배송중</option>
+					<option value="sales_status">완료</option>
+					<option value="sales_status">발주 불가</option>
+				</select>
+				
 				<input type="submit" class="btn btn-secondary" value="검색" />
 			</form>
 

@@ -277,3 +277,12 @@ body{
   overflow: hidden; /* 내용이 너무 길면 숨김 처리 */
   text-overflow: ellipsis; /* 내용이 숨겨질 경우 마지막 부분을 생략 부호(...)로 표시 */
 }
+
+/* 모달 */
+.modal a.close-modal {
+	display: none;
+}
+
+.list {
+	padding: 10px;
+}
