@@ -13,21 +13,35 @@ import com.mes2.materials.persistence.InDAO;
 
 @Service
 public class InServiceImpl implements InService {
-
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(InServiceImpl.class);
-
+	
 	@Inject
 	private InDAO idao;
-
+	
 	@Override
-	public List<InDTO> inSelect() throws Exception {
-
-		return idao.inSelect();
+	public void registerStock(InDTO idto) throws Exception {
+		idao.insertIn(idto);
+		
 	}
 
+	
+
 	@Override
-	public List<InDTO> detailList(String in_code) throws Exception {
-		return idao.detailSelect();
+	public List<InDTO> InInfo(InDTO idto) throws Exception {
+		logger.debug(" Service - InInfo(InDTO idto) ");
+		return idao.listIn(idto);
+	}
+
+
+	
+	
+	
+
+	@Override
+	public List<InDTO> detailList(String product_code) throws Exception {
+		return idao.detailSelect(product_code);
 	}
 
 	

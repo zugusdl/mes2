@@ -38,8 +38,8 @@
     }
 
     .search-font {
-      margin-right: 2px;
-      margin-left: 5px;
+      margin-right: 5px;
+      margin-left: 10px;
     }
     
     .container {
@@ -49,9 +49,3 @@
       gap: 20px;
       flex-direction: column;
     }
-    
-    .btn-info { 
-color : #fff;
-background-color: #36b9cc; }
-
-

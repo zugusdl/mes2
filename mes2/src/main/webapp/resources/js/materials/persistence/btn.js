@@ -1,6 +1,3 @@
-/**
- * 
- */
  function up(idx){
 	  updateBtn = true;
 	  goContent(idx);

@@ -6,7 +6,16 @@ import com.mes2.materials.domain.InDTO;
 
 public interface InService {
 	
-	public List<InDTO> inSelect() throws Exception;
+	// 입고 등록 
+	public void registerStock(InDTO idto) throws Exception;
 	
-	public List<InDTO> detailList(String in_code) throws Exception;
+	// 입고 조회 
+	public List<InDTO> InInfo(InDTO idto) throws Exception;
+	
+	
+	
+	
+	public List<InDTO> detailList(String product_code) throws Exception;
+
+	
 }

@@ -1,21 +1,20 @@
 package com.mes2.materials.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mes2.materials.domain.InDTO;
+import com.mes2.materials.domain.PurchaseDTO;
 import com.mes2.materials.service.InService;
-
 
 @Controller
 @RequestMapping(value = "/materials/*")
@@ -26,38 +25,86 @@ public class InController {
 	@Inject
 	private InService iService;
 
+	// http://localhost:8080/materials/inlist
 	
-	@RequestMapping(value="/in")
-	public String inSelectPOST() {
-		return "/materials/in";
+	// 입고 정보 입력 - GET
+	@GetMapping(value = "/in")
+	public void insertInGET() throws Exception {
+		logger.debug("/purchase/insertPurchase -> insertInGET() 호출 ");
+		logger.debug("/purchase/insertPurchase.jsp 뷰페이지로 이동");
 	}
 	
-	// http://localhost:8080/materials/in
-	@GetMapping(value = "/inlist")
-	public @ResponseBody List<InDTO> inSelect() throws Exception {
-		
-		List<InDTO> list = iService.inSelect();
-		logger.debug("/materials/in -> inGET() 호출 ");
-		logger.debug("/materials/in.jsp 뷰페이지로 이동");
+	// 입고 정보 처리 - POST
+		@RequestMapping(value = "/in", method = RequestMethod.POST)
+		public String insertInPOST(InDTO idto) throws Exception {
+			logger.debug(" 폼submit -> insertIn() 호출 ");
+			// 한글인코딩 (필터)
+			// 전달정보 저장
+			logger.debug(" idto : " + idto);
 
-//		for(InDTO in : list) {
-//			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@ " + in.getIn_regdate().toString());
-//		}
-		
-		return list;
-	}
+			// 서비스 - DB에 글쓰기(insert) 동작 호출
+			iService.registerStock(idto);
 
-//	@RequestMapping(value = "/detailList")
-//	public @ResponseBody List<InDTO> detailList() throws Exception {
-//		List<InDTO> list = iService.detailList();
+			logger.debug(" /materials/inlist 이동 ");
+
+			return "redirect:/materials/inlist";
+		}
+		
+		// 입고 리스트 - GET
+		@GetMapping(value = "/inlist")
+		public void listAllGET(Model model, InDTO idto) throws Exception {
+			logger.debug("/purchase/inlist -> listAllGET() 호출 ");
+			logger.debug("/purchase/inlist  뷰페이지로 이동");
+
+			// 서비스 - 디비에 저장된 글 가져오기
+			List<InDTO> inlist = iService.InInfo(idto);
+
+			model.addAttribute("inlist", inlist);
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	@GetMapping(value = "/in")
+//	public String insertInGET(Model model, @RequestParam(name = "product_code", required = false) String product_code) throws Exception {
+//		List<InDTO> inList = iService.getSelect();
+//		model.addAttribute("inList", inList);
+//
+//		  List<InDTO> detailList = iService.detailList(product_code);
+//		model.addAttribute("detailList", detailList);
 //		
-//		return list;
+//		
+//		return "/materials/in";
 //	}
-	
-	@RequestMapping(value = "/detailList")
-	public @ResponseBody List<InDTO> detailList(@RequestParam("in_code") String in_code) throws Exception {
-	   List<InDTO> list = iService.detailList(in_code);
-	   return list;
-	}
-
+//	
+//
+//	@PostMapping(value = "/in")
+//	public String getSelectPOST(@RequestParam(name = "product_code", required = false) String product_code) throws Exception {
+//		
+//
+//		return "/materials/in";
+//	}
 }

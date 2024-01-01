@@ -2,25 +2,92 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<<<<<<< HEAD
 
 <mapper namespace="com.mes2.mapper.MaterialsMapper">
 
-	<select id="inList" resultType="com.mes2.materials.domain.InDTO">
-		SELECT CONCAT(i.in_code, p.pd_lot) AS in_code, i.product_code, m.name, m.category, CONCAT(i.in_quantity, i.unit) AS quantity, 
-		i.in_regdate FROM in_warehouse i JOIN meta_data_product m ON i.product_code = m.product_code JOIN product p ON i.pd_lot = p.pd_lot
+	<!-- 자재 신청 -->
+	<insert id="addPurchase"> INSERT INTO material_order (product_code,
+		category,
+		name, cost, quantity, orders_code, user_id) VALUES (#{product_code},
+		#{category},#{name}, #{cost}, #{quantity}, SUBSTR(CONCAT_WS('-',
+		(SELECT
+		code_group FROM common_code WHERE code_group_name = '발주'),
+		#{product_code}),
+		1, 20), #{user_id})
+	</insert>
+
+	<!-- 자재 전체 리스트 -->
+	<select id="listPurchase"
+		resultType="com.mes2.materials.domain.PurchaseDTO">
+		select * from material_order
+	</select>
+
+	<!-- 자재 상세 리스트 -->
+	<select id="datailPurchase"
+		resultType="com.mes2.materials.domain.PurchaseDTO">
+		select * from material_order where product_code
+		=#{product_code}
+	</select>
+
+	<!-- 자재 상태 변경 업데이트 -->
+	<update id="updateOrderStatus">
+		UPDATE material_order SET status = #{status} WHERE
+		product_code =#{product_code}
+	</update>
+
+	<!-- 상태 변경된 자재 리스트 불러오기 -->
+	<select id="getStatus" parameterType="String"
+		resultType="com.mes2.materials.domain.PurchaseDTO">
+		SELECT status FROM material_order WHERE product_code =
+		#{product_code}
 	</select>
 
 
-	<select id="detailList"
+	<!-- 품목코드 불러오는 리스트 -->
+	<select id="getProductCode"
+		resultType="com.mes2.materials.domain.productDTO">
+		select product_code from meta_data_product
+	</select>
+
+
+
+	<!-- 입고 신청 -->
+	<insert id="addIn"> INSERT INTO in_warehouse (in_code, product_code, category, name, in_quantity, user_id)
+VALUES (SUBSTR(CONCAT_WS('-', (SELECT code_group FROM common_code WHERE code_group_name = '입고'),
+        #{product_code}), 1, 20), #{product_code}, #{category}, #{name}, #{in_quantity}, #{user_id})
+	</insert>
+
+	<!-- 입고 정보 리스트 -->
+	<select id="getInList"
 		resultType="com.mes2.materials.domain.InDTO">
- SELECT CONCAT(in_code, pd_lot) AS in_code, product_code, name, in_quantity, unit, category, in_regdate FROM in_warehouse WHERE CONCAT(in_code, pd_lot) = #{in_code}
+		SELECT * FROM in_warehouse
 	</select>
+
+	<!-- 입고 상세 정보 리스트 -->
+	<select id="detailInList"
+		resultType="com.mes2.materials.domain.InDTO" parameterType="java.util.Map">
+		SELECT * FROM in_warehouse WHERE
+		product_code=#{product_code}
+	</select>
+
+
+
+
+	<!-- 출고 정보 리스트 -->
+	<select id="getOutList"
+		resultType="com.mes2.materials.domain.OutDTO">
+		SELECT * FROM out_warehouse
+	</select>
+
+
+	<!-- 출고 상세 정보 리스트 -->
+	<select id="detailOutList"
+		resultType="com.mes2.materials.domain.OutDTO"
+		parameterType="java.util.Map">
+		SELECT * FROM out_warehouse WHERE
+		product_code=#{product_code}
+	</select>
+
+
 
 </mapper>
-=======
-  
-  <mapper namespace="com.mes2.mapper.MaterialsMapper">
-
-  </mapper>
->>>>>>> 1dc8f42cf6d4b54f7f241515cd98d56917aa85e1

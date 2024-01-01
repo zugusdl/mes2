@@ -217,10 +217,10 @@
 	<table class="table table-hover">
 		<tr>
 			<td></td>
-			<td>출고코드</td>
-			<td></td>
+			<td>발주코드</td>
 			<td>품목명</td>
-			<td></td>
+			<td>원가</td>
+			<td>자재유형</td>
 			<td>발주수량</td>
 			<td>발주등록일</td>
 			<td>발주담당자</td>
@@ -259,5 +259,46 @@
 		
 	</script>
 
+	<script>
+		function updateStatus(button) {
+			var product_code = $(button).closest('tr').find('.product_code')
+					.val();
+			var currentStatus = $(button).data('status');
+
+			$.ajax({
+				type : 'POST',
+				url : 'updateStatus',
+				data : {
+					product_code : product_code,
+					status : 'complete'
+				},
+				success : function(response) {
+					if (response > 0) {
+						// 성공 시 버튼 상태를 업데이트합니다.
+						$(button).data('status', 'complete');
+						$(button).removeClass('btn-primary').addClass(
+								'btn-success').text('완료');
+					} else {
+						// 실패 시 상태를 원래대로 돌려놓습니다.
+						$(button).data('status', 'waiting');
+						$(button).removeClass('btn-success').addClass(
+								'btn-primary').text('대기');
+						alert('상태 업데이트 실패');
+					}
+				},
+				error : function() {
+					// 에러 시 상태를 원래대로 돌려놓습니다.
+					$(button).data('status', 'waiting');
+					$(button).removeClass('btn-success')
+							.addClass('btn-primary').text('대기');
+					alert('AJAX 오류 발생');
+				}
+			});
+		}
+
 	
 	</script>
+
+
+</body>
+</html>
