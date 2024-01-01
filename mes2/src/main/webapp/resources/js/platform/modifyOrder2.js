@@ -1,4 +1,5 @@
-/* Created by Tivotal */
+var header = "X-CSRF-TOKEN";
+var token = $("meta[name='_csrf']").attr("content");
 
 // 수정하기
 function modifyOrder(order_code, sales_status) {
@@ -37,6 +38,9 @@ function modifyOrder(order_code, sales_status) {
 			method : "post",
 			data : jsonSopList,
 			contentType : 'application/json; charset=utf-8',
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(header, token)
+			},
 			async: false,
 			success : function(data) {
 				alert('발주 수정이 완료되었습니다.');

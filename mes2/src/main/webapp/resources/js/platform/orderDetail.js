@@ -1,4 +1,5 @@
-/* Created by Tivotal */
+var header = "X-CSRF-TOKEN";
+var token = $("meta[name='_csrf']").attr("content");
 
 // 수정하기
 function modifyOrder(order_code, order_date, sales_status) {
@@ -11,10 +12,10 @@ function modifyOrder(order_code, order_date, sales_status) {
 
 	$.ajax({
 		url : "/platform/modifyOrder?order_code=" + order_code,
+		method : "GET",
 		data : {
 			"order_date" : order_date
 		},
-		method : "GET",
 		success : function(response) {
 			$("#bottomContent").html(response);
 		},

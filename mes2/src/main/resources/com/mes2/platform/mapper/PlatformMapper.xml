@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.mes2.mapper.platformMapper">
+<mapper namespace="com.mes2.platform.mapper.PlatformMapper">
 	<resultMap type="com.mes2.platform.domain.SoiDTO" id="order">
 		<id property="order_code" column="order_code" />
 		<result property="order_code" column="order_code" />
@@ -26,9 +26,9 @@
 	
 	
 	<!-- 로그인 -->
-	<select id="login" resultType="com.mes2.platform.domain.MdbDTO">
+	<select id="read" resultType="com.mes2.platform.domain.MdbDTO">
 		select * from meta_data_business 
-		where company_code = #{company_code} and pw = #{pw} and contract_status = 1
+		where company_code = #{company_code}
 	</select>
 	
 	<!-- 품목 목록 조회 -->

@@ -2,12 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Document</title>
+<sec:csrfMetaTags/>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -29,6 +31,7 @@
 					<option value="품목명">품목명</option>
 				</select>
 				<input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<button type="button" class="btn btn-secondary" onclick="searchProduct();">조회</button>
 			</form>
 
@@ -36,6 +39,7 @@
 			<div class="list">
 				<div class="list-box">
 					<form class="list-form">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<c:if test="${!empty mdpDTO }">
 							<table class="table table-hover">
 								<thead>

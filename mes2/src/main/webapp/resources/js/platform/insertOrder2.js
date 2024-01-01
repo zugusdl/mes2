@@ -1,4 +1,6 @@
-/* Created by Tivotal */
+var header = $("meta[name='_csrf_header']").attr("content");
+var token = $("meta[name='_csrf']").attr("content");
+
 function insertOrder2() {
 	var order_date = document.querySelector('[name="order_date"]').value;
 	var allProduct_code = document.querySelectorAll('[name="product_code"]');
@@ -41,6 +43,9 @@ function insertOrder2() {
 					"order_date" : order_date
 					}),
 			contentType : 'application/json; charset=utf-8',
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(header, token)
+			},
 			async: false,
 			success : function(data) {
 				alert('발주 신청이 완료되었습니다.');

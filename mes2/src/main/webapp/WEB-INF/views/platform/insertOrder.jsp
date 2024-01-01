@@ -2,12 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Document</title>
+<sec:csrfMetaTags/>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -22,6 +24,7 @@
 			<hr>
 			<h1>발주 신청</h1>
 			<form action="/platform/insertOrder" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<span class="list-btn2">
 					<button type="button" class="btn btn-secondary" id="addBtn" onclick="openProductList()">품목 추가</button>
 					<button type="button" class="btn btn-secondary" onclick="insertOrder2();">신청</button>

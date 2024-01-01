@@ -1,4 +1,5 @@
-/* Created by Tivotal */
+var header = "X-CSRF-TOKEN";
+var token = $("meta[name='_csrf']").attr("content");
 
 function insertOrder() {
 	$.ajax({

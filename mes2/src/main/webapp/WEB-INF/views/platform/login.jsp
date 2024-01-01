@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LoginForm</title>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
 	integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -41,6 +42,7 @@
 			<i class="fas fa-xmark close-form"></i>
 			<div class="form login-form">
 				<form method="post">
+					
 					<img src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg" id="login-icon">
 					<div class="input-box">
 						<input type="text" id="id" name="company_code" placeholder="아이디를 입력하세요" />
@@ -52,7 +54,7 @@
 						<i class="fas fa-lock password"></i>
 						<i class="fas fa-eye-slash pass-hide"></i>
 					</div>
-						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 					<button class="btn" id="btn-post" type="submit">로그인하기</button>
 				</form>
 			</div>

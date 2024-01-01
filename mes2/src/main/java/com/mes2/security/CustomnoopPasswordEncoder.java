@@ -1,7 +1,9 @@
 package com.mes2.security;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
 public class CustomnoopPasswordEncoder implements PasswordEncoder {
 
 	@Override

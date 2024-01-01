@@ -51,28 +51,29 @@ public class PlatformController {
 	}
 	
 	// 로그인하고 메인페이지로 이동
-	@PostMapping(value="/login")
-	public String loginPOST(MdbDTO mdbDTO, HttpSession session, RedirectAttributes rttr) throws Exception {
-		logger.debug("platform.loginPOST() 호출");
-		
-		logger.debug("mdbDTO: " + mdbDTO);
-		
-		MdbDTO mdto = pService.customerLogin(mdbDTO);
-		
-		if(mdto != null) {
-			session.setAttribute("company_code", mdbDTO.getCompany_code());
-			session.setAttribute("mdto", mdto);
-			return "redirect:/platform/orderList";
-		}
-
-		rttr.addFlashAttribute("result", "loginFail");
-		
-		return "redirect:/platform/login";
-	}
+//	@PostMapping(value="/login")
+//	public String loginPOST(MdbDTO mdbDTO, HttpSession session, RedirectAttributes rttr) throws Exception {
+//		logger.debug("platform.loginPOST() 호출");
+//		
+//		logger.debug("mdbDTO: " + mdbDTO);
+//		
+//		MdbDTO mdto = pService.customerLogin(mdbDTO);
+//		
+//		if(mdto != null) {
+//			session.setAttribute("company_code", mdbDTO.getCompany_code());
+//			session.setAttribute("mdto", mdto);
+//			return "redirect:/platform/orderList";
+//		}
+//
+//		rttr.addFlashAttribute("result", "loginFail");
+//		
+//		return "redirect:/platform/login";
+//	}
 
 	// 발주(주문) 목록 페이지
 	@GetMapping(value="/orderList")
 	public String orderListGET(HttpSession session, Model model) throws Exception {
+		logger.debug("orderListGET() 호출!!");
 		String company_code = (String) session.getAttribute("company_code");
 		
 		if (company_code == null) {

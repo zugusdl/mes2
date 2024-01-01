@@ -1,3 +1,6 @@
+var header = "X-CSRF-TOKEN";
+var token = $("meta[name='_csrf']").attr("content");
+
 function searchProduct() {
 	var searchForm = document.querySelector("#searchForm");
 	var searchType = document.querySelector("#searchType");
@@ -72,6 +75,9 @@ function registProduct() {
 			method : "post",
 			data : {"product_code" : product_code},
 			dataType : "json",
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(header, token)
+			},
 			async: false,
 			success : function(data) {
 				console.log(data);

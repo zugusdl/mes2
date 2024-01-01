@@ -24,7 +24,7 @@ public class PlatformDAOImpl implements PlatformDAO {
 	@Inject
 	private SqlSession sqlSession;
 	
-	private static final String NAMESPACE = "com.mes2.mapper.platformMapper";
+	private static final String NAMESPACE = "com.mes2.platform.mapper.PlatformMapper";
 
 	// 로그인
 	@Override

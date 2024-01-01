@@ -41,8 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.formLogin()
 				.loginPage("/platform/login")
-				.loginProcessingUrl("/login")
-				.successHandler(loginSuccesshandler());
+				.loginProcessingUrl("/platform/login")
+				.usernameParameter("company_code")
+				.passwordParameter("pw")
+				.successHandler(loginSuccesshandler())
+				.permitAll();
 	}
 	
 	@Override
