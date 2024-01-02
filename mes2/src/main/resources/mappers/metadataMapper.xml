@@ -37,8 +37,8 @@
   	</select>
   	
   	<insert id="insert" parameterType="com.mes2.metadata.domain.md_productDTO">
-  		INSERT INTO meta_data_product (product_code, name, category, unit, cost, price)
-    	VALUES (#{product_code}, #{name}, #{category}, #{unit}, #{cost}, #{price})
+  		INSERT INTO meta_data_product (product_code, name, category, unit, cost, price, ofileName)
+    	VALUES (#{product_code}, #{name}, #{category}, #{unit}, #{cost}, #{price}, #{ofileName})
   	</insert>
   	
   	<update id="update" parameterType="com.mes2.metadata.domain.md_productDTO">
@@ -50,7 +50,10 @@
         unit = #{unit},
         cost = #{cost},
         price = #{price},
-        production_status = #{production_status}
+        production_status = #{production_status}       
+        <if test="ofileName != null">
+         ,   ofileName = #{ofileName}
+        </if>
     WHERE
         product_code = #{product_code}
   	</update>
