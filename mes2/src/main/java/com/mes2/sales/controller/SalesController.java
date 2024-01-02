@@ -114,6 +114,7 @@ public class SalesController {
 		sService.registerPlan(pdto);
 		List<SalesDTO> list = sService.getProdctCode(pdto.getOrder_code());
 		sService.makeSalesCode(list);
+		sService.insertShippingPlan(pdto);
 		return "redirect:/sales/salesPlanTest";
 	}
 	
@@ -188,11 +189,13 @@ public class SalesController {
 			dto.setProduct_status("progressing");
 			// 현재고 가져오기 
 			int stock_quantity = sService.stockQuantity(dto).getStock_quantity();
+			
 			// 부족재고 가져오기 
 			int lack_quantity =(dto.getSales_quantity() - stock_quantity);
 			// 자재팀한테는 stock_quantity 만큼 준비지시 (무조건)
 			// 생산팀한테는 lack_quantity 만큼 생산하라고 알리기		 
-			dto.setSales_quantity(stock_quantity);
+			//dto.setSales_quantity(stock_quantity);
+			dto.setStock_quantity(stock_quantity);
 			dto.setLack_quantity(lack_quantity);
 			// 수주량만큼 창고에서 수량빼주기 (상품번호 가져가면 됨)
 			

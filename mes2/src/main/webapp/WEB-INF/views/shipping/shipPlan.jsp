@@ -16,6 +16,8 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/38bf29a217.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/resources/css/contents/contents.css">  
     
     <style>
@@ -25,16 +27,61 @@
     align-items: center;
     gap: 20px;
    }
-   
+   .box {
+        background-color: #95c4a2;
+        border: 1px black solid;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        border-top-left-radius: 10px;  /* 왼쪽 위 둥근 테두리 */
+        border-bottom-left-radius: 10px;  /* 왼쪽 아래 둥근 테두리 */
+      }
+
+      .box2 {
+        background-color: white;
+        border: 1px black solid;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        border-top-right-radius: 10px; /* 오른쪽 위 둥근 테두리 */
+        border-bottom-right-radius: 10px; /* 오른쪽 아래 둥근 테두리 */
+      }
+
+      .box3 {
+        background-color: white;
+        border: 1px black solid;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        
+      }
+      
+    .box2:hover, .box3:hover, .box:hover {
+     color: #ffcccc;
+    cursor: pointer; 
+  
+    }
 
     </style>
   </head>
   
   <body>
   
-  <script src="/resources/js/sales/salesPlan/btn.js"></script>
-  <script src="/resources/js/sales/salesPlan/details.js"></script>
-  <script src="/resources/js/sales/salesPlan/search.js"></script>
+  <script src="/resources/js/shipping/shipPlan/btn.js"></script>
+  <script src="/resources/js/shipping/shipPlan/details.js"></script>
+  
   
 <!-- Modal -->
 <div id="modalcon">
@@ -45,7 +92,7 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body mo" id="sales-modal">
+      <div class="modal-body mo" id="shippngPlan-modal">
        
       </div>
       <div class="modal-footer">
@@ -56,7 +103,27 @@
   </div>
 </div>
 </div>
-    <!-- 검색창 -->
+
+
+	<!-- 진행현황 바  -->
+     <div class="box" onclick="location.href='/shipping/shipPlan'">
+      <span >출하</span>
+    </div>
+    <div class="box3" onclick="statusList('plan')">
+      <span >계획 ${status.planCnt }건</span>
+    </div>
+    <div class="box3" onclick="statusList('waiting')">
+      <span >대기 ${status.waitingCnt }건</span>
+    </div>
+    <div class="box3" onclick="statusList('instruction')">
+      <span >가능  ${status.instructionCnt }건</span>
+    </div>
+    <div class="box2" onclick="userList()">
+      <i class="fa-solid fa-user" ></i>
+    </div>
+
+    <!-- 검색창  style="clear: both;"-->
+    
     <div class="container">
     <section class="section1">
       <form action="searchPlan" method="post" class="search" onsubmit="return checkSearchSub()">
@@ -64,8 +131,8 @@
           <option value="">-- 검색선택 --</option>
           <option value="order_code">주문번호</option>
           <option value="company_name">수주처</option>
-          <option value="order_date">납기요청일</option>
-          <option value="request_date">수주신청일</option>
+          <option value="order_date">납품요청일</option>
+          <option value="scheduled_date">출하예정일</option>
         </select>
         
    
@@ -91,41 +158,50 @@
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
-         <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' id="reg-mo-btn" onclick="return register()">등록모</button>
-          <button type="button" class="btn btn-secondary" onclick="return register()">등록</button>
-          <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절모</button>
-          <button type="button" class="btn btn-secondary" onclick="load()">로드</button>         
+         <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick="return update()">수정</button>
+          
+          
+          <button type="button" class="btn btn-secondary" id="loadPage" onclick="load()">로드</button>         
         </div>
 
         <div class="list-box">
-          <form class="list-form" id="planListForm" action="planRegister" method="post">
+          <form class="list-form" id="planListForm" action="updateShipDate" method="post">
           <input type="hidden" id="u_id" name="user_id" value="dd" disabled/>
           <input type="hidden" id="odi" name="order_code" value="dd" disabled/>
             <table class="table table-hover">
               <thead>
                 <tr class="table-success">
-                  <th></th>
+                  <th scope="col"></th>
                   <th scope="col">주문번호</th>
                   <th scope="col">수주처</th>
-                  <th scope="col">납기요청일</th>
-                  <th scope="col">수주신청일</th>
-                  <th scope="col"></th>
+                  <th scope="col">납품요청일</th>
+                  <th scope="col">출하예정일</th>
+                  <th scope="col">출하상태</th>  
+                  <th scope="col">출하지시</th>             
                 </tr>
               </thead>
               <tbody>
               <c:forEach var="dto" items="${list }">
                 <tr>
-                  
-                  <td scope="row"><input type="checkbox" class="ck" value="${dto.order_code }" name="order_code"/></td>
+                  <td><input type="radio" class="ck" value="${dto.order_code }" name="order_code"/></td>  
                   <td><a href="javascript:goContent('${dto.order_code }')"> ${dto.order_code } </a></td> 
                   <td>${dto.company_name }</td>         
-                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.order_date}"/></td>
-                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.request_date }"/></td>
-                  <%-- <td><button type='submit' class='btn btn-secondary' formaction="rejectSales" onclick='return reject("${dto.order_code}")'>거절</button></td> --%>
-                  <%-- <td><button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='return reject("${dto.order_code}")'>거절모</button></td> --%>
-					
+                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.order_date}"/></td>            
+                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.scheduled_date }"/></td>                                              
+                  <c:if test="${dto.ship_status eq 'plan'}">
+                  <td>계획</td>
+                  <td><button type='button' class='btn btn-secondary' >불가능</button></td>
+                  </c:if>
+                  <c:if test="${dto.ship_status eq 'waiting'}">
+                  <td>대기</td>
+                  <td><button type='button' class='btn btn-secondary' >불가능</button></td>
+                  </c:if> 
+                  <c:if test="${dto.ship_status eq 'instruction'}">
+                  <td>준비완료</td>
+                  <td><button type='button' class='btn btn-danger'  onclick="return reg('${dto.order_code }')">가능</button></td>
+                  </c:if>               
                 </tr>
-               </c:forEach> 
+             </c:forEach> 
                 
               </tbody>
             </table>
@@ -134,10 +210,8 @@
       </div>
     </section>
 
-    <section class="section1" >
-      <form class='list-form' id="view2">
-      
-      </form>
+    <section class="section1" id="view2">
+   
       </section>
       </div>
     <script

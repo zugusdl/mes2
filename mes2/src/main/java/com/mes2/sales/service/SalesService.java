@@ -22,10 +22,12 @@ public interface SalesService {
 	
 	//public List<SalesDTO> salesAcceptList();
 	public List<SalesDTO> acceptContent(String order_code);
-	public void changeAcceptStatus(AcceptSaveDTO ad);
+	
 	
 	public void stockReg(SalesDTO sd);
 	public void changeProductStatus(SalesDTO sd);
 	public void productInst(SalesDTO sd);
 	public void updateStockQuan(SalesDTO sd);
+	
+	public void insertShippingPlan(PlanRegisterDTO pdto);
 }

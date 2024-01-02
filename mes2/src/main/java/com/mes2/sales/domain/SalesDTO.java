@@ -1,6 +1,8 @@
 package com.mes2.sales.domain;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import lombok.Data;
 
@@ -19,6 +21,8 @@ public class SalesDTO {
 	private String processing_reg; //처리등록여부 (sales_order_product 테이블)
 	private int stock_quantity; //현재고 (stock/quantity) ** 
 	private int lack_quantity; // 제품수량 - 현재고 //부족수량 ** 
+	
+	private Date scheduled_date;
 
 	
 	

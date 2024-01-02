@@ -1,6 +1,8 @@
 package com.mes2.sales.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -104,48 +106,6 @@ public class SalesServiceImpl implements SalesService {
 		return sdao.getAcceptContent(order_code);
 	}
 	
-	@Override
-	public void changeAcceptStatus(AcceptSaveDTO ad) {
-		logger.debug(" S : changeAcceptStatus(AcceptSaveDTO ad) ");
-		
-		// 수락수주 상태변경하는 메서드
-		sdao.updateAcceptStatus(ad);
-		//(AcceptSaveDTO ad)에서 수주코드, 주문코드, 상품코드, 상태 담겨있음
-		// 상태가 stock인 경우 출고테이블에서 출고수량 품목코드 출고유형 업로드
-		
-		List<String> productList = new ArrayList<>();
-		List<String> quantity = new ArrayList<>();
-		List<String> salesCode = new ArrayList<>();
-		AcceptSaveDTO dto = new AcceptSaveDTO();
-		for(int i=0; i< ad.getSales_code().size(); i++) {
-			
-			
-			String product_code = ad.getProduct_code().get(i); //품목코드
-			String sales_quantity = ad.getSales_quantity().get(i);
-			String processing_reg = ad.getProcessing_reg().get(i);
-			String sales_code = ad.getSales_code().get(i);
-			
-			if("stock".equals(processing_reg)) {
-				productList.add(product_code);
-				quantity.add(sales_quantity);
-			}else if("production".equals(processing_reg)) {
-				salesCode.add(sales_code);
-			}else if("multi".equals(processing_reg)) {
-				// 현재수량 가지고 와서 
-				// product_code넘기고 그걸 이용해서 현재수량 가지고 와서 
-				
-			}
-			
-			dto.setProduct_code(productList);
-			dto.setSales_quantity(quantity);
-			dto.setSales_code(salesCode);
-			
-		}
-		
-		
-		
-		
-	}
 	
 	@Override
 	public void changeProductStatus(SalesDTO sd) {
@@ -179,6 +139,24 @@ public class SalesServiceImpl implements SalesService {
 	public void updateStockQuan(SalesDTO sd) {
 		logger.debug(" S :updateStockQuan(SalesDTO sd) ");
 		sdao.updateStockQuan(sd);
+		
+	}
+	
+	@Override
+	public void insertShippingPlan(PlanRegisterDTO pdto) {
+		logger.debug(" insertShippingPlan(PlanRegisterDTO pdto) ");
+		List<String> orderList = pdto.getOrder_code();
+		
+		for(String order_code: orderList) {
+			SalesDTO sdt = new SalesDTO();
+			Date order_date = sdao.checkOrdeDate(order_code);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(order_date);
+			cal.add(Calendar.DATE, -4);
+			sdt.setScheduled_date(cal.getTime());
+			sdt.setOrder_code(order_code);			
+			sdao.insertShippingPlan(sdt);
+		}
 		
 	}
 }

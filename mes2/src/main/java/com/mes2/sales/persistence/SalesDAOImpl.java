@@ -1,5 +1,6 @@
 package com.mes2.sales.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -133,5 +134,17 @@ public class SalesDAOImpl implements SalesDAO {
 		
 		sqlSession.update(NAMESPACE+".updateStockQuan",sd);
 		
+	}
+	
+	@Override
+	public void insertShippingPlan(SalesDTO sd) {
+		logger.debug(" DAO :insertShippingPlan(PlanRegisterDTO pdto)");
+		sqlSession.update(NAMESPACE+".insertShippingPlan",sd);
+	}
+	
+	@Override
+	public Date checkOrdeDate(String order_code) {
+		logger.debug(" DAO :checkOrdeDate(String order_code)");
+		return sqlSession.selectOne(NAMESPACE+".checkOrdeDate",order_code);
 	}
 }

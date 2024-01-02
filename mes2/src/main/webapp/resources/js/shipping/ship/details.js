@@ -2,7 +2,7 @@
 function goContent(order_code){
        
 	  $.ajax({
-		  url:"planContent",  
+		  url:"shipContent",  
 		  type:"post",
 		  dataType:"json", 
 		  data: {"order_code": order_code }, 
@@ -75,10 +75,9 @@ function goContent(order_code){
 	  listHtml += "<tr class='table-success' >";
 	  listHtml += "<th scope='col'>수주번호</th>";
 	  listHtml += "<th scope='col'>제품명</th>";
-	  listHtml += "<th scope='col'>출하계획량</th>";
-	  listHtml += "<th scope='col'>제품진행</th>";
-	  listHtml += "<th scope='col'>처리</th>";
-	  listHtml += "<th scope='col'>출하준비</th>";
+	  listHtml += "<th scope='col'>출하량</th>";
+	  listHtml += "<th scope='col'>처리등록</th>";
+	  listHtml += "<th scope='col'></th>";
 	  listHtml += "</tr>";
 	  listHtml += "</thead>";
 	  
@@ -91,32 +90,15 @@ function goContent(order_code){
 		  listHtml += "<td>"+obj.product_name+"</td>";
 		  listHtml += "<td>"+obj.sales_quantity+"</td>";
 		  listHtml += "<td>"
-		  if(obj.product_status == "waiting"){
-		  listHtml += "대기";
-		  } else if(obj.product_status == "progressing"){
-		  listHtml += "진행";  
-		  }else if(obj.product_status == "complete"){
-		  listHtml += "완료";  
-		  }
-		  listHtml += "</td>"
-		  listHtml += "<td>"
 		  if(obj.processing_reg=="stock"){
 			  listHtml += "재고출하"; 
 		  }else if(obj.processing_reg=="production"){
 		  listHtml += "생산처리";  
 		  }else if(obj.processing_reg==" mult"){
 		  listHtml += "복합처리";  
-		  }else {
-			 listHtml += "미정";
 		  }
 		  listHtml += "</td>"
-		  listHtml += "<td>"
-		  if(obj.product_status == "waiting" || obj.product_status == "progressing"){
-			  listHtml += "대기";    
-		  }else if(obj.product_status == "complete"){
-		  listHtml += "완료";  
-		  }
-		  listHtml += "</td>"
+		  listHtml += "<td><button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#exampleModal' oonclick='info(\""+obj.order_code+"\", \""+obj.sales_code+"\")'>상세</button></td>";
 		  listHtml += "</tr>";
 	  });
     

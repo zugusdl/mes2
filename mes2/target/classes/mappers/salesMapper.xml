@@ -40,7 +40,7 @@
 	on I.company_code = B.company_code 
 	join sales_order_product P 
 	on I.order_code = P.order_code 
-	join meta_data_product M 
+	left join meta_data_product M 
 	on M.product_code = P.product_code 
   </sql>
   
@@ -195,5 +195,15 @@
   set quantity = (quantity - #{stock_quantity}) 
   where product_code = #{product_code} 
   </update>
+  
+<insert id="insertShippingPlan" >
+    insert into shipping (order_code, scheduled_date) 
+    values (#{order_code}, #{scheduled_date}) 
+</insert>
+
+<select id="checkOrdeDate" resultType="java.util.Date">
+	select order_date from sales_order_info 
+	where order_code = #{order_code} 
+</select>
   
   </mapper>

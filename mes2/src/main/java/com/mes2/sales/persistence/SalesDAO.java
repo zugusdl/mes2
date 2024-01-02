@@ -1,5 +1,6 @@
 package com.mes2.sales.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import com.mes2.sales.domain.AcceptSaveDTO;
@@ -28,4 +29,8 @@ public interface SalesDAO {
 	public void changeProductStatus(SalesDTO sd);
 	public void productInst(SalesDTO sd);
 	public void updateStockQuan(SalesDTO sd);
+	
+	public void insertShippingPlan(SalesDTO sd);
+	public Date checkOrdeDate(String order_code);
+	
 }

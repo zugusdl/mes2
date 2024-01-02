@@ -14,12 +14,12 @@ $(document).ready(function() {
 });
  
 
-function statusList(ship_status) {
-    location.href = "/shipping/shipCheck?ship_status=" + ship_status;
+function statusList(progress_status) {
+    location.href = "/shipping/shippingCheck?progress_status=" + progress_status;
 }
 
 function userList(){
-	location.href="/shipping/userShipPlanList";
+	location.href="/shipping/userShipList";
 }
 
  function reg(order_code){
@@ -145,35 +145,58 @@ function userList(){
 	 var count = ckArr.filter(":checked").length; 
 	 
 	 if(count==0){	 	
-	 	$("#exampleModalLabel").html('수정');
-		 var listHtml = "<div>선택된 항목이 없습니다. </div>";		
-		 $("#shippngPlan-modal").html(listHtml);
+		 Swal.fire({
+			  title: "선택된 항목이 없습니다.",
+			  icon: "warning"
+			});
 	 	
 	 }else{
 	 	 if(count==1){
-	 		 $.ajax({
-	 			  url:"updateIdCheck", 
-	 			  type:"get",
-	 			  dataType:"json",
-	 			  data: {"order_code":selectedOrder},
-	 			  success:moUpdate,
-	 			  error: function(){alert(" 등록모달error");}
-	 		  });
+	 		Swal.fire({
+	 			  title: "출하일정을 수정하시겠습니까?",
+	 			  text: "이미 예약출하가 지시된 상태입니다. 출하일정을 수정을 진행하시겠습니까?",
+	 			  icon: "warning",
+	 			  showCancelButton: true,
+	 			  confirmButtonColor: "#3085d6",
+	 			  cancelButtonColor: "#d33",
+	 			  confirmButtonText: "진행"
+	 			}).then((result) => {
+	 			  if (result.isConfirmed) {
+	 				  $.ajax({
+	 					 url:"updateIdCheck", 
+			 			  type:"get",
+			 			  dataType:"json",
+			 			  data: {"order_code":selectedOrder},
+			 			  success:moUpdate,
+			 			  error: function(){
+			 				 Swal.fire({
+			 					  title: "수정오류",
+			 					  text: "해당 주문 건의 관리자에게 문의하십시오.",
+			 					  icon: "warning"
+			 					});
+
+	 				  }	 
+	 				 });
 	 		 
 	 	 }
-	 }
+	 });
  }
  
-
+	 }
  
- 
+ }
  function moUpdate(data){
+	// 모달을 직접 보이게 하기
+	 //$("#exampleModal").css("display", "block");
+
+	 //$("#exampleModalLabel").show();
 	 $("#exampleModalLabel").html('비밀번호 확인');
 	 var listHtml = "<div>담당자 아이디 : <input type='text' id='user_id' value='"+data.user_id+"' disabled/> </div>";
 	 listHtml += "<div>담당자 이름 : <input type='text' id='user_name' value='"+data.user_name+"' disabled/> </div>";
 	 listHtml += "<div>비밀번호: <input type='password' id='user_pw'/></div>"
 	 listHtml += "<button type='button' class='btn btn-secondary' onclick='return updatePw()'>비밀번호 확인</button>";
-		 $("#shippngPlan-modal").html(listHtml);
+		 $("#shippng-modal").html(listHtml);
+		// $("#exampleModalLabel").show();
  }
  
  function updatePw(){
@@ -195,9 +218,14 @@ function userList(){
  }
  
  function moUpdateCheck(data){
+	 var ship_date = data.ship_date;
+	 alert("출하일자"+ship_date);
+	 
 	 if(data.check == "true"){	
 		 $("#mo-close").trigger('click');
-		 
+		 // 오늘 날짜
+		 var today = new Date();
+
 		 // 시작일 설정 (신청일 3주후)
 		 	var requestDate = new Date(data.request_date);
 		 	 alert(requestDate);
@@ -211,6 +239,21 @@ function userList(){
 		    var maxDate = new Date(orderDate);
 		    maxDate.setDate(orderDate.getDate() - 4);
 		    alert(maxDate);
+		
+		 // 만약 오늘 기준 신청일3주후(B)가 과거면 오늘이 min
+		// 오늘 기준 B가 미래면 B가 min
+		    var startDate;
+		    
+		    if (today < minDate) {
+		        startDate = minDate;
+		        alert("오늘이 과거");
+		    } else if (today >minDate) {
+		    	startDate = today; //오늘이 이후 
+		    	alert("오늘이 미래");
+		    } else {
+		        startDate = minDate; // 같은경우
+		    }
+		    
 		    
 		 Swal.fire({
 			  title: "출하예정일을 입력하세요.",
@@ -223,19 +266,19 @@ function userList(){
 		            input.attr('max', maxDate.toISOString().split('T')[0]);
 		            
 		         // date input의 min 속성 설정
-		            input.attr('min', minDate.toISOString().split('T')[0]);
+		            input.attr('min', startDate.toISOString().split('T')[0]);
 		        }
 		    }).then((result) => {
 			  if (result.value) {
 			    const scheduled_date = result.value; 
-			    //  Swal.fire("Departure date", date);
+			    
 			    $.ajax({
 					  url: "checkSchedule",
 					  type: "post",
 					  dataType: "json",
 					  data: {"scheduled_date": scheduled_date},
 					  success: function(data) {
-						  scheduleCheck(data,scheduled_date);
+						  scheduleCheck(data,scheduled_date,ship_date);
 					  },
 					  error: function() {
 					    alert(" updatePW모달오류 ");
@@ -254,30 +297,46 @@ function userList(){
 	 }
  }
  
- function scheduleCheck(data,scheduled_date){
+ function scheduleCheck(data,scheduled_date,ship_date){
+	 var date = new Date(ship_date);
+	 var sd =date.toISOString().split('T')[0];
 	 Swal.fire({
-		  title: "출하예정일을 수정하시겠습니까?",
-		  text: "현재 "+scheduled_date+" 에 예정된 출하건은 "+data+"개 입니다. 해당일에 추가하시겠습니까?",
+		  title: "예약출하 일정을 변경하시겠습니까?",
+		  text: "해당 주문건의 예약출하일정은 "+sd+" 입니다.",
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#95c4a2",
+		  confirmButtonColor: "#3085d6",
 		  cancelButtonColor: "#d33",
 		  confirmButtonText: "확인"
 		}).then((result) => {
 		  if (result.isConfirmed) {
-			  $.ajax({
-				  url: "updateSchedule",
-				  dataType: "text",
-				  type: "post",
-				  data: {"scheduled_date": scheduled_date, "order_code":selectedOrder},
-				  success: scheduledUpdateSuccess,
-				  error: function() {
-				    alert(" 다시 시도하세요 ");
-				  }
-				});
+				 Swal.fire({
+					  title: "예약출하 일정을 변경",
+					  text: "현재 "+scheduled_date+" 에 예정된 출하건은 "+data+"개 입니다. 해당일에 추가하시겠습니까?",
+					  icon: "info",
+					  showCancelButton: true,
+					  cancelButtonText: "취소",
+					  confirmButtonColor: "#95c4a2",
+					  cancelButtonColor: "#d33",
+					  confirmButtonText: "확인"
+					}).then((result) => {
+					  if (result.isConfirmed) {
+						  $.ajax({
+							  url: "changeShipSchedule",
+							  dataType: "text",
+							  type: "post",
+							  data: {"scheduled_date": scheduled_date, "order_code":selectedOrder},
+							  success: scheduledUpdateSuccess,
+							  error: function() {
+							    alert(" 다시 시도하세요 ");
+							  }
+							});
+					  }
+					});
 		  }
 		});
+
  }
  
 function scheduledUpdateSuccess(data){
@@ -295,37 +354,7 @@ function scheduledUpdateSuccess(data){
 	 $('#planListForm').submit();
  }
 
-// function reject(order_code){
-//	 alert("함수호출 거절");
-//	 $.ajax({
-//		  
-//		  url:"rejectSales",
-//		  type:"post",
-//		  data: {"order_code": order_code },
-//		  success: function () {
-//			  alert("거절되었습니다.");
-//			  location.href="/sales/salesPlanTest";
-//	           // $('#closeBtn').trigger('click');
-//	        },
-//		  error: function(){alert("거절error");}
-//	        
-//	  });
-// }
- 
-// function reject(order_code){
-//	 $('#odi').prop('disabled', false);
-//	 $('#odi').val(order_code);
-//	 var ckArr = $(".ck");
-//	 var count = ckArr.filter(":checked").length; 
-//
-//	 if(count>0){
-//	 	alert("체크박스 선택을 해제하십시오.");
-//	 	return false;
-//	 }else {
-//		 $('#planListForm').submit();
-//	 }
-//	 
-// }
+
  
  function reject() {
 	    alert("함수 호출 거절");
@@ -382,17 +411,7 @@ function scheduledUpdateSuccess(data){
 
 	function moRejPwCheck(data) {
 	    if (data === "true") {
-	      //  var result = confirm('거부하시겠습니까?');
-	       // if (result) {
-	         //   alert("이동");
-	           // $("#reject-fm").submit();
-	        //    var newAction = "rejectSales"; //**
-	         //   $("#planListForm").attr("action", newAction); //**
-	         //   $('#planListForm').submit(); //**
-	            //return true;
-	      //  } //else {
-	          //  return false;
-	       // }
+	
 	    	 $("#exampleModalLabel").html('수주거절');
 			 var listHtml = "<div>거절하시겠습니까?</div>"; 
 		     listHtml += "<button type='button' class='btn btn-danger' onclick='return refuse()'>거절</button>";
@@ -459,7 +478,7 @@ function del(){
 
 function load(){
 	
-	location.href="shipPlan";
+	location.href="shipping";
 }
 
 function checkSearchSub(e){
@@ -470,7 +489,7 @@ function checkSearchSub(e){
 		return false;
 	}
 	
-	if($("#searchType").val() == "order_code" && $("#putSearch").val() == ""){
+	if($("#searchType").val() == "ship_code" && $("#putSearch").val() == ""){
 		alert("검색어를 입력하세요.");
 		$("#putSearch").focus();
 		return false;
@@ -482,11 +501,7 @@ function checkSearchSub(e){
 		return false;
 	}
 	
-	if($("#searchType").val() == "company_name" && $("#putSearch").val() == ""){
-		alert("검색어를 입력하세요.");
-		$("#putSearch").focus();
-		return false;
-	}
+
 	
 	
 }

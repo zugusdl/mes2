@@ -44,7 +44,7 @@
 	 var listHtml = "<div>제품명 : <input type='text' value='"+data.product_name+"' readonly/></div>";
 		 listHtml += "<div>제품코드 : <input type='text' value='"+data.product_code+"' readonly/></div>";
 		 listHtml += "<div>보유수량 : <input type='text' value='"+data.stock_quantity+"' readonly/></div>";
-		 if((sales_quantity - data.stock_quantity)<0){
+		 if((sales_quantity - data.stock_quantity)<=0){
 			 listHtml += "<div>부족수량 : <input type='text' value='0' readonly/></div>"; 
 		 }else{
 			 listHtml += "<div>부족수량 : <input type='text' value='"+(sales_quantity - data.stock_quantity )+"' readonly/></div>";	
