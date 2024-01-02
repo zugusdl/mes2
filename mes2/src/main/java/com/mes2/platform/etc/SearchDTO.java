@@ -8,6 +8,7 @@ public class SearchDTO {
 	private String sales_status;
 	private String startDate;
 	private String endDate;
+	private Criteria cri;
 
 	@Override
 	public String toString() {

@@ -15,6 +15,7 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.etc.Criteria;
 import com.mes2.platform.etc.ModifyPwDTO;
 import com.mes2.platform.etc.SearchDTO;
 
@@ -37,14 +38,25 @@ public class PlatformDAOImpl implements PlatformDAO {
 
 	// 발주 신청 시 품목 목록 조회
 	@Override
-	public List<MdpDTO> inqueryProduct(String searchType, String search) throws Exception {
+	public List<MdpDTO> inqueryProduct(String searchType, String search, Criteria cri) throws Exception {
 		logger.debug("DAO: inqueryProduct() 호출");
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("searchType", searchType);
 		searchMap.put("search", search);
+		searchMap.put("cri", cri);
 		
-		logger.debug("DAO: inqueryProduct() 종료");
 		return sqlSession.selectList(NAMESPACE + ".inqueryProduct", searchMap);
+	}
+	
+	// 발주 신청 시 품목 개수 조회
+	@Override
+	public int getCountInqueryProduct(String searchType, String search) throws Exception {
+		logger.debug("DAO: getCountInqueryProduct() 호출");
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("searchType", searchType);
+		searchMap.put("search", search);
+		
+		return sqlSession.selectOne(NAMESPACE + ".getCountInqueryProduct", searchMap);
 	}
 
 	// 품목 하나 등록

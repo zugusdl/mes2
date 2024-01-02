@@ -8,6 +8,7 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.etc.Criteria;
 import com.mes2.platform.etc.ModifyPwDTO;
 import com.mes2.platform.etc.OrderRequestDTO;
 import com.mes2.platform.etc.SearchDTO;
@@ -17,7 +18,10 @@ public interface PlatformService {
 	public MdbDTO customerLogin(MdbDTO mdto) throws Exception;
 	
 	// 품목 목록 조회
-	public List<MdpDTO> inqueryProduct(String searchType, String search) throws Exception;
+	public List<MdpDTO> inqueryProduct(String searchType, String search, Criteria cri) throws Exception;
+	
+	// 품목 개수 조회(페이징)
+	public int getCountInqueryProduct(String searchType, String search) throws Exception;
 	
 	// 품목 하나 선택
 	public MdpDTO registProduct(String product_code) throws Exception;

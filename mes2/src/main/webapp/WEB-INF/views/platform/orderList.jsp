@@ -102,19 +102,15 @@
 				<ul class="pagination pagination-sm no-margin pull-right">
 				
 					<c:if test="${pageVO.prev }">
-						<li><a href="/platform/orderList?page=${pageVO.startPage - 1 }">«</a></li>
+						<li><a href="/platform/orderList?page=${pageVO.startPage - 1 }&sales_status=${sDTO.sales_status }&startDate=${sDTO.startDate }&endDate=${sDTO.endDate}">«</a></li>
 					</c:if>
 					
 					<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
-						<li ${pageVO.cri.page == i?  "class='active'":"" }>
-							<a href="/platform/orderList?page=${i }">
-								${i }
-							</a>
-						</li>
+						<li><a href="/platform/orderList?page=${i }&sales_status=${sDTO.sales_status }&startDate=${sDTO.startDate }&endDate=${sDTO.endDate}">${i }</a></li>
 					</c:forEach>
 					
 					<c:if test="${pageVO.next }">
-						<li><a href="/platform/orderList?page=${pageVO.endPage + 1 }">»</a></li>
+						<li><a href="/platform/orderList?page=${pageVO.endPage + 1 }&sales_status=${sDTO.sales_status }&startDate=${sDTO.startDate }&endDate=${sDTO.endDate}">»</a></li>
 					</c:if>
 				</ul>
 				</div>

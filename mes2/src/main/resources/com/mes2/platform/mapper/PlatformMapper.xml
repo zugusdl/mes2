@@ -42,6 +42,25 @@
 				AND name LIKE concat('%' , #{search}, '%')
 			</if>
 		</where>
+		AND category = '완제품'
+		ORDER BY product_code
+		<if test="cri != null">
+			LIMIT #{cri.startPage}, #{cri.pageSize}
+		</if>
+	</select>
+	
+	<!-- 품목 개수 조회 -->
+	<select id="getCountInqueryProduct" resultType="int">
+		SELECT count(*) FROM meta_data_product 
+		<where>
+			<if test="searchType.equals('품목코드')">
+				AND product_code LIKE concat('%' , #{search}, '%')
+			</if>
+			<if test="searchType.equals('품목명')">
+				AND name LIKE concat('%' , #{search}, '%')
+			</if>
+		</where>
+		AND category = '완제품'
 	</select>
 	
 	<!-- 품목 하나 선택 -->
@@ -91,20 +110,8 @@
                 AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
 			</if>
 		</where> 
-	</select>
-	
-	<!-- 주문(발주) 목록 조회(페이징) -->
-	<select id="getPagingOrderList" resultType="com.mes2.platform.domain.SoiDTO">
-		SELECT * FROM sales_order_info
-		<where>
-			company_code = #{company_code}
-			<if test="sales_status != null and !sales_status.equals('')">
-				AND sales_status = #{sales_status}
-			</if>
-			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
-                AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
-			</if>
-		</where> 
+		ORDER BY sales_index desc
+		LIMIT #{cri.startPage}, #{cri.pageSize}
 	</select>
 	
 	<!-- 주문 개수 조회 -->

@@ -80,6 +80,7 @@ public class PlatformController {
 		logger.debug("orderListGET() 호출!!");
 		String company_code = (String) session.getAttribute("company_code");
 		sDTO.setCompany_code(company_code);
+		sDTO.setCri(cri);
 		
 		// 페이징 처리
 		PageVO pageVO = new PageVO();
@@ -89,6 +90,7 @@ public class PlatformController {
 		
 		// 주문 목록 조회
 		List<SoiDTO> soiDTO = pService.getOrderList(sDTO);
+		model.addAttribute("sDTO", sDTO);
 		model.addAttribute("soiDTO", soiDTO);
 		
 		return "/platform/orderList";
@@ -126,17 +128,41 @@ public class PlatformController {
 	
 	// 품목 추가 페이지에서 품목 찾기
 	@GetMapping(value="/searchList")
-	public void searchListGET(Model model) throws Exception {
+	public void searchListGET(@RequestParam(value = "searchType", required = false) String searchType, @RequestParam(value = "search", required = false) String search, Criteria cri, Model model) throws Exception {
 		logger.debug("searchListGET() 호출");
+		logger.debug("" + cri.toString());
+		
+		if(searchType != null) {
+			// 페이징 처리
+			cri.setPageSize(5);
+			PageVO pageVO = new PageVO();
+			pageVO.setCri(cri);
+			pageVO.setTotalCount(pService.getCountInqueryProduct(searchType, search)); // 품목 개수
+			model.addAttribute("pageVO", pageVO);
+					
+			List<MdpDTO> mdpDTO = pService.inqueryProduct(searchType, search, cri);
+			model.addAttribute("mdpDTO", mdpDTO);
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("search", search);
+		}
+		
 	}
 	
-	// 품목 추가 페이지에서 검색
-	@PostMapping(value="/searchList")
-	public void searchListPOST(@RequestParam("searchType") String searchType, @RequestParam("search") String search, Model model) throws Exception {
-		logger.debug("searchListPOST() 호출");
-		List<MdpDTO> mdpDTO = pService.inqueryProduct(searchType, search);
-		model.addAttribute("mdpDTO", mdpDTO);
-	}
+//	// 품목 추가 페이지에서 검색
+//	@PostMapping(value="/searchList")
+//	public void searchListPOST(@RequestParam("searchType") String searchType, @RequestParam("search") String search, Criteria cri, Model model) throws Exception {
+//		logger.debug("searchListPOST() 호출");
+//
+//		// 페이징 처리
+//		cri.setPageSize(5);
+//		PageVO pageVO = new PageVO();
+//		pageVO.setCri(cri);
+//		pageVO.setTotalCount(pService.getCountInqueryProduct(searchType, search)); // 품목 개수
+//		model.addAttribute("pageVO", pageVO);
+//		
+//		List<MdpDTO> mdpDTO = pService.inqueryProduct(searchType, search, cri);
+//		model.addAttribute("mdpDTO", mdpDTO);
+//	}
 	
 	// 주문 상세 페이지
 	@GetMapping(value="/orderDetail")

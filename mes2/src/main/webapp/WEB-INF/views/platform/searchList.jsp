@@ -24,14 +24,14 @@
 	<div class="container2">
 		<h3 id="h3">발주 품목 등록</h3>
 		<section class="section1">
-			<form method="post" class="search" id="searchForm">
+			<form class="search" id="searchForm">
 				<select name="searchType" id="searchType">
 					<option value="default">구분</option>
 					<option value="품목코드">품목코드</option>
 					<option value="품목명">품목명</option>
 				</select>
 				<input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+<%-- 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
 				<button type="button" class="btn btn-secondary" onclick="searchProduct();">조회</button>
 			</form>
 
@@ -63,6 +63,26 @@
 									</c:forEach>
 								</tbody>
 							</table>
+							<!-- 페이징 -->
+							<div class="box-footer clearfix">
+								<div style="margin: 0 auto; width: fit-content;">
+								<ul class="pagination pagination-sm no-margin pull-right">
+								
+									<c:if test="${pageVO.prev }">
+										<li><a href="/platform/searchList?page=${pageVO.startPage - 1 }">«</a></li>
+									</c:if>
+									
+									<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+										<li><a href="/platform/searchList?page=${i }&searchType=${searchType }&search=${search }">${i }</a></li>
+									</c:forEach>
+									
+									<c:if test="${pageVO.next }">
+										<li><a href="/platform/searchList?page=${pageVO.endPage + 1 }">»</a></li>
+									</c:if>
+								</ul>
+								</div>
+							</div>
+							<!-- 페이징 끝 -->
 							<button class="btn btn-secondary regist" onclick="registProduct();">등록</button>
 							<button class="btn btn-secondary regist" onclick="window.close();">취소</button>
 						</c:if>

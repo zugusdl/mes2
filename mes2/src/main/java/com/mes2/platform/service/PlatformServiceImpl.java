@@ -18,6 +18,7 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.etc.Criteria;
 import com.mes2.platform.etc.ModifyPwDTO;
 import com.mes2.platform.etc.OrderRequestDTO;
 import com.mes2.platform.etc.SearchDTO;
@@ -40,9 +41,16 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 품목 목록 조회
 	@Override
-	public List<MdpDTO> inqueryProduct(String searchType, String search) throws Exception {
+	public List<MdpDTO> inqueryProduct(String searchType, String search, Criteria cri) throws Exception {
 		logger.debug("S: inqueryProduct() 호출");
-		return pdao.inqueryProduct(searchType, search);
+		return pdao.inqueryProduct(searchType, search, cri);
+	}
+	
+	// 품목 개수 조회(페이징)
+	@Override
+	public int getCountInqueryProduct(String searchType, String search) throws Exception {
+		logger.debug("S: getCountInqueryProduct() 호출");
+		return pdao.getCountInqueryProduct(searchType, search);
 	}
 
 	// 품목 하나 선택
