@@ -30,7 +30,11 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
-import com.mes2.platform.domain.OrderRequestDTO;
+import com.mes2.platform.etc.Criteria;
+import com.mes2.platform.etc.ModifyPwDTO;
+import com.mes2.platform.etc.OrderRequestDTO;
+import com.mes2.platform.etc.PageVO;
+import com.mes2.platform.etc.SearchDTO;
 import com.mes2.platform.service.PlatformService;
 import com.mes2.platform.service.PlatformServiceImpl;
 
@@ -72,16 +76,19 @@ public class PlatformController {
 
 	// 발주(주문) 목록 페이지
 	@GetMapping(value="/orderList")
-	public String orderListGET(HttpSession session, Model model) throws Exception {
+	public String orderListGET(HttpSession session, Model model, SearchDTO sDTO, Criteria cri) throws Exception {
 		logger.debug("orderListGET() 호출!!");
 		String company_code = (String) session.getAttribute("company_code");
+		sDTO.setCompany_code(company_code);
 		
-		if (company_code == null) {
-			return "redirect:/platform/login";
-		}
+		// 페이징 처리
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(pService.getTotalOrderCount(sDTO));
+		model.addAttribute("pageVO", pageVO);
 		
 		// 주문 목록 조회
-		List<SoiDTO> soiDTO = pService.getOrderList(company_code);
+		List<SoiDTO> soiDTO = pService.getOrderList(sDTO);
 		model.addAttribute("soiDTO", soiDTO);
 		
 		return "/platform/orderList";
@@ -165,6 +172,15 @@ public class PlatformController {
 		return "redirect:/platform/orderList";
 	}
 	
+	// 비밀번호 수정
+	@ResponseBody
+	@PostMapping(value="/modifyPw")
+	public void modifyPwPOST(@RequestBody ModifyPwDTO mpDTO, HttpSession session) throws Exception{
+		logger.debug("modifyPwPOST() 호출");
+		mpDTO.setCompany_code((String)session.getAttribute("company_code"));
+		pService.modifyPw(mpDTO);
+	}
+	
 	// 완료 처리 페이지
 	@GetMapping(value="/completeOrder")
 	public void completeOrderGET(@RequestParam("order_code") String order_code) throws Exception {
@@ -204,10 +220,4 @@ public class PlatformController {
 		}
 	}
 	
-	
-	// test
-	@GetMapping(value="/test")
-	public void testGET() throws Exception {
-		
-	}
 }

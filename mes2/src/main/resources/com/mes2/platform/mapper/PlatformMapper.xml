@@ -27,26 +27,26 @@
 	
 	<!-- 로그인 -->
 	<select id="read" resultType="com.mes2.platform.domain.MdbDTO">
-		select * from meta_data_business 
-		where company_code = #{company_code}
+		SELECT * FROM meta_data_business 
+		WHERE company_code = #{company_code}
 	</select>
 	
 	<!-- 품목 목록 조회 -->
 	<select id="inqueryProduct" resultType="com.mes2.platform.domain.MdpDTO">
-		select * from meta_data_product 
+		SELECT * FROM meta_data_product 
 		<where>
 			<if test="searchType.equals('품목코드')">
-				and product_code like concat('%' , #{search}, '%')
+				AND product_code LIKE concat('%' , #{search}, '%')
 			</if>
 			<if test="searchType.equals('품목명')">
-				and name like concat('%' , #{search}, '%')
+				AND name LIKE concat('%' , #{search}, '%')
 			</if>
 		</where>
 	</select>
 	
 	<!-- 품목 하나 선택 -->
 	<select id="selectProduct" resultType="com.mes2.platform.domain.MdpDTO">
-		SELECT * from meta_data_product 
+		SELECT * FROM meta_data_product 
 		WHERE product_code = #{product_code}
 	</select>
 	
@@ -59,21 +59,21 @@
 	<!-- 금일 주문건 중 마지막 주문번호 -->
 	<select id="countTodayOrder" resultType="String">
 		SELECT order_code FROM sales_order_info 
-		WHERE order_code like concat('%', #{checkCode}, '%') 
+		WHERE order_code LIKE concat('%', #{checkCode}, '%') 
 		ORDER BY sales_index DESC 
 		LIMIT 1
 	</select>
 	
 	<!-- 발주 신청 -->
 	<insert id="insertOrder" >
-		insert into sales_order_info (order_code, company_code, order_date) 
-		values (#{order_code}, #{company_code}, #{order_date})
+		INSERT into sales_order_info (order_code, company_code, order_date) 
+		VALUES (#{order_code}, #{company_code}, #{order_date})
 	</insert>
 	
 	<!-- 발주 신청 품목 입력 -->
 	<insert id="insertOrderProduct">
-		insert into sales_order_product (order_code, product_code, sales_quantity) 
-		values 
+		INSERT into sales_order_product (order_code, product_code, sales_quantity) 
+		VALUES 
 		<foreach collection="list" item="sopDTO" separator=", ">
 		(#{sopDTO.order_code}, #{sopDTO.product_code}, #{sopDTO.sales_quantity})
 		</foreach>	
@@ -81,8 +81,44 @@
 	
 	<!-- 주문(발주) 목록 조회 -->
 	<select id="getOrderList" resultType="com.mes2.platform.domain.SoiDTO">
-		select * from sales_order_info 
-		where company_code = #{company_code}
+		SELECT * FROM sales_order_info
+		<where>
+			company_code = #{company_code}
+			<if test="sales_status != null and !sales_status.equals('')">
+				AND sales_status = #{sales_status}
+			</if>
+			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
+                AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
+			</if>
+		</where> 
+	</select>
+	
+	<!-- 주문(발주) 목록 조회(페이징) -->
+	<select id="getPagingOrderList" resultType="com.mes2.platform.domain.SoiDTO">
+		SELECT * FROM sales_order_info
+		<where>
+			company_code = #{company_code}
+			<if test="sales_status != null and !sales_status.equals('')">
+				AND sales_status = #{sales_status}
+			</if>
+			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
+                AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
+			</if>
+		</where> 
+	</select>
+	
+	<!-- 주문 개수 조회 -->
+	<select id="getTotalOrderCount" resultType="int">
+		SELECT count(*) FROM sales_order_info
+		<where>
+			company_code = #{company_code}
+			<if test="sales_status != null and !sales_status.equals('')">
+				AND sales_status = #{sales_status}
+			</if>
+			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
+                AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
+			</if>
+		</where>
 	</select>
 	
 	<!-- 주문 상세 조회(주문 품목 조회) -->
@@ -129,4 +165,11 @@
 		DELETE FROM sales_order_info 
 		WHERE order_code = #{order_code}
 	</delete>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="modifyPw">
+		UPDATE meta_data_business 
+		SET pw = #{checkPw} 
+		WHERE company_code = #{company_code} AND pw = #{pw}
+	</update>
 </mapper>

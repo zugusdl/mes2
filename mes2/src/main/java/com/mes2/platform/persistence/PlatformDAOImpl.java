@@ -15,6 +15,8 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.etc.ModifyPwDTO;
+import com.mes2.platform.etc.SearchDTO;
 
 @Repository
 public class PlatformDAOImpl implements PlatformDAO {
@@ -77,9 +79,16 @@ public class PlatformDAOImpl implements PlatformDAO {
 
 	// 주문 목록 조회
 	@Override
-	public List<SoiDTO> getOrderList(String company_code) throws Exception {
+	public List<SoiDTO> getOrderList(SearchDTO sDTO) throws Exception {
 		logger.debug("DAO: getOrderList() 호출");
-		return sqlSession.selectList(NAMESPACE + ".getOrderList", company_code);
+		return sqlSession.selectList(NAMESPACE + ".getOrderList", sDTO);
+	}
+	
+	// 주문 개수 조회(페이징)
+	@Override
+	public int getTotalOrderCount(SearchDTO sDTO) throws Exception {
+		logger.debug("DAO: getTotalOrderCount() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".getTotalOrderCount", sDTO);
 	}
 
 	// 주문 상세 조회
@@ -133,7 +142,11 @@ public class PlatformDAOImpl implements PlatformDAO {
 		sqlSession.delete(NAMESPACE + ".deleteOrder", order_code);
 	}
 
-
-
+	// 비밀번호 변경
+	@Override
+	public void modifyPw(ModifyPwDTO mdDTO) throws Exception {
+		logger.debug("DAO: modifyPw() 호출");
+		sqlSession.update(NAMESPACE + ".modifyPw", mdDTO);
+	}
 
 }

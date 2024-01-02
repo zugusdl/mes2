@@ -7,6 +7,8 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Drop Down Sidebar Menu | CodingLab</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/platform/sideheadstyle.css">
@@ -84,35 +86,44 @@
 
 	<!-- 정보 수정 모달 -->
 	<div id="updateModal" class="modal">
-		mdto: ${mdto }
-		<div>
-			<div class="list">
-				회사명: <input type="text" name="name" value="${mdto.name }" readonly><br>
+		<form>
+			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+			<input type="hidden" name="nowPw" id="nowPw" value="${mdto.pw }">
+			<div>
+				<div class="list">
+					<span>회사명: <input type="text" name="name" value="${mdto.name }" readonly></span>
+				</div>
+				<div class="list">
+					<span>현재 비밀번호: <input type="password" name="pw" id="pw"></span>
+				</div>
+				<div class="list">
+					<span>수정 비밀번호: <input type="password" name="newPw" id="newPw"></span><br>
+					<span id="newPassword" class="explainNewPw">* 영어 대소문자, 숫자를 포함하여 8~12자리</span>
+				</div>
+				<div class="list">
+					<span>비밀번호 확인: <input type="password" name="checkPw" id="checkPw"></span><br>
+					<span id="checkPassword" class="explainCheckPw">* 수정 비밀번호 재입력</span>
+				</div>
+				<div class="list">
+					<span>담당자: <input type="text" name=manager value="${mdto.manager }" readonly></span>
+				</div>
+				<div class="list">
+					<span>전화번호: <input type="text" name=manager value="${mdto.call }" readonly></span>
+				</div>
+				<div class="list">
+					<span>주소: <input type="text" name="address" value="${mdto.address }" readonly></span>
+				</div>
 			</div>
-			<div class="list">
-				현재 비밀번호: <input type="password" name="pw" placehoder="현재 비밀번호를 입력하세요"><br>
+			
+			<div class="list-btn">
+				<button type="button" class="btn btn-secondary" onclick="modifyPw();">수정하기</button>
+				<a href="#" rel="modal:close"><button type="button" class="btn btn-secondary" >닫기</button></a>
 			</div>
-			<div class="list">
-				수정 비밀번호: <input type="password" name="newPw" placehoder="수정할 비밀번호를 입력하세요"><br>
-			</div>
-			<div class="list">
-				비밀번호 확인: <input type="password" name="checkPw" placehoder="수정 비밀번호 한번 더 입력하세요"><br>
-			</div>
-			<div class="list">
-				담당자: <input type="text" name=manager value="${mdto.manager }" readonly><br>
-			</div>
-			<div class="list">
-				주소: <input type="text" name="address" value="${mdto.address }" readonly><br>
-			</div>
-		</div>
-		<a href="#" rel="modal:close">닫기</a>
+		</form>
 	</div>
-
-	<script
-		src="${pageContext.request.contextPath}/resources/js/platform/sideheadscript.js"></script>
+		
 	<!-- 사이드바 script -->
-
-	<!-- 부트스트랩 js 추가-->
+	<script src="${pageContext.request.contextPath}/resources/js/platform/sideheadscript.js"></script>
 
 </body>
 </html>

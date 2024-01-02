@@ -1,8 +1,10 @@
-package com.mes2.platform.domain;
+package com.mes2.platform.etc;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+
+import com.mes2.platform.domain.SopDTO;
 
 import lombok.Data;
 

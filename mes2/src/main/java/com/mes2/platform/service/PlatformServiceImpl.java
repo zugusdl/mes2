@@ -18,7 +18,9 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
-import com.mes2.platform.domain.OrderRequestDTO;
+import com.mes2.platform.etc.ModifyPwDTO;
+import com.mes2.platform.etc.OrderRequestDTO;
+import com.mes2.platform.etc.SearchDTO;
 import com.mes2.platform.persistence.PlatformDAO;
 
 @Service
@@ -105,9 +107,16 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 주문 목록 조회
 	@Override
-	public List<SoiDTO> getOrderList(String company_code) throws Exception {
+	public List<SoiDTO> getOrderList(SearchDTO sDTO) throws Exception {
 		logger.debug("S: getOrderList() 호출");
-		return pdao.getOrderList(company_code);
+		return pdao.getOrderList(sDTO);
+	}
+	
+	// 주문 개수 조회(페이징)
+	@Override
+	public int getTotalOrderCount(SearchDTO sDTO) throws Exception {
+		logger.debug("S: getTotalOrderCount() 호출");
+		return pdao.getTotalOrderCount(sDTO);
 	}
 
 	// 주문 상세 조회
@@ -157,6 +166,13 @@ public class PlatformServiceImpl implements PlatformService {
 	public void deleteOrder(String order_code) throws Exception {
 		logger.debug("S: deleteOrder() 호출");
 		pdao.deleteOrder(order_code);
+	}
+
+	// 비밀번호 변경
+	@Override
+	public void modifyPw(ModifyPwDTO mpDTO) throws Exception {
+		logger.debug("S: modifyPw() 호출");
+		pdao.modifyPw(mpDTO);
 	}
 	
 	

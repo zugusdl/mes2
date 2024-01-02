@@ -1,6 +1,12 @@
 var header = "X-CSRF-TOKEN";
 var token = $("meta[name='_csrf']").attr("content");
 
+// 검색
+function searchList() {
+	
+}
+
+// 발주 추가
 function insertOrder() {
 	$.ajax({
 		url : "/platform/insertOrder",
@@ -14,6 +20,7 @@ function insertOrder() {
 	});
 }
 
+// 발주 상세 페이지
 function getOrderDetail(order_code, order_date) {
 	$.ajax({
 		url : "/platform/orderDetail?order_code=" + order_code,

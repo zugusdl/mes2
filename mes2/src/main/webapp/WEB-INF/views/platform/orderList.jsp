@@ -25,23 +25,24 @@
 	<!-- 검색창 -->
 	<div class="container">
 		<section class="section1">
-			<form class="search" action="/platform/search">
-				<div>
-					<span class="search-font">발주일자</span>
-					<input id="dtIp" type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
-					<span> ~ </span>
-					<input id="dtIp" type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px" />
-				</div>
-
-				<select id="boundary">
+			<form class="search">
+				<select id="sales_status" name="sales_status">
 					<option value="">-- 진행상태 --</option>
-					<option value="order_code">신청중</option>
-					<option value="order_date">생산중</option>
-					<option value="sales_status">배송중</option>
-					<option value="sales_status">완료</option>
-					<option value="sales_status">발주 불가</option>
+					<option value="requested">신청중</option>
+					<option value="accept">생산중</option>
+					<option value="deliver">배송중</option>
+					<option value="complete">완료</option>
+					<option value="reject">발주 불가</option>
 				</select>
 				
+				<div>
+					<span class="search-font">발주일자: </span>
+					<input id="dtIp" type="date" name="startDate" />
+					<span> ~ </span>
+					<input id="dtIp" type="date" name="endDate" />
+				</div>
+				
+<!-- 				<button type="button" class="btn btn-secondary" onclick="searchList();">검색</button> -->
 				<input type="submit" class="btn btn-secondary" value="검색" />
 			</form>
 
@@ -94,6 +95,31 @@
 					</form>
 				</div>
 			</div>
+			
+			<!-- 페이징 -->
+			<div class="box-footer clearfix">
+				<div style="margin: 0 auto; width: fit-content;">
+				<ul class="pagination pagination-sm no-margin pull-right">
+				
+					<c:if test="${pageVO.prev }">
+						<li><a href="/platform/orderList?page=${pageVO.startPage - 1 }">«</a></li>
+					</c:if>
+					
+					<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+						<li ${pageVO.cri.page == i?  "class='active'":"" }>
+							<a href="/platform/orderList?page=${i }">
+								${i }
+							</a>
+						</li>
+					</c:forEach>
+					
+					<c:if test="${pageVO.next }">
+						<li><a href="/platform/orderList?page=${pageVO.endPage + 1 }">»</a></li>
+					</c:if>
+				</ul>
+				</div>
+			</div>
+			<!-- 페이징 끝 -->
 		</section>
 
 		<div id="bottomContent"></div>
@@ -105,5 +131,6 @@
 	</script>
 	<script src="${pageContext.request.contextPath}/resources/js/platform/orderList.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/platform/insertOrder.js"></script>
+<%-- 	<script src="${pageContext.request.contextPath}/resources/js/platform/sideheadscript.js"></script> --%>
 </body>
 </html>

@@ -6,6 +6,8 @@ import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
+import com.mes2.platform.etc.ModifyPwDTO;
+import com.mes2.platform.etc.SearchDTO;
 
 public interface PlatformDAO {
 	// 로그인
@@ -30,7 +32,10 @@ public interface PlatformDAO {
 	public String countTodayOrder(String checkCode) throws Exception;
 	
 	// 주문 목록 조회
-	public List<SoiDTO> getOrderList(String company_code) throws Exception;
+	public List<SoiDTO> getOrderList(SearchDTO sDTO) throws Exception;
+	
+	// 주문 개수 조회(페이징)
+	public int getTotalOrderCount(SearchDTO sDTO) throws Exception;
 	
 	// 주문 상세 조회
 	public List<SoiDTO> getOrderDetail(String order_code) throws Exception;
@@ -50,5 +55,8 @@ public interface PlatformDAO {
 	
 	// 주문 삭제
 	public void deleteOrder(String order_code) throws Exception;
+	
+	// 비밀번호 변경
+	public void modifyPw(ModifyPwDTO mdDTO) throws Exception;
 	
 }

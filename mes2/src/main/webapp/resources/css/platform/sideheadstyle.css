@@ -286,3 +286,13 @@ body{
 .list {
 	padding: 10px;
 }
+
+.explainNewPw {
+	margin-left: 100px;
+	font-size: 12px;
+}
+
+.explainCheckPw {
+	margin-left: 100px;
+	font-size: 12px;
+}
