@@ -13,4 +13,6 @@ public class md_productDTO {
 	private double price; // 단가(판매가)
 	private int production_status; // 생산유무
 	private Date regdate; // 등록일자
+	private String ofileName;
+	
 }
