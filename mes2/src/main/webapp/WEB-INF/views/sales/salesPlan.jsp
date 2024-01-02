@@ -18,15 +18,64 @@
     />
     <link rel="stylesheet" href="/resources/css/contents/contents.css">  
     
-    <style>
+     <style>
     .mo {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
    }
-   
+   .box {
+        background-color: #95c4a2;
+        border: 1px black solid;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        border-top-left-radius: 10px;  /* 왼쪽 위 둥근 테두리 */
+        border-bottom-left-radius: 10px;  /* 왼쪽 아래 둥근 테두리 */
+      }
 
+      .box2 {
+        background-color: white;
+        border: 1px black solid;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        border-top-right-radius: 10px; /* 오른쪽 위 둥근 테두리 */
+        border-bottom-right-radius: 10px; /* 오른쪽 아래 둥근 테두리 */
+      }
+
+      .box3 {
+        background-color: white;
+        border: 1px black solid;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        
+      }
+      
+    .box2:hover, .box3:hover, .box:hover {
+     color: #ffcccc;
+    cursor: pointer; 
+  
+    }
+
+  .container {
+    clear: both;
+   
+  }
     </style>
   </head>
   
@@ -56,6 +105,23 @@
   </div>
 </div>
 </div>
+
+<!-- 진행현황 바  -->
+     <div class="box" onclick="location.href='/sales/salesPlan'">
+      <span >신청수주</span>
+    </div>
+    <div class="box3" onclick="statusList('waiting')"> 
+      <span >대기 ${status.waitingCnt }건</span>
+    </div>
+    <div class="box2" onclick="statusList('progressing')">
+      <span >신규 ${status.planCnt }건</span>
+    </div>
+    
+    <!-- 검색창  style="clear: both;"-->
+
+
+
+
     <!-- 검색창 -->
     <div class="container">
     <section class="section1">
@@ -91,9 +157,8 @@
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
-         <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' id="reg-mo-btn" onclick="return register()">등록모</button>
-          <button type="button" class="btn btn-secondary" onclick="return register()">등록</button>
-          <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절모</button>
+         <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' id="reg-mo-btn" onclick="return register()">등록</button>
+          <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절</button>
           <button type="button" class="btn btn-secondary" onclick="load()">로드</button>         
         </div>
 

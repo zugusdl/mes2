@@ -116,12 +116,14 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public void stockReg(SalesDTO sd) {
 		logger.debug(" S :stockReg(SalesDTO sd)");
+		// 출고테이블에 등록
 		sdao.stockReg(sd);
 		
-		// 값 변경
+		// 상태값 변경
 		sdao.changeProductStatus(sd);
+		
 		// 창고에서 빼기
-		sdao.updateStockQuan(sd);
+		//sdao.updateStockQuan(sd);
 	}
 	
 	@Override
@@ -133,12 +135,15 @@ public class SalesServiceImpl implements SalesService {
 		
 		
 		
+		
+		
 	}
 	
 	@Override
 	public void updateStockQuan(SalesDTO sd) {
 		logger.debug(" S :updateStockQuan(SalesDTO sd) ");
 		sdao.updateStockQuan(sd);
+		// 창고에서 값 빼기 
 		
 	}
 	

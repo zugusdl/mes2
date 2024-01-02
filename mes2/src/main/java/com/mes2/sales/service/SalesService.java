@@ -30,4 +30,5 @@ public interface SalesService {
 	public void updateStockQuan(SalesDTO sd);
 	
 	public void insertShippingPlan(PlanRegisterDTO pdto);
+	
 }

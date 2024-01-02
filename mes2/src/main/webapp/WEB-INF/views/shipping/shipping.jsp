@@ -74,6 +74,10 @@
   
     }
 
+  .container {
+    clear: both;
+   
+  }
     </style>
   </head>
   
@@ -124,7 +128,7 @@
 
     <!-- 검색창  style="clear: both;"-->
     
-    <div class="container">
+    <div class="container" >
     <section class="section1">
       <form action="searchShipping" method="post" class="search" onsubmit="return checkSearchSub()">
       	 <select name="type" id="searchType">

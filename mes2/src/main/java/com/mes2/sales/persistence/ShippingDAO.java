@@ -41,4 +41,5 @@ public interface ShippingDAO {
 	public List<ShippingDTO> userInstructionList(String user_id);
 	
 	public List<ShippingDTO> shippingSearch(SearchDTO sed);
+	public void udpateSaleStatus(ShippingDTO sdto);
 }

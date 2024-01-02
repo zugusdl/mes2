@@ -17,24 +17,7 @@
 	 }
  }
  
-// function register(){ //**
-//	 var ckArr = $(".ck");
-//	 var count = ckArr.filter(":checked").length; 
-//
-//	 if(count==0){
-//	 	alert("선택된 항목이 없습니다.");
-//	 	return false;
-//	 }else{
-//	 	var result = confirm('등록하시겠습니까?');	
-//	 	 if(result){
-//	 		
-//	 		$('#planListForm').submit();
-//	 	 }else{
-//	 		
-//	 		return false;
-//	 	 }
-//	 }
-// }
+
  
  function register(){
 	 var ckArr = $(".ck");

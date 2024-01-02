@@ -73,6 +73,11 @@
     cursor: pointer; 
   
     }
+    
+  .container {
+    clear: both;
+   
+  }
 
     </style>
   </head>

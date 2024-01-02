@@ -250,6 +250,12 @@
   where order_code = #{order_code} 
   </update>
   
+  <update id="udpateSaleStatus">
+  update sales_order_info 
+  set sales_status = #{sales_status} 
+  where order_code =#{order_code}
+  </update>
+  
   <select id="getshipContent" resultMap="ShippingDTO">
   select P.sales_code, P.sales_quantity, P.processing_reg, P.order_code, M.name
   from sales_order_product P 

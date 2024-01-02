@@ -172,8 +172,8 @@
   
   <insert id="stockReg">
   insert into out_warehouse 
-  (out_quantity,product_code,out_type,status,order_code) 
-  values (#{stock_quantity}, #{product_code}, 'S','waiting',#{order_code})
+  (quantity,product_code,out_type,status,order_code) 
+  values (#{stock_quantity}, #{product_code}, 'S','requested',#{order_code})
   </insert>
   
   <update id='changeProductStatus'>
@@ -204,6 +204,10 @@
 <select id="checkOrdeDate" resultType="java.util.Date">
 	select order_date from sales_order_info 
 	where order_code = #{order_code} 
+</select>
+
+<select id="planCnt">
+	select 
 </select>
   
   </mapper>

@@ -170,4 +170,10 @@ public class ShippingDAOImpl implements ShippingDAO {
 		
 		return sqlSession.selectList(NAMESPACE+".shippingSearch", sed);
 	}
+	
+	@Override
+	public void udpateSaleStatus(ShippingDTO sdto) {
+		
+		sqlSession.update(NAMESPACE+".udpateSaleStatus", sdto);
+	}
 }

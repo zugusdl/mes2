@@ -317,7 +317,7 @@ function userList(){
 					  icon: "info",
 					  showCancelButton: true,
 					  cancelButtonText: "취소",
-					  confirmButtonColor: "#95c4a2",
+					  confirmButtonColor: "#3085d6",
 					  cancelButtonColor: "#d33",
 					  confirmButtonText: "확인"
 					}).then((result) => {

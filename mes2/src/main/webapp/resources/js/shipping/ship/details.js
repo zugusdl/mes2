@@ -59,6 +59,26 @@ function goContent(order_code){
 	      
 		 $("#shippngPlan-modal").html(listHtml);
  }
+ 
+ function productInfo(order_code,sales_code) {
+	 alert(order_code);
+	 alert(sales_code);
+	 
+//	  $.ajax({
+//		  url:"productInfo", 
+//		  type:"post",
+//		  dataType:"json", 
+//		  data: {"order_code" : order_code}, 
+//		  success: function (data) {
+//			  
+//		      moInfo(data,order_code); 
+//		    },
+//		  error: function(){
+//			  alert("정보겟오류");
+//				
+//		  }
+//	  });
+ }
 
   function content(data,order_code){ //에이젝스에서 받은 값으로 출력하기 
 
@@ -85,7 +105,6 @@ function goContent(order_code){
 	  
 	  $.each(data,function(index,obj){
 		  listHtml += "<tr>";
-		 // listHtml += "<td scope='row'><input type='checkbox' class='ck' name='idx' value='"+obj.product_code+"' id='"+obj.product_code+"'/></td>";
 		  listHtml += "<td>"+obj.sales_code+"</td>";				  
 		  listHtml += "<td>"+obj.product_name+"</td>";
 		  listHtml += "<td>"+obj.sales_quantity+"</td>";
@@ -98,7 +117,7 @@ function goContent(order_code){
 		  listHtml += "복합처리";  
 		  }
 		  listHtml += "</td>"
-		  listHtml += "<td><button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#exampleModal' oonclick='info(\""+obj.order_code+"\", \""+obj.sales_code+"\")'>상세</button></td>";
+		  listHtml += "<td><button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='productInfo(\""+obj.order_code+"\", \""+obj.sales_code+"\")'>상세</button></td>";
 		  listHtml += "</tr>";
 	  });
     

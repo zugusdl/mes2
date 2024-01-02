@@ -31,6 +31,8 @@ public class ShippingDTO {
 	private int instructionCnt;
 	
 	private String progress_status; // shipping테이블 출하진행상태
+	private String sales_status; // 
+	private String confirm_status;//
 	
 
 	

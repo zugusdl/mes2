@@ -215,9 +215,17 @@ public class ShippingServiceImpl implements ShippingService {
 	            System.out.println("A 저장된 값은 오늘 이전입니다.");
 	            // 출하지시일이 오늘 이전인 경우
 	            sdt.setProgress_status("shipping");
+	            sdt.setSales_status("deliver");
+	            sdao.updateShipStatus(sdt);
 	        } else {
 	            //출하지시일이 오늘인 경우
 	            sdt.setProgress_status("progressing");
+	        }
+	        
+	        if(sdt.getConfirm_status()!=null) {
+	        	sdt.setSales_status("complete");
+	        	sdt.setProgress_status("complete");
+	        	sdao.updateShipStatus(sdt);
 	        }
 	        sdao.updateShipProgressing(sdt);
 			
