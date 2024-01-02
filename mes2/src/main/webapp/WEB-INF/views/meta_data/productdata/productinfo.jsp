@@ -189,22 +189,33 @@ function submitData() {
     var cost = $('input[name="cost"]').val();
     var price = $('input[name="price"]').val();
     var productionStatus = $('input[name="production_status"]').val();
-
+    
+    var formData = new FormData();
+	formData.append('product_code', productCode);
+	formData.append('name', name);
+	formData.append('category', category);
+	formData.append('unit', unit);
+	formData.append('cost', cost);
+	formData.append('price', price);
+	formData.append('production_status', productionStatus);
+	
+	// 파일 업로드를 위한 코드
+	  var fileInput = $('#addBtn')[0];
+	  var file = fileInput.files[0];
+	  formData.append('file', file);
+	  
+	  
     // Ajax를 사용하여 서버에 데이터 전송
     $.ajax({
         url: '/meta_data/insertproduct',
-        type: 'POST',
-        data: {
-            product_code: productCode,
-            name: name,
-            category: category,
-            unit: unit,
-            cost: cost,
-            price: price,
-            production_status: productionStatus
-            // 추가 필요한 데이터가 있다면 여기에 추가
-        },
-        async: false,
+        type: "POST",
+        enctype: 'multipart/form-data',
+        
+        data: formData,
+        
+        processData: false,
+        contentType: false,
+
         success: function() {
             
 
@@ -237,21 +248,30 @@ function submitData() {
         var hiddenCost = row.find('.b input[name="cost"]').val();
         var hiddenPrice = row.find('.b input[name="price"]').val();
         var hiddenProductionStatus = row.find('.b input[name="production_status"]').val();
-
+		
+        var formData = new FormData();
+    	formData.append('product_code', hiddenProductCode);
+    	formData.append('name', hiddenName);
+    	formData.append('category', hiddenCategory);
+    	formData.append('unit', hiddenUnit);
+    	formData.append('cost', hiddenCost);
+    	formData.append('price', hiddenPrice);
+    	formData.append('production_status', hiddenProductionStatus);
+    	
+    	// 파일 업로드를 위한 코드
+	  	var fileInput = row.find('#addBtn2')[0];
+	  	var file = fileInput.files[0];
+	  	formData.append('file', file);
+    	
         // AJAX를 사용하여 서버로 데이터 전송
         $.ajax({
             url: '/meta_data/updateproduct', // 실제 서버 엔드포인트로 변경해야 합니다.
             type: 'POST',
-            data: {
-                product_code: hiddenProductCode,
-                name: hiddenName,
-                category: hiddenCategory,
-                unit: hiddenUnit,
-                cost: hiddenCost,
-                price: hiddenPrice,
-                production_status: hiddenProductionStatus
-                // 나머지 필드들 추가
-            },
+            data: formData,
+            
+            processData: false,
+            contentType: false,
+            
             success: function(response) {
                 // 서버로부터의 응답 처리
                 alert('수정완료');
@@ -297,6 +317,41 @@ function redirectToFirstPage() {
     window.location.href = '/meta_data/firstpage';
 }
 </script>
+
+
+<!--  이미지 미리보기 js -->
+<script type="text/javascript">
+    //이미지 미리보기
+    var sel_file;
+ 
+    $(document).ready(function() {
+        $("#addBtn, #addBtn2").on("change", handleImgFileSelect);
+    });
+ 
+    function handleImgFileSelect(e) {
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+ 
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+ 
+        filesArr.forEach(function(f) {
+            if (!f.type.match(reg)) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+ 
+            sel_file = f;
+ 
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#img, #img2").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+</script>
+
+
 
 
 </head>
@@ -378,8 +433,11 @@ function redirectToFirstPage() {
 									<td><input type="text" name="price" size="5"></td>
 									<td><input type="text" name="production_status" size="5"></td>
 									<td></td>
-									<td>사진 넣는 버튼 <button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">추가</button></td>
-									
+									<td>
+									<img id="img" width="250px"/> 						
+									<input type="file"  value="사진 추가" id="addBtn">
+									<button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">저장</button>
+									</td>									
 								</tr>	
 								
 								
@@ -399,7 +457,9 @@ function redirectToFirstPage() {
 									<td class="a">${plist.price }</td>
 									<td class="a">${plist.production_status }</td>
 									<td class="a">${plist.regdate }</td>
-									<td class="a">${plist.regdate }</td> <!-- 사진 -->
+									<td class="a">																	  							     								
+									<img src="../../../../resources/img/metadata/${plist.ofileName }" width="200px" alt="">
+									</td>
 									
 									
 															
@@ -411,8 +471,9 @@ function redirectToFirstPage() {
 									<td class="b" style="display: none;"><input type="text" name="price" size="5" value="${plist.price }"></td>
 									<td class="b" style="display: none;"><input type="text" name="production_status" size="5" value="${plist.production_status }"></td>
 									<td class="b" style="display: none;">${plist.regdate }</td>
-									<td class="b" style="display: none; width: ;">
-									업로드 링크
+									<td class="b" style="display: none; width: ;">								
+									<img id="img2" src="../../../../resources/img/metadata/${plist.ofileName }" width="200px" alt="123">						
+									<input type="file" id="addBtn2">
 									<button type="button" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button> 
 									<button type="button" class="btn btn-secondary" id="submitbtn3" onclick="submitData3(this)" >삭제</button> 									
 									</td>
@@ -456,8 +517,6 @@ function redirectToFirstPage() {
 		</div>
 		<!-- 페이징 끝 -->
 	</div>
-
-	
 	
 
 
