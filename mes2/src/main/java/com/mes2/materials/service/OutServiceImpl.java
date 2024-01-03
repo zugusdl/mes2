@@ -19,21 +19,18 @@ public class OutServiceImpl implements OutService {
 	@Inject
 	private OutDAO odao;
 
+	// 출고 목록 조회
 	@Override
-	public void registerOutcomingStock(OutDTO odto) throws Exception {
-		odao.registerOutbound(odto);
-		
-	}
-
-	@Override
-	public List<OutDTO> getOutcomingStockInfo(OutDTO odto) throws Exception {
-		return odao.getAllOutboundInfo(odto);
+	public List<OutDTO> getOutList() throws Exception {
+		logger.debug("S: getOutList() 호출");
+		return odao.getOutList();
 	}
 	
+	// 출고 상세 조회
 	@Override
-	public void updateQuantity(String product_code, int quantity, String category) throws Exception {
-		odao.updateQuantity(product_code, quantity, category);
+	public OutDTO getOutDetail(String out_index) throws Exception {
+		logger.debug("S: getOutDetail() 호출");
+		return odao.getOutDetail(out_index);
 	}
-	
 	
 }
