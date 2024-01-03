@@ -95,7 +95,8 @@ public class PlatformController {
 		
 		return "/platform/orderList";
 	}
-	
+
+	//http://localhost:8080/platform//insertOrder
 	// 발주(주문) 추가 페이지
 	@GetMapping(value="/insertOrder")
 	public void insertOrderGET(Model model) throws Exception {

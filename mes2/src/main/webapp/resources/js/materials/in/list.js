@@ -38,15 +38,15 @@ var updateBtn = false;
 	  listHtml += "<tr class='table-success'>";
 	  listHtml += "<th></th>";
 	  listHtml += "<th></th>";
-	  listHtml += "<th scope='col'>입고코드</th>";
-	  listHtml += "<th scope='col'>품목코드</th>";
-	  listHtml += "<th scope='col'>자재유형</th>";
+	  listHtml += "<th scope='col'>입고현황?</th>";
+	  listHtml += "<th scope='col'>품목코드</th>";	  
+	  listHtml += "<th scope='col'>로트번호</th>";
 	  listHtml += "<th scope='col'>품목명</th>";
 	  listHtml += "<th scope='col'>수량</th>";
 	  listHtml += "<th scope='col'>단위</th>";
+	  listHtml += "<th scope='col'>카테고리</th>";
 	  listHtml += "<th scope='col'>입고등록일</th>";
-	  listHtml += "<th scope='col'>자재담당자</th>";
-	  listHtml += "<th scope='col'>진행상황</th>";
+	  listHtml += "<th scope='col'>담당자</th>";
 	  listHtml += "</tr>";
 	  listHtml += "</thead>";
 	  listHtml += "<tbody>";
@@ -57,21 +57,22 @@ var updateBtn = false;
 		  listHtml += "<tr>";
 		  listHtml += "<td>";
 		  listHtml += "<td scope='row'><input type='checkbox' class='ck' name='idx' value='"+obj.in_index+"' id='"+obj.in_index+"'/></td>";
-		  listHtml += "<td><a href='javascript:void(0);' onclick='goContent(\"" + obj.code_group + "\")'>" + obj.code_group + "</a></td>";
-		  listHtml += "<td>obj.pd_lot</td>";
-	/*	  listHtml += "<td><a href='javascript:goContent("+obj.product_code+")'>" + obj.product_code+ "</a></td>";*/
+		  listHtml += "<td>"+obj.code_group_name+"</td>";
+		  listHtml += "<td><a href='javascript:void(0);' onclick='goContent(\"" + obj.product_code + "\")'>" + obj.product_code + "</a></td>";
 		  listHtml += "<td>"+obj.pd_lot+"</td>";
-		  listHtml += "<td>"+obj.product_code+"</td>";
-		  listHtml += "<td>"+obj.category+"</td>";
+	/*	  listHtml += "<td><a href='javascript:goContent("+obj.product_code+")'>" + obj.product_code+ "</a></td>";*/
 		  listHtml += "<td>"+obj.name+"</td>";
 		  listHtml += "<td>"+obj.in_quantity+"</td>";
 		  listHtml += "<td>"+obj.unit+"</td>";
-		  listHtml += "<td>"+obj.in_in_regdate+"</td>";
+		  listHtml += "<td>"+obj.category+"</td>";
+		  listHtml += "<td>"+obj.in_regdate+"</td>";
 		  listHtml += "<td>"+obj.user_department+"</td>";
+		 
 	// 상세보기 클릭하면 goContent 함수 호출 
-	// 매개변수로 고유값을 넣어주면 된다.(obj.idx) 		  
+	// 매개변수로 고유값을 넣어주면 된다.(obj.idx)
 		  listHtml += "</tr>";
 	  });
+	  
 	  listHtml += "</tbody>"; 
 	  listHtml += "</table>";
 	 
