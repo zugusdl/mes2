@@ -18,6 +18,7 @@
   	<result property="product_status" column="product_status"/>
   	<result property="processing_reg" column="processing_reg"/>
   	<result property="stock_quantity" column="stock_quantity"/>
+  	<result property="orderStatus" column="orderStatus"/>
   </resultMap>
   
    <sql id="searchDate">
@@ -75,6 +76,25 @@
      </where>
      <include refid="salesGroup"/>
     order by I.request_date ASC
+  </select>
+  
+  <select id="getNewSales" resultMap="SalesDTO">
+     select I.order_code, B.name AS company_name ,I.order_date, I.request_date 
+     <include refid="salesJoin"/> 
+     where I.sales_status = 'requested' 
+     and I.request_date = CURDATE() 
+     <include refid="salesGroup"/> 
+     order by I.request_date ASC 
+  </select>
+  
+  <select id="getPlanNewCnt" resultType="Integer">
+  select count(order_code) from sales_order_info 
+  where sales_status =#{sales_status} and request_date = CURDATE() 
+  </select>
+  
+  <select id="getPlanWaitCnt" resultType="Integer">
+    select count(order_code) from sales_order_info 
+    where sales_status ='requested' 
   </select>
   
     <select id="getPlanContent"  resultMap="SalesDTO">
@@ -206,8 +226,24 @@
 	where order_code = #{order_code} 
 </select>
 
-<select id="planCnt">
-	select 
+<select id="makeOrderStates" resultMap="SalesDTO">
+ select processing_reg from sales_order_product where order_code= #{order_code} 
+</select>
+
+<select id="getNewAccept" resultMap="SalesDTO" >
+    select I.order_code, B.name AS company_name ,I.order_date, I.request_date 
+     <include refid="salesJoin"/> 
+    where I.sales_status = 'accept' and I.acceptance_date = CURDATE() 
+     <include refid="salesGroup"/>
+    order by I.request_date ASC
+</select>
+
+<select id="getUserAccept" resultMap="SalesDTO" >
+    select I.order_code, B.name AS company_name ,I.order_date, I.request_date 
+     <include refid="salesJoin"/> 
+    where I.sales_status = 'accept' and I.user_id =#{user_id}
+     <include refid="salesGroup"/>
+    order by I.request_date ASC
 </select>
   
   </mapper>

@@ -23,6 +23,12 @@ public class SalesDTO {
 	private int lack_quantity; // 제품수량 - 현재고 //부족수량 ** 
 	
 	private Date scheduled_date;
+	
+	private int newCnt;
+	private int waitingCnt;
+	private int completeCnt;
+	
+	private String orderStatus;
 
 	
 	

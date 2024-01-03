@@ -10,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://kit.fontawesome.com/38bf29a217.js" crossorigin="anonymous"></script>   
+   
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -19,12 +22,64 @@
     <link rel="stylesheet" href="/resources/css/sales/salesAccept.css">  
     
     <style>
-    .mo {
+     .mo {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
    }
+   .box {
+        background-color: #95c4a2;
+        border: 1px black solid;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        border-top-left-radius: 10px;  /* 왼쪽 위 둥근 테두리 */
+        border-bottom-left-radius: 10px;  /* 왼쪽 아래 둥근 테두리 */
+      }
+
+      .box2 {
+        background-color: white;
+        border: 1px black solid;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 25px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        border-top-right-radius: 10px; /* 오른쪽 위 둥근 테두리 */
+        border-bottom-right-radius: 10px; /* 오른쪽 아래 둥근 테두리 */
+      }
+
+      .box3 {
+        background-color: white;
+        border: 1px black solid;
+        width: 150px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        float: left;
+        
+      }
+      
+    .box2:hover, .box3:hover, .box:hover {
+     color: #ffcccc;
+    cursor: pointer; 
+  
+    }
+    
+  .container {
+    clear: both;
+   
+  }
+
    
 
     </style>
@@ -38,12 +93,12 @@
   
 <!-- Modal -->
 <div id="modalcon">
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="salesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="salesModalLabel"></h1>
+       <!--  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
       </div>
       <div class="modal-body mo" id="sales-modal">
        
@@ -56,6 +111,25 @@
   </div>
 </div>
 </div>
+
+
+<!-- 진행현황 바  -->
+     <div class="box" onclick="location.href='/sales/salesAccept'">
+      <span >등록수주</span>
+    </div>
+    <div class="box3" onclick="location.href='/sales/completePro'">
+      <span >처리완료 ${status.completeCnt }건</span>
+    </div>
+    <div class="box3" onclick="location.href='/sales/waitPro'">
+      <span >처리대기 ${status.waitingCnt }건</span>
+    </div>
+    <div class="box3" onclick="location.href='/sales/newPro'">
+      <span >신규 ${status.newCnt }건 </span>
+    </div>
+    <div class="box2" onclick="location.href='/sales/userPro'">
+      <i class="fa-solid fa-user" ></i>
+    </div>
+    
     <!-- 검색창 -->
     <div class="container">
     <section class="section1">
@@ -104,7 +178,8 @@
                   <th scope="col">수주처</th>
                   <th scope="col">납기요청일</th>
                   <th scope="col">수주신청일</th>
-                  <th scope="col"></th>
+                  <th scope="col">주문처리</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -116,8 +191,7 @@
                   <td>${dto.company_name }</td>         
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.order_date}"/></td>
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.request_date }"/></td>
-                  <%-- <td><button type='submit' class='btn btn-secondary' formaction="rejectSales" onclick='return reject("${dto.order_code}")'>거절</button></td> --%>
-                  <%-- <td><button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='return reject("${dto.order_code}")'>거절모</button></td> --%>
+                  <td>${dto.orderStatus }</td>  
 					
                 </tr>
                </c:forEach> 

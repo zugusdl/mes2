@@ -1,10 +1,10 @@
  function goContent(order_code){
        
 	  $.ajax({
-		  url:"acceptContent", // 
+		  url:"acceptContent",
 		  type:"post",
-		  dataType:"json", // Jackson Databind사용해서 json으로 받기
-		  data: {"order_code": order_code }, // 받은 매개변수 전달
+		  dataType:"json", 
+		  data: {"order_code": order_code }, 
 		  success: function(data) {
 			  content(data, order_code);
 		  },
@@ -22,17 +22,16 @@
  function mo(product_code,order_code,sales_quantity){
 	 
 	  $.ajax({
-		  url:"stockCheck", // 
+		  url:"stockCheck", 
 		  type:"post",
-		  dataType:"json", // Jackson Databind사용해서 json으로 받기
-		  data: {"product_code": product_code , "order_code" : order_code}, // 받은 매개변수 전달
+		  dataType:"json",
+		  data: {"product_code": product_code , "order_code" : order_code}, 
 		  success: function (data) {
-		      moStock(data, sales_quantity); // Pass sales_quantity to moStock
+		      moStock(data, sales_quantity);
 		    },
 		  error: function(){
-			  $("#exampleModalLabel").html('재고조회');
-			  var listHtml = "<div>창고에 보유 재고 없음</div>";
-			  //listHtml = "<div>재고 오류(창고에 상품 있는지 확인필요)</div>";
+			  $("#salesModalLabel").html('재고조회');
+			  var listHtml = "<div>창고에 보유 재고 없음</div>";			
 			  listHtml += "<div>부족수량 : <input type='text' value='"+sales_quantity+"' readonly/></div>"; 
 			  listHtml += "<button type='button' class='btn btn-danger'>재고부족</button>";
 			  $("#sales-modal").html(listHtml);
@@ -42,7 +41,7 @@
  }
  
  function moStock(data, sales_quantity) {
-	 $("#exampleModalLabel").html('재고조회');
+	 $("#salesModalLabel").html('재고조회');
 	 var listHtml = "<div>제품명 : <input type='text' value='"+data.product_name+"' readonly/></div>";
 		 listHtml += "<div>제품코드 : <input type='text' value='"+data.product_code+"' readonly/></div>";
 		 listHtml += "<div>보유수량 : <input type='text' value='"+data.stock_quantity+"' readonly/></div>";
@@ -60,11 +59,7 @@
  
 
  function save(index){
-	 
-	 
-	 //var in = index; // 변수로 받은 인덱스
-	 //var productCodeAtIndex = $(".product_code").eq(index).val();
-	 
+	
 	 var order = $("#order_code").val();
 	 var scode = $(".sales_code").eq(index).val();
 	 var productCode = $(".product_code").eq(index).val();
@@ -106,11 +101,10 @@
  function checkProReg(processing_reg,sales_code){
 	 confirm("이미 처리하셨습니다. 변경을 원하시나욥?");
  }
-  function content(data, order_code){ //에이젝스에서 받은 값으로 출력하기 
+  function content(data, order_code){ 
 	  
 	  var listHtml ="<div class='list-box'>";
-	  listHtml +="<button type='button' class='btn btn-secondary' id='closeBtn' onclick='cancle()'>닫기</button>";
-	  listHtml +="<button type='button' class='btn btn-secondary' id='saveBtn' onclick='save()'>저장</button>";
+	  listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
 	  listHtml +="<input type='hidden' id='order_code' value='"+order_code+"'>";
 	  listHtml += "<table class='table table-hover'>";
 	  listHtml += "<thead>";
@@ -146,8 +140,6 @@
 			  listHtml += "<option value='production' class='check-processing'>생산계획</option>";
 			  listHtml += "<option value='multi' class='check-processing'>복합처리</option>";  
 			  listHtml += "</select></td>";
-			 // listHtml += "<td><button type='button' class='btn btn-primary' onclick='save(\""+obj.sales_code+"\")'>저장</button></td>";
-			  //listHtml += "<td><button type='button' class='btn btn-primary' onclick='save(\""+index+"\")'>저장</button></td>";
 			  listHtml += "<td><button type='button' class='btn btn-primary' onclick='save(" + index + ")'>저장</button></td>";
 		  }  
 		  if(obj.processing_reg != 'N'){
@@ -165,7 +157,7 @@
 	  listHtml += "</tbody>";
 	  listHtml += "</table>";
 	 
-	//위 표가 들어갈 자리의 아이디값 가져와서 입력하기 
+
 	  $("#salesAcceptContent").html(listHtml);
 	  
 	 

@@ -8,8 +8,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>salesPlan</title>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/38bf29a217.js" crossorigin="anonymous"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -76,6 +78,10 @@
     clear: both;
    
   }
+  
+  #closeBtn{
+   font-size: 40px;
+  }
     </style>
   </head>
   
@@ -87,12 +93,12 @@
   
 <!-- Modal -->
 <div id="modalcon">
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="salesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="salesModalLabel"></h1>
+       <!--  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
       </div>
       <div class="modal-body mo" id="sales-modal">
        
@@ -106,15 +112,15 @@
 </div>
 </div>
 
-<!-- 진행현황 바  -->
+   <!-- 진행현황 바  -->
      <div class="box" onclick="location.href='/sales/salesPlan'">
-      <span >신청수주</span>
+      <span>신청수주</span>
     </div>
-    <div class="box3" onclick="statusList('waiting')"> 
+    <div class="box3" onclick="location.href='/sales/salesPlan'">
       <span >대기 ${status.waitingCnt }건</span>
     </div>
-    <div class="box2" onclick="statusList('progressing')">
-      <span >신규 ${status.planCnt }건</span>
+    <div class="box2" onclick="location.href='/sales/newSalesPlan'">
+      <span >신규 ${status.newCnt }건</span>
     </div>
     
     <!-- 검색창  style="clear: both;"-->
@@ -157,9 +163,10 @@
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
-         <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' id="reg-mo-btn" onclick="return register()">등록</button>
-          <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절</button>
-          <button type="button" class="btn btn-secondary" onclick="load()">로드</button>         
+         <button type='button' class='btn btn-secondary'  id="reg-mo-btn" onclick="return register()">등록</button>
+          <button type='button' class='btn btn-secondary' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절</button>
+         <!--  <button type="button" class="btn btn-secondary" onclick="load()">로드</button>  -->
+         <!--  <i class="fa-solid fa-rotate-right" onclick="load()"></i> -->        
         </div>
 
         <div class="list-box">

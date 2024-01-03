@@ -30,5 +30,13 @@ public interface SalesService {
 	public void updateStockQuan(SalesDTO sd);
 	
 	public void insertShippingPlan(PlanRegisterDTO pdto);
+	public List<SalesDTO> getNewSales();
+	public SalesDTO salesPlanCnt();
 	
+	public List<SalesDTO> completeList();
+	public List<SalesDTO> waitList();
+	public List<SalesDTO> acceptList();
+	public SalesDTO proCnt();
+	public List<SalesDTO>newAcceptList();
+	public List<SalesDTO>UserAccept(String user_id);
 }

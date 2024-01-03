@@ -45,8 +45,9 @@ public class SalesController {
 //		return "/sales/sales";
 //	}
 	// http://localhost:8080/sales/salesPlan
-	// http://localhost:8088/sales/salesPlanTest
-	@RequestMapping(value = "/salesPlanTest")
+	// http://localhost:8088/sales/salesPlan
+	//@RequestMapping(value = "/salesPlanTest")
+	@RequestMapping(value = "/salesPlan")
 	public String salesPlanTest(HttpSession session, Model model) {	
 		//--------------------------------------//
 		String user_id ="sawon4";
@@ -55,8 +56,26 @@ public class SalesController {
 		String sales_status = "requested";
 		List<SalesDTO> list = sService.salesList(sales_status);	
 		model.addAttribute("list", list);
+		
+		SalesDTO sdt = sService.salesPlanCnt();
+		model.addAttribute("status", sdt);
+		
 		return "/sales/salesPlan";
 	}
+	
+	@RequestMapping(value = "/newSalesPlan")
+	public String newSalesPlan(HttpSession session, Model model) {	
+		//--------------------------------------//
+		String user_id ="sawon4";
+		session.setAttribute("user_id",user_id );
+		//--------------------------------------//
+		
+		List<SalesDTO> list = sService.getNewSales();
+		model.addAttribute("list", list);
+		return "/sales/salesPlan";
+	}
+	
+	
 	
 	@RequestMapping(value = "salesPlanList", method=RequestMethod.GET)
 	public @ResponseBody List<SalesDTO> PlanListGet() {
@@ -78,7 +97,7 @@ public class SalesController {
 		
 		sService.rejectSales(odList);
 		
-		return "redirect:/sales/salesPlanTest";
+		return "redirect:/sales/salesPlan";
 		
 	}
 	
@@ -115,7 +134,7 @@ public class SalesController {
 		List<SalesDTO> list = sService.getProdctCode(pdto.getOrder_code());
 		sService.makeSalesCode(list);
 		sService.insertShippingPlan(pdto);
-		return "redirect:/sales/salesPlanTest";
+		return "redirect:/sales/salesPlan";
 	}
 	
 	@RequestMapping(value = "regIdCheck")
@@ -142,14 +161,68 @@ public class SalesController {
 		String user_id ="sawon4";
 		session.setAttribute("user_id",user_id );
 		//--------------------------------------//
-		String sales_status = "accept";
-		List<SalesDTO> list = sService.salesList(sales_status);	
+		//String sales_status = "accept";
+		List<SalesDTO> list = sService.acceptList();	
 		//List<SalesDTO> list = sService.salesAcceptList();
+		SalesDTO status = sService.proCnt();
+		model.addAttribute("status", status);
 		model.addAttribute("list", list);
 		return "/sales/salesAccept";
 	}
 	
+	@RequestMapping (value = "/completePro" )
+	public String completePro(Model model) {	
+		//--------------------------------------//
+		
+		//--------------------------------------//
+
+		List<SalesDTO> list = sService.completeList();
+		SalesDTO status = sService.proCnt();
+		model.addAttribute("status", status);
+		model.addAttribute("list", list);
+		return "/sales/salesAccept";
+	}
 	
+	@RequestMapping (value = "/waitPro" )
+	public String waitPro(Model model) {	
+		//--------------------------------------//
+		
+		//--------------------------------------//
+
+		List<SalesDTO> list = sService.waitList();
+		SalesDTO status = sService.proCnt();
+		model.addAttribute("status", status);
+		model.addAttribute("list", list);
+		return "/sales/salesAccept";
+	}
+	
+	@RequestMapping (value = "/newPro" )
+	public String newPro(Model model) {	
+		//--------------------------------------//
+		
+		
+		//--------------------------------------//
+
+		List<SalesDTO> list = sService.newAcceptList();
+		SalesDTO status = sService.proCnt();
+		model.addAttribute("status", status);
+		model.addAttribute("list", list);
+		return "/sales/salesAccept";
+	}
+	
+	@RequestMapping (value = "/userPro" )
+	public String userPro(HttpSession session, Model model) {	
+		//--------------------------------------//
+		
+		String user_id = (String)session.getAttribute("user_id");
+		//--------------------------------------//
+
+		List<SalesDTO> list = sService.UserAccept(user_id);
+		SalesDTO status = sService.proCnt();
+		model.addAttribute("status", status);
+		model.addAttribute("list", list);
+		return "/sales/salesAccept";
+	}
 	@RequestMapping(value ="acceptContent")
 	public @ResponseBody List<SalesDTO> acceptContent(String order_code){
 		

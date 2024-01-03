@@ -147,4 +147,40 @@ public class SalesDAOImpl implements SalesDAO {
 		logger.debug(" DAO :checkOrdeDate(String order_code)");
 		return sqlSession.selectOne(NAMESPACE+".checkOrdeDate",order_code);
 	}
+	
+	@Override
+	public List<SalesDTO> getNewSales() {		
+		return sqlSession.selectList(NAMESPACE+".getNewSales");
+	}
+	
+	@Override
+	public int getPlanWaitCnt() {
+		
+		return sqlSession.selectOne(NAMESPACE+".getPlanWaitCnt");
+	}
+	
+	@Override
+	public int getPlanNewCnt(String sales_status) {
+		
+		return sqlSession.selectOne(NAMESPACE+".getPlanNewCnt");
+	}
+	
+	
+	@Override
+	public List<SalesDTO> makeOrderStates(String order_code) {
+		
+		return sqlSession.selectList(NAMESPACE+".makeOrderStates", order_code);
+	}
+	
+	@Override
+	public List<SalesDTO> getNewAccept() {
+		
+		return sqlSession.selectList(NAMESPACE+".getNewAccept");
+	}
+	
+	@Override
+	public List<SalesDTO> getUserAccept(String user_id) {
+		
+		return sqlSession.selectList(NAMESPACE+".getUserAccept", user_id);
+	}
 }

@@ -33,4 +33,12 @@ public interface SalesDAO {
 	public void insertShippingPlan(SalesDTO sd);
 	public Date checkOrdeDate(String order_code);
 	
+	public List<SalesDTO> getNewSales();
+	public int getPlanWaitCnt();
+	public int getPlanNewCnt(String sales_status); 
+	
+	public List<SalesDTO>makeOrderStates(String order_code);
+	public List<SalesDTO>getNewAccept();
+	public List<SalesDTO>getUserAccept(String user_id);
+	
 }
