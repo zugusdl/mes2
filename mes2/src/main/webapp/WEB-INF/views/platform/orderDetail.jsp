@@ -28,7 +28,7 @@
 						<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${soiList[0].order_code}', '${soiList[0].order_date }', '${soiList[0].sales_status }');">발주 수정</button>
 						<button type="button" class="btn btn-secondary" id="addBtn" onclick="deleteOrder('${soiList[0].order_code}', '${soiList[0].sales_status }');">발주 취소</button>
 					</c:if>
-					<c:if test="${soiList[0].sales_status ne 'requested'}">
+					<c:if test="${soiList[0].sales_status eq 'deliver'}">
 						<button type="button" class="btn btn-secondary" id="addBtn" onclick="completeOrder('${soiList[0].order_code}');">수령 완료</button>
 					</c:if>
 				</span> <br>

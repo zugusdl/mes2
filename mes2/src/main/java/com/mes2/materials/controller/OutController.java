@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mes2.materials.domain.OutDTO;
+import com.mes2.materials.domain.StockDTO;
 import com.mes2.materials.service.OutService;
 
 @Controller
@@ -35,19 +36,28 @@ public class OutController {
 
 		model.addAttribute("oList", oService.getOutList());
 	}
-	
+
 	// 출고 상세 리스트 - GET
-	@GetMapping(value="/outDetail/out_index={out_index}")
-	public void outDetailGET(@PathVariable("out_index") String out_index, @RequestParam("out_code") String out_code, Model model) throws Exception {
+	@GetMapping(value = "/outDetail")
+	public void outDetailGET(@RequestParam("out_index") String out_index, @RequestParam("product_code") String product_code,
+						@RequestParam("out_code") String out_code, Model model) throws Exception {
 		logger.debug("outDetailGET() 호출");
-		
-		if(out_code.equals("undefined")) {
+
+		if (out_code == "") {
 			model.addAttribute("out_index", out_index);
+			model.addAttribute("product_code", product_code);
 		} else {
 			OutDTO outDTO = oService.getOutDetail(out_index);
 			model.addAttribute("outDTO", outDTO);
 		}
-		
 	}
 	
+	// 출고 품목 재고 조회 - GET
+	@GetMapping(value = "/stockList")
+	public void stockListGET(@RequestParam("product_code") String product_code, Model model) throws Exception {
+		logger.debug("stockListGET() 호출");
+		List<StockDTO> stockList = oService.getStockList(product_code);
+		model.addAttribute("stockList", stockList);
+	}
+
 }

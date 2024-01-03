@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.mes2.materials.domain.OutDTO;
+import com.mes2.materials.domain.StockDTO;
 
 @Repository
 public class OutDAOImpl implements OutDAO {
@@ -35,6 +36,12 @@ public class OutDAOImpl implements OutDAO {
 	public OutDTO getOutDetail(String out_index) throws Exception {
 		logger.debug("DAO: getOutDetail() 호출");
 		return sqlSession.selectOne(NAMESPACE + ".getOutDetail", out_index);
+	}
+	
+	// 출고 품목 재고 조회
+	@Override
+	public List<StockDTO> getStockList(String product_code) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".getStockList", product_code);
 	}
 	
 }

@@ -53,6 +53,12 @@
 		ON owp.out_code = ow.out_code
 		LEFT JOIN meta_data_product mdp
 		ON owp.product_code = mdp.product_code 
-		WHERE out_index = #{out_index};
+		WHERE out_index = #{out_index}
+	</select>
+	
+	<!-- 출고 품목 재고 조회 -->
+	<select id="getStockList" resultType="com.mes2.materials.domain.StockDTO">
+		SELECT * FROM stock
+		WHERE product_code = #{product_code}
 	</select>
 </mapper>

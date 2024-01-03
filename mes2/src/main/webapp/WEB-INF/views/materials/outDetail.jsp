@@ -19,18 +19,17 @@
 <body>
 	<div class="container">
 		<section class="section1">
-			<!-- 표 -->
 			<div class="list">
-				<div class="list-btn">
-					<c:if test="${!empty outDTO }">
-						<button>출고 품목 입력</button>
-						<button>출고 등록</button>
-					</c:if>
-<!-- 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button> -->
-				</div>
+				<form action="test" class="list-form">
+					<div class="list-btn">
+						<c:if test="${empty outDTO }">
+							<button type="button" class="btn btn-secondary" onclick="insertOutProduct('${product_code}');">출고 품목 입력</button>
+							<button type="submit" class="btn btn-secondary">출고 등록</button>
+						</c:if>
+	<!-- 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button> -->
+					</div>
 
-				<div class="list-box">
-					<form action="test" class="list-form">
+					<div class="list-box">
 						<table class="table table-hover">
 							<thead>
 								<tr class="table-success">
@@ -53,8 +52,8 @@
 								</c:if>
 							</tbody>
 						</table>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 		</section>
 
