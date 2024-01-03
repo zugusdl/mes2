@@ -9,32 +9,18 @@
 <body>
 
 TestPage
-<form action="/product/test" method="post">
-	
+<form action="/product/test" onsubmit="lazyEnd();" method="post">
+	<input type="hidden" value="hou" name="tt">
 	<input type="submit" value="종료" id="submit">
-	
-	<input type="number" name="qcResult">
-	
-	
 </form>
 
 
 <script type="text/javascript">
 
-	const sbutton = document.getElementById("submit")
 
-	function end(){
 		opener.document.location.reload();		
 		self.close();
-	}
-	
-	function lazyEnd(){
-		setTimeout(end, 1000);
-	}
-	sbutton.addEventListener('click', () => {
-		setTimeout(end, 1000);
-		
-   });
+
 	
 </script>
 </body>

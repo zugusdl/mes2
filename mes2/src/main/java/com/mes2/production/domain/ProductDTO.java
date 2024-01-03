@@ -8,12 +8,14 @@ public class ProductDTO {
 	
 	private String pd_lot;
 	private String pd_mdp_code;
-	private String pd_quantity;
+	private int pd_quantity;
 	private Date pd_period;
 	private Date pd_date;
 	private String pd_soi_id;
 	private int pd_qc_result;
 	private int pd_count;
+	private String pd_is_code;
+	
 	public String getPd_lot() {
 		return pd_lot;
 	}
@@ -29,10 +31,10 @@ public class ProductDTO {
 	public void setPd_mdp_code(String pd_mdp_code) {
 		this.pd_mdp_code = pd_mdp_code;
 	}
-	public String getPd_quantity() {
+	public int getPd_quantity() {
 		return pd_quantity;
 	}
-	public void setPd_quantity(String pd_quantity) {
+	public void setPd_quantity(int pd_quantity) {
 		this.pd_quantity = pd_quantity;
 	}
 	public Date getPd_period() {
@@ -65,6 +67,13 @@ public class ProductDTO {
 	public void setPd_count(int pd_count) {
 		this.pd_count = pd_count;
 	}
+	public String getPd_is_code() {
+		return pd_is_code;
+	}
+	public void setPd_is_code(String pd_is_code) {
+		this.pd_is_code = pd_is_code;
+	}
+	
 	
 	
 	
