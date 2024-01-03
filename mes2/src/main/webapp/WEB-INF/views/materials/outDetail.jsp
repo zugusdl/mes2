@@ -17,12 +17,15 @@
 </head>
 
 <body>
-	<!-- 검색창 -->
 	<div class="container">
 		<section class="section1">
 			<!-- 표 -->
 			<div class="list">
 				<div class="list-btn">
+					<c:if test="${!empty outDTO }">
+						<button>출고 품목 입력</button>
+						<button>출고 등록</button>
+					</c:if>
 <!-- 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button> -->
 				</div>
 
@@ -31,34 +34,23 @@
 						<table class="table table-hover">
 							<thead>
 								<tr class="table-success">
-									<th scope="col">출고코드</th>
-									<th scope="col">출고품목</th>
+									<th scope="col">품목코드</th>
+									<th scope="col">품목이름</th>
+									<th scope="col">로트번호</th>
 									<th scope="col">출고수량</th>
-									<th scope="col">출고유형</th>
-									<th scope="col">출고요청일</th>
-									<th scope="col">출고등록일</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="oList" items="${oList }">
-									<tr onclick="getOutDetail('${oList.out_index }')" class="selectOrder">
-										<td>${oList.out_code }</td>
-										<td>${oList.product_code }</td>
-										<td>${oList.quantity } ${oList.pdto.unit}</td>
-										<td>
-											<c:choose>
-												<c:when test="${oList.status eq 'waiting' }">
-													<i class="fa-solid fa-circle fa-2xs" style="color: #ff9924;"></i> 요청
-												</c:when>
-												<c:when test="${oList.status eq 'complete' }">
-													<i class="fa-solid fa-circle fa-2xs" style="color: #6b6b6b;"></i> 완료
-												</c:when>
-											</c:choose>
-										</td>
-										<td>${oList.out_request_date }</td>
-										<td>${oList.out_regdate }</td>
-									</tr>
-								</c:forEach>
+								<c:if test="${!empty outDTO }">
+									<c:forEach var="opDTO" items="${outDTO.opList }">
+										<tr>
+											<td>${outDTO.pdto.product_code }</td>
+											<td>${outDTO.pdto.name }</td>
+											<td>${opDTO.pd_lot }</td>
+											<td>${opDTO.out_quantity }</td>
+										</tr>
+									</c:forEach>
+								</c:if>
 							</tbody>
 						</table>
 					</form>

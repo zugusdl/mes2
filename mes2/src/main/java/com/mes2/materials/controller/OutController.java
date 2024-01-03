@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,18 +37,15 @@ public class OutController {
 	}
 	
 	// 출고 상세 리스트 - GET
-	@GetMapping(value="/outDetail")
-	public void outDetailGET(@RequestParam("out_index") String out_index, @RequestParam("out_code") String out_code, Model model) throws Exception {
+	@GetMapping(value="/outDetail/out_index={out_index}")
+	public void outDetailGET(@PathVariable("out_index") String out_index, @RequestParam("out_code") String out_code, Model model) throws Exception {
 		logger.debug("outDetailGET() 호출");
-		logger.debug(out_index, out_code);
 		
-		if(!out_code.equals(null)) {
+		if(out_code.equals("undefined")) {
+			model.addAttribute("out_index", out_index);
+		} else {
 			OutDTO outDTO = oService.getOutDetail(out_index);
 			model.addAttribute("outDTO", outDTO);
-		}
-		
-		if(out_code.equals(null)) {
-			model.addAttribute("out_index", out_index);
 		}
 		
 	}

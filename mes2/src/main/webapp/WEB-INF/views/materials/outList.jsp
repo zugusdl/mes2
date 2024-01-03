@@ -63,7 +63,7 @@
 							</thead>
 							<tbody>
 								<c:forEach var="oList" items="${oList }">
-									<tr onclick="getOutDetail('${oList.out_index, oList.out_code }')" class="selectOrder">
+									<tr onclick="getOutDetail('${oList.out_index },${oList.out_code }');" class="selectOrder">
 										<td>${oList.out_code }</td>
 										<td>${oList.product_code }</td>
 										<td>${oList.quantity } ${oList.pdto.unit}</td>
