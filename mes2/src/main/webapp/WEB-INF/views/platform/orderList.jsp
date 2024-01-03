@@ -65,8 +65,8 @@
 							</thead>
 							<tbody>
 								<c:forEach var="soiDTO" items="${soiDTO }">
-									<tr>
-										<td onclick="getOrderDetail('${soiDTO.order_code }','${soiDTO.order_date }')" class="selectOrder">${soiDTO.order_code }</td>
+									<tr onclick="getOrderDetail('${soiDTO.order_code }','${soiDTO.order_date }')" class="selectOrder">
+										<td>${soiDTO.order_code }</td>
 										<td>${soiDTO.request_date }</td>
 										<td>${soiDTO.order_date }</td>
 										<td>

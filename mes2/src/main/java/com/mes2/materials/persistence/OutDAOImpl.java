@@ -21,41 +21,20 @@ public class OutDAOImpl implements OutDAO {
 	@Inject
 	private SqlSession sqlSession;
 	
-	private static final String NAMESPACE ="com.mes2.mapper.MaterialsMapper";
+	private static final String NAMESPACE ="com.mes2.mapper.outMapper";
 
-	
-	
-	
+	// 출고 목록 조회
 	@Override
-	public void registerOutbound(OutDTO odto) throws Exception {
-		 logger.debug(" DAO : 출고 신청 registerOutbound(OutDTO odto) ");
-			sqlSession.insert(NAMESPACE + ".addOut" , odto);
-		
-	}
-
-
-
-
-	@Override
-	public List<OutDTO> getAllOutboundInfo(OutDTO odto) throws Exception {
+	public List<OutDTO> getOutList() throws Exception {
+		logger.debug("DAO: getOutList() 호출");
 		return sqlSession.selectList(NAMESPACE + ".getOutList");
 	}
-
-
-
-
+	
+	// 출고 상세 조회
 	@Override
-	public void updateQuantity(String product_code, int quantity, String category) throws Exception {
-		  Map<String, Object> paramMap = new HashMap<>();
-	        paramMap.put("product_code", product_code);
-	        paramMap.put("quantity", quantity);
-	        paramMap.put("category", category);
-
-	        sqlSession.update(NAMESPACE + ".OutupdateQuantity", paramMap);
-		
+	public OutDTO getOutDetail(String out_index) throws Exception {
+		logger.debug("DAO: getOutDetail() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".getOutDetail", out_index);
 	}
-
-	
-	
 	
 }

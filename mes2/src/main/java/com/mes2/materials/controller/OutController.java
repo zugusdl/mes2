@@ -19,52 +19,37 @@ import com.mes2.materials.service.OutService;
 @Controller
 @RequestMapping(value = "/materials/*")
 public class OutController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(OutController.class);
 
 	@Inject
 	private OutService oService;
 
-	// http://localhost:8080/materials/outlist
-	
-	// 출고 정보 입력 - GET
-	@GetMapping(value = "/out")
-	public void goToOutboundInputPageGET() throws Exception {
+	// http://localhost:8088/materials/outList
+
+	// 출고 목록 리스트 - GET
+	@GetMapping(value = "/outList")
+	public void outListGET(Model model, OutDTO odto) throws Exception {
+		logger.debug("outListGET() 호출 ");
+
+		model.addAttribute("oList", oService.getOutList());
 	}
 	
-	// 출고 정보 처리 - POST
-		@RequestMapping(value = "/out", method = RequestMethod.POST)
-		public String goToOutboundInputPagePOST(OutDTO odto, @RequestParam("product_code") String product_code,
-	            @RequestParam("quantity") int quantity,
-	            @RequestParam("category") String category) throws Exception {
+	// 출고 상세 리스트 - GET
+	@GetMapping(value="/outDetail")
+	public void outDetailGET(@RequestParam("out_index") String out_index, @RequestParam("out_code") String out_code, Model model) throws Exception {
+		logger.debug("outDetailGET() 호출");
+		logger.debug(out_index, out_code);
 		
-			// 한글인코딩 (필터)
-			// 전달정보 저장
-			logger.debug(" odto : " + odto);
-
-			// 서비스 - DB에 글쓰기(insert) 동작 호출
-			oService.registerOutcomingStock(odto);
-			
-		    // 서비스 - meta_data_product 수량 업데이트 호출
-		    oService.updateQuantity(product_code, quantity, category);
-			
-			logger.debug(" /materials/outlist 이동 ");
-
-			return "redirect:/materials/outlist";
+		if(!out_code.equals(null)) {
+			OutDTO outDTO = oService.getOutDetail(out_index);
+			model.addAttribute("outDTO", outDTO);
 		}
 		
-		// 출고 리스트 - GET
-				@GetMapping(value = "/outlist")
-				public void listAllGET(Model model, OutDTO odto) throws Exception {
-					logger.debug("/purchase/outlist -> listAllGET() 호출 ");
-					logger.debug("/purchase/outlist  뷰페이지로 이동");
-
-					// 서비스 - 디비에 저장된 글 가져오기
-					List<OutDTO> outlist = oService.getOutcomingStockInfo(odto);
-
-					model.addAttribute("outlist", outlist);
-				}
-			
-
+		if(out_code.equals(null)) {
+			model.addAttribute("out_index", out_index);
+		}
+		
+	}
+	
 }
-
