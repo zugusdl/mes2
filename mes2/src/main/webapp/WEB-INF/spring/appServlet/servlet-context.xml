@@ -27,4 +27,11 @@
 	 -->
 	<context:component-scan base-package="com.mes2.*" />
 	
+		<!-- 파일업로드 필요설정 -->
+	<beans:bean id="multipartResolver"
+	            class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 	<beans:property name="maxUploadSize" value="52428800"/>
+	 	<beans:property name="maxInMemorySize" value="1000000"/>
+	 	<beans:property name="defaultEncoding" value="UTF-8" />	          
+	 </beans:bean>
 </beans:beans>

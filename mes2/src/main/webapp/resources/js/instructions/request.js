@@ -87,9 +87,10 @@ function showMaterials(data){
 	requestButton.textContent ="자재요청";
 	
 	bottomContent.appendChild(requestButton);
+	if(requestButton.onclick){
+		requestMaterials(detailSopCode,salesQuantity);
+	}
 	
-	
-	requestButton.onclick = requestMaterials(detailSopCode,salesQuantity);
 	
 }
 

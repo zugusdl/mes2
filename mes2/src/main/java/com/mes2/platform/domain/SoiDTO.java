@@ -2,6 +2,7 @@ package com.mes2.platform.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,14 +15,17 @@ public class SoiDTO {
 	private Date order_date;
 	private Date update_date;
 	private Date acceptance_date;
-	private int user_id;
+	private String user_id;
 	private String sales_status;
+	private List<SopDTO> sopList;
 	
 	@Override
 	public String toString() {
 		return "SoiDTO [sales_index=" + sales_index + ", order_code=" + order_code + ", company_code=" + company_code
 				+ ", request_date=" + request_date + ", order_date=" + order_date + ", update_date=" + update_date
 				+ ", acceptance_date=" + acceptance_date + ", user_id=" + user_id + ", sales_status=" + sales_status
-				+ "]";
+				+ ", sopList=" + sopList + "]";
 	}
+	
+	
 }

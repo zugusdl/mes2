@@ -1,4 +1,4 @@
- function up(idx){
+  function up(idx){
 	  updateBtn = true;
 	  goContent(idx);
   }
