@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.mes2.sales.service.ShippingService;
 
 @Controller
-@RequestMapping(value = "/sales/*")
+@RequestMapping(value = "/shipping/*")
 public class ShippingController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ShippingController.class);
@@ -19,12 +19,13 @@ public class ShippingController {
 	@Inject
 	private ShippingService pService;
 
-	// http://localhost:8080/sales/shipping
-	@GetMapping(value = "/shipping")
+	// http://localhost:8080/shipping/shipPlan
+	// http://localhost:8088/shipping/shipPlan
+	@RequestMapping(value = "/shipPlan")
 	public String shippingGET() throws Exception {
 		logger.debug("/sales/shipping -> shippingGET 호출 ");
 		logger.debug("/sales/shipping.jsp 뷰페이지로 이동");
 		
-		return "/sales/shipping";
+		return "/shipping/shipPlan";
 	}
 }

@@ -12,12 +12,16 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mes2.platform.domain.MdbDTO;
 import com.mes2.platform.domain.MdpDTO;
 import com.mes2.platform.domain.SoiDTO;
 import com.mes2.platform.domain.SopDTO;
-import com.mes2.platform.domain.orderRequestDTO;
+import com.mes2.platform.etc.Criteria;
+import com.mes2.platform.etc.ModifyPwDTO;
+import com.mes2.platform.etc.OrderRequestDTO;
+import com.mes2.platform.etc.SearchDTO;
 import com.mes2.platform.persistence.PlatformDAO;
 
 @Service
@@ -37,9 +41,16 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 품목 목록 조회
 	@Override
-	public List<MdpDTO> inqueryProduct(String searchType, String search) throws Exception {
+	public List<MdpDTO> inqueryProduct(String searchType, String search, Criteria cri) throws Exception {
 		logger.debug("S: inqueryProduct() 호출");
-		return pdao.inqueryProduct(searchType, search);
+		return pdao.inqueryProduct(searchType, search, cri);
+	}
+	
+	// 품목 개수 조회(페이징)
+	@Override
+	public int getCountInqueryProduct(String searchType, String search) throws Exception {
+		logger.debug("S: getCountInqueryProduct() 호출");
+		return pdao.getCountInqueryProduct(searchType, search);
 	}
 
 	// 품목 하나 선택
@@ -51,7 +62,8 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 발주 신청
 	@Override
-	public void insertOrder(orderRequestDTO orDTO, HttpSession session) throws Exception {
+	@Transactional(rollbackFor = Exception.class)
+	public void insertOrder(OrderRequestDTO orDTO, HttpSession session) throws Exception {
 		String order_code = makeOrderCode(session);
 		Date order_date = Date.valueOf(orDTO.getOrder_date());
 		
@@ -65,24 +77,111 @@ public class PlatformServiceImpl implements PlatformService {
 		for(SopDTO sopDTO : sopList) {
 			sopDTO.setOrder_code(order_code);
 		}
-		pdao.insertOrder(soiDTO, sopList);
+		
+		pdao.insertOrder(soiDTO);
+		pdao.insertOrderProduct(sopList);
 	}
 	
 	// 주문코드 생성
 	private String makeOrderCode(HttpSession session) throws Exception {
+		logger.debug("S: makeOrderCode() 호출");
+		
+		// 발주 공통코드
+		String common_code = pdao.getCommonCode();
+		
 		// 날짜 계산
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 		String dtfToday = today.format(dtf);
+		String company_code = (String) session.getAttribute("company_code");
+		String checkCode = dtfToday + "-" + company_code;
 		
-		// 인덱스 계산(디비에 오늘날짜 포함된 행이 있는지?)
-		int index = pdao.countTodayOrder(dtfToday) + 1;
+		// 금일 주문번호 max
+		String lastOrder_code = pdao.countTodayOrder(checkCode);
 		
-		String order_code = "OD-" + dtfToday + "-" + session.getAttribute("company_code") + "-" + index;
+		// 마지막 주문번호 인덱스 계산
+		int index = 0;
+		
+		if(lastOrder_code == null) {
+			index = 1;
+		} else {
+			index = Integer.parseInt(lastOrder_code.substring(lastOrder_code.lastIndexOf("-")+1)) + 1;
+		}
+		
+		String order_code = common_code + "-" + dtfToday + "-" + session.getAttribute("company_code") + "-" + index;
+		
 		return order_code;
 	}
 
+	// 주문 목록 조회
+	@Override
+	public List<SoiDTO> getOrderList(SearchDTO sDTO) throws Exception {
+		logger.debug("S: getOrderList() 호출");
+		return pdao.getOrderList(sDTO);
+	}
+	
+	// 주문 개수 조회(페이징)
+	@Override
+	public int getTotalOrderCount(SearchDTO sDTO) throws Exception {
+		logger.debug("S: getTotalOrderCount() 호출");
+		return pdao.getTotalOrderCount(sDTO);
+	}
 
+	// 주문 상세 조회
+	@Override
+	public List<SoiDTO> getOrderDetail(String order_code) throws Exception {
+		logger.debug("S: getOrderDetail() 호출");
+		return pdao.getOrderDetail(order_code);
+	}
+
+	// 주문 수정
+	@Override
+	@Transactional(rollbackFor = Exception.class)/*롤백 하지 않을 예외 지정(rollbackFor = 예외발생 클래스명 )*/
+	public void modifyOrder(List<SopDTO> sopList) throws Exception {
+		logger.debug("S: modifyOrder() 호출");
+		
+		String order_code = sopList.get(0).getOrder_code();
+		
+		// 기존 주문 주문번호, 품목코드 가져오기
+		List<SopDTO> beforeList = pdao.getOrderProduct(order_code);
+			
+		// 수정 주문, 기존 주문 품목코드 비교해서 삭제된 품목은 delete
+		for(SopDTO bDTO : beforeList) {
+			boolean found = false; // 기본적으로 삭제
+			
+			for(SopDTO modifyDTO : sopList) {
+				if(bDTO.getProduct_code().equals(modifyDTO.getProduct_code())) {
+					found = true; // 같은 품목 있으면 true로 변경
+//					pdao.modifyOrder(modifyDTO);
+					break;
+				}
+			}
+			
+			if(!found) { // 같은 품목이 없으면 삭제
+				pdao.deleteOrderProduct(bDTO);
+			}
+		}
+		
+		// 나머지 수정된 품목 수량 update
+		pdao.modifyOrder(sopList);
+		
+		// update_date 일자 수정
+		pdao.updateOrderDate(order_code);
+	}
+
+	// 주문 삭제
+	@Override
+	public void deleteOrder(String order_code) throws Exception {
+		logger.debug("S: deleteOrder() 호출");
+		pdao.deleteOrder(order_code);
+	}
+
+	// 비밀번호 변경
+	@Override
+	public void modifyPw(ModifyPwDTO mpDTO) throws Exception {
+		logger.debug("S: modifyPw() 호출");
+		pdao.modifyPw(mpDTO);
+	}
 	
 	
 }

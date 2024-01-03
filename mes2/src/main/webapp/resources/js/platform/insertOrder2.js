@@ -1,5 +1,8 @@
-/* Created by Tivotal */
-function insertOrder() {
+//var header = "X-CSRF-TOKEN";
+var header = $("meta[name='_csrf_header']").attr("content");
+var token = $("meta[name='_csrf']").attr("content");
+
+function insertOrder2() {
 	var order_date = document.querySelector('[name="order_date"]').value;
 	var allProduct_code = document.querySelectorAll('[name="product_code"]');
 
@@ -21,7 +24,7 @@ function insertOrder() {
 		var row = productTable.rows[i];
 		var sopDTO = {
 			product_code: row.querySelector('[name="product_code"]').value,
-			name: row.querySelector('[name="name"]').value,
+//			name: row.querySelector('[name="name"]').value,
 			price: row.querySelector('[name="price"]').value,
 			sales_quantity: row.querySelector('[name="sales_quantity"]').value
 		};
@@ -29,18 +32,21 @@ function insertOrder() {
 		sopList.push(sopDTO);
 	}
 	
-	var jsonSopList = JSON.stringify(sopList);
-	console.log(order_date, jsonSopList);
+//	var jsonSopList = JSON.stringify(sopList);
+	console.log(order_date, sopList);
 	
-	if(jsonSopList != null) {
+	if(sopList != null) {
 		$.ajax({
 			url : "/platform/insertOrder",
 			method : "post",
 			data : JSON.stringify({
-					"sopList": JSON.parse(jsonSopList),
+					"sopList": sopList,
 					"order_date" : order_date
 					}),
 			contentType : 'application/json; charset=utf-8',
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(header, token)
+			},
 			async: false,
 			success : function(data) {
 				alert('발주 신청이 완료되었습니다.');
@@ -51,4 +57,13 @@ function insertOrder() {
 			}
 		});
 	}
+}
+
+function cancleOrder() {
+	location.reload();
+}
+
+function trRemove(ths) {
+	var $tr = $(ths).parents("tr");
+	$tr.remove();
 }

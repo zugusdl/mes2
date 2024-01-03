@@ -4,7 +4,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class productDTO {
+public class md_productDTO {
 	private String product_code; // 품목코드
 	private String name; // 품목명
 	private String category; // 카테고리(완제품/부자재/원재료)
@@ -13,4 +13,6 @@ public class productDTO {
 	private double price; // 단가(판매가)
 	private int production_status; // 생산유무
 	private Date regdate; // 등록일자
+	private String ofileName;
+	
 }
