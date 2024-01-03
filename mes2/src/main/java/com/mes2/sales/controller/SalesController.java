@@ -50,8 +50,8 @@ public class SalesController {
 	@RequestMapping(value = "/salesPlan")
 	public String salesPlanTest(HttpSession session, Model model) {	
 		//--------------------------------------//
-		String user_id ="sawon4";
-		session.setAttribute("user_id",user_id );
+		String id ="sawon4";
+		session.setAttribute("id",id );
 		//--------------------------------------//
 		String sales_status = "requested";
 		List<SalesDTO> list = sService.salesList(sales_status);	
@@ -66,8 +66,8 @@ public class SalesController {
 	@RequestMapping(value = "/newSalesPlan")
 	public String newSalesPlan(HttpSession session, Model model) {	
 		//--------------------------------------//
-		String user_id ="sawon4";
-		session.setAttribute("user_id",user_id );
+		String id ="sawon4";
+		session.setAttribute("id",id );
 		//--------------------------------------//
 		
 		List<SalesDTO> list = sService.getNewSales();
@@ -123,6 +123,8 @@ public class SalesController {
 		String sales_status = "accept";
 		sed.setSales_status(sales_status);
 		List<SalesDTO> list =sService.searchListPlan(sed);
+		SalesDTO status = sService.proCnt();
+		model.addAttribute("status", status);
 		model.addAttribute("list", list);
 		return "/sales/salesAccept";
 	}
@@ -140,9 +142,8 @@ public class SalesController {
 	@RequestMapping(value = "regIdCheck")
 	public @ResponseBody String regIdCheck(HttpSession session) {
 		
-		String user_id = (String) session.getAttribute("user_id");
-		System.out.println("!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:"+user_id);
-		return user_id;
+		String id = (String) session.getAttribute("user_id");
+		return id;
 	}
 	
 	@RequestMapping(value = "regPwCheck", method = RequestMethod.POST)
@@ -158,8 +159,8 @@ public class SalesController {
 	@RequestMapping (value = "/salesAccept" )
 	public String salesAccept(HttpSession session, Model model) {	
 		//--------------------------------------//
-		String user_id ="sawon4";
-		session.setAttribute("user_id",user_id );
+		String id ="sawon4";
+		session.setAttribute("id",id );
 		//--------------------------------------//
 		//String sales_status = "accept";
 		List<SalesDTO> list = sService.acceptList();	
@@ -171,11 +172,7 @@ public class SalesController {
 	}
 	
 	@RequestMapping (value = "/completePro" )
-	public String completePro(Model model) {	
-		//--------------------------------------//
-		
-		//--------------------------------------//
-
+	public String completePro(Model model) {			
 		List<SalesDTO> list = sService.completeList();
 		SalesDTO status = sService.proCnt();
 		model.addAttribute("status", status);
@@ -184,11 +181,7 @@ public class SalesController {
 	}
 	
 	@RequestMapping (value = "/waitPro" )
-	public String waitPro(Model model) {	
-		//--------------------------------------//
-		
-		//--------------------------------------//
-
+	public String waitPro(Model model) {			
 		List<SalesDTO> list = sService.waitList();
 		SalesDTO status = sService.proCnt();
 		model.addAttribute("status", status);
@@ -197,12 +190,7 @@ public class SalesController {
 	}
 	
 	@RequestMapping (value = "/newPro" )
-	public String newPro(Model model) {	
-		//--------------------------------------//
-		
-		
-		//--------------------------------------//
-
+	public String newPro(Model model) {			
 		List<SalesDTO> list = sService.newAcceptList();
 		SalesDTO status = sService.proCnt();
 		model.addAttribute("status", status);
@@ -211,13 +199,9 @@ public class SalesController {
 	}
 	
 	@RequestMapping (value = "/userPro" )
-	public String userPro(HttpSession session, Model model) {	
-		//--------------------------------------//
-		
-		String user_id = (String)session.getAttribute("user_id");
-		//--------------------------------------//
-
-		List<SalesDTO> list = sService.UserAccept(user_id);
+	public String userPro(HttpSession session, Model model) {			
+		String id = (String)session.getAttribute("id");		
+		List<SalesDTO> list = sService.UserAccept(id);
 		SalesDTO status = sService.proCnt();
 		model.addAttribute("status", status);
 		model.addAttribute("list", list);
@@ -291,6 +275,12 @@ public class SalesController {
 	
 		
 		return order_code;
+	}
+	
+	
+	@RequestMapping(value = "getOrderInfo", method = RequestMethod.POST)
+	public @ResponseBody AcceptSaveDTO getOrderInfo(String order_code ){
+		return  sService.orderInfo(order_code);
 	}
 	
 	

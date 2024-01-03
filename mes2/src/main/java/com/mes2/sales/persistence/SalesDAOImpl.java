@@ -183,4 +183,10 @@ public class SalesDAOImpl implements SalesDAO {
 		
 		return sqlSession.selectList(NAMESPACE+".getUserAccept", user_id);
 	}
+	
+	@Override
+	public AcceptSaveDTO getOrderInfo(String order_code) {
+		
+		return sqlSession.selectOne(NAMESPACE+".getOrderInfo", order_code);
+	}
 }

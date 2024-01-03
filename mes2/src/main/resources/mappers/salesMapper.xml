@@ -21,6 +21,21 @@
   	<result property="orderStatus" column="orderStatus"/>
   </resultMap>
   
+  
+  <resultMap id="AcceptSaveDTO" type="com.mes2.sales.domain.AcceptSaveDTO">
+  	<result property="order_code" column="order_code"/>
+  	<result property="company_name" column="name"/> 
+  	<result property="company_code" column="company_code"/> 
+  	<result property="company_address" column="address"/> 
+  	<result property="company_call" column="call"/>
+  	<result property="request_date" column="request_date"/> 
+  	<result property="user_id" column="user_id"/> 
+  	<result property="user_name" column="user_name"/>
+  	<result property="user_department" column="user_department"/>
+  	<result property="user_position" column="user_position"/>
+  	<result property="user_auth" column="user_auth"/>
+  </resultMap>
+  
    <sql id="searchDate">
     <choose>
         <when test="startDay != null and endDay != null">
@@ -245,5 +260,14 @@
      <include refid="salesGroup"/>
     order by I.request_date ASC
 </select>
+  
+    <select id="getOrderInfo" resultMap="AcceptSaveDTO">
+  select I.request_date, E.user_id, E.user_name, E.user_department, E.user_position, E.user_auth, 
+  B.company_code, B.name, B.address, B.call 
+  from employees E 
+  join sales_order_info I on E.user_id = I.user_id 
+  join meta_data_business B on B.company_code = I.company_code 
+  where I.order_code = #{order_code} 
+  </select>
   
   </mapper>

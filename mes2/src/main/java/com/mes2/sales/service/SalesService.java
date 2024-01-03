@@ -39,4 +39,6 @@ public interface SalesService {
 	public SalesDTO proCnt();
 	public List<SalesDTO>newAcceptList();
 	public List<SalesDTO>UserAccept(String user_id);
+	
+	public AcceptSaveDTO orderInfo(String order_code);
 }

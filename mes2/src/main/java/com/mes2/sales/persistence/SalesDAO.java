@@ -41,4 +41,6 @@ public interface SalesDAO {
 	public List<SalesDTO>getNewAccept();
 	public List<SalesDTO>getUserAccept(String user_id);
 	
+	public AcceptSaveDTO getOrderInfo(String oreder_code);
+	
 }

@@ -54,7 +54,27 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public List<SalesDTO> searchListPlan(SearchDTO sed) {
 		logger.debug(" S : searchListPlan(SearchDTO sed) ");
-		return sdao.planSearch(sed);
+		List<SalesDTO> list = sdao.planSearch(sed);
+		for(SalesDTO sdt : list) {
+			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
+			int size = olist.size();
+			int count =0;
+			for(SalesDTO pdt : olist) {
+				if(!pdt.getProcessing_reg().equals("N")) {
+					count ++;
+				}
+			}
+			
+			if(count == size) {
+				sdt.setOrderStatus("complete");
+				
+			}else {
+				sdt.setOrderStatus("waiting");
+			}
+	
+		}
+		return list;
+		
 	}
 	
 	@Override
@@ -299,5 +319,10 @@ public class SalesServiceImpl implements SalesService {
 		
 	}
 	
+	@Override
+	public AcceptSaveDTO orderInfo(String order_code) {
+		
+		return sdao.getOrderInfo(order_code);
+	}
 	
 }

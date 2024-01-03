@@ -23,7 +23,7 @@ public interface ShippingDAO {
 	
 	public void updateSchedule(ShippingDTO sdto);
 	public ShippingDTO checkOrderDate(String order_code);
-	public AcceptSaveDTO getOrderInfo(String oreder_code);
+	public AcceptSaveDTO getOrderInfo(String order_code);
 	
 	public int countShipStatus(String ship_status);
 	public List<ShippingDTO> getStatusList(String ship_status);
