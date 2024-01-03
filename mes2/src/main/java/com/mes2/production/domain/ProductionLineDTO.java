@@ -2,14 +2,14 @@ package com.mes2.production.domain;
 
 import java.sql.Date;
 
-public class ProductionLine {
+public class ProductionLineDTO {
 
 	private int index;
 	private int line;
-	private String lsCode;
+	private String isCode;
 	private Date startDate;
-	private Date closeDate;
-	private String status;
+	private Date endDate; 
+	private String status; //라인 상태 STANDBY,START,CLOSE
 	
 	public int getIndex() {
 		return index;
@@ -23,11 +23,11 @@ public class ProductionLine {
 	public void setLine(int line) {
 		this.line = line;
 	}
-	public String getLsCode() {
-		return lsCode;
+	public String getIsCode() {
+		return isCode;
 	}
-	public void setLsCode(String lsCode) {
-		this.lsCode = lsCode;
+	public void setIsCode(String isCode) {
+		this.isCode = isCode;
 	}
 	public Date getStartDate() {
 		return startDate;
@@ -35,11 +35,12 @@ public class ProductionLine {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public Date getCloseDate() {
-		return closeDate;
+
+	public Date getEndDate() {
+		return endDate;
 	}
-	public void setCloseDate(Date closeDate) {
-		this.closeDate = closeDate;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 	public String getStatus() {
 		return status;
@@ -47,6 +48,12 @@ public class ProductionLine {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	@Override
+	public String toString() {
+		return "ProductionLineDTO [index=" + index + ", line=" + line + ", isCode=" + isCode + ", startDate="
+				+ startDate + ", endDate=" + endDate + ", status=" + status + "]";
+	}
+	
 	
 	//
 }
