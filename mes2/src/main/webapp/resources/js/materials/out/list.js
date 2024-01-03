@@ -6,7 +6,7 @@
  
  $(document).ready(function(){
 	  loadList();
-  })
+  });
 
 
   function loadList(){
@@ -58,4 +58,3 @@ listHtml += "<td><a href='javascript:goContent("+obj.idx+")'>" + obj.title + "</
 	  
 	  $("#view").html(listHtml);
   } 
-  }
