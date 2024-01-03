@@ -23,7 +23,8 @@ public class OutDTO {
 	private String unit; // 단위 ** meta_data_product
 	
 	private String pd_lot; //로트번호 ** 
-	private int out_quantity; //로트수량 ** 
+	private int out_quantity; // 수량 ** 
+	private int quantity; //수량 ** 
 	
 	private String out_type; //품목 타입 * P: 생산, S: 출하
 	private String based_code; //출하 또는 작업 지시 코드 **
@@ -33,8 +34,13 @@ public class OutDTO {
 	private String status; 
 	private String user_id; // 담당자 ** employees
 	
+	private String product_status; // 수주 상태변경 **
+	
+	
 	private String RP; //원자재코드**
 	private String FP; //완제품코드**
 	private String WH; //창고코드**
 	private String ORD; //발주코드**
+	
+	
 }

@@ -5,6 +5,7 @@ import java.sql.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import com.mes2.materials.domain.productDTO;
 
 @Data
 public class InDTO { 
@@ -14,7 +15,6 @@ public class InDTO {
 	private String code_group; // IN ** common_code
 	private String code_group_name; // 입고 **  common_code
 	
-	private int in_quantity; //입고수량 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date in_regdate; //입고등록일 
 	
@@ -27,6 +27,7 @@ public class InDTO {
 	
 	private String category; //카테고리 ** meta_data_product
 	private String name; //품목명 ** meta_data_product
+	private String cost; // 
 	
 	private String user_id; // 담당자 ** employees 
 	

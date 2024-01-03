@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.PurchaseDTO;
 import com.mes2.materials.persistence.PurchaseDAO;
 
@@ -60,11 +61,25 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
 	@Override
-	public List<PurchaseDTO> getMaterialDataByName(String category, String name) throws Exception {
-		return pdao.getSelectName(category, name);
+	public void updateQuantity(String product_code, int quantity, String category) throws Exception {
+		pdao.updateQuantity(product_code, quantity, category);
+		
 	}
 
-	
+
+	@Override
+	public List<PurchaseDTO> purchaseListPage(Criteria cri) throws Exception {
+		return pdao.getPurchaseListPage(cri);
+	}
+
+
+	@Override
+	public int totalPurchaseCount() throws Exception {
+		return pdao.getPurchaseCount();
+	}
+
+
+
 
 	
 }

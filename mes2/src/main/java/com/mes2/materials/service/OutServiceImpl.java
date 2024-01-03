@@ -18,18 +18,22 @@ public class OutServiceImpl implements OutService {
 	
 	@Inject
 	private OutDAO odao;
+
+	@Override
+	public void registerOutcomingStock(OutDTO odto) throws Exception {
+		odao.registerOutbound(odto);
+		
+	}
+
+	@Override
+	public List<OutDTO> getOutcomingStockInfo(OutDTO odto) throws Exception {
+		return odao.getAllOutboundInfo(odto);
+	}
 	
 	@Override
-	public List<OutDTO> getSelect() throws Exception {
-		return odao.getSelect();
+	public void updateQuantity(String product_code, int quantity, String category) throws Exception {
+		odao.updateQuantity(product_code, quantity, category);
 	}
-
-	@Override
-	public List<OutDTO> detailList(String product_code) throws Exception {
-		logger.debug("");
-		return odao.detailSelect(product_code);
-	}
-
 	
 	
 }

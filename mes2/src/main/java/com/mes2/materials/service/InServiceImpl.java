@@ -8,41 +8,46 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.InDTO;
 import com.mes2.materials.persistence.InDAO;
 
 @Service
 public class InServiceImpl implements InService {
-	
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(InServiceImpl.class);
-	
+
 	@Inject
 	private InDAO idao;
-	
+
 	@Override
-	public void registerStock(InDTO idto) throws Exception {
-		idao.insertIn(idto);
-		
+	public void registerIncomingStock(InDTO idto) throws Exception {
+		idao.registerInbound(idto);
+
+	}
+
+	@Override
+	public List<InDTO> getIncomingStockInfo(InDTO idto) throws Exception {
+		return idao.getAllInboundInfo(idto);
 	}
 
 	
+	@Override
+	public void updateQuantity(String product_code, int quantity, String category) throws Exception {
+		idao.updateQuantity(product_code, quantity, category);
+	}
 
 	@Override
-	public List<InDTO> InInfo(InDTO idto) throws Exception {
-		logger.debug(" Service - InInfo(InDTO idto) ");
-		return idao.listIn(idto);
+	public List<InDTO> InListPage(Criteria cri) throws Exception {
+		return idao.getInListPage(cri);
+	}
+
+	@Override
+	public int totalInCount() throws Exception {
+		return idao.getInCount();
 	}
 
 
 	
-	
-	
-
-	@Override
-	public List<InDTO> detailList(String product_code) throws Exception {
-		return idao.detailSelect(product_code);
-	}
-
 	
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mes2.materials.domain.Criteria;
+import com.mes2.materials.domain.PageVO;
 import com.mes2.materials.domain.PurchaseDTO;
 import com.mes2.materials.service.PurchaseService;
 
@@ -27,6 +29,9 @@ public class PurchaseController {
 	@Inject
 	private PurchaseService pService;
 
+	private int quantity;
+	private String category;
+
 	// http://localhost:8080/materials/purchaselist
 
 	// 발주 정보 입력 - GET
@@ -38,33 +43,54 @@ public class PurchaseController {
 
 	// 발주 정보 처리 - POST
 	@RequestMapping(value = "/purchase", method = RequestMethod.POST)
-	public String insertPurchasePOST(PurchaseDTO pdto) throws Exception {
-		logger.debug(" 폼submit -> purchasePOST() 호출 ");
+	public String insertPurchasePOST(PurchaseDTO pdto, @RequestParam("product_code") String product_code,
+            @RequestParam("quantity") int quantity,
+            @RequestParam("category") String category) throws Exception {
+		
 		// 한글인코딩 (필터)
 		// 전달정보 저장
 		logger.debug(" ppto : " + pdto);
 
 		// 서비스 - DB에 글쓰기(insert) 동작 호출
 		pService.purchaseOrder(pdto);
-
+		  
+		// 서비스 - meta_data_product 수량 업데이트 호출
+		pService.updateQuantity(product_code, quantity, category);
+		    
+	    
 		logger.debug(" /materials/purchaselist 이동 ");
 
 		return "redirect:/materials/purchaselist";
 	}
-
+	
+	
+	
+	
 	// 발주 리스트 - GET
 	@GetMapping(value = "/purchaselist")
-	public void listAllGET(Model model, PurchaseDTO pdto) throws Exception {
+	public void listAllGET(Model model, PurchaseDTO pdto, Criteria cri) throws Exception {
 		logger.debug("/purchase/purchaselist -> listAllGET() 호출 ");
 		logger.debug("/purchase/purchaselist  뷰페이지로 이동");
 
 		// 서비스 - 디비에 저장된 글 가져오기
 		List<PurchaseDTO> purchaselist = pService.PurchaseInfo(pdto);
 
+		purchaselist = pService.purchaseListPage(cri);
+		
+		// 페이지 블럭 정보 준비 -> view 페이지 전달
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);		
+		pageVO.setTotalCount(pService.totalPurchaseCount());
+		
+		logger.debug(" 확인 :"+pageVO);
+		model.addAttribute("pageVO", pageVO);
+		
+		// 데이터를 연결된 뷰페이지로 전달(Model)
 		model.addAttribute("purchaselist", purchaselist);
+
 	}
 
-	// 상태변경
+	// 상태 변경
 	  @PostMapping(value="/updateStatus")
 	  @ResponseBody public int updateStatus(@RequestParam("status") String
 	  status, @RequestParam("product_code") String product_code) throws Exception {
@@ -74,7 +100,8 @@ public class PurchaseController {
 	  
 	 }
 	
-
+	  
+	
 	@GetMapping(value = "/getOrderStatus")
 	@ResponseBody
 	public List<PurchaseDTO> getOrderStatus(@RequestParam("product_code") String product_code) throws Exception {
@@ -83,14 +110,6 @@ public class PurchaseController {
 	}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

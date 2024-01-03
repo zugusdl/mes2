@@ -20,7 +20,6 @@
 </head>
 <body>
 
-
 	
 	<!-- Button trigger modal -->
 	<div class="col-md-13 text-end">
@@ -100,15 +99,15 @@
 								</td>
 							</tr>
 
-							<!-- <tr>
+							 <tr>
 								<td>단위</td>
 								<td><input type="text" class="form-control" name="unit"
 									required></td>
-							</tr> -->
+							</tr>
 							<tr>
 								<td>수량</td>
 								<td><input type="number" class="form-control"
-									name="in_quantity" required></td>
+									name="quantity" required></td>
 							</tr>
 							<!-- <tr>
 								<td>입고등록일</td>
@@ -139,6 +138,7 @@
 			<td>로트번호</td>			
 			<td>품목명</td>
 			<td>수량</td>
+			<td>단위</td>
 			<td>자재유형</td>
 			<td>입고등록일</td>
 			<td>입고담당자</td>
@@ -150,7 +150,8 @@
 				<td><c:out value="${in.in_code}" /></td>
 				<td><c:out value="${in.pd_lot}" /></td>
 				<td><c:out value="${in.name}" /></td>
-				<td><c:out value="${in.in_quantity}" /></td>
+				<td><c:out value="${in.quantity}" /></td>
+				<td><c:out value="${in.unit}" /></td>
 				<td><c:out value="${in.category}" /></td>
 				<td><fmt:formatDate value="${in.in_regdate}" pattern="yyyy-MM-dd" /></td>
 				<td><c:out value="${in.user_id}" /></td>
@@ -163,8 +164,26 @@
 		</c:forEach>
 	</table>
 
-
-
+	<div class="box-footer clearfix">
+		<ul class="pagination pagination-sm no-margin pull-right">
+			
+			<c:if test="${pageVO.prev }">
+				<li><a href="/materials/inlist?page=${pageVO.startPage - 1 }">«</a></li>
+			</c:if>
+			
+			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+				<li ${pageVO.cri.page == i?  "class='active'":"" }>
+					<a href="/materials/inlist?page=${i }">
+						${i }
+					</a>
+				</li>
+			</c:forEach>
+			
+			<c:if test="${pageVO.next }">
+				<li><a href="/materials/inlist?page=${pageVO.endPage + 1 }">»</a></li>
+			</c:if>
+		</ul>
+	</div>
 
 
 

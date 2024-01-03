@@ -6,8 +6,13 @@ import com.mes2.materials.domain.OutDTO;
 
 public interface OutService {
 
-	public List<OutDTO> getSelect() throws Exception;
+	// 출고 등록 
+	public void registerOutcomingStock(OutDTO odto) throws Exception;
 	
-	public List<OutDTO> detailList(String product_code) throws Exception;
+	// 출고 조회 
+	public List<OutDTO> getOutcomingStockInfo(OutDTO odto) throws Exception;
 	
+	// 출고 업데이트 
+	public void updateQuantity(String product_code, int quantity, String category) throws Exception;
+		  
 }

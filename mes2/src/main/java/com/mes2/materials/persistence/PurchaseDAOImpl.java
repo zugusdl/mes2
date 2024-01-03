@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.PurchaseDTO;
 
 @Repository
@@ -79,13 +80,43 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 
 
 	@Override
-	public List<PurchaseDTO> getSelectName(String category, String name) throws Exception {
-		Map<String, Object> params = new HashMap<>();
-		params.put("name", name);
-		params.put("category",category);
-		
-		return sqlSession.selectList(NAMESPACE + ".getNames" , params);
+	public void updateQuantity(String product_code, int quantity, String category) throws Exception {
+	    Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("product_code", product_code);
+        paramMap.put("quantity", quantity);
+        paramMap.put("category", category);
+        
+        sqlSession.update(NAMESPACE + ".PurchaseupdateQuantity", paramMap);
 	}
 
+
+	@Override
+	public List<PurchaseDTO> getPurchaseListPage(int page) throws Exception {
+		logger.debug(" DAO : getPurchaseListPage() ");
+		
+		// 페이징처리 계산
+		// page 1 => 1~10  page 2 => 11~20 ... page 3 => 21-30
+		//  => limit 0,10   =>  limit  10,10    => limit 20,10
+		
+		page = (page - 1) * 10;
+		
+		return sqlSession.selectList(NAMESPACE + ".PurchaselistPage",page);
+	}
+
+
+	@Override
+	public List<PurchaseDTO> getPurchaseListPage(Criteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".PurchaselistPage", cri);
+	}
+
+
+	@Override
+	public int getPurchaseCount() throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".PurchaseCount");
+	}
+
+
+	
+	
 	
 }

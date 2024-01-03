@@ -15,83 +15,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
 	// 기존 스크립트
-	$(document).ready(
-			function() {
-				// 페이지 로드 시 상태 초기화
-				initializeStatusButtons();
-
-				// 버튼 클릭 시 상태 업데이트
-				$('.statusButton').on(
-						'click',
-						function() {
-							var button = $(this);
-							var product_code = button.closest('tr').find(
-									'.product_code').val();
-							updateStatus(button, product_code);
-						});
-			});
-
-	function initializeStatusButtons() {
-		// 각 행의 상태를 가져와서 적용
-		$('.statusButton').each(
-				function() {
-					var button = $(this);
-					var product_code = button.closest('tr').find(
-							'.product_code').val();
-					updateButtonStatus(button, product_code);
-				});
-	}
-
-	function updateStatus(button, product_code) {
-		// 서버에 상태 업데이트 요청
-		$.ajax({
-			type : 'POST',
-			url : 'updateStatus',
-			data : {
-				product_code : product_code,
-				status : 'complete'
-			},
-			success : function(response) {
-				if (response > 0) {
-					// 성공 시 버튼 상태 업데이트
-					updateButtonStatus(button, product_code);
-				} else {
-					alert('상태 업데이트 실패');
-				}
-			},
-			error : function() {
-				alert('AJAX 오류 발생');
-			}
-		});
-	}
-
-	function updateButtonStatus(button, product_code) {
-		// 서버에 상태 요청
-		$.ajax({
-			type : 'GET',
-			url : 'getOrderStatus',
-			data : {
-				product_code : product_code
-			},
-			success : function(response) {
-				var status = response[0].status; // 가정: purchaselist에 하나의 항목만 있는 경우
-
-				// 받아온 상태에 따라 버튼 업데이트
-				if (status === 'complete') {
-					button.removeClass('btn-primary').addClass('btn-success')
-							.text('완료');
-					button.data('status', 'complete'); // 상태 업데이트
-				} else {
-					button.removeClass('btn-success').addClass('btn-primary')
-							.text('대기');
-					button.data('status', 'waiting'); // 상태 업데이트
-				}
-			},
-			error : function() {
-				alert('상태 조회 오류 발생');
-			}
-		});
-	}
+	
 </script>
 
 </head>
@@ -102,34 +26,37 @@
 	<div class="col-md-13 text-end">
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">신청</button>
+			data-bs-target="#exampleModal">등록</button>
 	</div>
 
 	<!-- Modal -->
-	<form action="/materials/purchase" method="post">
+	<form action="/materials/out" method="post">
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">발주 신청</h1>
+						<h1 class="modal-title fs-5" id="exampleModalLabel">출고 등록</h1>
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
 						<table class="table">
 							<tr>
-								<td>발주코드</td>
+								<td>출고코드</td>
 								<td><input type="text" class="form-control"
-									name="orders_code"></td>
+									name="out_code"></td>
 							</tr>
 							<tr>
 								<td>품목코드</td>
 								<td><input type="text" class="form-control"
 									name="product_code" required></td>
 							</tr>
-							
-							
+							<tr>
+								<td>주문코드</td>
+								<td><input type="text" class="form-control"
+									name="order_code" readonly></td>
+							</tr>							
 							<tr>
 								<td>자재유형</td>
 								<td>
@@ -156,11 +83,6 @@
 
 
 
-
-
-
-
-
 							<tr>
 								<td>품목명</td>
 								<td>
@@ -174,21 +96,18 @@
 												<span class="caret"></span>
 											</button>
 											<div class="dropdown-menu">
-												<a class="dropdown-item" href="#" data-value="${pl.name}"
-													data-input="nameInput">옵션 1</a> 
+												<a class="dropdown-item" href="#" data-value="옵션 1"
+													data-input="nameInput">옵션 1</a> <a class="dropdown-item"
+													href="#" data-value="옵션 2" data-input="nameInput">옵션 2</a>
+												<a class="dropdown-item" href="#" data-value="옵션 3"
+													data-input="nameInput">옵션 3</a>
 											</div>
 										</div>
 									</div>
 								</td>
 							</tr>
-
 							<tr>
-								<td>원가</td>
-								<td><input type="text" class="form-control" name="cost"
-									required></td>
-							</tr>
-							<tr>
-								<td>발주수량</td>
+								<td>수량</td>
 								<td><input type="number" class="form-control"
 									name="quantity" required></td>
 							</tr>
@@ -198,7 +117,7 @@
 									required></td>
 							</tr> -->
 							<tr>
-								<td>발주담당자</td>
+								<td>출고담당자</td>
 								<td><input type="text" class="form-control" name="user_id"
 									required></td>
 							</tr>
@@ -213,35 +132,35 @@
 
 
 
-	<a href="/materials/purchase"></a>
+	<a href="/materials/out"></a>
 	<table class="table table-hover">
 		<tr>
 			<td></td>
 			<td>출고코드</td>
-			<td></td>
+			<td>주문코드</td>
+			<td>자재유형</td>
 			<td>품목명</td>
-			<td></td>
-			<td>발주수량</td>
-			<td>발주등록일</td>
-			<td>발주담당자</td>
+			<td>출고수량</td>
+			<td>출고등록일</td>
+			<td>출고담당자</td>
+			<td>처리상태</td>
 			<td>진행상황</td>
+			<td>생산</td>
 		</tr>
 
-		<c:forEach var="pl" items="${purchaselist}">
+		<c:forEach var="out" items="${outlist}">
 			<tr>
-				<td><input type="hidden" class="product_code"
-					value="${pl.product_code}" /></td>
-				<td><c:out value="${pl.orders_code}" /></td>
-				<td><c:out value="${pl.name}" /></td>
-				<td><c:out value="${pl.cost}" /></td>
-				<td><c:out value="${pl.category}" /></td>
-				<td><c:out value="${pl.quantity}" /></td>
-				<td><fmt:formatDate value="${pl.regdate}" pattern="yyyy-MM-dd" /></td>
-				<td><c:out value="${pl.user_id}" /></td>
-
-				<!-- 	<button type="button" class="btn btn-primary" onclick="buttonClick()">대기</button> -->
-				<td><button type="button" class="btn btn-primary statusButton"
-						onclick="updateStatus(this)" data-status="waiting">대기</button></td>
+				<td><input type="hidden" class="product_code" value="${out.product_code}" /></td>	
+				<td><c:out value="${out.out_code}" /></td>
+				<td><c:out value="${out.order_code}" /></td>
+				<td><c:out value="${out.name}" /></td>
+				<td><c:out value="${out.category}" /></td>
+				<td><c:out value="${out.quantity}" /></td>
+				<td><fmt:formatDate value="${out.out_regdate}" pattern="yyyy-MM-dd" /></td>
+				<td><c:out value="${out.user_id}" /></td>
+				<td><c:out value="${out.status}" /></td>
+				<td><button type="button" class="btn btn-warning">생산</button></td>
+				<td><button type="button" class="btn btn-success">출하</button></td>
 
 			</tr>
 		</c:forEach>

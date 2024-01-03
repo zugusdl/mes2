@@ -13,86 +13,81 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
+ <script>
+
+
+
 	// 기존 스크립트
-	$(document).ready(
-			function() {
-				// 페이지 로드 시 상태 초기화
-				initializeStatusButtons();
+	$(document).ready(function () {
+    // 페이지 로드 시 상태 초기화
+    initializeStatusButtons();
 
-				// 버튼 클릭 시 상태 업데이트
-				$('.statusButton').on(
-						'click',
-						function() {
-							var button = $(this);
-							var product_code = button.closest('tr').find(
-									'.product_code').val();
-							updateStatus(button, product_code);
-						});
-			});
+    // 버튼 클릭 시 상태 업데이트
+    $('.statusButton').on('click', function () {
+        var button = $(this);
+        var product_code = button.closest('tr').find('.product_code').val();
+        updateStatus(button, product_code);
+    });
+});
 
-	function initializeStatusButtons() {
-		// 각 행의 상태를 가져와서 적용
-		$('.statusButton').each(
-				function() {
-					var button = $(this);
-					var product_code = button.closest('tr').find(
-							'.product_code').val();
-					updateButtonStatus(button, product_code);
-				});
-	}
+function initializeStatusButtons() {
+    // 각 행의 상태를 가져와서 적용
+    $('.statusButton').each(function () {
+        var button = $(this);
+        var product_code = button.closest('tr').find('.product_code').val();
+        updateButtonStatus(button, product_code);
+    });
+}
 
-	function updateStatus(button, product_code) {
-		// 서버에 상태 업데이트 요청
-		$.ajax({
-			type : 'POST',
-			url : 'updateStatus',
-			data : {
-				product_code : product_code,
-				status : 'complete'
-			},
-			success : function(response) {
-				if (response > 0) {
-					// 성공 시 버튼 상태 업데이트
-					updateButtonStatus(button, product_code);
-				} else {
-					alert('상태 업데이트 실패');
-				}
-			},
-			error : function() {
-				alert('AJAX 오류 발생');
-			}
-		});
-	}
+function updateStatus(button, product_code) {
+    // 서버에 상태 업데이트 요청
+    $.ajax({
+        type: 'POST',
+        url: 'updateStatus',
+        data: {
+            product_code: product_code,
+            status: 'complete'
+        },
+        success: function (response) {
+            if (response > 0) {
+                // 성공 시 해당 버튼 상태 업데이트
+                updateButtonStatus(button, product_code);
+            } else {
+                alert('상태 업데이트 실패');
+            }
+        },
+        error: function () {
+            alert('AJAX 오류 발생');
+        }
+    });
+}
 
-	function updateButtonStatus(button, product_code) {
-		// 서버에 상태 요청
-		$.ajax({
-			type : 'GET',
-			url : 'getOrderStatus',
-			data : {
-				product_code : product_code
-			},
-			success : function(response) {
-				var status = response[0].status; // 가정: purchaselist에 하나의 항목만 있는 경우
+function updateButtonStatus(button, product_code) {
+    // 서버에 상태 요청
+    $.ajax({
+        type: 'GET',
+        url: 'getOrderStatus',
+        data: {
+            product_code: product_code
+        },
+        success: function (response) {
+            var status = response[0].status; // 가정: purchaselist에 하나의 항목만 있는 경우
 
-				// 받아온 상태에 따라 버튼 업데이트
-				if (status === 'complete') {
-					button.removeClass('btn-primary').addClass('btn-success')
-							.text('완료');
-					button.data('status', 'complete'); // 상태 업데이트
-				} else {
-					button.removeClass('btn-success').addClass('btn-primary')
-							.text('대기');
-					button.data('status', 'waiting'); // 상태 업데이트
-				}
-			},
-			error : function() {
-				alert('상태 조회 오류 발생');
-			}
-		});
-	}
-</script>
+            // 받아온 상태에 따라 해당 버튼 업데이트
+            if (status === 'complete') {
+                button.removeClass('btn-primary').addClass('btn-success').text('완료');
+                button.data('status', 'complete'); // 상태 업데이트
+            } else {
+                button.removeClass('btn-success').addClass('btn-primary').text('대기');
+                button.data('status', 'waiting'); // 상태 업데이트
+            }
+        },
+        error: function () {
+            alert('상태 조회 오류 발생');
+        }
+    });
+}
+</script> 
 
 </head>
 <body>
@@ -102,7 +97,7 @@
 	<div class="col-md-13 text-end">
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">신청</button>
+			data-bs-target="#exampleModal">등록</button>
 	</div>
 
 	<!-- Modal -->
@@ -127,9 +122,7 @@
 								<td>품목코드</td>
 								<td><input type="text" class="form-control"
 									name="product_code" required></td>
-							</tr>
-							
-							
+							</tr>			
 							<tr>
 								<td>자재유형</td>
 								<td>
@@ -153,14 +146,6 @@
 									</div>
 								</td>
 							</tr>
-
-
-
-
-
-
-
-
 							<tr>
 								<td>품목명</td>
 								<td>
@@ -181,7 +166,6 @@
 									</div>
 								</td>
 							</tr>
-
 							<tr>
 								<td>원가</td>
 								<td><input type="text" class="form-control" name="cost"
@@ -248,7 +232,26 @@
 	</table>
 
 
-
+<div class="box-footer clearfix">
+		<ul class="pagination pagination-sm no-margin pull-right">
+			
+			<c:if test="${pageVO.prev }">
+				<li><a href="/materials/purchaselist?page=${pageVO.startPage - 1 }">«</a></li>
+			</c:if>
+			
+			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+				<li ${pageVO.cri.page == i?  "class='active'":"" }>
+					<a href="/materials/purchaselist?page=${i }">
+						${i }
+					</a>
+				</li>
+			</c:forEach>
+			
+			<c:if test="${pageVO.next }">
+				<li><a href="/materials/purchaselist?page=${pageVO.endPage + 1 }">»</a></li>
+			</c:if>
+		</ul>
+	</div>
 
 
 
@@ -259,7 +262,7 @@
 		
 	</script>
 
-	<script>
+<script>
 		function updateStatus(button) {
 			var product_code = $(button).closest('tr').find('.product_code')
 					.val();
@@ -294,11 +297,11 @@
 					alert('AJAX 오류 발생');
 				}
 			});
-		}
+		} 
 
 	
 	</script>
 
-
+	<script src="${pageContext.request.contextPath}/resources/js/persistence/status.js"></script>
 </body>
 </html>
