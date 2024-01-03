@@ -36,6 +36,12 @@ public class ProductionLineServiceImpl implements ProductionLineService{
 	public ProductionLineDTO findByIsCode(String isCode) {
 		return productionalLineDAO.selectByIsCode(isCode);
 	}
+
+	@Override
+	public List<ProductionLineDTO> findByDateForProduce(Date startDate) {
+		return productionalLineDAO.selectByDateForProduce(startDate);
+	}
+	
 	
 	
 	

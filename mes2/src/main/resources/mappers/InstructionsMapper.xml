@@ -50,7 +50,7 @@
 	<!-- 혹시 대비를 위한  -->
 	<update id="updateAccept">
 		update instructions
-		set code=#{code}, line=#{line}, due_date = #{dueDate}, type=#{type},  state = 'WAITING', emp_id = #{empNum}
+		set code=#{code}, line=#{line}, due_date = #{dueDate}, type=#{type},  state = 'WAITING', emp_id = #{empNum} , target_quantity = #{targetQuantity} 
 		where sop_code = #{sopCode}
 	</update>
 	
@@ -197,13 +197,14 @@
 	</select>
 	
 	<!-- 품목별 소요량 확인하기 -->
-	<select id="selectByisCodeForMaterials" resultMap="requestMaterialsDTOMap">
+	<select id="selectByisCodeForMaterialsWithRequested" resultMap="requestMaterialsDTOMap">
+		<![CDATA[
 		select *		
 		from meta_data_product mdp
 		join meta_data_required_amount mdra 
 		on mdra.product_code = mdp.product_code 
-		where mdp.product_code = (select mdp_code from instructions where sop_code = #{sopCode})
-		
+		where mdp.product_code = (select mdp_code from instructions where sop_code = #{sopCode} and state = 'REQUESTED')
+		]]>
 	</select>
 	
 	<!-- SOP 정보로 찾기 -->
@@ -223,10 +224,24 @@
 		where state = #{state} 
 	</select>
 	
+	<!-- 수주 상태 업데이트 -->
 	<update id="updateSaleOrderProduct">
 		update sales_order_product 
-		set product_code = #{status}
-		where order_code = (select sop_code from instructions where code = #{isCode})
+		set product_status = #{status}
+		where sales_code = (select sop_code from instructions where code = #{isCode})
 	</update>
+	
+	<!-- 자재팀에게 원자재 요청 -->
+	<insert id="insertOutWarehouseForMaterials">
+		insert into out_warehouse 
+		(based_code, product_code, out_type, quantity, status)
+		values(#{orderCode}, #{productCode} ,'P' ,#{outQuantity} ,'waiting')
+	</insert>
 
+	<!-- 자재 전달 상황 조회 -->
+	<select id="selectOutWarehouseForMaterials">
+		select * 
+		from out_warehouse 
+		where based_code = #{basedCode} and status ='complete' and out_type = 'p'
+	</select>
 </mapper>

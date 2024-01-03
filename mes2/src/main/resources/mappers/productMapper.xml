@@ -12,8 +12,8 @@
 	</select>
 	
 	<insert id="insertProduct">
-		insert into product (pd_lot,pd_mdp_code, pd_quantity, pd_period, pd_date, pd_soi_id, pd_qc_result, pd_count)
-		value(#{pd_lot},#{pd_mdp_code},#{pd_quantity},#{pd_period},#{pd_date},#{pd_soi_id},#{pd_qc_result},#{pd_count})
+		insert into product (pd_lot,pd_mdp_code, pd_quantity, pd_period, pd_date, pd_soi_id, pd_qc_result, pd_count, pd_is_code)
+		value(#{pd_lot},#{pd_mdp_code},#{pd_quantity},#{pd_period},#{pd_date},#{pd_soi_id},#{pd_qc_result},#{pd_count}, #{pd_is_code})
 	</insert>
 
 	<select id="selectByLot" resultType="com.mes2.production.domain.ProductDTO">

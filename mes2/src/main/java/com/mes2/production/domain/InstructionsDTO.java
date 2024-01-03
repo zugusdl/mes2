@@ -19,6 +19,7 @@ public class InstructionsDTO {
 	private int quantity;
 	private int fault;
 	private int salesQuantity;
+	private int targetQuantity; //실제 생산 량 = salesQuantity * 1.1(수주 물량 + 10%)
 	
 	
 	public String getCode() {
@@ -113,6 +114,13 @@ public class InstructionsDTO {
 	}
 	public void setEmpName(String empName) {
 		this.empName = empName;
+	}
+	
+	public int getTargetQuantity() {
+		return targetQuantity;
+	}
+	public void setTargetQuantity(int targetQuantity) {
+		this.targetQuantity = targetQuantity;
 	}
 	@Override
 	public String toString() {

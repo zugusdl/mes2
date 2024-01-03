@@ -26,11 +26,17 @@ function removeTable() {
     if (materialsTable) {
     	materialsTable.remove();
     }
+    var requestButton = document.getElementById("requestButton");
+    if (requestButton) {
+    	requestButton.remove();
+    }
 }
     
 //이거 될지는 모르겠음
 function showMaterials(data){
 	var bottomContent = document.getElementById('bottomContent');
+	var detailSopCode = data.sopCode;
+	var salesQuantity = data.salesQuantity;
 	
 	var table = document.createElement("table");
 	table.id = "materialsTable";
@@ -75,5 +81,30 @@ function showMaterials(data){
 	table.appendChild(tbody);
 	
 	bottomContent.appendChild(table);
+	
+	var requestButton = document.createElement("button");
+	requestButton.id = "requestButton";
+	requestButton.textContent ="자재요청";
+	
+	bottomContent.appendChild(requestButton);
+	
+	
+	requestButton.onclick = requestMaterials(detailSopCode,salesQuantity);
+	
+}
+
+function requestMaterials(sopCode, salesQuantity){
+	
+	$.ajax({
+		type:"POST",
+		url:"/restInstruction/requestMaterials",
+		dataType:"json",
+		contentType: "application/json; charset=UTF-8",
+		data : JSON.stringify({'salesQuantity' : salesQuantity, 'sopCode' : sopCode}),
+		success:function(data){
+			removeTable();
+			showMaterials(data);
+		}
+	});
 	
 }

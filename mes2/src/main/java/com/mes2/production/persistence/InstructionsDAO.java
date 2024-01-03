@@ -27,6 +27,7 @@ public interface InstructionsDAO {
 	
 	public int updateState(InstructionsDTO instructionsDTO);
 
+	//요청 - 수주번호로 제품생산 소요량 찾기
 	public RequestMaterialsDTO selectBySopCodeForMaterials(String sopCode);
 	
 	public int updateAccept(InstructionsDTO instructionsDTO);
@@ -34,4 +35,9 @@ public interface InstructionsDAO {
 	public InstructionsDTO selectBySopCode(String sopCode, String state);
 	
 	public List<InstructionsDTO> selectByState(String state);
+	
+	public int insertOutWarehouseForMaterials(String orderCode, String productCode, int outQuantity);
+
+	public int updateSopByIsCode(String isCode, String status);
+	
 }

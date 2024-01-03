@@ -14,4 +14,6 @@ public interface ProductionLineService {
 	public List<ProductionLineDTO> findByDate(Date startDate , Date endDate);
 	
 	public ProductionLineDTO findByIsCode(String isCode);
+	
+	public List<ProductionLineDTO> findByDateForProduce(Date startDate);
 }

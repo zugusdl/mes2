@@ -1,7 +1,5 @@
 package com.mes2.production.persistence;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.mes2.production.domain.InstructionsDTO;
 import com.mes2.production.etc.InstructionsSearchParam;
 import com.mes2.production.etc.RequestMaterialsDTO;
-
-import lombok.RequiredArgsConstructor;
 
 @Repository
 public class InstructionsDAOImpl implements InstructionsDAO {
@@ -135,10 +131,12 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 	@Override
 	public RequestMaterialsDTO selectBySopCodeForMaterials(String sopCode) {
 		log.debug("instructionsDAO : selectBySopCodeForMaterials 호출");
-		RequestMaterialsDTO rqml = sqlSession.selectOne(NAMESAPCE+".selectByisCodeForMaterials", sopCode);
+		RequestMaterialsDTO rqml = sqlSession.selectOne(NAMESAPCE+".selectByisCodeForMaterialsWithRequested", sopCode);
 		log.debug(""+rqml.toString());
 		return rqml;
 	}
+	
+	
 
 
 
@@ -167,6 +165,28 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 	@Override
 	public List<InstructionsDTO> selectByState(String state) {
 		return sqlSession.selectList(NAMESAPCE+".selectByState", state);
+	}
+
+
+
+	@Override
+	public int insertOutWarehouseForMaterials(String orderCode, String productCode, int outQuantity) {
+		Map<String, Object> paramMap = new HashMap();
+		paramMap.put("orderCode", orderCode);
+		paramMap.put("productCode", productCode);
+		paramMap.put("outQuantity", outQuantity);
+		return sqlSession.insert(NAMESAPCE+".insertOutWarehouseForMaterials", paramMap);
+		
+	}
+
+
+
+	@Override
+	public int updateSopByIsCode(String isCode, String status) {
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("isCode", isCode);
+		paramMap.put("status", status);
+		return sqlSession.update(NAMESAPCE+".updateSaleOrderProduct", paramMap);
 	}
 	
 	

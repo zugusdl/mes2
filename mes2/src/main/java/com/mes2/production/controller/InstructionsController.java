@@ -77,14 +77,14 @@ public class InstructionsController {
 	//http://localhost:8088/instructions/search
 	@GetMapping("/search")
 	public String searchGET(Model model,
-			@RequestParam(value="searchStartDate", required = false) Date searchStartDateDate,
+			@RequestParam(value="searchStartDate", required = false) Date searchStartDateV2,
+			@RequestParam(value="searchEndDate", required = false) Date searchEndDateV2,
 			@ModelAttribute(value = "searchStartDate") String searchStartDate,
 			@ModelAttribute(value="searchEndDate") String searchEndDate, 
 			@ModelAttribute(value = "searchCode") String searchCode,
 			@ModelAttribute(value="searchType") String searchType,
 			@RequestParam(value="searchState", required = false) String searchState ) {
 		
-		log.debug("isController : 넘겨받은 Date타입의 startDate : " + searchStartDateDate);
 		log.debug("isController : 넘겨받은 startDate : " + searchStartDate);
 		log.debug("isController : 넘겨받은 endDate : " + searchEndDate);
 		log.debug("isController : 넘겨받은 searchType : " + searchType);
@@ -150,7 +150,8 @@ public class InstructionsController {
 //		}
 		
 		if(searchStartDate!=null && !searchStartDate.equals("")) {
-			model.addAttribute("startDate", searchStartDateDate);
+			model.addAttribute("startDate", searchStartDateV2);
+			model.addAttribute("endDate", searchEndDateV2);
 		}
 //		if(searchEndDate!=null && !searchEndDate.equals("")) {
 //			model.addAttribute("endDate", Date.valueOf(searchEndDate));
@@ -158,10 +159,11 @@ public class InstructionsController {
 		
 		//log.debug("입력받은 state"+state.getClass());
 		
-		model.addAttribute("startDate", searchStartDate);
-		model.addAttribute("endDate", searchEndDate);
+		//model.addAttribute("startDate", searchStartDate);
+		//model.addAttribute("endDate", searchEndDate);
 		model.addAttribute("instructions", instructions);
 		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchState", searchState);
 		return "/instructions/instructionList";
 	}
 	
@@ -265,7 +267,7 @@ public class InstructionsController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:/instructions/request";
+		return null;
 		
 		
 	}
@@ -298,4 +300,12 @@ public class InstructionsController {
 		
 		return null;
 	}
+	
+	@PostMapping("/materials")
+	public String materialsPOST() {
+		
+		
+		return null;
+	}
+	
 }

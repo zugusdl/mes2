@@ -7,4 +7,6 @@ public class RequestMaterialInfo {
 
 	private String sopCode;
 	private int salesQuantity;
+	private String requestState;
+	
 }

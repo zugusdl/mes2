@@ -55,6 +55,11 @@ public class ProductionLineDAOImpl implements ProductionLineDAO {
 		return sqlSession.update(NAMESPACE+".updateComplete", productionLineDTO);
 	}
 
+	@Override
+	public List<ProductionLineDTO> selectByDateForProduce(Date startDate) {
+		return sqlSession.selectList(NAMESPACE+".selectByDateForProduce", startDate);
+	}
+
 	
 	
 	

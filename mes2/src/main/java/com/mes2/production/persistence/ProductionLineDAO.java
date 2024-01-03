@@ -16,5 +16,7 @@ public interface ProductionLineDAO {
 	public int updateState(ProductionLineDTO productionLineDTO);
 	
 	public int updateComplete(ProductionLineDTO productionLineDTO);
+	
+	public List<ProductionLineDTO> selectByDateForProduce(Date startDate);
 
 }

@@ -35,4 +35,7 @@ public interface InstructionsService {
 	
 	public InstructionsDTO findBySopCode(String sopCode, String state);
 	
+	//자재 요청하기
+	public void requestMaterials(String productCode, int quantity);
+	
 }

@@ -16,4 +16,6 @@ public interface ProductDAO {
 	public int deleteByLot(List<String> lotList);
 	
 	public String searchLastLot(String searchLot);
+	
+	public int insertProduct(ProductDTO productDTO);
 }

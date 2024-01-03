@@ -56,6 +56,12 @@ public class ProductDAOImpl implements ProductDAO{
 		
 		return sqlSession.selectOne(NAMESPACE+".getLastLot", searchLot);
 	}
+
+	@Override
+	public int insertProduct(ProductDTO productDTO) {
+		return sqlSession.insert(NAMESPACE+".insertProduct", productDTO);
+	}
+	
 	
 	
 }

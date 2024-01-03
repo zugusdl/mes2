@@ -25,7 +25,7 @@
 		<section class="section1">
 			<form class="search" action="/instructions/search" onsubmit="return validateSearchForm()">
 				
-				<select id="state" name="searchState" >
+				<select id="state" name="searchState">
 					<option value="">-- 검색선택 --</option>
 					<option value="WAITING">작업대기</option>
 					<option value="PROGRESSING">진행중</option>
@@ -101,6 +101,12 @@
 										<td>${item.quantity}</td>
 										<td>${item.fault}</td>
 										<td>
+										<c:if test="${item.state.equals('WAITING')}">
+											<button type="button" onclick="updateProgressing('${item.code}');">생산시작</button>
+										</c:if>
+										<c:if test="${item.state.equals('COMPLETE')}">
+											생산완료
+										</c:if>
 										<c:if test="${item.state.equals('PROGRESSING')}">
 											<button type="button" onclick="window.open('/instructions/resultInfo/${item.code}','result','width=800px, height=640px')">작업 종료</button>
 										</c:if>
@@ -148,13 +154,14 @@
     }
     
     var searchType = '${searchType}'; 
-
+    var searchState = '${searchState}'; 
     // JavaScript를 통해 동적으로 선택된 값을 설정
     document.getElementById('boundary').value = searchType;
-		
+    document.getElementById('state').value = searchState;
 		
 	
 	</script>
+	<script src="/resources/js/instructions/instructionList.js"></script>
 		
 </body>
 </html>

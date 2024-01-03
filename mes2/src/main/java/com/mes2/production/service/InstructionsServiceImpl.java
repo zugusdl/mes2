@@ -12,10 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mes2.production.domain.InstructionsDTO;
+import com.mes2.production.domain.ProductDTO;
 import com.mes2.production.domain.ProductionLineDTO;
 import com.mes2.production.etc.InstructionsSearchParam;
+import com.mes2.production.etc.RequestMaterialDTO;
+import com.mes2.production.etc.RequestMaterialsDTO;
 import com.mes2.production.exception.UpdateFailException;
 import com.mes2.production.exception.ValidationValueErrorException;
 import com.mes2.production.persistence.InstructionsDAO;
@@ -123,6 +127,7 @@ public class InstructionsServiceImpl implements InstructionsService {
 		isDTO.setCode(createIsCode(dueDate, line));
 		isDTO.setDueDate(dueDate);
 		isDTO.setLine(line);
+		isDTO.setTargetQuantity(isDTO.getTargetQuantity()+(isDTO.getTargetQuantity()/10));
 		log.debug("InstructionsService : saveInstructions : 새로 생성된 코드" +isDTO.getCode());
 		
 		
@@ -132,6 +137,7 @@ public class InstructionsServiceImpl implements InstructionsService {
 		productionLine.setStartDate(isDTO.getDueDate());
 		productionLine.setLine(isDTO.getLine());
 		productionLine.setStatus("WAITING");
+		productionLine.setEndDate(calEndDate(isDTO.getDueDate(), isDTO.getSalesQuantity()));
 		
 		
 	
@@ -308,6 +314,21 @@ public class InstructionsServiceImpl implements InstructionsService {
 		productionLineDAO.updateComplete(findProductionLine);
 		
 		log.debug("instructionsService : 작업종료 완료 및 상태 변경 완료 ");
+		
+		
+		ProductDTO product = new ProductDTO();
+		product.setPd_lot(createLotCode(Date.valueOf(LocalDate.now()), findProductionLine.getLine(), findInstructions.getMdpCode()));
+		product.setPd_date(Date.valueOf(LocalDate.now()));
+		product.setPd_quantity(quantity);
+		product.setPd_mdp_code(findInstructions.getMdpCode());
+		product.setPd_soi_id(findInstructions.getSopCode());
+		product.setPd_is_code(findInstructions.getCode());
+		productDAO.insertProduct(product);
+		
+		instructionsDAO.updateSopByIsCode(isCode, "complete");
+
+		log.debug("instructionsService : product 저장 완료");
+		
 	}
 	
 	
@@ -341,6 +362,30 @@ public class InstructionsServiceImpl implements InstructionsService {
         Date endDate = Date.valueOf(futureLocalDate);
 		
 		return endDate;
+	}
+
+	
+	//작업진행 업데이트
+	public void updateProgressing(String isCode ) {
+		
+		InstructionsDTO instructions = instructionsDAO.selectByCode(isCode);
+		ProductionLineDTO productionLine = productionLineDAO.selectByIsCode(isCode);
+		instructions.setState("PROGRESSING");
+		productionLine.setStatus("PROGRESSING");
+		instructionsDAO.updateState(instructions);
+		productionLineDAO.updateState(productionLine);
+		
+	}
+	
+	//생산요청 - 자재 요청하기
+	@Override
+	public void requestMaterials(String sopCode, int quantity) {
+		RequestMaterialsDTO requestMaterial = instructionsDAO.selectBySopCodeForMaterials(sopCode);
+		
+		for(RequestMaterialDTO reqMaterial : requestMaterial.getMaterialList()) {
+			instructionsDAO.insertOutWarehouseForMaterials(sopCode, reqMaterial.getProductCode(), reqMaterial.getAmount()*quantity);
+		}
+		
 	}
 	
 	
