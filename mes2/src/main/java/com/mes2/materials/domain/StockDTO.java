@@ -2,6 +2,7 @@ package com.mes2.materials.domain;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
@@ -16,4 +17,5 @@ public class StockDTO {
 	private Date regdate; // 등록일자
 
 	private int useQuantity; // 출고 수량
+
 }

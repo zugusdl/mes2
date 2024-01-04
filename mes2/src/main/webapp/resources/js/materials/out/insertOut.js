@@ -9,7 +9,7 @@ function insertOut() {
 	var sum = 0;
 	var quantity = document.querySelector("input[name='quantity']").value;
 	
-	$("input[name='useQuantity']").each(function(){
+	$("[id^='useQuantity']").each(function(){
 		useQuantityList.push($(this).val());
 	});
 	
