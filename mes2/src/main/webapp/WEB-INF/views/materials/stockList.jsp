@@ -34,27 +34,36 @@
 									<tr class="table-success">
 										<th></th>
 										<th scope="col">로트번호</th>
-										<th scope="col">등록일자</th>
+										<th scope="col">입고일자</th>
 										<th scope="col">창고위치</th>
 										<th scope="col">현재재고</th>
 										<th scope="col">출고수량</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="stockDTO" items="${stockList }" varStatus="loop">
+									<c:forEach var="stockDTO" items="${stockList }">
 											<tr>
-												<td scope="row"><input type="checkbox" name="idx" value="${loop.index}"></td>
-												<td><input type="hidden" name="pd_lot${loop.index}" value="${stockDTO.pd_lot}">${mdpDTO.product_code}</td>
-												<td><input type="hidden" name="regdate${loop.index}" value="${stockDTO.regdate }">${stockDTO.regdate }</td>
-												<td><input type="hidden" name="warehouse_code${loop.index}" value="${stockDTO.warehouse_code }">${stockDTO.warehouse_code }</td>
-												<td><input type="hidden" name="quantity${loop.index}" value="${stockDTO.quantity}">${stockDTO.quantity}</td>
-												<td><input type="hidden" name="useQuantity${loop.index}"><input type="number" min="0"></td>
+												<td scope="row"><input type="checkbox" name="stock_index" value="${stockDTO.stock_index}"></td>
+												<td>
+													<input type="hidden" name="pd_lot${stockDTO.stock_index}" value="${stockDTO.pd_lot}">
+													<c:if test="${empty stockDTO.pd_lot}">
+														-
+													</c:if>
+													<c:if test="${!empty stockDTO.pd_lot}">
+														${mdpDTO.product_code}
+													</c:if>
+												</td>
+												<td><input type="hidden" name="regdate${stockDTO.stock_index}" value="${stockDTO.regdate }">${stockDTO.regdate }</td>
+												<td><input type="hidden" name="warehouse_code${stockDTO.stock_index}" value="${stockDTO.warehouse_code }">${stockDTO.warehouse_code }</td>
+												<td><input type="hidden" name="quantity${stockDTO.stock_index}" value="${stockDTO.quantity}">${stockDTO.quantity}</td>
+												<td><input type="number" name="useQuantity${stockDTO.stock_index}" min="0"></td>
 											</tr>
 									</c:forEach>
 								</tbody>
 							</table>
-							<button class="btn btn-secondary regist" onclick="registProduct();">등록</button>
-							<button class="btn btn-secondary regist" onclick="window.close();">취소</button>
+							<input type="hidden" name="product_code" value="${stockList[0].product_code }">
+							<button type="button" class="btn btn-secondary regist" onclick="registProduct();">등록</button>
+							<button type="button" class="btn btn-secondary regist" onclick="window.close();">취소</button>
 						</c:if>
 						<c:if test="${empty stockList }">
 							<div>현재 재고가 없습니다.</div>
@@ -66,6 +75,6 @@
 		</section>
 	</div>
 	
-	<script src="${pageContext.request.contextPath}/resources/js/materials/out/productList.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/materials/out/stockList.js"></script>
 </body>
 </html>

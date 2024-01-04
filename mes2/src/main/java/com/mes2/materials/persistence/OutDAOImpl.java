@@ -31,11 +31,18 @@ public class OutDAOImpl implements OutDAO {
 		return sqlSession.selectList(NAMESPACE + ".getOutList");
 	}
 	
-	// 출고 상세 조회
+	// 출고 상세 조회(출고코드 O)
 	@Override
-	public OutDTO getOutDetail(String out_index) throws Exception {
+	public OutDTO getOutDetail(String out_code) throws Exception {
 		logger.debug("DAO: getOutDetail() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".getOutDetail", out_index);
+		return sqlSession.selectOne(NAMESPACE + ".getOutDetail", out_code);
+	}
+	
+	// 출고 상세 조회(출고코드 X)
+	@Override
+	public OutDTO getOutInfo(String out_index) throws Exception {
+		logger.debug("DAO: getOutInfo() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".getOutInfo", out_index);
 	}
 	
 	// 출고 품목 재고 조회
@@ -44,4 +51,17 @@ public class OutDAOImpl implements OutDAO {
 		return sqlSession.selectList(NAMESPACE + ".getStockList", product_code);
 	}
 	
+	// 출고 품목 재고 등록
+	@Override
+	public StockDTO registProduct(int stock_index) throws Exception {
+		logger.debug("DAO: registProduct() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".registProduct", stock_index);
+	}
+	
+	// 출고 품목 입력 시 Stock 테이블 출고 예정 수량에 입력
+//	@Override
+//	public void updatePlannedQuantity(List<StockDTO> stockDTO) throws Exception {
+//		logger.debug("DAO: updatePlannedQuantity() 호출");
+//		sqlSession.update(NAMESPACE +".updatePlannedQuantity", stockDTO);
+//	}
 }

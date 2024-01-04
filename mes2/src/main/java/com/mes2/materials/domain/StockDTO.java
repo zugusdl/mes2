@@ -14,4 +14,6 @@ public class StockDTO {
 	private String category; // 부자재,원재료,완제품
 	private String pd_lot; // 로트번호
 	private Date regdate; // 등록일자
+
+	private int useQuantity; // 출고 수량
 }

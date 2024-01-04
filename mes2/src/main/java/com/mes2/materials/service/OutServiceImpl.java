@@ -27,17 +27,33 @@ public class OutServiceImpl implements OutService {
 		return odao.getOutList();
 	}
 	
-	// 출고 상세 조회
+	// 출고 상세 조회(출고코드 O)
 	@Override
-	public OutDTO getOutDetail(String out_index) throws Exception {
+	public OutDTO getOutDetail(String out_code) throws Exception {
 		logger.debug("S: getOutDetail() 호출");
-		return odao.getOutDetail(out_index);
+		return odao.getOutDetail(out_code);
+	}
+	
+	// 출고 상세 조회(출고코드 X)
+	@Override
+	public OutDTO getOutInfo(String out_index) throws Exception {
+		logger.debug("S: getOutInfo() 호출");
+		return odao.getOutInfo(out_index);
 	}
 	
 	// 출고 품목 재고 조회
 	@Override
 	public List<StockDTO> getStockList(String product_code) throws Exception {
 		return odao.getStockList(product_code);
+	}
+	
+	// 출고 품목 재고 등록
+	@Override
+	public List<StockDTO> registProduct(List<StockDTO> stockDTO) throws Exception {
+		logger.debug("S: registProduct() 호출");
+//		odao.updatePlannedQuantity(stockDTO);
+		return null;
+//		return odao.registProduct(stock_index);
 	}
 	
 }

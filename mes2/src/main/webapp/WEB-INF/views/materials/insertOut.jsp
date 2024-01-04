@@ -12,7 +12,7 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materials/outDetail.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materials/insertOut.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -20,13 +20,11 @@
 	<div class="container">
 		<section class="section1">
 			<div class="list">
-				<form action="/insertOut" method="post" class="list-form">
+				<form action="/materials/insertOut" method="post" class="list-form" id="frm">
+					<input type="hidden" name="quantity" value="${outDTO.quantity}">
 					<div class="list-btn">
-						<c:if test="${empty outDTO }">
-							<button type="button" class="btn btn-secondary" onclick="insertOutProduct('${product_code}');">출고 품목 입력</button>
+							<button type="button" class="btn btn-secondary" onclick="insertOutProduct('${outDTO.product_code}');">출고 품목 입력</button>
 							<button type="button" class="btn btn-secondary" onclick="insertOut();">출고 등록</button>
-						</c:if>
-	<!-- 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button> -->
 					</div>
 
 					<div class="list-box">
@@ -41,17 +39,6 @@
 								</tr>
 							</thead>
 							<tbody id="outProductList">
-								<c:if test="${!empty outDTO }">
-									<c:forEach var="opDTO" items="${outDTO.opList }">
-										<tr>
-											<td></td>
-											<td>${opDTO.pd_lot }</td>
-											<td>${outDTO.pdto.product_code }</td>
-											<td>${opDTO.out_quantity }</td>
-											<td></td>
-										</tr>
-									</c:forEach>
-								</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -61,6 +48,6 @@
 
 		<div id="bottomContent"></div>
 	</div>
-	<script src="${pageContext.request.contextPath}/resources/js/materials/out/outDetail.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/materials/out/insertOut.js"></script>
 </body>
 </html>

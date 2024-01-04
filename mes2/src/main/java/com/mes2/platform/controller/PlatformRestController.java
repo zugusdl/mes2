@@ -37,7 +37,6 @@ public class PlatformRestController {
 		logger.debug("registProduct() 호출");
 		logger.debug("product_code" + product_code);
 		MdpDTO mdpDTO = pService.registProduct(product_code);
-		logger.debug("@@@@@mdpDTO@@@@@" +  mdpDTO);
 		return mdpDTO;
 	}
 	

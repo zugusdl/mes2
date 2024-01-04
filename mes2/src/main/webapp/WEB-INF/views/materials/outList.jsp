@@ -45,7 +45,6 @@
 			<!-- 표 -->
 			<div class="list">
 				<div class="list-btn">
-<!-- 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button> -->
 				</div>
 
 				<div class="list-box">
@@ -63,14 +62,14 @@
 							</thead>
 							<tbody>
 								<c:forEach var="oList" items="${oList }">
-									<tr onclick="getOutDetail('${oList.out_index }','${oList.product_code }','${oList.out_code }');" class="selectOrder">
+									<tr onclick="getOutDetail('${oList.out_index }','${oList.out_code }');" class="selectOrder">
 										<td>${oList.out_code }</td>
 										<td>${oList.product_code }</td>
 										<td>${oList.quantity } ${oList.pdto.unit}</td>
 										<td>
 											<c:choose>
 												<c:when test="${oList.status eq 'waiting' }">
-													<i class="fa-solid fa-circle fa-2xs" style="color: #ff9924;"></i> 요청
+													<i class="fa-solid fa-circle fa-2xs" style="color: #ff9924;"></i> 대기
 												</c:when>
 												<c:when test="${oList.status eq 'complete' }">
 													<i class="fa-solid fa-circle fa-2xs" style="color: #6b6b6b;"></i> 완료

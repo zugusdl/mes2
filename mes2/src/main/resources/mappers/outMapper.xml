@@ -42,10 +42,11 @@
 	<select id="getOutList" resultMap="oDTO">
 		SELECT * FROM c7d2307t2_2.out_warehouse
 		JOIN meta_data_product
-		ON out_warehouse.product_code = meta_data_product.product_code;
+		ON out_warehouse.product_code = meta_data_product.product_code
+		ORDER BY status DESC
 	</select>
 	
-	<!-- 출고 상세 조회 -->
+	<!-- 출고 상세 조회(출고코드 O) -->
 	<select id="getOutDetail" resultMap="oDTO">
 		SELECT ow.out_index, owp.out_code, owp.product_code, mdp.name, pd_lot, out_quantity
 		FROM out_warehouse_product owp 
@@ -56,9 +57,26 @@
 		WHERE out_index = #{out_index}
 	</select>
 	
+	<!-- 출고 상세 조회(출고코드 X) -->
+	<select id="getOutInfo" resultType="com.mes2.materials.domain.OutDTO">
+		SELECT * FROM out_warehouse 
+		WHERE out_index = #{out_index}
+	</select>
+	
 	<!-- 출고 품목 재고 조회 -->
 	<select id="getStockList" resultType="com.mes2.materials.domain.StockDTO">
 		SELECT * FROM stock
 		WHERE product_code = #{product_code}
 	</select>
+	
+	<!-- 출고 품목 재고 등록 -->
+	
+	<!-- Stock 테이블 출고 예정 수량 입력 -->
+<!-- 	<update id="updatePlannedQuantity"> -->
+<!-- 		<foreach collection="list" item="stockDTO" separator=";"> -->
+<!-- 			UPDATE stock  -->
+<!-- 			SET planned_quantity = #{stockDTO.planned_quantity}  -->
+<!-- 			WHERE stock_index = #{stockDTO.stock_index} -->
+<!-- 		</foreach> -->
+<!-- 	</update> -->
 </mapper>
