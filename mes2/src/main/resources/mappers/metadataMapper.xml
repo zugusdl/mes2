@@ -17,11 +17,11 @@
     </resultMap>
   
   	<!-- 모든 글 조회(ALL) -->
-  	<select id="listALL" resultType="com.mes2.metadata.domain.md_productDTO">
+  	<!-- <select id="listALL" resultType="com.mes2.metadata.domain.md_productDTO">
   		select * from meta_data_product
-  	</select>
+  	</select> -->
   	
-  	<!-- 날짜 필터 조회(datefilter) -->
+  	<!-- 날짜 필터 조회(datefilter) 
   	<select id="listDATE" resultType="com.mes2.metadata.domain.md_productDTO" parameterType="java.util.Map">
   		select * from meta_data_product
   		<where>
@@ -34,7 +34,7 @@
             </if>
             
          </where>
-  	</select>
+  	</select> -->
   	
   	<insert id="insert" parameterType="com.mes2.metadata.domain.md_productDTO">
   		INSERT INTO meta_data_product (product_code, name, category, unit, cost, price, ofileName)
@@ -65,20 +65,54 @@
   	</delete>
   	
   	
-  	<!--글 목록 조회(page) -->
+  	<!--글 목록 조회(page) 
   	<select id="listPage" resultType="com.mes2.metadata.domain.md_productDTO" resultMap="board">
   		select * from meta_data_product
-<!--   		order by bno desc,regdate desc  -->
-  		<!-- limit #{page},#{pageSize} --> 	
+   		order by bno desc,regdate desc  
+  		 limit #{page},#{pageSize} 
   		limit #{startPage},#{pageSize} 	
-  	</select>
+  	</select> -->
 	
 	
-	<!-- 전체 글 개수 조회 -->
+	<!-- 전체 글 개수 조회 
   	<select id="countBoard" resultType="int">
   	  <![CDATA[
 	  	  select count(*) from meta_data_product
    	  ]]> 
+  	</select> -->
+  	
+  	<!-- 글 갯수 세기 -->
+  	<select id="count" resultType="int">
+  		select count(*) from meta_data_product
+  		<where>
+  		
+  		<if test="startDate !=null and endDate !=null and !startDate.equals('') and !endDate.equals('')">
+  		and regdate between #{startDate} and #{endDate}
+  		</if>
+  		
+  		<if test="search !=null and !search.equals('')">
+  		and name like '%${search }%'
+  		</if>
+  		</where> 	
+  	</select>
+  	
+  	<!-- 리스트 가져가기 -->
+  	<select id="list" resultType="com.mes2.metadata.domain.md_productDTO">
+  		select * from meta_data_product
+  		<where>
+  		
+  		<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('')">
+  		and regdate between #{startDate} and #{endDate}
+  		</if>
+  		
+  		<if test="search !=null and !search.equals('')">
+  		and name like '%${search }%'
+  		</if>
+  		</where>
+  		<if test="cri != null">
+  		limit #{cri.startPage},#{cri.pageSize} 	
+  		</if>
+  		
   	</select>
 	
   </mapper>

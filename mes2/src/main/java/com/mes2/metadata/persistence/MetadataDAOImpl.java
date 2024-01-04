@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.mes2.metadata.domain.Criteria;
+import com.mes2.metadata.domain.alllistDTO;
 import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.platform.persistence.PlatformDAOImpl;
 
@@ -26,26 +27,24 @@ public class MetadataDAOImpl implements MetadataDAO{
 	@Inject
 	private SqlSession sqlSession;
 
-	@Override
-	public List<md_productDTO> getproductListAll() throws Exception {
-		logger.debug(" DAO : getproductListAll() ");
-		return sqlSession.selectList(NAMESPACE + ".listALL");
-	}
+	/*
+	 * @Override public List<md_productDTO> getproductListAll() throws Exception {
+	 * logger.debug(" DAO : getproductListAll() "); return
+	 * sqlSession.selectList(NAMESPACE + ".listALL"); }
+	 */
 
 	
-	@Override
-	public List<md_productDTO> getproductdatefilter(Date start, Date end, String search) throws Exception {
-		logger.debug(" DAO : getproductdatefilter() ");
-		//logger.debug("날짜확인" + start);
-		//logger.debug("이름확인" + searchName);
-		
-		Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("start", start);
-        paramMap.put("end", end);
-        paramMap.put("searchName", search);
-
-        return sqlSession.selectList(NAMESPACE + ".listDATE", paramMap);
-	}
+	/*
+	 * @Override public List<md_productDTO> getproductdatefilter(Date start, Date
+	 * end, String search) throws Exception {
+	 * logger.debug(" DAO : getproductdatefilter() "); //logger.debug("날짜확인" +
+	 * start); //logger.debug("이름확인" + searchName);
+	 * 
+	 * Map<String, Object> paramMap = new HashMap<>(); paramMap.put("start", start);
+	 * paramMap.put("end", end); paramMap.put("searchName", search);
+	 * 
+	 * return sqlSession.selectList(NAMESPACE + ".listDATE", paramMap); }
+	 */
 
 
 	@Override
@@ -67,35 +66,20 @@ public class MetadataDAOImpl implements MetadataDAO{
 		logger.debug(" DAO : productdelete() " + dto);
 		return sqlSession.update(NAMESPACE + ".delete", dto);
 	}
-	
+
+
 	@Override
-	public List<md_productDTO> getBoardListPage(int page) throws Exception {
-		logger.debug(" DAO : getBoardListPage() ");
+	public int gettotalcount(alllistDTO aDTO) throws Exception {
 		
-		// 페이징처리 계산
-		// page 1 => 1~10  page 2 => 11~20 ... page 3 => 21-30
-		//  => limit 0,10   =>  limit  10,10    => limit 20,10
+		return sqlSession.selectOne(NAMESPACE + ".count", aDTO);
+	}
+
+
+	@Override
+	public List<md_productDTO> getlist(alllistDTO aDTO) throws Exception {
 		
-		page = (page - 1) * 10;
-		
-		return sqlSession.selectList(NAMESPACE + ".listPage",page);
+		return sqlSession.selectList(NAMESPACE + ".list", aDTO);
 	}
 	
-	@Override
-	public List<md_productDTO> getBoardListPage(Criteria cri) throws Exception {
-		logger.debug(" DAO : getBoardListPage(Criteria cri)");
-		return sqlSession.selectList(NAMESPACE + ".listPage", cri);
-	}
-	
-	
-	@Override
-	public int getBoardCount() throws Exception {
-		logger.debug(" DAO : getBoardCount() ");
-		return sqlSession.selectOne(NAMESPACE + ".countBoard");
-	}
-	
-	
-	
-	
-	
+
 }

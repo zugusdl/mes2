@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.mes2.metadata.domain.Criteria;
+import com.mes2.metadata.domain.alllistDTO;
 import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.metadata.persistence.MetadataDAO;
 
@@ -22,17 +23,16 @@ public class MetadataServiceImpl implements MetadataService {
 	private MetadataDAO mdao;
 
 	
-	@Override
-	public List<md_productDTO> productListAll() throws Exception {
-		logger.debug("S : productListAll()");
-		return mdao.getproductListAll();
-	}
+	/*
+	 * @Override public List<md_productDTO> productListAll() throws Exception {
+	 * logger.debug("S : productListAll()"); return mdao.getproductListAll(); }
+	 */
 
-	@Override
-	public List<md_productDTO> productdatefilter(Date start, Date end, String search) throws Exception {
-		logger.debug("S : productdatefilter()");
-		return mdao.getproductdatefilter(start, end, search);
-	}
+	/*
+	 * @Override public List<md_productDTO> productdatefilter(Date start, Date end,
+	 * String search) throws Exception { logger.debug("S : productdatefilter()");
+	 * return mdao.getproductdatefilter(start, end, search); }
+	 */
 
 	@Override
 	public int productinsert(md_productDTO dto) throws Exception {
@@ -53,15 +53,18 @@ public class MetadataServiceImpl implements MetadataService {
 	}
 
 	@Override
-	public List<md_productDTO> boardListPage(Criteria cri) throws Exception {
+	public int gettotalcount(alllistDTO aDTO) throws Exception {
 		
-		return mdao.getBoardListPage(cri);
+		return mdao.gettotalcount(aDTO);
 	}
 
 	@Override
-	public int totalBoardCount() throws Exception {
-		logger.debug(" S : totalBoardCount()  ");
-		return mdao.getBoardCount();
+	public List<md_productDTO> getlist(alllistDTO aDTO) throws Exception {
+		
+		return mdao.getlist(aDTO);
 	}
+
+	
+	
 
 }

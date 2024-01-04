@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mes2.metadata.domain.Criteria;
 import com.mes2.metadata.domain.PageVO;
+import com.mes2.metadata.domain.alllistDTO;
 import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.metadata.service.MetadataService;
 
@@ -42,28 +43,30 @@ public class  MetadataController{
 	
 	
 	// 품목관리 페이지, 모든 품목정보리스트 호출
-	@RequestMapping(value="/firstpage", method=RequestMethod.GET)
-	public String productdataGET(Model model, Criteria cri) throws Exception{
-		
-		//서비스 - 디비에 저장된 글을 가져오기
-		List<md_productDTO> productList = mService.boardListPage(cri);
-		logger.debug(" @@@ " + productList);
+	@RequestMapping(value="/firstpage", method= {RequestMethod.POST, RequestMethod.GET})
+	public String productdataGET(Model model, Criteria cri, alllistDTO aDTO) throws Exception{
 		
 		
-		// 페이지 블럭 정보 준비 -> view 페이지 전달
+		
+		aDTO.setCri(cri);
+		logger.debug("aDTO 보자 "+aDTO);
+		
+		
+		//페이징 pageVO 작업
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
-		pageVO.setTotalCount(mService.totalBoardCount());
+		pageVO.setTotalCount(mService.gettotalcount(aDTO));
+		logger.debug("aDTO 카운트 "+pageVO);
 		
-		logger.debug(" 확인 :"+pageVO);
+		
+		//리스트 가져오기
+		List<md_productDTO> productList = mService.getlist(aDTO);
+		
+		//모델로 보내기
+		model.addAttribute("aDTO", aDTO);
+		model.addAttribute("productList", productList);
 		model.addAttribute("pageVO", pageVO);
 		
-		
-		
-		//List<md_productDTO> productList = mService.productListAll();
-		logger.debug("@@@" + productList);
-		logger.debug("모든품목정보 출력 컨트롤러 실행 성공");
-		model.addAttribute("productList", productList);
 		
 		return "/meta_data/productdata/productinfo";
 		
@@ -73,44 +76,38 @@ public class  MetadataController{
 	
 	
 	// 품목관리 페이지, 날짜필터 품목정보리스트 호출
-	@PostMapping("/filter")
-	public String productdataPOST(Model model,
-			@RequestParam("startDate") String startDate,
-			@RequestParam("endDate") String endDate,
-			@RequestParam("search") String search) throws Exception{
-	
-		
-		
-		Date start;
-		Date end;
-		
-		if(startDate.equals("")) {
-			  start = null;
-		}else {
-			start = Date.valueOf(startDate);
-		}
-		
-		if(endDate.equals("")) {
-			  end = null;
-		}else {
-			end = Date.valueOf(endDate);
-		}
-		
-		//logger.debug(""+search.getClass());
-		//logger.debug(""+start.getClass());
-		//logger.debug(""+end.getClass());
-		//logger.debug("날짜필터 컨트롤러 실행 성공");
-		//logger.debug("확인" + startDate + endDate + search);
-
-		List<md_productDTO> productList = mService.productdatefilter(start, end, search);
-		logger.debug("@@@" + productList);
-		
-		model.addAttribute("productList", productList);
-		
-		return "/meta_data/productdata/productinfo";
-		
-		
-	}
+	/*
+	 * @PostMapping("/filter") public String productdataPOST(Model model,
+	 * 
+	 * @RequestParam("startDate") String startDate,
+	 * 
+	 * @RequestParam("endDate") String endDate,
+	 * 
+	 * @RequestParam("search") String search) throws Exception{
+	 * 
+	 * 
+	 * 
+	 * Date start; Date end;
+	 * 
+	 * if(startDate.equals("")) { start = null; }else { start =
+	 * Date.valueOf(startDate); }
+	 * 
+	 * if(endDate.equals("")) { end = null; }else { end = Date.valueOf(endDate); }
+	 * 
+	 * //logger.debug(""+search.getClass()); //logger.debug(""+start.getClass());
+	 * //logger.debug(""+end.getClass()); //logger.debug("날짜필터 컨트롤러 실행 성공");
+	 * //logger.debug("확인" + startDate + endDate + search);
+	 * 
+	 * List<md_productDTO> productList = mService.productdatefilter(start, end,
+	 * search); logger.debug("@@@" + productList);
+	 * 
+	 * model.addAttribute("productList", productList);
+	 * 
+	 * return "/meta_data/productdata/productinfo";
+	 * 
+	 * 
+	 * }
+	 */
 	
 	//파일 추가 코드
 	// 파일정보(이름)을 저장, 파일업로드 처리
@@ -136,7 +133,7 @@ public class  MetadataController{
 	
 	
 				// 실제 폴더 생성
-				File file = new File("C:\\Users\\qhtjd\\git\\mes2\\mes2\\src\\main\\webapp\\resources\\img\\metadata\\"+ofileName);
+				File file = new File("C:\\Users\\ITWILL\\git\\mes2\\mes2\\src\\main\\webapp\\resources\\img\\metadata\\"+ofileName);
 				// 파일업로드
 				if(mFile.getSize() != 0) { //첨부파일이 있을때
 					if(!file.exists()) { // 파일,디렉터리(폴더)가 존재하는지 체크

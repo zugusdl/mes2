@@ -364,7 +364,7 @@ function redirectToFirstPage() {
 		<div class="son_serch">
 			
 			
-			<form id="dateForm" action="/meta_data/filter" onsubmit="" method="POST">
+			<form id="dateForm" action="/meta_data/firstpage" onsubmit="" method="POST">
 				<span class="son_search-font">등록기간</span>
 				<input id="dtIp" type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
 				<input id="dtIp" type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px"/>					
@@ -402,7 +402,7 @@ function redirectToFirstPage() {
 				<div class="son_list-box">	
 						<table class="table table-hover">
 							<thead>
-								<tr class="table-success" >
+								<tr class="table-success" style="text-align: center;" >
 									<th scope="col">C</th> <!-- 체크박스 -->
 									<th scope="col">품목코드</th>
 									<th scope="col">품명</th>
@@ -412,17 +412,17 @@ function redirectToFirstPage() {
 									<th scope="col">단가</th>
 									<th scope="col">취급유무</th>
 									<th scope="col">등록일</th>
-									<th scope="col">사진</th>
-									
+									<th scope="col" width="100px">사진</th>
+									<th scope="col"></th>
 									
 								</tr>
 							</thead>
 							
-							<tbody >
+							<tbody>
 								
 								
 								<!-- 품목추가버튼 누를시 나옴 -->
-								<tr id="inserthang" style="display: none;">	
+								<tr id="inserthang" style="display: none; text-align: center; vertical-align: middle;">	
 									
 									<td></td>							
 									<td><input type="text" name="product_code" size="5"></td>
@@ -435,7 +435,9 @@ function redirectToFirstPage() {
 									<td></td>
 									<td>
 									<img id="img" width="250px"/> 						
-									<input type="file"  value="사진 추가" id="addBtn">
+									<input type="file"  value="사진 추가" id="addBtn" style="width: 200px;">									
+									</td>
+									<td>
 									<button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">저장</button>
 									</td>									
 								</tr>	
@@ -445,7 +447,7 @@ function redirectToFirstPage() {
 								<!-- 모든물품 검색하기 productList를 가져오면 실행됨 -->
 								<c:if test="${!empty productList }">
 								<c:forEach var="plist" items="${productList }">
-								<tr>
+								<tr style="text-align: center; vertical-align: middle; ">
 									<td><input type="checkbox" class="updatecheckbox" style="display: none;" onchange="a(this)"/></td>									
 									
 									
@@ -460,6 +462,7 @@ function redirectToFirstPage() {
 									<td class="a">																	  							     								
 									<img src="../../../../resources/img/metadata/${plist.ofileName }" width="200px" alt="">
 									</td>
+									<td class="a" style="content: '\00a0'"></td>
 									
 									
 															
@@ -471,11 +474,13 @@ function redirectToFirstPage() {
 									<td class="b" style="display: none;"><input type="text" name="price" size="5" value="${plist.price }"></td>
 									<td class="b" style="display: none;"><input type="text" name="production_status" size="5" value="${plist.production_status }"></td>
 									<td class="b" style="display: none;">${plist.regdate }</td>
-									<td class="b" style="display: none; width: ;">								
+									<td class="b" style="display: none; width: 80px;">								
 									<img id="img2" src="../../../../resources/img/metadata/${plist.ofileName }" width="200px" alt="123">						
-									<input type="file" id="addBtn2">
-									<button type="button" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button> 
-									<button type="button" class="btn btn-secondary" id="submitbtn3" onclick="submitData3(this)" >삭제</button> 									
+									<input type="file" id="addBtn2" style="width: 200px;">
+									</td>
+									<td class="b" style="display: none; width: 80px; ">
+									<button type="button" style="margin: 10px 0;" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button>
+									<button type="button" style="margin: 10px 0;" class="btn btn-secondary" id="submitbtn3" onclick="submitData3(this)" >삭제</button>																		 									
 									</td>
 									
 								
@@ -494,7 +499,7 @@ function redirectToFirstPage() {
 			</div>
 		<!--  페이징 -->
 		<div class="box-footer clearfix">
-		<div style="margin: 0 auto; width: fit-content;">
+		<div style="margin: 0 auto; width: fit-content;" class="pagination-container">
 		<ul class="pagination pagination-sm no-margin pull-right">
 			
 			<c:if test="${pageVO.prev }">
@@ -502,8 +507,8 @@ function redirectToFirstPage() {
 			</c:if>
 			
 			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
-				<li ${pageVO.cri.page == i?  "class='active'":"" }>
-					<a href="/meta_data/firstpage?page=${i }">
+				<li class=${pageVO.cri.page == i ? "active":"" }>
+					<a href="/meta_data/firstpage?page=${i }&search=${aDTO.search }&startDate=${aDTO.startDate }&endDate=${aDTO.endDate }">
 						${i }
 					</a>
 				</li>
