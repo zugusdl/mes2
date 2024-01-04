@@ -10,6 +10,10 @@ public class ProductSearchParam {
 	private Date startDate;
 	private Date endDate;
 	
+	private int page;
+	private int pageSize;
+	
+	
 	public String getName() {
 		return name;
 	}

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.mes2.materials.domain.OutDTO;
 import com.mes2.production.domain.InstructionsDTO;
 import com.mes2.production.domain.ProductDTO;
 import com.mes2.production.domain.ProductionLineDTO;
@@ -387,6 +388,18 @@ public class InstructionsServiceImpl implements InstructionsService {
 		}
 		
 	}
+
+	//출고요청 상태 조회
+	@Override
+	public OutDTO findBySopCodeForOutDTO(String sopCode) {
+		return instructionsDAO.selectByBaseCodeForOutDTO(sopCode);
+	}
+
+	@Override
+	public int getTotalCountWithSearchParam(InstructionsSearchParam searchParam) {
+		return instructionsDAO.getTotalCountWithSearchParam(searchParam);
+	}
+	
 	
 	
 	

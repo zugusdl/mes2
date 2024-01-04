@@ -82,6 +82,46 @@
 		where code = #{code}
 	</update>
 	
+	<!-- 서치 총 카운트 -->
+	<select id="selectBySearchParamCodeForTotalCount" resultType="int">
+		select count(*)
+		from instructions 
+		<where>
+			<if test="state !=null and !state.equals('')">
+				<![CDATA[
+            	and state = #{state}
+            	]]>   
+            </if>
+		
+            <if test="code !=null and !code.equals('')">
+               <![CDATA[
+               	and code like concat('%',#{code},'%')
+               ]]>    
+            </if>
+                
+            <if test="state == null or state.equals('')">
+            	and state != 'REQUESTED'
+            </if>
+            
+
+            <if test="startDate != null and endDate != null ">
+                AND due_Date between #{startDate} AND #{endDate}
+            </if>	
+<!--             
+            <if test="startTime != null  and endTime == null ">
+                <![CDATA[ AND start_time > #{startTime}]]>
+            </if>	
+
+			<if test="startTime == null  and endTime != null ">
+                <![CDATA[ AND end_time < #{endTime} ]]>
+            </if>
+             -->
+             
+         </where>
+	</select>
+	
+	
+	
 	<select id="selectBySearchParamCode" resultMap="instructionsDTOMap">
 		select * 
 		from instructions 
@@ -115,6 +155,12 @@
                 <![CDATA[ AND end_time < #{endTime} ]]>
             </if>
              -->
+             
+            ORDER BY index 
+			<if test="startPage != null and pageSize !=null">
+				LIMIT #{startPage}, #{pageSize}
+			</if>
+             
          </where>
 	</select>
 
@@ -239,9 +285,9 @@
 	</insert>
 
 	<!-- 자재 전달 상황 조회 -->
-	<select id="selectOutWarehouseForMaterials">
+	<select id="selectOutWarehouseForMaterials" resultType="com.mes2.materials.domain.OutDTO" parameterType="java.util.Map" >
 		select * 
 		from out_warehouse 
-		where based_code = #{basedCode} and status ='complete' and out_type = 'p'
+		where based_code = #{basedCode} and out_type = 'p'
 	</select>
 </mapper>

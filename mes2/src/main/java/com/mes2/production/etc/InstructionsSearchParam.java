@@ -13,6 +13,9 @@ public class InstructionsSearchParam {
 	private Timestamp endTime;
 	private String searchType;
 	
+	private int page;
+	private int pageSize;
+	
 	// 날짜 검색 전용
 	private Date startDate;
 	private Date endDate;

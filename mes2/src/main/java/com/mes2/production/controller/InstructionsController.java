@@ -23,10 +23,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mes2.materials.domain.OutDTO;
 import com.mes2.production.domain.InstructionsDTO;
 import com.mes2.production.domain.ProductionLineDTO;
+import com.mes2.production.etc.Criteria;
 import com.mes2.production.etc.InstructionResultParam;
 import com.mes2.production.etc.InstructionsSearchParam;
+import com.mes2.production.etc.PageVO;
+import com.mes2.production.etc.RequestMaterialsDTO;
 import com.mes2.production.exception.ValidationValueErrorException;
 import com.mes2.production.service.InstructionsService;
 import com.mes2.production.service.ProductionLineService;
@@ -83,7 +87,8 @@ public class InstructionsController {
 			@ModelAttribute(value="searchEndDate") String searchEndDate, 
 			@ModelAttribute(value = "searchCode") String searchCode,
 			@ModelAttribute(value="searchType") String searchType,
-			@RequestParam(value="searchState", required = false) String searchState ) {
+			@RequestParam(value="searchState", required = false) String searchState ,
+			Criteria cri) {
 		
 		log.debug("isController : 넘겨받은 startDate : " + searchStartDate);
 		log.debug("isController : 넘겨받은 endDate : " + searchEndDate);
@@ -153,6 +158,14 @@ public class InstructionsController {
 			model.addAttribute("startDate", searchStartDateV2);
 			model.addAttribute("endDate", searchEndDateV2);
 		}
+		
+		
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(instructionsService.getTotalCountWithSearchParam(param));
+		model.addAttribute("pageVO", pageVO);
+		
+		
 //		if(searchEndDate!=null && !searchEndDate.equals("")) {
 //			model.addAttribute("endDate", Date.valueOf(searchEndDate));
 //		}
@@ -228,9 +241,16 @@ public class InstructionsController {
 
 		String state="REQUESTED";
 		
+		List<InstructionsDTO> instructions = instructionsService.findByState(state);
+		for(InstructionsDTO isDTO : instructions) {
+			
+			OutDTO outDTO = instructionsService.findBySopCodeForOutDTO(isDTO.getSopCode());
+			isDTO.setState(isDTO.getState());
+		}
+		
 		model.addAttribute("instructions" , instructionsService.findByState(state));
-
-
+		
+		
 		return "/instructions/request";
 	}
 	

@@ -5,6 +5,7 @@ package com.mes2.production.service;
 import java.sql.Date;
 import java.util.List;
 
+import com.mes2.materials.domain.OutDTO;
 import com.mes2.production.domain.InstructionsDTO;
 import com.mes2.production.etc.InstructionResultParam;
 import com.mes2.production.etc.InstructionsSearchParam;
@@ -37,5 +38,10 @@ public interface InstructionsService {
 	
 	//자재 요청하기
 	public void requestMaterials(String productCode, int quantity);
+	
+	//자재 출고 내용 조회
+	public OutDTO findBySopCodeForOutDTO(String sopCode);
+	
+	public int getTotalCountWithSearchParam(InstructionsSearchParam searchParam);
 	
 }

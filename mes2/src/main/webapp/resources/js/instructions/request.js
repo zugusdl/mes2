@@ -82,11 +82,13 @@ function showMaterials(data){
 	
 	bottomContent.appendChild(table);
 	
-	var requestButton = document.createElement("button");
-	requestButton.id = "requestButton";
-	requestButton.textContent ="자재요청";
+	if(data.status==='empty'){
+		var requestButton = document.createElement("button");
+		requestButton.id = "requestButton";
+		requestButton.textContent ="자재요청";
+		bottomContent.appendChild(requestButton);
+	}
 	
-	bottomContent.appendChild(requestButton);
 	if(requestButton.onclick){
 		requestMaterials(detailSopCode,salesQuantity);
 	}

@@ -18,4 +18,6 @@ public interface ProductDAO {
 	public String searchLastLot(String searchLot);
 	
 	public int insertProduct(ProductDTO productDTO);
+	
+	public int updateProduct(ProductDTO productDTO);
 }

@@ -77,6 +77,7 @@
           <li><a href="/instructions/search">작업지시관리</a></li>
           <li><a href="/productionLine/search">라인관리</a></li>
           <li><a href="/product/search">생산제품</a></li>
+          <li><a href="/validation/search">품질검사</a></li>
         </ul>
       </li>
       <li>
