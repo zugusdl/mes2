@@ -11,7 +11,7 @@ public interface InDAO {
 	public void registerInbound(InDTO idto) throws Exception;
 	
 	// 입고 전체 리스트 조회
-	public List<InDTO> getAllInboundInfo(InDTO idto) throws Exception;
+	public List<InDTO> getAllInboundInfo(InDTO idto, Criteria cri) throws Exception;
 	
 	// 입고 수량 업데이트
 	public void updateQuantity(String product_code, int quantity, String category) throws Exception;

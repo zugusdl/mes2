@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.PurchaseDTO;
+import com.mes2.materials.domain.SearchDTO;
 import com.mes2.materials.persistence.PurchaseDAO;
 
 
@@ -33,29 +34,22 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
 	@Override
-	public List<PurchaseDTO> PurchaseInfo(PurchaseDTO pdto) throws Exception {
+	public List<PurchaseDTO> PurchaseInfo(PurchaseDTO pdto, Criteria cri, SearchDTO sdto) throws Exception {
 		logger.debug(" Service - PurchaserInfo(PurchaseDTO pdto) ");
-		return pdao.listPurchase(pdto);
+		return pdao.listPurchase(pdto , cri, sdto);
 	}
-
-
-
-
-	@Override
-	public List<PurchaseDTO> PurchaseDetailInfo(PurchaseDTO pdto) throws Exception {
-		return pdao.detailPurchase(pdto);
-	}
-
 
 	
 	@Override
 	public int updateOrderStatus(String status, String product_code) throws Exception {
+		logger.debug("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"+ product_code);
 		return pdao.updateOrderStatus(status, product_code);
 	}
 
 
 	@Override
 	public List<PurchaseDTO> getUpdateStatus(String product_code) throws Exception {
+		logger.debug("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"+ product_code);
 		return pdao.getUpdateStatus(product_code);
 	}
 
@@ -68,15 +62,33 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
 	@Override
-	public List<PurchaseDTO> purchaseListPage(Criteria cri) throws Exception {
-		return pdao.getPurchaseListPage(cri);
+	public List<PurchaseDTO> purchaseListPage(Criteria cri, SearchDTO sdto) throws Exception {
+		return pdao.getPurchaseListPage(cri, sdto);
 	}
 
 
 	@Override
-	public int totalPurchaseCount() throws Exception {
-		return pdao.getPurchaseCount();
+	public int totalPurchaseCount(SearchDTO sdto) throws Exception {
+		return pdao.getPurchaseCount(sdto);
 	}
+
+
+	@Override
+	public void MaterialReceipt(String product_code, int quantity) throws Exception {
+		pdao.MaterialReceipt(product_code, quantity);
+		
+	}
+
+
+	@Override
+	public List<PurchaseDTO> searchMaterial(String searchType, String keyword) throws Exception {
+		return pdao.searchMaterial(searchType, keyword);
+		
+	}
+
+
+
+	
 
 
 

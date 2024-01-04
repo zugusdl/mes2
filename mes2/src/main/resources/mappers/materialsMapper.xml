@@ -6,7 +6,7 @@
 <mapper namespace="com.mes2.mapper.MaterialsMapper">
 
 	<!-- 테이블 데이터 매핑 -->
-  <resultMap id="InDTO" type="com.mes2.materials.domain.InDTO">
+	<resultMap id="InDTO" type="com.mes2.materials.domain.InDTO">
 		<result property="in_code" column="in_code" />
 		<result property="in_regdate" column="in_regdate" />
 		<result property="product_code" column="product_code" />
@@ -17,50 +17,93 @@
 		<result property="name" column="name" />
 		<result property="cost" column="cost" />
 		<result property="user_id" column="user_id" />
-		<result property="unit" column="unit" />
 	</resultMap>
 
 
-	<!-- 자재 신청 -->
-	<insert id="addPurchase"> INSERT INTO material_order (product_code,
-		category,
-		name, cost, quantity, orders_code, user_id) VALUES (#{product_code},
-		#{category},#{name}, #{cost}, #{quantity}, SUBSTR(CONCAT_WS('-',
-		(SELECT
-		code_group FROM common_code WHERE code_group_name = '발주'),
-		#{product_code}),
-		1, 20), #{user_id})
+	<resultMap type="com.mes2.materials.domain.PageVO"
+		id="PageVO">
+		<result property="totalCount" column="totalCount" />
+		<result property="startPage" column="startPage" />
+		<result property="endPage" column="endPage" />
+		<result property="prev" column="prev" />
+		<result property="next" column="next" />
+		<result property="displayPageNum" column="displayPageNum" />
+	</resultMap>
+
+	<resultMap type="com.mes2.materials.domain.Criteria"
+		id="Criteria">
+		<result property="page" column="page" />
+		<result property="pageSize" column="pageSize" />
+	</resultMap>
+
+	<resultMap type="com.mes2.materials.domain.SearchDTO"
+		id="Search">
+		<result property="category" column="category" />
+		<result property="name" column="name" />
+		<result property="searchType" column="searchType" />
+		<result property="keyword" column="keyword" />
+	</resultMap>
+
+	<!-- 자재 신청 시 주문코드 부여 -->
+	<insert id="insertMaterialOrderWithCode"
+		parameterType="java.util.Map">
+	 <![CDATA[
+		INSERT INTO material_order (orders_code, product_code, material_code, quantity, user_id)
+		SELECT
+		CONCAT('ORD-', #{material_code}) AS orders_code,
+		#{product_code},
+		#{material_code},
+		#{quantity},
+		#{user_id}
+		FROM meta_data_required_amount mdro where mdro.material_code =#{material_code}
+	]]>
 	</insert>
 
+
 	<!-- 자재 전체 리스트 -->
-	<select id="listPurchase"
+	<select id="materialList"
 		resultType="com.mes2.materials.domain.PurchaseDTO">
-		select * from material_order
+		select mo.orders_code, mo.product_code, mdp.name, mdp.cost,
+		mdp.price,
+		mdp.category, mdro.material_code, mdro.amount,
+		mdro.amount_unit,
+		mo.regdate
+		, mo.user_id, mo.status
+		from material_order
+		mo join meta_data_required_amount mdro on
+		mdro.material_code =
+		mo.material_code
+		join meta_data_product mdp on mdp.product_code =
+		mo.product_code limit #{startPage},#{pageSize}
 	</select>
 
 	<!-- 자재 상태 변경 업데이트 -->
 	<update id="updateOrderStatus">
-		UPDATE material_order SET status = #{status} WHERE
-		product_code =#{product_code}
+		UPDATE material_order SET status = #{status} WHERE product_code =#{product_code}
 	</update>
 
 	<!-- 상태 변경된 자재 리스트 불러오기 -->
 	<select id="getStatus" parameterType="String"
 		resultType="com.mes2.materials.domain.PurchaseDTO">
-		SELECT status FROM material_order WHERE product_code =
-		#{product_code}
+		SELECT status FROM material_order WHERE product_code =#{product_code} 
 	</select>
 
-	<!-- 발주 수량 stock 업데이트 -->
+
+	<!-- 발주 입고 수량 stock 업데이트 -->
 	<update id="PurchaseupdateQuantity"
 		parameterType="java.util.Map">
       <![CDATA[
         UPDATE stock
         SET quantity = quantity + #{quantity}
-        WHERE product_code = #{product_code}
-        AND category = #{category}
-    ]]>
+        WHERE product_code =#{product_code}
+    	]]>
 	</update>
+
+	<!-- 자재 입고 테이블 수량 업데이트 -->
+	<insert id="insertMaterialReceipt" parameterType="java.util.Map">
+		insert into in_warehouse (product_code, quantity) values(#{product_code}, #{quantity})
+	</insert>
+
 
 
 	<!-- 발주 글 목록 조회(page) -->
@@ -81,43 +124,47 @@
 	</select>
 
 
+  <!-- 통합 검색 쿼리 -->
+    <select id="searchMaterial" resultType="com.mes2.materials.domain.PurchaseDTO">
+        SELECT 
+            <choose>
+                <when test="searchType == 'name'">
+                    mdp.name
+                </when>
+                <when test="searchType == 'category'">
+                    mdp.category
+                </when>
+            </choose>
+        FROM material_order mo
+        JOIN meta_data_product mdp ON mdp.product_code = mo.product_code
+        WHERE 
+            <choose>
+                <when test="searchType == 'name'">
+                    mdp.name LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="searchType == 'category'">
+                    mdp.category LIKE '%' || #{keyword} || '%'
+                </when>
+            </choose>
+    </select>
 
 
-
-
-
-
-
-	<!-- 입고 신청 -->
-	<insert id="addIn">
-		INSERT INTO in_warehouse (in_code, product_code, quantity, user_id)
-		VALUES (SUBSTR(CONCAT_WS('-', (SELECT code_group FROM common_code
-		WHERE code_group_name = '입고'), #{product_code}), 1, 20),
-		#{product_code},
-		#{quantity},
-		#{user_id})
-	</insert>
-
-	<!-- stock 테이블 추가 업데이트 -->
-	<update id="addStock">
-	     <![CDATA[
-        UPDATE stock
-        SET quantity = quantity + #{quantity}
-        WHERE product_code = #{product_code}
-        AND category = #{category}
-    ]]>
-	</update>
 
 
 	<!-- 입고 전체 리스트 -->
-	<select id="getInList" 
-		resultType="com.mes2.materials.domain.InDTO" resultMap="InDTO">
-	select iw.in_code, mdp.name, mdp.product_code, mdp.cost, mdp.category, iw.pd_lot, iw.quantity, mdp.unit, in_regdate, user_id 
-from in_warehouse iw join meta_data_product mdp on mdp.product_code = iw.product_code
+	<select id="getInList"
+		resultType="com.mes2.materials.domain.InDTO"
+		parameterType="java.util.Map">
+		select iw.in_code, mdp.name, mdp.product_code, mdp.cost,
+		mdp.category, iw.pd_lot, iw.quantity, mdp.unit, in_regdate, user_id
+		from in_warehouse iw
+		join meta_data_product mdp
+		on mdp.product_code =
+		iw.product_code limit #{startPage},#{pageSize}
 	</select>
 
 
-	<!-- 입고 수량 업데이트 -->
+	<!-- stock 테이블 입고 수량 업데이트 -->
 	<update id="InupdateQuantity" parameterType="java.util.Map">
       <![CDATA[
         UPDATE stock
@@ -127,7 +174,41 @@ from in_warehouse iw join meta_data_product mdp on mdp.product_code = iw.product
     ]]>
 	</update>
 
-	<!-- 입고 글 목록 조회(page) -->
+	<!-- 로트번호 입고코드 부여 -->
+	<update id="assignInCodeAndChangeStatus"
+		parameterType="java.util.Map">
+		UPDATE in_warehouse
+		SET in_code =
+		SUBSTRING(CONCAT_WS('-',
+		(SELECT code_group FROM common_code WHERE
+		code_group_name = '입고'),
+		#{pd_lot}), 1, 200)
+		WHERE pd_lot = #{pd_lot}
+	</update>
+
+
+	<!-- 원재료 입고코드 부여 -->
+	<update id="assignRawMaterialInCodeAndUpdate"
+		parameterType="java.util.Map">
+		UPDATE in_warehouse
+		SET in_code =
+		SUBSTRING(CONCAT_WS('-',
+		(SELECT code_group FROM common_code
+		WHERE
+		code_group_name = '입고'),
+		#{product_code}, #{material_code},
+		#{orders_code}, 1, 100),
+		product_code =
+		#{product_code},
+		orders_code =
+		#{orders_code},
+		WHERE category ='원재료' AND
+		in_code =#{in_code}
+	</update>
+
+
+
+	<!-- 발주 글 목록 조회(page) -->
 	<select id="InlistPage"
 		resultType="com.mes2.materials.domain.InDTO">
 		select * from in_warehouse
@@ -136,19 +217,13 @@ from in_warehouse iw join meta_data_product mdp on mdp.product_code = iw.product
 		limit #{startPage},#{pageSize}
 	</select>
 
-	<!-- 입고 전체 글 개수 조회 -->
+	<!-- 발주 전체 글 개수 조회 -->
 	<select id="InCount" resultType="int">
   	  <![CDATA[
 	  	  select count(*) from in_warehouse 
 	  	  where in_index > 0  
    	  ]]>
 	</select>
-
-
-
-
-
-
 
 
 	<!-- 출고 신청 폼에 수주 출고 상태 업데이트 같이 해줘야 함 -->

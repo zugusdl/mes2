@@ -5,18 +5,37 @@ public class Criteria {
 	private int page;
 	private int pageSize;
 	
-	private String type;
-	private String keyword;
+	private String type; // 검색조건
+	private String keyword; // 키워드
 	
 	public Criteria() {
 		this.page = 1;
-		this.pageSize = 2;
+		this.pageSize = 10;
 	}
 		
+
 	
-	public String[] getTypeArr() {
-		return type == null? new String[] {} : type.split("");
+	public String getType() {
+		return type;
 	}
+	
+	
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
+	public String getKeyword() {
+		return keyword;
+	}
+	
+	
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	
+	
 	
 	// alt shift s + r
 
@@ -28,6 +47,11 @@ public class Criteria {
 		}
 		this.page = page;		
 	}
+
+	
+	
+	
+
 	public void setPageSize(int pageSize) {
 		
 		if(pageSize <= 0 || pageSize > 100) {
@@ -55,10 +79,11 @@ public class Criteria {
 
 	
 	
-	// alt shift s + s
 	@Override
 	public String toString() {
-		return "Criteria [page=" + page + ", pageSize=" + pageSize + "]";
+		return "Criteria [page=" + page + ", pageSize=" + pageSize + ", type=" + type + ", keyword=" + keyword + "]";
 	}
+	
+	
 	
 }

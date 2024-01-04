@@ -36,9 +36,16 @@ public class InDAOImpl implements InDAO {
 	
 
 	@Override
-	public List<InDTO> getAllInboundInfo(InDTO idto) throws Exception {
-		logger.debug(" DAO -  입고 전체 리스트 listIn(InDTO idto) ");   
-		return sqlSession.selectList(NAMESPACE + ".getInList");
+	public List<InDTO> getAllInboundInfo(InDTO idto, Criteria cri) throws Exception {
+		logger.debug(" DAO -  입고 전체 리스트 listIn(InDTO idto) "); 
+	    
+		
+		Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("startPage", cri.getStartPage());
+        paramMap.put("pageSize", cri.getPageSize());
+		
+	    
+		return sqlSession.selectList(NAMESPACE + ".getInList", paramMap);
 	}
 	
 	
@@ -57,6 +64,14 @@ public class InDAOImpl implements InDAO {
 
 	@Override
 	public List<InDTO> getInListPage(int page) throws Exception {
+		
+		// 페이징처리 계산
+		// page 1 => 1~10  page 2 => 11~20 ... page 3 => 21-30
+		//  => limit 0,10   =>  limit  10,10    => limit 20,10
+		
+		page = (page - 1) * 10;
+		
+		
 		return sqlSession.selectList(NAMESPACE + ".InlistPage",page);
 	}
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.PageVO;
 import com.mes2.materials.domain.PurchaseDTO;
+import com.mes2.materials.domain.SearchDTO;
 import com.mes2.materials.service.PurchaseService;
 
 @Controller
@@ -31,7 +32,9 @@ public class PurchaseController {
 
 	private int quantity;
 	private String category;
-
+	private String product_code;
+	private String orders_code;
+	
 	// http://localhost:8080/materials/purchaselist
 
 	// 발주 정보 입력 - GET
@@ -44,8 +47,9 @@ public class PurchaseController {
 	// 발주 정보 처리 - POST
 	@RequestMapping(value = "/purchase", method = RequestMethod.POST)
 	public String insertPurchasePOST(PurchaseDTO pdto, @RequestParam("product_code") String product_code,
+			@RequestParam("orders_code") String orders_code,
             @RequestParam("quantity") int quantity,
-            @RequestParam("category") String category) throws Exception {
+            @RequestParam("category") String category, Model model) throws Exception {
 		
 		// 한글인코딩 (필터)
 		// 전달정보 저장
@@ -54,10 +58,13 @@ public class PurchaseController {
 		// 서비스 - DB에 글쓰기(insert) 동작 호출
 		pService.purchaseOrder(pdto);
 		  
-		// 서비스 - meta_data_product 수량 업데이트 호출
+		model.addAttribute("orders_code", orders_code);
+		// 서비스 - stock 수량 업데이트 호출
 		pService.updateQuantity(product_code, quantity, category);
 		    
-	    
+	    // 서비스 - in_warehouse 수량 업데이트 호출 
+		pService.MaterialReceipt(product_code, quantity);
+		
 		logger.debug(" /materials/purchaselist 이동 ");
 
 		return "redirect:/materials/purchaselist";
@@ -68,52 +75,69 @@ public class PurchaseController {
 	
 	// 발주 리스트 - GET
 	@GetMapping(value = "/purchaselist")
-	public void listAllGET(Model model, PurchaseDTO pdto, Criteria cri) throws Exception {
+	public void listAllGET(Model model, PurchaseDTO pdto, Criteria cri, SearchDTO sdto) throws Exception {
 		logger.debug("/purchase/purchaselist -> listAllGET() 호출 ");
 		logger.debug("/purchase/purchaselist  뷰페이지로 이동");
 
+	
 		// 서비스 - 디비에 저장된 글 가져오기
-		List<PurchaseDTO> purchaselist = pService.PurchaseInfo(pdto);
-
-		purchaselist = pService.purchaseListPage(cri);
+		List<PurchaseDTO> purchaselist = pService.PurchaseInfo(pdto, cri, sdto);
+		List<PurchaseDTO> purchaselist2 = pService.purchaseListPage(cri, sdto); 
+	
+	
+		for(PurchaseDTO pDTO : purchaselist2) {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + pDTO.toString());
+		
+		}
 		
 		// 페이지 블럭 정보 준비 -> view 페이지 전달
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);		
-		pageVO.setTotalCount(pService.totalPurchaseCount());
+		pageVO.setTotalCount(pService.totalPurchaseCount(sdto));
+		model.addAttribute("pageVO", pageVO);
 		
 		logger.debug(" 확인 :"+pageVO);
-		model.addAttribute("pageVO", pageVO);
 		
 		// 데이터를 연결된 뷰페이지로 전달(Model)
 		model.addAttribute("purchaselist", purchaselist);
+		model.addAttribute("purchaselist2", purchaselist2);
 
 	}
 
 	// 상태 변경
-	  @PostMapping(value="/updateStatus")
-	  @ResponseBody public int updateStatus(@RequestParam("status") String
-	  status, @RequestParam("product_code") String product_code) throws Exception {
-	  int purchaselist = pService.updateOrderStatus(status, product_code);
+		  @PostMapping(value="/updateStatus")
+		  @ResponseBody public int updateStatus(@RequestParam("status") String
+		  status, @RequestParam("product_code") String product_code) throws Exception {
+		  int purchaselist = pService.updateOrderStatus(status, product_code);
+		  
+		  return purchaselist;
+		  
+		 }
+	
 	  
-	  return purchaselist;
-	  
+	
+			
+			@GetMapping(value = "/getOrderStatus")
+			@ResponseBody
+			public List<PurchaseDTO> getOrderStatus(@RequestParam("product_code") String product_code) throws Exception {
+				List<PurchaseDTO> purchaselist = pService.getUpdateStatus(product_code);
+				return purchaselist;
+			}
+
+	
+	 @GetMapping(value ="/searchMaterials")
+	    public List<PurchaseDTO> searchMaterials(@RequestParam String searchType, @RequestParam String keyword, Model model) throws Exception {
+		    List<PurchaseDTO> purchaselist = pService.searchMaterial(searchType, keyword);
+			
+			for(PurchaseDTO pudto : purchaselist ) {
+				System.out.println("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧" + pudto.toString());
+			}
+		    model.addAttribute("purchaselist", purchaselist);
+
+	        return purchaselist; 
+
+	
 	 }
-	
-	  
-	
-	@GetMapping(value = "/getOrderStatus")
-	@ResponseBody
-	public List<PurchaseDTO> getOrderStatus(@RequestParam("product_code") String product_code) throws Exception {
-		List<PurchaseDTO> purchaselist = pService.getUpdateStatus(product_code);
-		return purchaselist;
-	}
-
-
-	
-	
-	
-
 
 //	 @GetMapping("/materials/getNameList")
 //	 @ResponseBody

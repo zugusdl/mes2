@@ -12,7 +12,10 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
+	<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/materials/searchList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
  <script>
 
 
@@ -22,12 +25,12 @@
     // 페이지 로드 시 상태 초기화
     initializeStatusButtons();
 
-    // 버튼 클릭 시 상태 업데이트
+    /* // 버튼 클릭 시 상태 업데이트
     $('.statusButton').on('click', function () {
         var button = $(this);
         var product_code = button.closest('tr').find('.product_code').val();
         updateStatus(button, product_code);
-    });
+    }); */
 });
 
 function initializeStatusButtons() {
@@ -87,10 +90,39 @@ function updateButtonStatus(button, product_code) {
         }
     });
 }
+
+var productCodeValue = "product_code"; // 실제 값을 적절히 설정하세요
+
+//AJAX를 사용하여 서버로 HTTP 요청 보내기
+$.ajax({
+url: 'getOrderStatus',
+method: 'GET', // 또는 다른 HTTP 메서드 사용
+data: { product_code: product_code },
+success: function(response) {
+ // 서버 응답 처리
+ console.log(response);
+},
+error: function(error) {
+ // 오류 처리
+ console.error(error);
+}
+});
 </script> 
+
+
+
 
 </head>
 <body>
+
+<form action="/materials/purchaselist" method="get">
+	<select name="searchType">
+		<option value="category">자재유형</option>
+		<option value="name">품목명</option>
+	</select>
+	<input type="text" name="keyword">
+	<input type="submit" value="검색하기">
+</form>
 
 
 	<!-- Button trigger modal -->
@@ -118,12 +150,39 @@ function updateButtonStatus(button, product_code) {
 								<td><input type="text" class="form-control"
 									name="orders_code"></td>
 							</tr>
-							<tr>
+					<tr>
 								<td>품목코드</td>
 								<td><input type="text" class="form-control"
-									name="product_code" required></td>
-							</tr>			
+									name="product_code"></td>
+							</tr>
 							<tr>
+								<td>원재료코드</td>
+								<td><input type="text" class="form-control"
+									name="material_code" required></td>
+							</tr>
+							<tr>
+								<td>품목명</td>
+								<td>
+									<div class="input-group">
+										<input type="text" class="form-control" name="name"
+											id="nameInput" required>
+										<div class="input-group-append">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">
+												<span class="caret"></span>
+											</button>
+											<div class="dropdown-menu">
+												<a class="dropdown-item" href="#" data-value="${pl.name}"
+													data-input="nameInput">옵션 1</a> 
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							
+							
+								<tr>
 								<td>자재유형</td>
 								<td>
 									<div class="input-group">
@@ -146,31 +205,32 @@ function updateButtonStatus(button, product_code) {
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td>품목명</td>
-								<td>
-									<div class="input-group">
-										<input type="text" class="form-control" name="name"
-											id="nameInput" required>
-										<div class="input-group-append">
-											<button class="btn btn-secondary dropdown-toggle"
-												type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-												aria-expanded="false">
-												<span class="caret"></span>
-											</button>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="#" data-value="${pl.name}"
-													data-input="nameInput">옵션 1</a> 
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
+							
+							
+							
 							<tr>
 								<td>원가</td>
 								<td><input type="text" class="form-control" name="cost"
 									required></td>
 							</tr>
+							
+							<tr>
+								<td>단가</td>
+								<td><input type="text" class="form-control" name="price"
+									required></td>
+							</tr>
+							<tr>
+								<td>용량</td>
+								<td><input type="text" class="form-control" name="amount"
+									required></td>
+							</tr>
+							
+							<tr>
+								<td>용량 단위</td>
+								<td><input type="text" class="form-control" name="amount_unit"
+									required></td>
+							</tr>
+						
 							<tr>
 								<td>발주수량</td>
 								<td><input type="number" class="form-control"
@@ -202,9 +262,12 @@ function updateButtonStatus(button, product_code) {
 		<tr>
 			<td></td>
 			<td>발주코드</td>
+			<td>원재료코드</td>
 			<td>품목명</td>
-			<td>원가</td>
 			<td>자재유형</td>
+			<td>원가</td>
+			<td>단가</td>
+			<td>용량</td>
 			<td>발주수량</td>
 			<td>발주등록일</td>
 			<td>발주담당자</td>
@@ -213,12 +276,14 @@ function updateButtonStatus(button, product_code) {
 
 		<c:forEach var="pl" items="${purchaselist}">
 			<tr>
-				<td><input type="hidden" class="product_code"
-					value="${pl.product_code}" /></td>
+				<td><c:out value="${pl.product_code}" /></td>
 				<td><c:out value="${pl.orders_code}" /></td>
+				<td><c:out value="${pl.material_code}" /></td>
 				<td><c:out value="${pl.name}" /></td>
-				<td><c:out value="${pl.cost}" /></td>
 				<td><c:out value="${pl.category}" /></td>
+				<td><c:out value="${pl.cost}" /></td>
+				<td><c:out value="${pl.price}" /></td>
+		<td><c:out value="${pl.amount}${pl.amount_unit}" /></td>
 				<td><c:out value="${pl.quantity}" /></td>
 				<td><fmt:formatDate value="${pl.regdate}" pattern="yyyy-MM-dd" /></td>
 				<td><c:out value="${pl.user_id}" /></td>
@@ -301,7 +366,6 @@ function updateButtonStatus(button, product_code) {
 
 	
 	</script>
-
-	<script src="${pageContext.request.contextPath}/resources/js/persistence/status.js"></script>
+	
 </body>
 </html>

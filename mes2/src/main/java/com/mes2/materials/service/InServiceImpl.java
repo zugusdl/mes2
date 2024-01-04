@@ -27,8 +27,8 @@ public class InServiceImpl implements InService {
 	}
 
 	@Override
-	public List<InDTO> getIncomingStockInfo(InDTO idto) throws Exception {
-		return idao.getAllInboundInfo(idto);
+	public List<InDTO> getIncomingStockInfo(InDTO idto, Criteria cri) throws Exception {
+		return idao.getAllInboundInfo(idto, cri);
 	}
 
 	

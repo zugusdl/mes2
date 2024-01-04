@@ -21,14 +21,14 @@
 <body>
 
 	
-	<!-- Button trigger modal -->
-	<div class="col-md-13 text-end">
-		<!-- Button trigger modal -->
+	<!-- <!-- Button trigger modal -->
+<!-- 	<div class="col-md-13 text-end">
+		Button trigger modal
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 			data-bs-target="#exampleModal">신청</button>
 	</div>
 
-	<!-- Modal -->
+	Modal
 	<form action="/materials/in" method="post">
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -109,11 +109,11 @@
 								<td><input type="number" class="form-control"
 									name="quantity" required></td>
 							</tr>
-							<!-- <tr>
+							<tr>
 								<td>입고등록일</td>
 								<td><input type="date" class="form-control" name="in_regdate"
 									required></td>
-							</tr> -->
+							</tr>
 							<tr>
 								<td>입고담당자</td>
 								<td><input type="text" class="form-control" name="user_id"
@@ -127,8 +127,8 @@
 			</div>
 		</div>
 	</form>
-
-
+ -->
+ 
 
 	<a href="/materials/in"></a>
 	<table class="table table-hover">
@@ -142,6 +142,7 @@
 			<td>자재유형</td>
 			<td>입고등록일</td>
 			<td>입고담당자</td>
+			<td>진행상황</td>
 		</tr>
 
 		<c:forEach var="in" items="${inlist}">
@@ -157,8 +158,8 @@
 				<td><c:out value="${in.user_id}" /></td>
 
 				<!-- 	<button type="button" class="btn btn-primary" onclick="buttonClick()">대기</button> -->
-			<!-- 	<td><button type="button" class="btn btn-primary statusButton"
-						onclick="updateStatus(this)" data-status="waiting">대기</button></td> -->
+			<td><button type="button" class="btn btn-primary statusButton"
+						onclick="updateStatus(this)" data-status="waiting">입고</button></td> 
 
 			</tr>
 		</c:forEach>

@@ -17,6 +17,7 @@ import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.InDTO;
 import com.mes2.materials.domain.PageVO;
 import com.mes2.materials.service.InService;
+import com.mes2.materials.domain.SearchDTO;
 
 @Controller
 @RequestMapping(value = "/materials/*")
@@ -57,25 +58,28 @@ public class InController {
 		
 		// 입고 리스트 - GET
 		@GetMapping(value = "/inlist")
-		public void listAllGET(Model model, InDTO idto, Criteria cri) throws Exception {
+		public void listAllGET(Model model, InDTO idto, SearchDTO sdto, Criteria cri) throws Exception {
 			logger.debug("/purchase/inlist -> listAllGET() 호출 ");
 			logger.debug("/purchase/inlist  뷰페이지로 이동");
-
+			//sdto.setName(name);
+			//sdto setCri(cri);
 			// 서비스 - 디비에 저장된 글 가져오기
-			List<InDTO> inlist = iService.getIncomingStockInfo(idto);
+			List<InDTO> inlist = iService.getIncomingStockInfo(idto, cri);
 
-			inlist = iService.InListPage(cri);
+			List<InDTO> inlist2 = iService.InListPage(cri);
 			
 			// 페이지 블럭 정보 준비 -> view 페이지 전달
 			PageVO pageVO = new PageVO();
 			pageVO.setCri(cri);		
 			pageVO.setTotalCount(iService.totalInCount());
+			model.addAttribute("pageVO", pageVO);
+			
 			
 			logger.debug(" 확인 :"+pageVO);
-			model.addAttribute("pageVO", pageVO);
 			
 			// 데이터를 연결된 뷰페이지로 전달(Model)
 			model.addAttribute("inlist", inlist);
+			model.addAttribute("inlist2", inlist2);
 		}
 	
 	

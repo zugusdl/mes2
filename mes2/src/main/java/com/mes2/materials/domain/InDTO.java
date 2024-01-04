@@ -30,9 +30,9 @@ public class InDTO {
 	private String cost; // 
 	
 	private String user_id; // 담당자 ** employees 
+
+	private PageVO pageVo;
 	
-	private String RP; //원자재코드** 
-	private String FP; //완제품코드**
-	private String WH; //창고코드**
-	private String ORD; //발주코드**
+	private Criteria cri;
+	
 }

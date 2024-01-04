@@ -11,7 +11,7 @@ public interface InService {
 	public void registerIncomingStock(InDTO idto) throws Exception;
 	
 	// 입고 조회 
-	public List<InDTO> getIncomingStockInfo(InDTO idto) throws Exception;
+	public List<InDTO> getIncomingStockInfo(InDTO idto, Criteria cri) throws Exception;
 	
 	// 입고 수량 업데이트 
 	public void updateQuantity(String product_code, int quantity, String category) throws Exception;
