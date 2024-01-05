@@ -36,6 +36,10 @@
 <link rel="stylesheet" href="/resources/css/metadata/paging.css">
 
 
+
+
+
+
 <!--  추가 버튼 스크립트 -->
 <!-- 저장버튼을 클릭하면 (추,수,삭)3개버튼은 사라지고 취소 버튼이 나오게 되는 js 입니다.  -->
 <!--  밑부분은  추가되는 행이 보이게 하거나 숨기는 js입니다. -->
@@ -340,6 +344,7 @@ function redirectToFirstPage() {
  
     $(document).ready(function() {
         $("#addBtn, #addBtn2").on("change", handleImgFileSelect);
+
     });
  
     function handleImgFileSelect(e) {
@@ -365,11 +370,11 @@ function redirectToFirstPage() {
     }
 </script>
 
-<!-- 카테고리 공통코드 가져오는 ajax -->
+<!-- 품목 추가하는 부분 공통코드 가져오는 ajax -->
 <script>
 function processAjaxData(data) {
     // 받아온 데이터를 전역 변수나 다른 곳에 저장
-    window.abc = data;
+    //window.abc = data;
 
     // JSP 코드에서 사용할 수 있도록 동적으로 옵션 생성
     var options = '';
@@ -395,21 +400,18 @@ $.ajax({
         console.error('Error:', status, error);
     }
 });
-</script>
 
-<!-- 단위 공통코드 가져오는 ajax -->
-<script>
 function processAjaxData2(data) {
     // 받아온 데이터를 전역 변수나 다른 곳에 저장
-    window.abc2 = data;
+    //window.abc2 = data;
 
     // JSP 코드에서 사용할 수 있도록 동적으로 옵션 생성
     var options = '';
     var options = '<option>단위</option>';
-    $.each(data, function(index, item) {
-        options += '<option>' + item.code_code + '</option>';
-    });
     
+    $.each(data, function(index, item) {
+        options += '<option >' + item.code_code + '</option>';
+    });
     
     // 생성된 옵션을 삽입
     $('#ins_unit, #upd_unit').html(options);
@@ -421,14 +423,17 @@ $.ajax({
     dataType: 'json',
     success: function(data) {
         // 서버에서 받아온 JSON 데이터를 이용하여 원하는 작업 수행
-        console.log(data);
+        console.log(data);        
         processAjaxData2(data);
+       
     },
     error: function(xhr, status, error) {
         console.error('Error:', status, error);
     }
 });
 </script>
+
+
 
 </head>
 <body>
@@ -568,11 +573,10 @@ $.ajax({
 								    </select>
 									</td>
 																												
-									<td class="b" style="display: none;">									
-									<!--  <input type="text" name="unit" size="5" value="${plist.unit }">	-->								
+									<td class="b" style="display: none;">																							
 									<select id="upd_unit" name="upd_unit">
-								    <!--  <option value="option1" selected>${plist.unit }</option>	-->									      
-								    </select>																
+								    <!--  <option value="option1" selected>${plist.unit }</option>	-->								      
+								    </select>													
 									</td>
 									
 									
@@ -642,7 +646,12 @@ $.ajax({
 		<!-- 페이징 끝 -->
 	</div>
 	
+<script>
+//<select id="upd_unit" name="upd_unit">
 
+//addEventListner( chage )
+
+</script>
 
 
 </body>
