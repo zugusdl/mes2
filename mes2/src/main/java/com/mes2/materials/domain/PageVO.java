@@ -2,6 +2,18 @@ package com.mes2.materials.domain;
 
 public class PageVO {
 	
+	/**
+	 *	페이징 처리에 필요한 정보를 저장
+	 *	=> 총 개수, 시작 페이지 번호, 끝 페이지 번호, 이전 링크, 다음 링크, 블럭의 크기
+	 *	+ Criteria (페이지 번호, 페이지 사이즈)
+	 *
+	 * 	총 개수: totalCount (DB 조회)
+	 * 	끝   페이지: endPage = 올림(페이지 번호 / 블럭의 크기) * 블럭의 크기
+	 *  시작 페이지: startPage = (endPage - 블럭의 크기) + 1
+	 *  이전 링크: prev (boolean) -> startPage != 1
+	 *  다음 링크: next (boolean) -> endPage * 블럭의 크기 < totalCount 
+	 */
+
 	private int totalCount;  // 총 개수
 	private int startPage;	 // 페이지 블럭 시작번호
 	private int endPage;	 // 페이지 블럭 끝번호
@@ -109,6 +121,6 @@ public class PageVO {
 		return "PageVO [totalCount=" + totalCount + ", startPage=" + startPage + ", endPage=" + endPage + ", prev="
 				+ prev + ", next=" + next + ", displayPageNum=" + displayPageNum + ", cri=" + cri + "]";
 	}
-	
 
 }
+	

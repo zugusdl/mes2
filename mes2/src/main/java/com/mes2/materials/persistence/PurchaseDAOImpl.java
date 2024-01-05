@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.PurchaseDTO;
 import com.mes2.materials.domain.SearchDTO;
+import com.mes2.materials.domain.productDTO;
 
 @Repository
 public class PurchaseDAOImpl implements PurchaseDAO {
@@ -35,17 +36,24 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 	 }
 
 
-	@Override
-	public List<PurchaseDTO> listPurchase(PurchaseDTO pdto, Criteria cri, SearchDTO sdto) throws Exception {
-		logger.debug(" DAO -  발주 전체 리스트 listPurchase(PurchaseDTO pdto) ");
-
-		Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("startPage", cri.getStartPage());
-        paramMap.put("pageSize", cri.getPageSize());
 	
+	  @Override 
+	  public List<PurchaseDTO> listPurchase(String searchType, String search, Criteria cri) throws Exception {
+	  logger.debug(" DAO -  발주 전체 리스트 listPurchase(PurchaseDTO pdto) ");
+	  
+	  Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("searchType", searchType);
+		searchMap.put("search", search);
+		searchMap.put("cri", cri);
 		
-		return sqlSession.selectList(NAMESPACE + ".materialList", paramMap);
-	}
+	  
+	  return sqlSession.selectList(NAMESPACE + ".combinedMaterialList", searchMap);
+	  
+	  }
+	 
+
+	
+	
 	
 
 	// 전 상태변경 
@@ -59,6 +67,11 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 	 * return sqlSession.update(NAMESPACE + ".updateOrderStatus", params); }
 	 */
 	
+	
+
+
+
+
 	// 후 상태변경 
 	@Override
 	public int updateOrderStatus(String status, String product_code) throws Exception {
@@ -68,6 +81,19 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		params.put("product_code", product_code);
 
 		return sqlSession.update(NAMESPACE + ".updateOrderStatus", params);
+	}
+
+
+
+
+	@Override
+	public PurchaseDTO getProductByCategory(String product_code, String category) throws Exception {
+	    Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("product_code", product_code);
+        paramMap.put("category", category);
+        
+		return  sqlSession.selectOne(NAMESPACE + ".getProductByCategory" , paramMap);
+		
 	}
 
 
@@ -101,20 +127,20 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		
 		page = (page - 1) * 10;
 		
-		return sqlSession.selectList(NAMESPACE + ".PurchaselistPage",page);
+		return null;/* sqlSession.selectList(NAMESPACE + ".PurchaselistPage",page);*/
 	}
 
 
 	@Override
 	public List<PurchaseDTO> getPurchaseListPage(Criteria cri, SearchDTO sdto) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".PurchaselistPage", cri);
+		return sqlSession.selectList(NAMESPACE + ".combinedMaterialList", cri);
 	}
 
 
-	@Override
-	public int getPurchaseCount(SearchDTO sdto) throws Exception {
-		return sqlSession.selectOne(NAMESPACE + ".PurchaseCount");
-	}
+	
+	  @Override public int getPurchaseCount(SearchDTO sdto) throws Exception {
+	  return sqlSession.selectOne(NAMESPACE + ".PurchaseCount", sdto); }
+	 
 
 
 	@Override
@@ -128,7 +154,7 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 
 
 	@Override
-	public List<PurchaseDTO>  searchMaterial(String searchType, String keyword) throws Exception {
+	public List<PurchaseDTO> searchMaterial(String searchType, String keyword) throws Exception {
 		  Map<String, Object> paramMap = new HashMap<>();
 	        paramMap.put("searchType", searchType);
 	        paramMap.put("keyword", keyword);

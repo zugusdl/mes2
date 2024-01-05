@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,7 +50,7 @@ public class InController {
 			iService.registerIncomingStock(idto);
 			
 		    // 서비스 - meta_data_product 수량 업데이트 호출
-		    iService.updateQuantity(product_code, quantity, category);
+		    iService.InupdateQuantity(product_code, quantity, category);
 			
 			logger.debug(" /materials/inlist 이동 ");
 
@@ -58,13 +59,13 @@ public class InController {
 		
 		// 입고 리스트 - GET
 		@GetMapping(value = "/inlist")
-		public void listAllGET(Model model, InDTO idto, SearchDTO sdto, Criteria cri) throws Exception {
+		public void listAllGET(Model model, InDTO idto, Criteria cri, SearchDTO sdto, String status) throws Exception {
 			logger.debug("/purchase/inlist -> listAllGET() 호출 ");
 			logger.debug("/purchase/inlist  뷰페이지로 이동");
 			//sdto.setName(name);
-			//sdto setCri(cri);
+			//sdto setCri(cri); 
 			// 서비스 - 디비에 저장된 글 가져오기
-			List<InDTO> inlist = iService.getIncomingStockInfo(idto, cri);
+			List<InDTO> inlist = iService.getIncomingStockInfo(idto, cri, sdto, status);
 
 			List<InDTO> inlist2 = iService.InListPage(cri);
 			
@@ -81,46 +82,5 @@ public class InController {
 			model.addAttribute("inlist", inlist);
 			model.addAttribute("inlist2", inlist2);
 		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@GetMapping(value = "/in")
-//	public String insertInGET(Model model, @RequestParam(name = "product_code", required = false) String product_code) throws Exception {
-//		List<InDTO> inList = iService.getSelect();
-//		model.addAttribute("inList", inList);
-//
-//		  List<InDTO> detailList = iService.detailList(product_code);
-//		model.addAttribute("detailList", detailList);
-//		
-//		
-//		return "/materials/in";
-//	}
-//	
-//
-//	@PostMapping(value = "/in")
-//	public String getSelectPOST(@RequestParam(name = "product_code", required = false) String product_code) throws Exception {
-//		
-//
-//		return "/materials/in";
-//	}
+
 }

@@ -1,41 +1,26 @@
 package com.mes2.materials.domain;
 
+/**
+ *  페이징 처리를 위해서 생성한 객체
+ *   => 페이지번호, 페이지사이즈를 저장하는 객체  
+ */
 public class Criteria {
-	
+
 	private int page;
 	private int pageSize;
 	
-	private String type; // 검색조건
-	private String keyword; // 키워드
+	private String type;
+	private String keyword;
 	
 	public Criteria() {
 		this.page = 1;
-		this.pageSize = 10;
+		this.pageSize = 2;
 	}
 		
-
 	
-	public String getType() {
-		return type;
+	public String[] getTypeArr() {
+		return type == null? new String[] {} : type.split("");
 	}
-	
-	
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-	
-	public String getKeyword() {
-		return keyword;
-	}
-	
-	
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-
-	
-	
 	
 	// alt shift s + r
 
@@ -47,11 +32,6 @@ public class Criteria {
 		}
 		this.page = page;		
 	}
-
-	
-	
-	
-
 	public void setPageSize(int pageSize) {
 		
 		if(pageSize <= 0 || pageSize > 100) {
@@ -79,11 +59,10 @@ public class Criteria {
 
 	
 	
+	// alt shift s + s
 	@Override
 	public String toString() {
-		return "Criteria [page=" + page + ", pageSize=" + pageSize + ", type=" + type + ", keyword=" + keyword + "]";
+		return "Criteria [page=" + page + ", pageSize=" + pageSize + "]";
 	}
-	
-	
 	
 }

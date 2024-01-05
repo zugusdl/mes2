@@ -21,14 +21,24 @@
 <body>
 
 	
-	<!-- <!-- Button trigger modal -->
-<!-- 	<div class="col-md-13 text-end">
+	<form action="/materials/purchaselist" method="get">
+		<select name="searchType">
+			<option value="category">자재유형</option>
+			<option value="name">품목명</option>
+		</select> <input type="text" name="keyword"> <input type="submit"
+			value="검색하기">
+	</form>
+
+	
+	
+<!-- Button trigger modal -->
+ 	<div class="col-md-13 text-end">
 		Button trigger modal
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 			data-bs-target="#exampleModal">신청</button>
 	</div>
 
-	Modal
+	
 	<form action="/materials/in" method="post">
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -127,7 +137,7 @@
 			</div>
 		</div>
 	</form>
- -->
+ 
  
 
 	<a href="/materials/in"></a>

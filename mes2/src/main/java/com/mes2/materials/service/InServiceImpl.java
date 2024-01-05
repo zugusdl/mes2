@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.InDTO;
+import com.mes2.materials.domain.SearchDTO;
 import com.mes2.materials.persistence.InDAO;
 
 @Service
@@ -27,14 +28,14 @@ public class InServiceImpl implements InService {
 	}
 
 	@Override
-	public List<InDTO> getIncomingStockInfo(InDTO idto, Criteria cri) throws Exception {
-		return idao.getAllInboundInfo(idto, cri);
+	public List<InDTO> getIncomingStockInfo(InDTO idto, Criteria cri, SearchDTO sdto, String status) throws Exception {
+		return idao.getAllInboundInfo(idto, cri, sdto, status);
 	}
 
 	
 	@Override
-	public void updateQuantity(String product_code, int quantity, String category) throws Exception {
-		idao.updateQuantity(product_code, quantity, category);
+	public void InupdateQuantity(String product_code, int quantity, String category) throws Exception {
+		idao.InupdateQuantity(product_code, quantity, category);
 	}
 
 	@Override

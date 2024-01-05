@@ -12,102 +12,86 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/materials/searchList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
- <script>
+<script>
+	/* // 기존 스크립트
+	$(document).ready(function() {
+		// 페이지 로드 시 상태 초기화
+		initializeStatusButtons();
 
+		/* // 버튼 클릭 시 상태 업데이트
+		$('.statusButton').on('click', function () {
+		    var button = $(this);
+		    var product_code = button.closest('tr').find('.product_code').val();
+		    updateStatus(button, product_code);
+		}); */
+	});
 
+	function initializeStatusButtons() {
+		// 각 행의 상태를 가져와서 적용
+		$('.statusButton').each(
+				function() {
+					var button = $(this);
+					var product_code = button.closest('tr').find(
+							'.product_code').val();
+					updateButtonStatus(button, product_code);
+				});
+	}
 
-	// 기존 스크립트
-	$(document).ready(function () {
-    // 페이지 로드 시 상태 초기화
-    initializeStatusButtons();
+	function updateStatus(button, product_code) {
+		// 서버에 상태 업데이트 요청
+		$.ajax({
+			type : 'POST',
+			url : 'updateStatus',
+			data : {
+				product_code : product_code,
+				status : 'complete'
+			},
+			success : function(response) {
+				if (response > 0) {
+					// 성공 시 해당 버튼 상태 업데이트
+					updateButtonStatus(button, product_code);
+				} else {
+					alert('상태 업데이트 실패');
+				}
+			},
+			error : function() {
+				alert('AJAX 오류 발생');
+			}
+		});
+	}
 
-    /* // 버튼 클릭 시 상태 업데이트
-    $('.statusButton').on('click', function () {
-        var button = $(this);
-        var product_code = button.closest('tr').find('.product_code').val();
-        updateStatus(button, product_code);
-    }); */
-});
+	function updateButtonStatus(button, product_code) {
+		// 서버에 상태 요청
+		$.ajax({
+			type : 'GET',
+			url : 'getOrderStatus',
+			data : {
+				product_code : product_code
+			},
+			success : function(response) {
+				var status = response[0].status; // 가정: purchaselist에 하나의 항목만 있는 경우
 
-function initializeStatusButtons() {
-    // 각 행의 상태를 가져와서 적용
-    $('.statusButton').each(function () {
-        var button = $(this);
-        var product_code = button.closest('tr').find('.product_code').val();
-        updateButtonStatus(button, product_code);
-    });
-}
-
-function updateStatus(button, product_code) {
-    // 서버에 상태 업데이트 요청
-    $.ajax({
-        type: 'POST',
-        url: 'updateStatus',
-        data: {
-            product_code: product_code,
-            status: 'complete'
-        },
-        success: function (response) {
-            if (response > 0) {
-                // 성공 시 해당 버튼 상태 업데이트
-                updateButtonStatus(button, product_code);
-            } else {
-                alert('상태 업데이트 실패');
-            }
-        },
-        error: function () {
-            alert('AJAX 오류 발생');
-        }
-    });
-}
-
-function updateButtonStatus(button, product_code) {
-    // 서버에 상태 요청
-    $.ajax({
-        type: 'GET',
-        url: 'getOrderStatus',
-        data: {
-            product_code: product_code
-        },
-        success: function (response) {
-            var status = response[0].status; // 가정: purchaselist에 하나의 항목만 있는 경우
-
-            // 받아온 상태에 따라 해당 버튼 업데이트
-            if (status === 'complete') {
-                button.removeClass('btn-primary').addClass('btn-success').text('완료');
-                button.data('status', 'complete'); // 상태 업데이트
-            } else {
-                button.removeClass('btn-success').addClass('btn-primary').text('대기');
-                button.data('status', 'waiting'); // 상태 업데이트
-            }
-        },
-        error: function () {
-            alert('상태 조회 오류 발생');
-        }
-    });
-}
-
-var productCodeValue = "product_code"; // 실제 값을 적절히 설정하세요
-
-//AJAX를 사용하여 서버로 HTTP 요청 보내기
-$.ajax({
-url: 'getOrderStatus',
-method: 'GET', // 또는 다른 HTTP 메서드 사용
-data: { product_code: product_code },
-success: function(response) {
- // 서버 응답 처리
- console.log(response);
-},
-error: function(error) {
- // 오류 처리
- console.error(error);
-}
-});
-</script> 
+				// 받아온 상태에 따라 해당 버튼 업데이트
+				if (status === 'complete') {
+					button.removeClass('btn-primary').addClass('btn-success')
+							.text('완료');
+					button.data('status', 'complete'); // 상태 업데이트
+				} else {
+					button.removeClass('btn-success').addClass('btn-primary')
+							.text('대기');
+					button.data('status', 'waiting'); // 상태 업데이트
+				}
+			},
+			error : function() {
+				alert('상태 조회 오류 발생');
+			}
+		});
+	} */
+</script>
 
 
 
@@ -115,16 +99,13 @@ error: function(error) {
 </head>
 <body>
 
-<form action="/materials/purchaselist" method="get">
-	<select name="searchType">
-		<option value="category">자재유형</option>
-		<option value="name">품목명</option>
-	</select>
-	<input type="text" name="keyword">
-	<input type="submit" value="검색하기">
-</form>
-
-
+	<form action="/materials/purchaselist" method="get">
+		<select name="searchType">
+			<option value="category">자재유형</option>
+			<option value="name">품목명</option>
+		</select> <input type="text" name="keyword"> <input type="submit"
+			value="검색하기">
+	</form>
 	<!-- Button trigger modal -->
 	<div class="col-md-13 text-end">
 		<!-- Button trigger modal -->
@@ -149,16 +130,11 @@ error: function(error) {
 								<td>발주코드</td>
 								<td><input type="text" class="form-control"
 									name="orders_code"></td>
-							</tr>
-					<tr>
+							</tr> 
+							<tr>
 								<td>품목코드</td>
 								<td><input type="text" class="form-control"
 									name="product_code"></td>
-							</tr>
-							<tr>
-								<td>원재료코드</td>
-								<td><input type="text" class="form-control"
-									name="material_code" required></td>
 							</tr>
 							<tr>
 								<td>품목명</td>
@@ -173,16 +149,18 @@ error: function(error) {
 												<span class="caret"></span>
 											</button>
 											<div class="dropdown-menu">
-												<a class="dropdown-item" href="#" data-value="${pl.name}"
-													data-input="nameInput">옵션 1</a> 
+													<c:forEach var="pc" items="${purchaselist2}">
+														<a class="dropdown-item" href="#" data-value="${pc.name}"
+															data-input="nameInput">${pc.name}</a>
+													</c:forEach>
 											</div>
 										</div>
 									</div>
 								</td>
 							</tr>
-							
-							
-								<tr>
+
+
+							<tr>
 								<td>자재유형</td>
 								<td>
 									<div class="input-group">
@@ -195,42 +173,31 @@ error: function(error) {
 												<span class="caret"></span>
 											</button>
 											<div class="dropdown-menu">
-												<a class="dropdown-item" href="#" data-value="완제품"
-													data-input="categoryInput">완제품</a> <a class="dropdown-item"
-													href="#" data-value="원재료" data-input="categoryInput">원재료</a>
-												<a class="dropdown-item" href="#" data-value="부자재"
-													data-input="categoryInput">부자재</a>
+													<c:forEach var="pc" items="${purchaselist2}">
+														<a class="dropdown-item" href="#" data-value="${pc.category}"
+															data-input="nameInput">${pc.category}</a>
+													</c:forEach>
 											</div>
 										</div>
 									</div>
 								</td>
 							</tr>
-							
-							
-							
+
+
+
 							<tr>
 								<td>원가</td>
 								<td><input type="text" class="form-control" name="cost"
 									required></td>
 							</tr>
-							
+
 							<tr>
 								<td>단가</td>
 								<td><input type="text" class="form-control" name="price"
 									required></td>
 							</tr>
-							<tr>
-								<td>용량</td>
-								<td><input type="text" class="form-control" name="amount"
-									required></td>
-							</tr>
-							
-							<tr>
-								<td>용량 단위</td>
-								<td><input type="text" class="form-control" name="amount_unit"
-									required></td>
-							</tr>
-						
+				
+
 							<tr>
 								<td>발주수량</td>
 								<td><input type="number" class="form-control"
@@ -283,7 +250,7 @@ error: function(error) {
 				<td><c:out value="${pl.category}" /></td>
 				<td><c:out value="${pl.cost}" /></td>
 				<td><c:out value="${pl.price}" /></td>
-		<td><c:out value="${pl.amount}${pl.amount_unit}" /></td>
+				<td><c:out value="${pl.amount}${pl.amount_unit}" /></td>
 				<td><c:out value="${pl.quantity}" /></td>
 				<td><fmt:formatDate value="${pl.regdate}" pattern="yyyy-MM-dd" /></td>
 				<td><c:out value="${pl.user_id}" /></td>
@@ -297,7 +264,29 @@ error: function(error) {
 	</table>
 
 
-<div class="box-footer clearfix">
+	<div class="box-footer clearfix">
+		<ul class="pagination pagination-sm no-margin pull-right">
+
+			<c:if test="${pageVO.prev}">
+				<li><a
+					href="/materials/purchaselist?page=${pageVO.startPage - 1}">«</a></li>
+			</c:if>
+
+			<c:forEach var="i" begin="${pageVO.startPage}"
+				end="${pageVO.endPage}" step="1">
+				<li <c:if test="${pageVO.cri.page == i}">class="active"</c:if>>
+					<a href="/materials/purchaselist?page=${i}"> ${i} </a>
+				</li>
+			</c:forEach>
+
+			<c:if test="${pageVO.next}">
+				<li><a
+					href="/materials/purchaselist?page=${pageVO.endPage + 1}">»</a></li>
+			</c:if>
+		</ul>
+	</div>
+
+	<%-- <div class="box-footer clearfix">
 		<ul class="pagination pagination-sm no-margin pull-right">
 			
 			<c:if test="${pageVO.prev }">
@@ -316,7 +305,7 @@ error: function(error) {
 				<li><a href="/materials/purchaselist?page=${pageVO.endPage + 1 }">»</a></li>
 			</c:if>
 		</ul>
-	</div>
+	</div> --%>
 
 
 
@@ -327,7 +316,7 @@ error: function(error) {
 		
 	</script>
 
-<script>
+	<!-- <script>
 		function updateStatus(button) {
 			var product_code = $(button).closest('tr').find('.product_code')
 					.val();
@@ -362,10 +351,8 @@ error: function(error) {
 					alert('AJAX 오류 발생');
 				}
 			});
-		} 
+		}
+	</script> -->
 
-	
-	</script>
-	
 </body>
 </html>

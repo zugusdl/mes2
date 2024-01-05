@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.InDTO;
+import com.mes2.materials.domain.SearchDTO;
 
 @Repository
 public class InDAOImpl implements InDAO {
@@ -36,14 +37,14 @@ public class InDAOImpl implements InDAO {
 	
 
 	@Override
-	public List<InDTO> getAllInboundInfo(InDTO idto, Criteria cri) throws Exception {
-		logger.debug(" DAO -  입고 전체 리스트 listIn(InDTO idto) "); 
+	public List<InDTO> getAllInboundInfo(InDTO idto, Criteria cri, SearchDTO sdto, String status) throws Exception {
+		logger.debug(" DAO -  입고 전체 리스트 getAllInboundInfo(InDTO idto) "); 
 	    
 		
 		Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("startPage", cri.getStartPage());
         paramMap.put("pageSize", cri.getPageSize());
-		
+        paramMap.put("status", status);
 	    
 		return sqlSession.selectList(NAMESPACE + ".getInList", paramMap);
 	}
@@ -51,13 +52,13 @@ public class InDAOImpl implements InDAO {
 	
 
 	@Override
-    public void updateQuantity(String product_code, int quantity, String category) throws Exception {
+    public void InupdateQuantity(String product_code, int quantity, String category) throws Exception {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("product_code", product_code);
         paramMap.put("quantity", quantity);
         paramMap.put("category", category);
 
-        sqlSession.update(NAMESPACE + ".InupdateQuantity", paramMap);
+        sqlSession.update(NAMESPACE + ".StockupdateQuantity", paramMap);
     }
 
 
