@@ -266,6 +266,14 @@ function submitData() {
         var hiddenProductionStatus = row.find('.b select[name="upd_status"] option:selected').text();
 
         
+     // 추가: "카테고리" "단위" 값이면 확인 창 띄우고 이전으로 돌아가기
+        if (hiddenCategory === "카테고리" || hiddenUnit == "단위") {
+            alert('카테고리와 단위를 다시 확인해주세요.');            
+            return;
+        }
+
+        
+        
         
         var formData = new FormData();
     	formData.append('product_code', hiddenProductCode);
@@ -598,7 +606,7 @@ $.ajax({
 									
 									<td class="b" style="display: none;">${plist.regdate }</td>
 									<td class="b" style="display: none; width: 80px;">								
-									<img id="img2" src="../../../../resources/img/metadata/${plist.ofileName }" width="200px" alt="123">						
+									<img id="img2" src="../../../../resources/img/metadata/${plist.ofileName }" width="200px">						
 									<input type="file" id="addBtn2" style="width: 200px;">
 									</td>
 									<td class="b" style="display: none; width: 80px; ">
