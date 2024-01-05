@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>품목관리</title>
 
-<!-- jqery js입니다. (ajax랑 js에 있는 여러가지 js라이브러리 쓸려고)-->
+<!-- jqery js입니다. (ajax랑 js에 있는 여러가지 js라이브러리 쓸려고gg)-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- 부트스트랩 css cdn입니다. -->
