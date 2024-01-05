@@ -155,13 +155,10 @@
                 <![CDATA[ AND end_time < #{endTime} ]]>
             </if>
              -->
-             
-            ORDER BY index 
-			<if test="startPage != null and pageSize !=null">
-				LIMIT #{startPage}, #{pageSize}
-			</if>
-             
+
          </where>
+         ORDER BY is_index desc
+		LIMIT #{startPage}, #{pageSize}
 	</select>
 
 	<select id="selectBySearchParamSoiCode"  resultType="com.mes2.production.domain.InstructionsDTO">

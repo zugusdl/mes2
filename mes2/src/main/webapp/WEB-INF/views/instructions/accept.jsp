@@ -33,13 +33,12 @@
 			[수주물량 + 예비물량(10%)]
 			</span><br>
 			
-			호우호우
+			
 				
 			<label>
 				<input type="text" name="soiCode">
 			</label><br>
-			호우호우
-			호우호우
+			
 			<input type="submit" value="종료" id="submit">
 		</form>
 	</div>

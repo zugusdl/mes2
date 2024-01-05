@@ -148,7 +148,6 @@ public class InstructionsController {
 		param.setCode(searchCode);
 		param.setSearchType(searchType);
 		
-		List<InstructionsDTO> instructions =   instructionsService.findBySearchParam(param);
 		
 //		for(InstructionsDTO dto : instructions) {
 //			log.debug("" + dto.toString());
@@ -165,7 +164,10 @@ public class InstructionsController {
 		pageVO.setTotalCount(instructionsService.getTotalCountWithSearchParam(param));
 		model.addAttribute("pageVO", pageVO);
 		
+		param.setPage(cri.getPage());
+		param.setPageSize(cri.getPageSize());
 		
+		List<InstructionsDTO> instructions =   instructionsService.findBySearchParam(param);
 //		if(searchEndDate!=null && !searchEndDate.equals("")) {
 //			model.addAttribute("endDate", Date.valueOf(searchEndDate));
 //		}
@@ -237,18 +239,37 @@ public class InstructionsController {
 	
 	//http://localhost:8088/instructions/request
 	@GetMapping("/request")
-	public String requestGET(Model model) {
+	public String requestGET(Model model, Criteria cri) {
 
+		
+		
 		String state="REQUESTED";
 		
-		List<InstructionsDTO> instructions = instructionsService.findByState(state);
+		InstructionsSearchParam param = new InstructionsSearchParam();
+		param.setState(state);
+		param.setSearchType("isCode");
+		
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(instructionsService.getTotalCountWithSearchParam(param));
+		model.addAttribute("pageVO", pageVO);
+		
+		param.setPage(cri.getPage());
+		param.setPageSize(cri.getPageSize());
+		
+		
+		//List<InstructionsDTO> instructions = instructionsService.findByState(state);
+		List<InstructionsDTO> instructions = instructionsService.findBySearchParam(param);
 		for(InstructionsDTO isDTO : instructions) {
 			
 			OutDTO outDTO = instructionsService.findBySopCodeForOutDTO(isDTO.getSopCode());
 			isDTO.setState(isDTO.getState());
 		}
 		
-		model.addAttribute("instructions" , instructionsService.findByState(state));
+		
+		
+		
+		model.addAttribute("instructions" , instructions);
 		
 		
 		return "/instructions/request";

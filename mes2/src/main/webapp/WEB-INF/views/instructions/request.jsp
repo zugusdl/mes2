@@ -90,9 +90,34 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						
 				</div>
 			</div>
+			
+			
 		</section>
+		<br><br><br><br>
+		<!-- 페이징 -->
+			<div class="box-footer clearfix">
+				<div style="margin: 0 auto; width: fit-content;">
+				<ul class="pagination pagination-sm no-margin pull-right">
+				
+					<c:if test="${pageVO.prev }">
+						<li><a href="/instructions/request?page=${pageVO.startPage - 1 }&searchType=${searchType }&startDate=${sDTO.startDate }&endDate=${sDTO.endDate}">«</a></li>
+					</c:if>
+					
+					<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+						<li><a href="/instructions/request?page=${i }&searchType=${searchType}&startDate=${startDate }&searchState=${searchState}&endDate=${endDate}">${i }</a></li>
+					</c:forEach>
+					
+					<c:if test="${pageVO.next }">
+						<li><a href="/instructions/request?page=${pageVO.endPage + 1 }&searchType=${searchType}&searchState=${searchState}&startDate=${startDate }&endDate=${endDate}">»</a></li>
+					</c:if>
+				</ul>
+				</div>
+			</div>
+			<!-- 페이징 끝 -->
+		
 		<section class="section1">
 			<div id="bottomContent">
 		
