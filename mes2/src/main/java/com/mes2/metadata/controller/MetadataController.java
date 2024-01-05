@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -73,42 +74,6 @@ public class  MetadataController{
 		
 	}
 	
-	
-	
-	// 품목관리 페이지, 날짜필터 품목정보리스트 호출
-	/*
-	 * @PostMapping("/filter") public String productdataPOST(Model model,
-	 * 
-	 * @RequestParam("startDate") String startDate,
-	 * 
-	 * @RequestParam("endDate") String endDate,
-	 * 
-	 * @RequestParam("search") String search) throws Exception{
-	 * 
-	 * 
-	 * 
-	 * Date start; Date end;
-	 * 
-	 * if(startDate.equals("")) { start = null; }else { start =
-	 * Date.valueOf(startDate); }
-	 * 
-	 * if(endDate.equals("")) { end = null; }else { end = Date.valueOf(endDate); }
-	 * 
-	 * //logger.debug(""+search.getClass()); //logger.debug(""+start.getClass());
-	 * //logger.debug(""+end.getClass()); //logger.debug("날짜필터 컨트롤러 실행 성공");
-	 * //logger.debug("확인" + startDate + endDate + search);
-	 * 
-	 * List<md_productDTO> productList = mService.productdatefilter(start, end,
-	 * search); logger.debug("@@@" + productList);
-	 * 
-	 * model.addAttribute("productList", productList);
-	 * 
-	 * return "/meta_data/productdata/productinfo";
-	 * 
-	 * 
-	 * }
-	 */
-	
 	//파일 추가 코드
 	// 파일정보(이름)을 저장, 파일업로드 처리
 	
@@ -157,10 +122,15 @@ public class  MetadataController{
 		logger.debug("fileUploadPOST()-파일업로드 처리 ");
 		logger.debug("넘어오니?"+multiRequest);
 		
+		//코드 만들어 주기 pk이므로 먼저 만들어 줘야함
+		
+		
 		// 파일 정보를 저장
 		String ofileName = fileProcess(multiRequest);
 		dto.setOfileName(ofileName);
 		mService.productinsert(dto);
+		
+		
 		
 		logger.debug("사진 이름!" + ofileName);
 		logger.debug("최종디티오" + dto);

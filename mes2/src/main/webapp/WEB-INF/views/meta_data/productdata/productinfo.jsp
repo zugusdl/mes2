@@ -184,11 +184,16 @@ function submitData() {
     // 입력 필드의 값을 가져오기
     var productCode = $('input[name="product_code"]').val();
     var name = $('input[name="name"]').val();
-    var category = $('input[name="category"]').val();
-    var unit = $('input[name="unit"]').val();
+    
+    //var category = $('input[name="category"]').val();
+    var category = $('#ins_cate option:selected').text();    
+    
+    //var unit = $('input[name="unit"]').val();
+    var unit = $('#ins_unit option:selected').text();
+    
     var cost = $('input[name="cost"]').val();
     var price = $('input[name="price"]').val();
-    var productionStatus = $('input[name="production_status"]').val();
+    //var productionStatus = $('input[name="production_status"]').val();
     
     var formData = new FormData();
 	formData.append('product_code', productCode);
@@ -197,7 +202,7 @@ function submitData() {
 	formData.append('unit', unit);
 	formData.append('cost', cost);
 	formData.append('price', price);
-	formData.append('production_status', productionStatus);
+	//formData.append('production_status', productionStatus);
 	
 	// 파일 업로드를 위한 코드
 	  var fileInput = $('#addBtn')[0];
@@ -243,12 +248,21 @@ function submitData() {
         // 수정된 값 가져오기
         var hiddenProductCode = row.find('.b:eq(0)').text();
         var hiddenName = row.find('.b input[name="name"]').val();
-        var hiddenCategory = row.find('.b input[name="category"]').val();
-        var hiddenUnit = row.find('.b input[name="unit"]').val();
+        
+        //var hiddenCategory = row.find('.b input[name="category"]').val();
+        var hiddenCategory = row.find('.b select[name="upd_cate"] option:selected').text();
+        
+        //var hiddenUnit = row.find('.b input[name="unit"]').val();
+        var hiddenUnit = row.find('.b select[name="upd_unit"] option:selected').text();
+        
         var hiddenCost = row.find('.b input[name="cost"]').val();
         var hiddenPrice = row.find('.b input[name="price"]').val();
-        var hiddenProductionStatus = row.find('.b input[name="production_status"]').val();
-		
+        
+        //var hiddenProductionStatus = row.find('.b input[name="production_status"]').val();
+        var hiddenProductionStatus = row.find('.b select[name="upd_status"] option:selected').text();
+
+        
+        
         var formData = new FormData();
     	formData.append('product_code', hiddenProductCode);
     	formData.append('name', hiddenName);
@@ -425,13 +439,36 @@ function redirectToFirstPage() {
 								<tr id="inserthang" style="display: none; text-align: center; vertical-align: middle;">	
 									
 									<td></td>							
-									<td><input type="text" name="product_code" size="5"></td>
-									<td><input type="text" name="name" size="5"></td>
-									<td><input type="text" name="category" size="5"></td>
-									<td><input type="text" name="unit" size="5"></td>
+									<td>(코드자동생성)</td>
+									<td><input type="text" name="name" size="5"></td>									
+									
+									<td>
+									<!--  <input type="text" name="category" size="5">		-->				
+								      <select id="ins_cate" name="ins_cate">
+								      <option value="option1">카테고리</option>
+								      <option value="option1">원재료</option>
+								      <option value="option2">부재료</option>
+								      <option value="option3">완제품</option>
+								    </select>
+									</td>
+									
+									<td>
+									<!--<input type="text" name="unit" size="5">-->
+									<select id="ins_unit" name="ins_unit">								      
+								      <option value="option1">단위</option>
+								      <option value="option2">ML</option>
+								      <option value="option3">L</option>
+								      <option value="option3">BOX</option>
+								      <option value="option3">G</option>
+								      <option value="option3">KG</option>
+								    </select>
+									</td>
+									
+									
+									
 									<td><input type="text" name="cost" size="5"></td>
 									<td><input type="text" name="price" size="5"></td>
-									<td><input type="text" name="production_status" size="5"></td>
+									<td>디폴트 1</td>
 									<td></td>
 									<td>
 									<img id="img" width="250px"/> 						
@@ -468,11 +505,48 @@ function redirectToFirstPage() {
 															
 									<td class="b" style="display: none;">${plist.product_code }</td>
 									<td class="b" style="display: none;"><input type="text" name="name" size="5" value="${plist.name }"></td>
-									<td class="b" style="display: none;"><input type="text" name="category" size="5" value="${plist.category }"></td>
-									<td class="b" style="display: none;"><input type="text" name="unit" size="5" value="${plist.unit }"></td>
+									
+									
+									<td class="b" style="display: none;">
+									<!-- <input type="text" name="category" size="5" value="${plist.category }"> -->
+									<select id="upd_cate" name="upd_cate">
+								      <option value="option1" selected>${plist.category }</option>
+								      <option value="option1">원재료</option>
+								      <option value="option2">부재료</option>
+								      <option value="option3">완제품</option>
+								    </select>
+									</td>
+									
+																		
+									<td class="b" style="display: none;">									
+									<!--  <input type="text" name="unit" size="5" value="${plist.unit }">	-->								
+									<select id="upd_unit" name="upd_unit">
+								      <option value="option1" selected>${plist.unit }</option>
+								      <option value="option2">ML</option>
+								      <option value="option3">L</option>
+								      <option value="option3">BOX</option>
+								      <option value="option3">G</option>
+								      <option value="option3">KG</option>
+								    </select>																
+									</td>
+									
+									
+									
+									
+									
 									<td class="b" style="display: none;"><input type="text" name="cost" size="5" value="${plist.cost }"></td>
 									<td class="b" style="display: none;"><input type="text" name="price" size="5" value="${plist.price }"></td>
-									<td class="b" style="display: none;"><input type="text" name="production_status" size="5" value="${plist.production_status }"></td>
+									<td class="b" style="display: none;">
+									<!--  <input type="text" name="production_status" size="5" value="${plist.production_status }">-->
+									<select id="upd_status" name="upd_status">
+								      <option value="option1" selected>${plist.production_status }</option>
+								      <option value="option1">1</option>
+								      <option value="option2">0</option>
+								    </select>
+									</td>
+									
+									
+									
 									<td class="b" style="display: none;">${plist.regdate }</td>
 									<td class="b" style="display: none; width: 80px;">								
 									<img id="img2" src="../../../../resources/img/metadata/${plist.ofileName }" width="200px" alt="123">						

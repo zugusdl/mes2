@@ -27,26 +27,6 @@ public class MetadataDAOImpl implements MetadataDAO{
 	@Inject
 	private SqlSession sqlSession;
 
-	/*
-	 * @Override public List<md_productDTO> getproductListAll() throws Exception {
-	 * logger.debug(" DAO : getproductListAll() "); return
-	 * sqlSession.selectList(NAMESPACE + ".listALL"); }
-	 */
-
-	
-	/*
-	 * @Override public List<md_productDTO> getproductdatefilter(Date start, Date
-	 * end, String search) throws Exception {
-	 * logger.debug(" DAO : getproductdatefilter() "); //logger.debug("날짜확인" +
-	 * start); //logger.debug("이름확인" + searchName);
-	 * 
-	 * Map<String, Object> paramMap = new HashMap<>(); paramMap.put("start", start);
-	 * paramMap.put("end", end); paramMap.put("searchName", search);
-	 * 
-	 * return sqlSession.selectList(NAMESPACE + ".listDATE", paramMap); }
-	 */
-
-
 	@Override
 	public int productinsert(md_productDTO dto) throws Exception {
 		logger.debug(" DAO : productinsert() " + dto);
@@ -80,6 +60,22 @@ public class MetadataDAOImpl implements MetadataDAO{
 		
 		return sqlSession.selectList(NAMESPACE + ".list", aDTO);
 	}
+
+
+	@Override
+	public String commoncode(String category) throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE + ".common", category);
+	}
+
+
+	@Override
+	public String number(String commoncode) throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE + ".number", commoncode);
+	}
+	
+	
 	
 
 }

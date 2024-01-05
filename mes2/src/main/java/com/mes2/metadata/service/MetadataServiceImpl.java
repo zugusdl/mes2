@@ -21,21 +21,33 @@ public class MetadataServiceImpl implements MetadataService {
 	
 	@Inject
 	private MetadataDAO mdao;
-
 	
-	/*
-	 * @Override public List<md_productDTO> productListAll() throws Exception {
-	 * logger.debug("S : productListAll()"); return mdao.getproductListAll(); }
-	 */
-
-	/*
-	 * @Override public List<md_productDTO> productdatefilter(Date start, Date end,
-	 * String search) throws Exception { logger.debug("S : productdatefilter()");
-	 * return mdao.getproductdatefilter(start, end, search); }
-	 */
 
 	@Override
 	public int productinsert(md_productDTO dto) throws Exception {
+		
+		//공통코드가 뭔지 가져오기
+		String commoncode = mdao.commoncode(dto.getCategory());
+		logger.debug("공통코드다!" + commoncode);
+		
+		// 공통코드가 몇자리인 알아보기
+		int leng = commoncode.length();
+		
+		//품목테이블에 상품코드 가져오기
+		String code = mdao.number(commoncode);
+		
+		//숫자만 빼서 +1 해주기
+		int number = Integer.parseInt(code.substring(leng));
+		number++;
+		
+		String.valueOf(number);
+		
+		//공통코드와 숫자 합치기
+		String code2 = commoncode + number;
+		logger.debug("이제 끝!" + code2);
+		
+		dto.setProduct_code(code2);
+		
 		
 		return mdao.productinsert(dto);
 	}
