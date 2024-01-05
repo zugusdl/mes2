@@ -6,6 +6,7 @@ function registProduct() {
 		stock_indexList.push($(this).val());
 	});
 	
+	var index = 0;
 	if(stock_indexList.length != 0) {
 		$.each(stock_indexList, function(idx, val){
 			var stock_index = val;
@@ -14,12 +15,14 @@ function registProduct() {
 			var useQuantity = document.querySelector("input[name='useQuantity" + stock_index + "']").value;
 			
 			$("#outProductList", opener.document).append(
-				"<tr><td><input type='hidden' name='stockList["+stock_index+"].stock_index' id='"+stock_index+"' value='"+stock_index+"'></td>" +
-				"<td><input type='hidden' name='stockList["+stock_index+"].pd_lot' id='pd_lot"+stock_index+"' value='"+pd_lot+"'>"+pd_lot+"</td>" +
-				"<td><input type='hidden' name='stockList["+stock_index+"].product_code' id='product_code"+stock_index+"' value='"+product_code+"'>"+product_code+"</td>" +
-				"<td><input type='hidden' name='stockList["+stock_index+"].useQuantity' id='useQuantity"+stock_index+"' value='"+useQuantity+"'>"+useQuantity+"</td>" +
+				"<tr><td><input type='hidden' name='StockDTO["+index+"].stock_index' id='"+stock_index+"' value='"+stock_index+"'></td>" +
+				"<td><input type='hidden' name='StockDTO["+index+"].pd_lot' id='pd_lot"+stock_index+"' value='"+pd_lot+"'>"+pd_lot+"</td>" +
+				"<td><input type='hidden' name='StockDTO["+index+"].product_code' id='product_code"+stock_index+"' value='"+product_code+"'>"+product_code+"</td>" +
+				"<td><input type='hidden' name='StockDTO["+index+"].useQuantity' id='useQuantity"+stock_index+"' value='"+useQuantity+"'>"+useQuantity+"</td>" +
 				"<td><button type='button' onclick='trRemove(this);' class='deleteBtn'>x</button></td></tr>"
 			);
+			
+			index++;
 		});
 		window.close();
 	} else {

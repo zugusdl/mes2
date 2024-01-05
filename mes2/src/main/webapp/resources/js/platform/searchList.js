@@ -85,7 +85,7 @@ function registProduct() {
 						"<tr><td><input type='hidden' name='product_code' id='"+data.product_code+"' value='"+data.product_code+"'>"+data.product_code+"</td>" +
 						"<td>"+data.name+"</td>" +
 						"<td><input type='hidden' name='price' id='p"+data.product_code+"' value='"+data.price+"'>"+new Intl.NumberFormat('ko-KR').format(data.price)+"원</td>" +
-						"<td><input type='number' name='sales_quantity' id='q"+data.product_code+"' step='100' min='300' oninput='cal(this);'>EA</td>" +
+						"<td><input type='number' name='sales_quantity' id='q"+data.product_code+"' step='500' min='500' oninput='cal(this);'>EA</td>" +
 						"<td><input type='text' id='s"+data.product_code+"' readonly>원</td>" +
 						"<td><button type='button' onclick='trRemove(this);' class='deleteBtn'>x</button></td></tr>");
 				window.close();

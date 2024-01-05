@@ -22,7 +22,7 @@
 	<div class="container">
 		<section class="section1">
 			<form class="search">
-				<select id="status" name="sales_status">
+				<select id="status" name="status">
 					<option value="">-- 진행상태 --</option>
 					<option value="waiting">대기</option>
 					<option value="complete">완료</option>
@@ -110,6 +110,46 @@
 
 		<div id="bottomContent"></div>
 	</div>
+	<script type="text/javascript">
+		var result = '${result}';
+		var quantitySum = '${quantitySum}';
+		var product_code = '${product_code}';
+		console.log(quantitySum, product_code);
+		
+		if(result == 'SUCCESS') {
+			alert('출고 등록이 완료되었습니다.');
+		}
+		
+		if(quantitySum != "") {
+			var productionConfirm = confirm(product_code + " 재고가 " + quantitySum + "개 입니다. 생산 지시 하시겠습니까?");
+			if(productionConfirm) {
+				var prompt = prompt("생산 지시 수량을 입력하세요.");
+				insertInstructions(prompt, product_code);
+			}
+		}
+		
+		// 생산 지시
+		function insertInstructions(quantity, product_code) {
+			var instructData = {
+				"mdp_code" : product_code,
+				"sales_quantity" : quantity
+			}
+			
+			$.ajax({
+				url : "/rOut/instruction",
+				type : "POST",
+				data : JSON.stringify(instructData),
+				contentType : "application/json",
+				success : function(data) {
+					alert("생산 지시를 완료하였습니다.")
+					location.reload();
+				},
+				error : function() {
+					alert("생산 지시에 실패했습니다.");
+				}
+			});
+		}
+	</script>
 	<script src="${pageContext.request.contextPath}/resources/js/materials/out/outList.js"></script>
 </body>
 </html>

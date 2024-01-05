@@ -22,13 +22,7 @@
 			<div class="list">
 				<form action="/insertOut" method="post" class="list-form">
 					<div class="list-btn">
-						<c:if test="${empty outDTO }">
-							<button type="button" class="btn btn-secondary" onclick="insertOutProduct('${product_code}');">출고 품목 입력</button>
-							<button type="button" class="btn btn-secondary" onclick="insertOut();">출고 등록</button>
-						</c:if>
-	<!-- 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button> -->
 					</div>
-
 					<div class="list-box">
 						<table class="table table-hover">
 							<thead>
@@ -41,16 +35,16 @@
 								</tr>
 							</thead>
 							<tbody id="outProductList">
-								<c:if test="${!empty outDTO }">
-									<c:forEach var="opDTO" items="${outDTO.opList }">
-										<tr>
-											<td></td>
-											<td>${opDTO.pd_lot }</td>
-											<td>${outDTO.pdto.product_code }</td>
-											<td>${opDTO.out_quantity }</td>
-											<td></td>
-										</tr>
-									</c:forEach>
+								<c:if test="${!empty opList }">
+										<c:forEach var="opDTO" items="${opList }">
+											<tr>
+												<td></td>
+												<td>${opDTO.pd_lot }</td>
+												<td>${opDTO.product_code }</td>
+												<td>${opDTO.out_quantity }</td>
+												<td></td>
+											</tr>
+										</c:forEach>
 								</c:if>
 							</tbody>
 						</table>

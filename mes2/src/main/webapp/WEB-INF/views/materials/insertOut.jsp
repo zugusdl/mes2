@@ -21,6 +21,7 @@
 		<section class="section1">
 			<div class="list">
 				<form action="/materials/insertOut" method="post" class="list-form" id="frm">
+					<input type="hidden" name="out_index" value="${outDTO.out_index}">
 					<input type="hidden" name="quantity" value="${outDTO.quantity}">
 					<div class="list-btn">
 							<button type="button" class="btn btn-secondary" onclick="insertOutProduct('${outDTO.product_code}');">출고 품목 입력</button>
