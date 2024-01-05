@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mes2.metadata.domain.Criteria;
 import com.mes2.metadata.domain.alllistDTO;
+import com.mes2.metadata.domain.common_DTO;
 import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.platform.persistence.PlatformDAOImpl;
 
@@ -73,6 +74,20 @@ public class MetadataDAOImpl implements MetadataDAO{
 	public String number(String commoncode) throws Exception {
 		
 		return sqlSession.selectOne(NAMESPACE + ".number", commoncode);
+	}
+
+
+	@Override
+	public List<common_DTO> selectbox() throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE + ".selectbox");
+	}
+
+
+	@Override
+	public List<common_DTO> selectbox2() throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE + ".selectbox2");
 	}
 	
 	

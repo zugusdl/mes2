@@ -13,6 +13,8 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mes2.metadata.domain.Criteria;
 import com.mes2.metadata.domain.PageVO;
 import com.mes2.metadata.domain.alllistDTO;
+import com.mes2.metadata.domain.common_DTO;
 import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.metadata.service.MetadataService;
 
@@ -166,7 +170,35 @@ public class  MetadataController{
 		
 		return "redirect:/meta_data/firstpage";			
 		}
-		
+	
+	
+	
+	//http://localhost:8088/meta_data/product/category
+	@ResponseBody	
+	@RequestMapping(value = "/product/category", method = RequestMethod.GET)
+	public ResponseEntity<List<common_DTO>> productcate() throws Exception{
+			
+		List<common_DTO> abc = mService.selectbox();
+				
+		logger.debug("셀렉박스 카테고리 공코" + abc);
+				
+		return new ResponseEntity<List<common_DTO>>(abc,HttpStatus.OK);		
+	}
+	
+	
+	//http://localhost:8088/meta_data/product/unit
+		@ResponseBody	
+		@RequestMapping(value = "/product/unit", method = RequestMethod.GET)
+		public ResponseEntity<List<common_DTO>> productunit() throws Exception{
+				
+			List<common_DTO> abc2 = mService.selectbox2();
+					
+			logger.debug("셀렉박스 단위 공코" + abc2);
+					
+			return new ResponseEntity<List<common_DTO>>(abc2,HttpStatus.OK);		
+		}
+	
+	
 
 
 }

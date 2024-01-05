@@ -365,8 +365,70 @@ function redirectToFirstPage() {
     }
 </script>
 
+<!-- 카테고리 공통코드 가져오는 ajax -->
+<script>
+function processAjaxData(data) {
+    // 받아온 데이터를 전역 변수나 다른 곳에 저장
+    window.abc = data;
 
+    // JSP 코드에서 사용할 수 있도록 동적으로 옵션 생성
+    var options = '';
+    var options = '<option>카테고리</option>';
+    $.each(data, function(index, item) {
+        options += '<option>' + item.code_name + '</option>';
+    });
 
+    // 생성된 옵션을 삽입
+    $('#ins_cate, #upd_cate').html(options);
+}
+
+$.ajax({
+    url: '/meta_data/product/category',
+    method: 'GET',
+    dataType: 'json',
+    success: function(data) {
+        // 서버에서 받아온 JSON 데이터를 이용하여 원하는 작업 수행
+        console.log(data);
+        processAjaxData(data);
+    },
+    error: function(xhr, status, error) {
+        console.error('Error:', status, error);
+    }
+});
+</script>
+
+<!-- 단위 공통코드 가져오는 ajax -->
+<script>
+function processAjaxData2(data) {
+    // 받아온 데이터를 전역 변수나 다른 곳에 저장
+    window.abc2 = data;
+
+    // JSP 코드에서 사용할 수 있도록 동적으로 옵션 생성
+    var options = '';
+    var options = '<option>단위</option>';
+    $.each(data, function(index, item) {
+        options += '<option>' + item.code_code + '</option>';
+    });
+    
+    
+    // 생성된 옵션을 삽입
+    $('#ins_unit, #upd_unit').html(options);
+}
+
+$.ajax({
+    url: '/meta_data/product/unit',
+    method: 'GET',
+    dataType: 'json',
+    success: function(data) {
+        // 서버에서 받아온 JSON 데이터를 이용하여 원하는 작업 수행
+        console.log(data);
+        processAjaxData2(data);
+    },
+    error: function(xhr, status, error) {
+        console.error('Error:', status, error);
+    }
+});
+</script>
 
 </head>
 <body>
@@ -440,27 +502,20 @@ function redirectToFirstPage() {
 									
 									<td></td>							
 									<td>(코드자동생성)</td>
-									<td><input type="text" name="name" size="5"></td>									
+									<td><input type="text" name="name" size="5"></td>																		
+									
 									
 									<td>
-									<!--  <input type="text" name="category" size="5">		-->				
-								      <select id="ins_cate" name="ins_cate">
-								      <option value="option1">카테고리</option>
-								      <option value="option1">원재료</option>
-								      <option value="option2">부재료</option>
-								      <option value="option3">완제품</option>
+									<!--  <input type="text" name="category" size="5">		-->												    								      
+								    <select id="ins_cate" name="ins_cate">								      
 								    </select>
 									</td>
 									
+									
+									
 									<td>
 									<!--<input type="text" name="unit" size="5">-->
-									<select id="ins_unit" name="ins_unit">								      
-								      <option value="option1">단위</option>
-								      <option value="option2">ML</option>
-								      <option value="option3">L</option>
-								      <option value="option3">BOX</option>
-								      <option value="option3">G</option>
-								      <option value="option3">KG</option>
+									<select id="ins_unit" name="ins_unit">								      								      
 								    </select>
 									</td>
 									
@@ -509,24 +564,14 @@ function redirectToFirstPage() {
 									
 									<td class="b" style="display: none;">
 									<!-- <input type="text" name="category" size="5" value="${plist.category }"> -->
-									<select id="upd_cate" name="upd_cate">
-								      <option value="option1" selected>${plist.category }</option>
-								      <option value="option1">원재료</option>
-								      <option value="option2">부재료</option>
-								      <option value="option3">완제품</option>
+									<select id="upd_cate" name="upd_cate">								      						    
 								    </select>
 									</td>
-									
-																		
+																												
 									<td class="b" style="display: none;">									
 									<!--  <input type="text" name="unit" size="5" value="${plist.unit }">	-->								
 									<select id="upd_unit" name="upd_unit">
-								      <option value="option1" selected>${plist.unit }</option>
-								      <option value="option2">ML</option>
-								      <option value="option3">L</option>
-								      <option value="option3">BOX</option>
-								      <option value="option3">G</option>
-								      <option value="option3">KG</option>
+								    <!--  <option value="option1" selected>${plist.unit }</option>	-->									      
 								    </select>																
 									</td>
 									

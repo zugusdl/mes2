@@ -93,5 +93,21 @@
 	
 	</select>
 	
+	<!-- 카테고리 공코 -->
+	<select id="selectbox" resultType="com.mes2.metadata.domain.common_DTO">
+	SELECT *
+	FROM common_code
+	where code_group_name = "제품분류";
+	
+	</select>
+	
+	<!-- 단위 공코 -->
+	<select id="selectbox2" resultType="com.mes2.metadata.domain.common_DTO">
+	SELECT *
+	FROM common_code
+	where code_group_name = "기준단위";
+	
+	</select>
+	
   </mapper>
   

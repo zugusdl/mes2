@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mes2.metadata.domain.Criteria;
 import com.mes2.metadata.domain.alllistDTO;
+import com.mes2.metadata.domain.common_DTO;
 import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.metadata.persistence.MetadataDAO;
 
@@ -74,6 +75,18 @@ public class MetadataServiceImpl implements MetadataService {
 	public List<md_productDTO> getlist(alllistDTO aDTO) throws Exception {
 		
 		return mdao.getlist(aDTO);
+	}
+
+	@Override
+	public List<common_DTO> selectbox() throws Exception {
+		
+		return mdao.selectbox();
+	}
+
+	@Override
+	public List<common_DTO> selectbox2() throws Exception {
+		
+		return mdao.selectbox2();
 	}
 
 	
