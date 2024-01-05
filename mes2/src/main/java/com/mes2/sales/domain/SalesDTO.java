@@ -28,7 +28,8 @@ public class SalesDTO {
 	private int waitingCnt;
 	private int completeCnt;
 	
-	private String orderStatus;
+	//private String orderStatus;
+	private String instructions;
 
 	
 	

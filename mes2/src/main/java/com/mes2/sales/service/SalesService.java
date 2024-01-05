@@ -33,12 +33,14 @@ public interface SalesService {
 	public List<SalesDTO> getNewSales();
 	public SalesDTO salesPlanCnt();
 	
-	public List<SalesDTO> completeList();
-	public List<SalesDTO> waitList();
-	public List<SalesDTO> acceptList();
+	public List<SalesDTO> instructionList(String instructions);
+	//public List<SalesDTO> waitList();
+	//public List<SalesDTO> acceptList();
 	public SalesDTO proCnt();
 	public List<SalesDTO>newAcceptList();
 	public List<SalesDTO>UserAccept(String user_id);
 	
 	public AcceptSaveDTO orderInfo(String order_code);
+	
+	public String instructSales(List<SalesDTO> list);
 }

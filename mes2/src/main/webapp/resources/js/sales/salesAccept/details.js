@@ -1,4 +1,6 @@
- function goContent(order_code){
+var intNum = 0;
+
+function goContent(order_code){
        
 	  $.ajax({
 		  url:"acceptContent",
@@ -53,48 +55,63 @@
 
 			 
 		 }
-	      
+		 
 		 $("#sales-modal").html(listHtml);
  }
  
 
- function save(index){
+ function SalesDTO(order_code, sales_code, product_code, sales_quantity, processing_reg) {
+	  this.order_code = order_code;
+	  this.sales_code = sales_code;
+	  this.product_code = product_code;
+	  this.sales_quantity = sales_quantity;
+	  this.processing_reg = processing_reg;
+	}
+
+ function save(){
 	
-	 var order = $("#order_code").val();
-	 var scode = $(".sales_code").eq(index).val();
-	 var productCode = $(".product_code").eq(index).val();
-	 var salesQuantity = $(".sales_quantity").eq(index).val();
-	 var processingReg = $(".product-processing").eq(index).val();
+ //var order = $("#order_code").val();
+//	 var scode = $(".sales_code").eq(index).val();
+//	 var productCode = $(".product_code").eq(index).val();
+//	 var salesQuantity = $(".sales_quantity").eq(index).val();
+//	 var processingReg = $(".product-processing").eq(index).val();
+	 
+	 var list = [];
+
+	 for (var i = 0; i < intNum; i++) {
+		 var order = $("#order_code").val();
+		 var scode = $(".sales_code").eq(i).val();
+		 var pcode = $(".product_code").eq(i).val();
+		 var salesQuantity = $(".sales_quantity").eq(i).val();
+		 var processingReg = $(".product-processing").eq(i).val();
 	 
 	 
-	 alert(scode);
-	 alert(order);
-	 alert(productCode);
-	 alert(salesQuantity);
-	 alert(processingReg);
-	 
-	
-	 
-	 var data = {
-			 order_code: order,
-			 sales_code: scode,
-			 product_code: productCode,
-			 sales_quantity: salesQuantity,
-			 processing_reg: processingReg
-			};
-	 
+		 var dto = new SalesDTO(order, scode, pcode, salesQuantity, processingReg);
+		 list.push(dto);
+
+
+	 }
+	 console.log(list);
 	 $.ajax({
 		  url: "acceptSave",
 		  method: "POST",
-		  dataType:"text",
-		  data: data,
+		  contentType: "application/json",
+		 // dataType:"text",
+		  //data: data,
+		  data: JSON.stringify(list), 
 		  success: function(data) {
+			  intNum = 0;
 			  goContent(data);
 			 
 			 
 			},
 		 
-			error: function(){alert("error 저장");}
+			error: function(xhr, textStatus, errorThrown) {
+		        console.log("AJAX Error:", textStatus);
+		        console.log("Error thrown:", errorThrown);
+		        console.log("Response:", xhr.responseText);
+		        alert("Error during save. Check console for details.");
+		    }
 		});
  }
 
@@ -161,10 +178,14 @@
 //	  var listHtml ="<div class='list-box'>";
 //	  listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
 //	  listHtml +="<input type='hidden' id='order_code' value='"+order_code+"'>";
+	  
+	 
 	  var listHtml = "<div class='list-box'>";
 	  listHtml += "<div>";
 	  listHtml += "<p>주문번호: "+order_code+"</p>";
+	  
 	  listHtml += "<button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#salesModal' onclick='info(\""+order_code+"\")'>상세</button>";
+	  listHtml += " <button type='button' class='btn btn-primary' onclick='save()'>저장</button>";
 	  listHtml += "</div>";
 	  listHtml += "<div>";
 	  listHtml +="<i class='fa-solid fa-rectangle-xmark'id='closeBtn' onclick='cancle()'></i>";
@@ -185,9 +206,13 @@
 	  
 	  listHtml += "<tbody>";
 	  
+	  
 	  $.each(data,function(index,obj){
+		  intNum++;
+		 
 		  
 		  listHtml += "<tr>";
+		  listHtml +="<input type='hidden' id='order_code' value='"+order_code+"'>";
 		  listHtml +="<input type='hidden' name='sales_code' class='sales_code' value='"+obj.sales_code+"'>";
 		  listHtml += "<td>"+obj.sales_code+"</td>";
 		  if(obj.product_name == null){
@@ -204,11 +229,11 @@
 		  if(obj.processing_reg == 'N'){
 			  listHtml += "<td class='back'><select name='processing_reg' class='product-processing'>";
 			  listHtml += "<option value='N' class='check-processing'>N</option>";
-			  listHtml += "<option value='stock' class='check-processing'>재고출하</option>";
-			  listHtml += "<option value='production' class='check-processing'>생산계획</option>";
+			  listHtml += "<option value='stock' class='check-processing'>재고처리</option>";
+			  listHtml += "<option value='production' class='check-processing'>생산처리</option>";
 			  listHtml += "<option value='multi' class='check-processing'>복합처리</option>";  
 			  listHtml += "</select></td>";
-			  listHtml += "<td><button type='button' class='btn btn-primary' onclick='save(" + index + ")'>저장</button></td>";
+			 // listHtml += "<td><button type='button' class='btn btn-primary' onclick='save(" + index + ")'>저장</button></td>";
 		  }  
 		  if(obj.processing_reg != 'N'){
 			  
@@ -221,7 +246,7 @@
       
 	  });
     
-
+	
 	  listHtml += "</tbody>";
 	  listHtml += "</table>";
 	 

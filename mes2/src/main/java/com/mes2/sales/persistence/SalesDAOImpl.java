@@ -189,4 +189,16 @@ public class SalesDAOImpl implements SalesDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".getOrderInfo", order_code);
 	}
+	
+	@Override
+	public void updateInstruction(String order_code) {
+		sqlSession.update(NAMESPACE+".updateInstruction", order_code);
+		
+	}
+	
+	@Override
+	public List<SalesDTO> getInstructionsList(String instructions) {
+		
+		return sqlSession.selectList(NAMESPACE+".getInstructionsList", instructions);
+	}
 }

@@ -42,5 +42,8 @@ public interface SalesDAO {
 	public List<SalesDTO>getUserAccept(String user_id);
 	
 	public AcceptSaveDTO getOrderInfo(String oreder_code);
+	public void updateInstruction(String order_code);
+	
+	public List<SalesDTO>getInstructionsList(String instructions);
 	
 }

@@ -34,6 +34,7 @@
   	<result property="user_department" column="user_department"/>
   	<result property="user_position" column="user_position"/>
   	<result property="user_auth" column="user_auth"/>
+  	<result property="instructions" column="instructions"/>
   </resultMap>
   
    <sql id="searchDate">
@@ -84,7 +85,7 @@
  
   
    <select id="getSalesList" resultMap="SalesDTO" >
-    select I.order_code, B.name AS company_name ,I.order_date, I.request_date 
+    select I.order_code, B.name AS company_name ,I.order_date, I.request_date , I.instructions 
      <include refid="salesJoin"/> 
      <where>
      I.sales_status = #{sales_status}
@@ -130,11 +131,14 @@
     </update>
     
     <select id="getStockQuantity"  resultMap="SalesDTO">
-	 select sum(quantity) as stock_quantity, product_code, name 
-	 from meta_data_product 
-	 where product_code = #{product_code} 
+	select  
+    (select sum(quantity) from stock where product_code = #{product_code}) -
+    (select IFNULL(SUM(quantity),0) from out_warehouse where product_code = #{product_code} AND status = 'waiting') AS stock_quantity,
+    name, 
+    product_code 
+    from meta_data_product 
+    where product_code = #{product_code} 
     </select>
-    
     
  <select id="planSearch"  resultMap="SalesDTO" >
     select I.order_code, B.name AS company_name, I.order_date, 
@@ -207,15 +211,15 @@
   
   <insert id="stockReg">
   insert into out_warehouse 
-  (quantity,product_code,out_type,status,order_code) 
-  values (#{stock_quantity}, #{product_code}, 'S','requested',#{order_code})
+  (quantity,product_code,out_type,based_code,status) 
+  values (#{sales_quantity}, #{product_code}, 'S', #{order_code},'waiting')
   </insert>
   
   <update id='changeProductStatus'>
   update sales_order_product 
   set product_status = #{product_status}, 
   processing_reg = #{processing_reg} 
-  where sales_code =#{sales_code}
+  where sales_code =#{sales_code} 
   </update>
   
   <insert id="productInst">
@@ -254,14 +258,14 @@
 </select>
 
 <select id="getUserAccept" resultMap="SalesDTO" >
-    select I.order_code, B.name AS company_name ,I.order_date, I.request_date 
+    select I.order_code, B.name AS company_name ,I.order_date, I.request_date ,I.instructions  
      <include refid="salesJoin"/> 
     where I.sales_status = 'accept' and I.user_id =#{user_id}
      <include refid="salesGroup"/>
     order by I.request_date ASC
 </select>
   
-    <select id="getOrderInfo" resultMap="AcceptSaveDTO">
+  <select id="getOrderInfo" resultMap="AcceptSaveDTO">
   select I.request_date, E.user_id, E.user_name, E.user_department, E.user_position, E.user_auth, 
   B.company_code, B.name, B.address, B.call 
   from employees E 
@@ -270,4 +274,22 @@
   where I.order_code = #{order_code} 
   </select>
   
+  
+ <update id="updateInstruction">
+ update sales_order_info 
+ set instructions = 'Y' 
+ where order_code =#{order_code} 
+ </update>
+ 
+ <select id="getInstructionsList" resultMap="SalesDTO" >
+ select I.order_code, B.name AS company_name ,I.order_date, I.request_date , I.instructions 
+     <include refid="salesJoin"/> 
+     where 
+     I.sales_status = 'accept' and 
+     I.instructions = #{instructions}
+     <include refid="salesGroup"/>
+    order by I.request_date ASC 
+ </select>
+ 
+
   </mapper>

@@ -54,25 +54,26 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public List<SalesDTO> searchListPlan(SearchDTO sed) {
 		logger.debug(" S : searchListPlan(SearchDTO sed) ");
+		
 		List<SalesDTO> list = sdao.planSearch(sed);
-		for(SalesDTO sdt : list) {
-			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-			int size = olist.size();
-			int count =0;
-			for(SalesDTO pdt : olist) {
-				if(!pdt.getProcessing_reg().equals("N")) {
-					count ++;
-				}
-			}
-			
-			if(count == size) {
-				sdt.setOrderStatus("complete");
-				
-			}else {
-				sdt.setOrderStatus("waiting");
-			}
-	
-		}
+//		for(SalesDTO sdt : list) {
+//			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
+//			int size = olist.size();
+//			int count =0;
+//			for(SalesDTO pdt : olist) {
+//				if(!pdt.getProcessing_reg().equals("N")) {
+//					count ++;
+//				}
+//			}
+//			
+//			if(count == size) {
+//				sdt.setOrderStatus("complete");
+//				
+//			}else {
+//				sdt.setOrderStatus("waiting");
+//			}
+//	
+//		}
 		return list;
 		
 	}
@@ -200,79 +201,68 @@ public class SalesServiceImpl implements SalesService {
 	}
 	
 	
-	@Override
-	public List<SalesDTO> completeList() {
-		List<SalesDTO> list = salesList("accept");
-		List<SalesDTO> completeList = new ArrayList<>();
-		
-		for(SalesDTO sdt : list) {
-			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-			int size = olist.size();
-			int count =0;
-			for(SalesDTO pdt : olist) {
-				if(!pdt.getProcessing_reg().equals("N")) {
-					count ++;
-				}
-			}
-			
-			if(count == size) {
-				sdt.setOrderStatus("complete");
-				completeList.add(sdt);
-			}
-	
-		}
-		
-		return completeList;
-	}
-	
-	@Override
-	public List<SalesDTO> waitList() {
-		
-		List<SalesDTO> list = salesList("accept");		
-		List<SalesDTO> waitList = new ArrayList<>();
-		for(SalesDTO sdt : list) {
-			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-			int size = olist.size();
-			int count =0;
-			for(SalesDTO pdt : olist) {
-				if(!pdt.getProcessing_reg().equals("N")) {
-					count ++;
-				}
-			}
-			
-			if(count != size) {
-				sdt.setOrderStatus("waiting");
-				waitList.add(sdt);
-			}
-	
-		}
-		
-		return waitList;
-	}
+//	@Override
+//	public List<SalesDTO> instructionList() {
+//		List<SalesDTO> list = salesList("accept");
+//		//List<SalesDTO> completeList = new ArrayList<>();
+//		
+////		for(SalesDTO sdt : list) {
+////			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
+////			int size = olist.size();
+////			int count =0;
+////			for(SalesDTO pdt : olist) {
+////				if(!pdt.getProcessing_reg().equals("N")) {
+////					count ++;
+////				}
+////			}
+////			
+////			if(count == size) {
+////				sdt.setOrderStatus("complete");
+////				completeList.add(sdt);
+////			}
+////	
+////		}
+//		
+//		return null;
+//	}
 	
 	@Override
-	public List<SalesDTO> acceptList() {
-		List<SalesDTO> list = salesList("accept");	
-		for(SalesDTO sdt : list) {
-			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-			int size = olist.size();
-			int count =0;
-			for(SalesDTO pdt : olist) {
-				if(!pdt.getProcessing_reg().equals("N")) {
-					count ++;
-				}
-			}
-			
-			if(count == size) {
-				sdt.setOrderStatus("complete");
-				
-			}else {
-				sdt.setOrderStatus("waiting");
-			}
-	
-		}
-		return list;
+	public List<SalesDTO> instructionList(String instrucions) {
+		sdao.getInstructionsList(instrucions);
+		return null;
 	}
+	
+//	@Override
+//	public List<SalesDTO> waitList() {
+//		
+//		List<SalesDTO> list = salesList("accept");		
+//		List<SalesDTO> waitList = new ArrayList<>();
+//		for(SalesDTO sdt : list) {
+//			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
+//			int size = olist.size();
+//			int count =0;
+//			for(SalesDTO pdt : olist) {
+//				if(!pdt.getProcessing_reg().equals("N")) {
+//					count ++;
+//				}
+//			}
+//			
+//			if(count != size) {
+//				sdt.setOrderStatus("waiting");
+//				waitList.add(sdt);
+//			}
+//	
+//		}
+//		
+//		return waitList;
+//	}
+	
+//	@Override
+//	public List<SalesDTO> acceptList() {
+//		List<SalesDTO> list = salesList("accept");	
+//		
+//		return list;
+//	}
 	
 	@Override
 	public List<SalesDTO> newAcceptList() {
@@ -282,10 +272,11 @@ public class SalesServiceImpl implements SalesService {
 	
 	@Override
 	public SalesDTO proCnt() {
-		List<SalesDTO> completeList = completeList();
-		List<SalesDTO> waitList = waitList();
+		//List<SalesDTO> completeList = completeList();
+		//List<SalesDTO> waitList = waitList();
 		List<SalesDTO> newList = newAcceptList();
-		
+		List<SalesDTO> completeList = sdao.getInstructionsList("Y");
+		List<SalesDTO> waitList = sdao.getInstructionsList("N");
 		SalesDTO dto = new SalesDTO();
 		dto.setNewCnt(newList.size());
 		dto.setWaitingCnt(waitList.size());
@@ -297,24 +288,24 @@ public class SalesServiceImpl implements SalesService {
 	public List<SalesDTO> UserAccept(String user_id) {
 		
 		List<SalesDTO> list = sdao.getUserAccept(user_id);
-		for(SalesDTO sdt : list) {
-			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-			int size = olist.size();
-			int count =0;
-			for(SalesDTO pdt : olist) {
-				if(!pdt.getProcessing_reg().equals("N")) {
-					count ++;
-				}
-			}
-			
-			if(count == size) {
-				sdt.setOrderStatus("complete");
-				
-			}else {
-				sdt.setOrderStatus("waiting");
-			}
-	
-		}
+//		for(SalesDTO sdt : list) {
+//			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
+//			int size = olist.size();
+//			int count =0;
+//			for(SalesDTO pdt : olist) {
+//				if(!pdt.getProcessing_reg().equals("N")) {
+//					count ++;
+//				}
+//			}
+//			
+//			if(count == size) {
+//				sdt.setOrderStatus("complete");
+//				
+//			}else {
+//				sdt.setOrderStatus("waiting");
+//			}
+//	
+//		}
 		return list;
 		
 	}
@@ -325,4 +316,59 @@ public class SalesServiceImpl implements SalesService {
 		return sdao.getOrderInfo(order_code);
 	}
 	
+	@Override
+	public String instructSales(List<SalesDTO> list) {
+
+		SalesDTO sdt = list.get(0);
+
+        String order_code = sdt.getOrder_code();
+		sdao.updateInstruction(order_code);
+		
+		for(SalesDTO dto : list) {
+			
+			
+			if(dto != null && dto.getProcessing_reg().equals("stock")) {
+				
+				dto.setProduct_status("progressing");			
+				stockReg(dto);
+				
+				
+			}
+			
+			if(dto != null && dto.getProcessing_reg().equals("production")) {
+				// 전체 부족인 경우 
+				
+				dto.setProduct_status("progressing");
+				dto.setLack_quantity(dto.getSales_quantity());
+				productInst(dto);
+				
+				//dto.setStock_quantity(dto.getSales_quantity());
+				stockReg(dto); 
+				
+			}
+			
+			if(dto.getProcessing_reg().equals("multi")) {
+				
+				// 4. stock_quantity < sales_quantity 
+				// 재고가 있는 경우 
+				dto.setProduct_status("progressing");
+				// 현재고 가져오기 
+				int stock_quantity = stockQuantity(dto).getStock_quantity();
+				
+				// 부족재고 가져오기 
+				int lack_quantity =(dto.getSales_quantity() - stock_quantity);
+				
+				dto.setLack_quantity(lack_quantity);		
+				
+				stockReg(dto);
+				
+				productInst(dto);
+			}
+			if(dto.getProcessing_reg().equals("N")) {
+				// 아무 동작이 필요하지 않은 경우
+			}
+		}
+		
+		return order_code;
+	}
 }

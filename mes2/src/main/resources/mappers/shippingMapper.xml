@@ -99,7 +99,7 @@
   </sql>
   
   <select id="getShippingList" resultMap="ShippingDTO">
-  select I.order_code , B.name AS company_name ,I.request_date ,I.order_date, S.ship_status, S.scheduled_date
+  select I.order_code , B.name AS company_name ,I.order_date, S.ship_status, S.scheduled_date
   <include refid="shippingJoin"/>
   where  
   I.sales_status = 'accept' 

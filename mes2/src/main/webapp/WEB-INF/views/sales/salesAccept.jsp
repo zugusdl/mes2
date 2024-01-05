@@ -191,7 +191,7 @@
                   <td>${dto.company_name }</td>         
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.order_date}"/></td>
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.request_date }"/></td>
-                  <td>${dto.orderStatus }</td>  
+                  <td>${dto.instructions }</td>  
 					
                 </tr>
                </c:forEach> 
