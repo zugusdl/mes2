@@ -1,27 +1,22 @@
 package com.mes2.metadata.service;
 
-import java.sql.Date;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import com.mes2.metadata.domain.Criteria;
 import com.mes2.metadata.domain.alllistDTO;
 import com.mes2.metadata.domain.common_DTO;
 import com.mes2.metadata.domain.md_productDTO;
-import com.mes2.metadata.persistence.MetadataDAO;
+import com.mes2.metadata.persistence.Product_DAO;
 
 @Service
-public class MetadataServiceImpl implements MetadataService {
+public class Product_ServiceImpl implements Product_Service {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MetadataServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(Product_ServiceImpl.class);
 	
 	@Inject
-	private MetadataDAO mdao;
+	private Product_DAO mdao;
 	
 
 	@Override

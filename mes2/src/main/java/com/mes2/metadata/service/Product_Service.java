@@ -1,31 +1,32 @@
-package com.mes2.metadata.persistence;
+package com.mes2.metadata.service;
 
 
-import java.sql.Date;
 import java.util.List;
-
-import com.mes2.metadata.domain.Criteria;
 import com.mes2.metadata.domain.alllistDTO;
 import com.mes2.metadata.domain.common_DTO;
 import com.mes2.metadata.domain.md_productDTO;
 
-public interface MetadataDAO {
+public interface Product_Service {
 	
+	//품목  추가
 	public int productinsert(md_productDTO dto) throws Exception;
 	
+	//품목 수정
 	public int productupdate(md_productDTO dto) throws Exception;
 	
+	//품목 삭제
 	public int productdelete(md_productDTO dto) throws Exception;
 	
-	public int gettotalcount(alllistDTO dto) throws Exception;
-
-	public List<md_productDTO> getlist(alllistDTO dto) throws Exception;
+	//글 개수(페이징)
+	public int gettotalcount(alllistDTO aDTO) throws Exception;
 	
-	public String commoncode(String category) throws Exception;
+	//리스트(페이징)
+	public List<md_productDTO> getlist(alllistDTO aDTO) throws Exception;
 	
-	public String number(String commoncode) throws Exception;
-	
+	//카테고리 공통코드
 	public List<common_DTO> selectbox() throws Exception;
 	
+	//단위 공통코드
 	public List<common_DTO> selectbox2() throws Exception;
+
 }

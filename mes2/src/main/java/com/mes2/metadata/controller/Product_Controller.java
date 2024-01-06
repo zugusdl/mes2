@@ -20,7 +20,7 @@ import com.mes2.metadata.domain.PageVO;
 import com.mes2.metadata.domain.alllistDTO;
 import com.mes2.metadata.domain.common_DTO;
 import com.mes2.metadata.domain.md_productDTO;
-import com.mes2.metadata.service.MetadataService;
+import com.mes2.metadata.service.Product_Service;
 
 
 //http://localhost:8088/meta_data/firstpage
@@ -31,7 +31,7 @@ public class  Product_Controller{
 	private static final Logger logger = LoggerFactory.getLogger(Product_Controller.class);
 	
 	@Inject
-	private MetadataService mService;
+	private Product_Service mService;
 	
 	
 	
