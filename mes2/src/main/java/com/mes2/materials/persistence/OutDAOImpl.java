@@ -31,7 +31,7 @@ public class OutDAOImpl implements OutDAO {
 	@Override
 	public List<OutDTO> getOutList(OutSearchDTO osDTO) throws Exception {
 		logger.debug("DAO: getOutList() 호출");
-		return sqlSession.selectList(NAMESPACE + ".getOutList");
+		return sqlSession.selectList(NAMESPACE + ".getOutList", osDTO);
 	}
 	
 	// 목록 개수 조회

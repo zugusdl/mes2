@@ -43,3 +43,4 @@ function deleteOrder(order_code, sales_status) {
 	
 	location.href = "/platform/deleteOrder?order_code=" + order_code;
 }
+

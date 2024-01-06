@@ -107,7 +107,7 @@
 				AND sales_status = #{sales_status}
 			</if>
 			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
-                AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
+                AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE) + 1
 			</if>
 		</where> 
 		ORDER BY sales_index desc
@@ -123,7 +123,7 @@
 				AND sales_status = #{sales_status}
 			</if>
 			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
-                AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
+                AND request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE) + 1
 			</if>
 		</where>
 	</select>
@@ -178,5 +178,19 @@
 		UPDATE meta_data_business 
 		SET pw = #{checkPw} 
 		WHERE company_code = #{company_code} AND pw = #{pw}
+	</update>
+	
+	<!-- 수령 완료(수주 테이블 complete로 변경) -->
+	<update id="receiveDelivery">
+		UPDATE shipping 
+		SET confirm_status = 'complete' 
+		WHERE order_code = #{order_code}
+	</update>
+	
+	<!-- 수령 완료(주문 테이블 complete로 변경) -->
+	<update id="changeOrderStatus">
+		UPDATE sales_order_info 
+		SET sales_status = 'complete' 
+		WHERE order_code = #{order_code}
 	</update>
 </mapper>

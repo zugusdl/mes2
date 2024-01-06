@@ -63,4 +63,10 @@ public interface PlatformDAO {
 	// 비밀번호 변경
 	public void modifyPw(ModifyPwDTO mdDTO) throws Exception;
 	
+	// 수령 완료(수주 테이블 complete로 변경)
+	public void receiveDelivery(String order_code) throws Exception;
+	
+	// 수령 완료(주문 테이블 complete로 변경)
+	public void changeOrderStatus(String order_code) throws Exception;
+	
 }

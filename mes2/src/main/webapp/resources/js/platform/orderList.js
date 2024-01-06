@@ -37,7 +37,31 @@ function getOrderDetail(order_code, order_date) {
 	});
 }
 
-//수령 완료 처리
+//수령 완료
 function completeOrder(order_code) {
-	var complete = window.open("/platform/completeOrder?order_code="+order_code, "_blank","height=400, width=500");
+	console.log(order_code);
+	
+	var completeConfirm = confirm('수령 완료 처리 하시겠습니까?');
+	
+	if(completeConfirm) {
+		$.ajax({
+			url : "/restPlatform/receiveDelivery",
+			type : "POST",
+			data : {
+				"order_code" : order_code
+			},
+			success : function() {
+				alert('수령 완료 처리 하였습니다.');
+				location.href = '/platform/orderList';
+			},
+			error : function() {
+				alert('수령 완료 처리에 실패하였습니다.')
+			}
+		});
+	}
 }
+
+//수령 완료 처리
+//function completeOrder(order_code) {
+//	var complete = window.open("/platform/completeOrder?order_code="+order_code, "_blank","height=400, width=500");
+//}

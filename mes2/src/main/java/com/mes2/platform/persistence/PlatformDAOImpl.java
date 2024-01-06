@@ -160,5 +160,20 @@ public class PlatformDAOImpl implements PlatformDAO {
 		logger.debug("DAO: modifyPw() 호출");
 		sqlSession.update(NAMESPACE + ".modifyPw", mdDTO);
 	}
+	
+	// 수령 완료(수주 테이블 complete로 변경)
+	@Override
+	public void receiveDelivery(String order_code) throws Exception {
+		logger.debug("DAO: ");
+		sqlSession.update(NAMESPACE + ".receiveDelivery", order_code);
+		
+	}
+	
+	// 수령 완료(주문 테이블 complete로 변경)
+	@Override
+	public void changeOrderStatus(String order_code) throws Exception {
+		logger.debug("DAO: ");
+		sqlSession.update(NAMESPACE + ".changeOrderStatus", order_code);
+	}
 
 }

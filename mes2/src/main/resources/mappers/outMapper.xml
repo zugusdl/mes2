@@ -48,14 +48,14 @@
 				AND out_warehouse.status = #{status}
 			</if>
 			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
-                AND out_warehouse.out_request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
+                AND out_warehouse.out_request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE) + 1
 			</if>
 			<if test="product_code != null and !product_code.equals('')">
 				AND out_warehouse.product_code = #{product_code}
 			</if>
 		</where>
-		ORDER BY status DESC
-		<!-- LIMIT #{cri.startPage}, #{cri.pageSize} -->
+		ORDER BY status DESC, out_request_date
+		LIMIT #{cri.startPage}, #{cri.pageSize}
 	</select>
 	
 	<!-- 목록 개수 조회 -->
@@ -66,7 +66,7 @@
 				AND status = #{status}
 			</if>
 			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
-                AND out_request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE)
+                AND out_request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE) + 1
 			</if>
 			<if test="product_code != null and !product_code.equals('')">
 				AND product_code = #{product_code}

@@ -41,17 +41,17 @@ public class OutController {
 
 	// 출고 목록 리스트 - GET
 	@GetMapping(value = "/outList")
-	public void outListGET(Model model, OutDTO odto, OutSearchDTO osDTO/* , Criteria cri */) throws Exception {
+	public void outListGET(Model model, OutDTO odto, OutSearchDTO osDTO , Criteria cri ) throws Exception {
 		logger.debug("outListGET() 호출 ");
 		logger.debug("@@osDTO: " + osDTO);
-//		cri.setPageSize(7);
-//		osDTO.setCri(cri);
+		cri.setPageSize(7);
+		osDTO.setCri(cri);
 		
 		// 페이징 처리
-//		PageVO pageVO = new PageVO();
-//		pageVO.setCri(cri);
-//		pageVO.setTotalCount(oService.getTotalOutCount(osDTO));
-//		model.addAttribute("pageVO", pageVO);
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(oService.getTotalOutCount(osDTO));
+		model.addAttribute("pageVO", pageVO);
 
 		// 출고 목록 조회
 		model.addAttribute("osDTO", osDTO);

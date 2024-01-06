@@ -46,4 +46,7 @@ public interface PlatformService {
 	
 	// 비밀번호 변경
 	public void modifyPw(ModifyPwDTO mpDTO) throws Exception;
+	
+	// 수령 완료
+	public void receiveDelivery(String order_code) throws Exception;
 }

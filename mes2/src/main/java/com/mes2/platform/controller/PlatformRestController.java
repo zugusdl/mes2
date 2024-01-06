@@ -40,4 +40,10 @@ public class PlatformRestController {
 		return mdpDTO;
 	}
 	
+	@PostMapping(value = "/receiveDelivery")
+	public void receiveDelivery(@RequestParam("order_code") String order_code) throws Exception {
+		logger.debug("receiveDelivery() 호출");
+		pService.receiveDelivery(order_code);
+	}
+	
 }

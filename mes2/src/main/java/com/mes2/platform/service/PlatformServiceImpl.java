@@ -183,5 +183,12 @@ public class PlatformServiceImpl implements PlatformService {
 		pdao.modifyPw(mpDTO);
 	}
 	
+	// 수령 완료
+	@Override
+	public void receiveDelivery(String order_code) throws Exception {
+		logger.debug("S: receiveDelivery() 호출");
+		pdao.receiveDelivery(order_code);
+		pdao.changeOrderStatus(order_code);
+	}
 	
 }
