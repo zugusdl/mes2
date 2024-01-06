@@ -37,7 +37,7 @@
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,삭제 버튼 -->	
 		<div class="son_serch">
-			<form action="/meta_data/firstpage" method="POST">
+			<form action="/product/firstpage" method="POST">
 				<span>등록기간</span>
 				<input type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
 				<input type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px"/>					
@@ -147,19 +147,19 @@
 				<ul class="pagination pagination-sm no-margin pull-right">
 				
 				<c:if test="${pageVO.prev }">
-					<li><a href="/meta_data/firstpage?page=${pageVO.startPage - 1 }">«</a></li>
+					<li><a href="/product/firstpage?page=${pageVO.startPage - 1 }">«</a></li>
 				</c:if>
 				
 				<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
 					<li class=${pageVO.cri.page == i ? "active":"" }>
-						<a href="/meta_data/firstpage?page=${i }&search=${aDTO.search }&startDate=${aDTO.startDate }&endDate=${aDTO.endDate }">
+						<a href="/product/firstpage?page=${i }&search=${aDTO.search }&startDate=${aDTO.startDate }&endDate=${aDTO.endDate }">
 							${i }
 						</a>
 					</li>
 				</c:forEach>
 				
 				<c:if test="${pageVO.next }">
-					<li><a href="/meta_data/first?page=${pageVO.endPage + 1 }">»</a></li>
+					<li><a href="/product/first?page=${pageVO.endPage + 1 }">»</a></li>
 				</c:if>
 			
 				</ul>

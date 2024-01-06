@@ -23,9 +23,9 @@ import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.metadata.service.Product_Service;
 
 
-//http://localhost:8088/meta_data/firstpage
+//http://localhost:8088/product/firstpage
 @Controller
-@RequestMapping(value = "/meta_data/*")
+@RequestMapping(value = "/product/*")
 public class  Product_Controller{
 	
 	private static final Logger logger = LoggerFactory.getLogger(Product_Controller.class);
@@ -71,7 +71,7 @@ public class  Product_Controller{
 		dto.setOfileName(ofileName);
 		mService.productinsert(dto);
 
-		return "redirect:/meta_data/firstpage";
+		return "redirect:/product/firstpage";
 		
 		
 	}
@@ -84,7 +84,7 @@ public class  Product_Controller{
 		dto.setOfileName(ofileName);
 		mService.productupdate(dto);
 			
-		return "redirect:/meta_data/firstpage";			
+		return "redirect:/product/firstpage";			
 	}
 		
 		
@@ -94,14 +94,12 @@ public class  Product_Controller{
 		
 		mService.productdelete(dto);		
 		
-		return "redirect:/meta_data/firstpage";			
+		return "redirect:/product/firstpage";			
 	}
 	
 	
-	
-	//http://localhost:8088/meta_data/product/category
 	@ResponseBody	
-	@RequestMapping(value = "/product/category", method = RequestMethod.GET)
+	@RequestMapping(value = "/product2/category", method = RequestMethod.GET)
 	public ResponseEntity<List<common_DTO>> productcate() throws Exception{
 			
 		List<common_DTO> abc = mService.selectbox();
@@ -110,9 +108,8 @@ public class  Product_Controller{
 	}
 	
 	
-	//http://localhost:8088/meta_data/product/unit
 	@ResponseBody	
-	@RequestMapping(value = "/product/unit", method = RequestMethod.GET)
+	@RequestMapping(value = "/product2/unit", method = RequestMethod.GET)
 	public ResponseEntity<List<common_DTO>> productunit() throws Exception{
 				
 		List<common_DTO> abc2 = mService.selectbox2();

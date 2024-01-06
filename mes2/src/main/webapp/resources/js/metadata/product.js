@@ -149,7 +149,7 @@ function submitData() {
 	formData.append('file', file);
 	
     $.ajax({
-        url: '/meta_data/insertproduct',
+        url: '/product/insertproduct',
         type: "POST",
         enctype: 'multipart/form-data',
         data: formData,        
@@ -204,7 +204,7 @@ function submitData2(submitbtn2) {
   	formData.append('file', file);
 	
     $.ajax({
-        url: '/meta_data/updateproduct',
+        url: '/product/updateproduct',
         type: 'POST',
         data: formData,        
         processData: false,
@@ -231,7 +231,7 @@ function submitData3(submitbtn3) {
     var ProductCode = row.find('.b:eq(0)').text();
 
     $.ajax({
-        url: '/meta_data/deleteproduct',
+        url: '/product/deleteproduct',
         type: 'POST',
         data: {
             product_code: ProductCode,
@@ -250,7 +250,7 @@ function submitData3(submitbtn3) {
 
 // 취소버튼 js -->
 function redirectToFirstPage() {
-    window.location.href = '/meta_data/firstpage';
+    window.location.href = '/product/firstpage';
 }
 
 
@@ -298,7 +298,7 @@ function processAjaxData(data) {
 }
 
 $.ajax({
-    url: '/meta_data/product/category',
+    url: '/product/product2/category',
     method: 'GET',
     dataType: 'json',
     success: function(data) {
@@ -326,7 +326,7 @@ function processAjaxData2(data) {
 }
 
 $.ajax({
-    url: '/meta_data/product/unit',
+    url: '/product/product2/unit',
     method: 'GET',
     dataType: 'json',
     success: function(data) {
