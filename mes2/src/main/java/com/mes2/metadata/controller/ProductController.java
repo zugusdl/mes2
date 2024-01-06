@@ -37,9 +37,9 @@ import com.mes2.metadata.service.MetadataService;
 //http://localhost:8088/meta_data/firstpage
 @Controller
 @RequestMapping(value = "/meta_data/*")
-public class  MetadataController{
+public class  ProductController{
 	
-	private static final Logger logger = LoggerFactory.getLogger(MetadataController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 	@Inject
 	private MetadataService mService;
@@ -73,7 +73,7 @@ public class  MetadataController{
 		model.addAttribute("pageVO", pageVO);
 		
 		
-		return "/meta_data/productdata/productinfo";
+		return "/meta_data/productinfo";
 		
 		
 	}
