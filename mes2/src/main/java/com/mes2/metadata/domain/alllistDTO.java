@@ -1,7 +1,5 @@
 package com.mes2.metadata.domain;
 
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data
