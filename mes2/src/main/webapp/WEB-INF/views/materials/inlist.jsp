@@ -21,130 +21,19 @@
 <body>
 
 	
-	<form action="/materials/purchaselist" method="get">
+	<form action="/materials/inlist" method="get">
 		<select name="searchType">
-			<option value="category">자재유형</option>
-			<option value="name">품목명</option>
+			<option value="status">입고현황</option>
 		</select> <input type="text" name="keyword"> <input type="submit"
 			value="검색하기">
 	</form>
 
 	
-	
-<!-- Button trigger modal -->
- 	<div class="col-md-13 text-end">
-		Button trigger modal
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">신청</button>
-	</div>
-
-	
-	<form action="/materials/in" method="post">
-		<div class="modal fade" id="exampleModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">입고 등록</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<table class="table">
-							<tr>
-								<td>입고코드</td>
-								<td><input type="text" class="form-control"
-									name="in_code"></td>
-							</tr>
-							<tr>
-								<td>품목코드</td>
-								<td><input type="text" class="form-control"
-									name="product_code" required></td>
-							</tr>
-							<tr>
-								<td>자재유형</td>
-								<td>
-									<div class="input-group">
-										<input type="text" class="form-control" name="category"
-											id="categoryInput" required>
-										<div class="input-group-append">
-											<button class="btn btn-secondary dropdown-toggle"
-												type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-												aria-expanded="false">
-												<span class="caret"></span>
-											</button>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="#" data-value="완제품"
-													data-input="categoryInput">완제품</a> <a class="dropdown-item"
-													href="#" data-value="원재료" data-input="categoryInput">원재료</a>
-												<a class="dropdown-item" href="#" data-value="부자재"
-													data-input="categoryInput">부자재</a>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-
-							<tr>
-								<td>품목명</td>
-								<td>
-									<div class="input-group">
-										<input type="text" class="form-control" name="name"
-											id="nameInput" required>
-										<div class="input-group-append">
-											<button class="btn btn-secondary dropdown-toggle"
-												type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-												aria-expanded="false">
-												<span class="caret"></span>
-											</button>
-											<div class="dropdown-menu">
-												<a class="dropdown-item" href="#" data-value="옵션 1"
-													data-input="nameInput">옵션 1</a> <a class="dropdown-item"
-													href="#" data-value="옵션 2" data-input="nameInput">옵션 2</a>
-												<a class="dropdown-item" href="#" data-value="옵션 3"
-													data-input="nameInput">옵션 3</a>
-											</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-
-							 <tr>
-								<td>단위</td>
-								<td><input type="text" class="form-control" name="unit"
-									required></td>
-							</tr>
-							<tr>
-								<td>수량</td>
-								<td><input type="number" class="form-control"
-									name="quantity" required></td>
-							</tr>
-							<tr>
-								<td>입고등록일</td>
-								<td><input type="date" class="form-control" name="in_regdate"
-									required></td>
-							</tr>
-							<tr>
-								<td>입고담당자</td>
-								<td><input type="text" class="form-control" name="user_id"
-									required></td>
-							</tr>
-						</table>
-						<button type="submit" class="btn btn-secondary">신청</button>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
- 
- 
 
 	<a href="/materials/in"></a>
 	<table class="table table-hover">
 		<tr>
 			<td></td>
-			<td>입고코드</td>
 			<td>로트번호</td>			
 			<td>품목명</td>
 			<td>수량</td>
@@ -158,7 +47,6 @@
 		<c:forEach var="in" items="${inlist}">
 			<tr>
 				<td><input type="hidden" class="product_code" value="${in.product_code}" /></td>
-				<td><c:out value="${in.in_code}" /></td>
 				<td><c:out value="${in.pd_lot}" /></td>
 				<td><c:out value="${in.name}" /></td>
 				<td><c:out value="${in.quantity}" /></td>
@@ -168,9 +56,17 @@
 				<td><c:out value="${in.user_id}" /></td>
 
 				<!-- 	<button type="button" class="btn btn-primary" onclick="buttonClick()">대기</button> -->
-			<td><button type="button" class="btn btn-primary statusButton"
-						onclick="updateStatus(this)" data-status="waiting">입고</button></td> 
-
+			<td>
+				<c:if test="${in.status.equals('waiting')}">
+						<form action="/materials/updateInStatus" method="post">
+							<input type ="hidden" value="${in.in_index}" name="in_index">
+							<button type="submit" class="btn btn-primary statusButton" >대기</button>
+						</form>
+					</c:if>
+					<c:if test="${in.status.equals('complete')}">
+						<button type="button" class="btn btn-primary statusButton" >완료</button>
+					</c:if>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -204,6 +100,7 @@
 		crossorigin="anonymous">
 		
 	</script>
+
 
 
 

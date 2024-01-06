@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 
 import com.mes2.materials.domain.Criteria;
 import com.mes2.materials.domain.InDTO;
+import com.mes2.materials.domain.PurchaseDTO;
 import com.mes2.materials.domain.SearchDTO;
+import com.mes2.materials.domain.productDTO;
 
 @Repository
 public class InDAOImpl implements InDAO {
@@ -26,29 +28,17 @@ public class InDAOImpl implements InDAO {
 	private static final String NAMESPACE ="com.mes2.mapper.MaterialsMapper";
 
 
-	
 	@Override
-	public void registerInbound(InDTO idto) throws Exception {
-		 logger.debug(" DAO : 입고 신청 registerInbound(InDTO idto) ");
-		sqlSession.insert(NAMESPACE + ".addIn" , idto);
+	public List<InDTO> getAllInboundInfo(String searchType, String keyword, Criteria cri, SearchDTO sdto) throws Exception {
 		
-	}
-
-	
-
-	@Override
-	public List<InDTO> getAllInboundInfo(InDTO idto, Criteria cri, SearchDTO sdto, String status) throws Exception {
-		logger.debug(" DAO -  입고 전체 리스트 getAllInboundInfo(InDTO idto) "); 
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("searchType", searchType);
+		searchMap.put("keyword", keyword);
+		searchMap.put("cri", cri);
+		searchMap.put("sdto", sdto);
 	    
-		
-		Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("startPage", cri.getStartPage());
-        paramMap.put("pageSize", cri.getPageSize());
-        paramMap.put("status", status);
-	    
-		return sqlSession.selectList(NAMESPACE + ".getInList", paramMap);
+		return sqlSession.selectList(NAMESPACE + ".getInList", searchMap);
 	}
-	
 	
 
 	@Override
@@ -61,33 +51,58 @@ public class InDAOImpl implements InDAO {
         sqlSession.update(NAMESPACE + ".StockupdateQuantity", paramMap);
     }
 
-
-
 	@Override
-	public List<InDTO> getInListPage(int page) throws Exception {
+	public int getInCount(Criteria cri, String searchType, String keyword) throws Exception {
+		 Map<String, Object> paramMap = new HashMap<>();
+		 paramMap.put("cri", cri); 
+		 paramMap.put("searchType", searchType); 
+		 paramMap.put("keyword", keyword);
+		return sqlSession.selectOne(NAMESPACE + ".InCount", paramMap);
+	}
+	
+	@Override
+	public List<InDTO> searchIn(String searchType, String keyword, Criteria cri) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("searchType", searchType);
+		paramMap.put("keyword", keyword);
+		paramMap.put("startPage", cri.getStartPage());
+		paramMap.put("pageSize", cri.getPageSize());
 		
-		// 페이징처리 계산
-		// page 1 => 1~10  page 2 => 11~20 ... page 3 => 21-30
-		//  => limit 0,10   =>  limit  10,10    => limit 20,10
-		
-		page = (page - 1) * 10;
-		
-		
-		return sqlSession.selectList(NAMESPACE + ".InlistPage",page);
+		return sqlSession.selectList(NAMESPACE + ".getInList", paramMap);
+	}
+	
+	@Override
+	public int updateInStatus(String status, int in_index) throws Exception {
+		Map<String, Object> params = new HashMap<>();
+		params.put("status", status);
+		params.put("in_index", in_index);
+
+		return sqlSession.update(NAMESPACE + ".updateInStatus", params);
 	}
 
 
-
 	@Override
-	public List<InDTO> getInListPage(Criteria cri) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".InlistPage",cri);
+	public productDTO listIncomingProductCodes(String product_code) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("product_code", product_code);
+
+		return sqlSession.selectOne(NAMESPACE + ".listIncomingProductCodes", paramMap);
 	}
 
 
+	@Override
+	public List<productDTO> getIncomingProductCodesByCategory(String category) throws Exception {
+		Map<String, Object> parammap = new HashMap<>();
+		parammap.put("category", category);
+		
+		return sqlSession.selectList(NAMESPACE + ".getIncomingProductCodesByCategory", parammap);
+	}
+
 
 	@Override
-	public int getInCount() throws Exception {
-		return sqlSession.selectOne(NAMESPACE + ".InCount");
+	public void insertIncomingRequest(InDTO idto) throws Exception {
+		System.out.println("발주신청");
+		sqlSession.insert(NAMESPACE + ".insertIncomingRequest", idto);
 	}
 	
 	

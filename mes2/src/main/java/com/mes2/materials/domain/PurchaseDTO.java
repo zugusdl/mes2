@@ -9,8 +9,8 @@ import lombok.Data;
 @Data
 public class PurchaseDTO {
 
+	private int orders_index; // 인덱스
 	private String orders_code; // 발주코드
-	
 	private String product_code; // 품목코드 **
 	private String material_code; // 원자재 **
 

@@ -29,140 +29,90 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 
 	@Override
 	public void insertPurchase(PurchaseDTO pdto) throws Exception {
-		
-	
-	 logger.debug(" DAO : 발주 신청 insertPurchase(PurchaseDTO pdto) ");
-	 sqlSession.insert(NAMESPACE + ".insertMaterialOrderWithCode", pdto);
-	 }
 
+		logger.debug(" DAO : 발주 신청 insertPurchase(PurchaseDTO pdto) ");
+		sqlSession.insert(NAMESPACE + ".insertMaterialOrderWithCode", pdto);
+	}
 
-	
-	  @Override 
-	  public List<PurchaseDTO> listPurchase(String searchType, String search, Criteria cri) throws Exception {
-	  logger.debug(" DAO -  발주 전체 리스트 listPurchase(PurchaseDTO pdto) ");
-	  
-	  Map<String, Object> searchMap = new HashMap<String, Object>();
-		searchMap.put("searchType", searchType);
-		searchMap.put("search", search);
-		searchMap.put("cri", cri);
-		
-	  
-	  return sqlSession.selectList(NAMESPACE + ".combinedMaterialList", searchMap);
-	  
-	  }
-	 
-
-	
-	
-	
-
-	// 전 상태변경 
-	/*
-	 * @Override public int updateOrderStatus(String status, String product_code)
-	 * throws Exception { logger.
-	 * debug(" DAO - 상태 변경  updateStatus(String status, String product_code) ");
-	 * Map<String, Object> params = new HashMap<>(); params.put("status", status);
-	 * params.put("product_code", product_code);
-	 * 
-	 * return sqlSession.update(NAMESPACE + ".updateOrderStatus", params); }
-	 */
-	
-	
-
-
-
-
-	// 후 상태변경 
 	@Override
-	public int updateOrderStatus(String status, String product_code) throws Exception {
-		logger.debug(" DAO - 상태 변경  updateStatus(String status, String material_code) ");
+	public List<PurchaseDTO> listPurchase(String searchType, String keyword, Criteria cri, SearchDTO sdto)
+			throws Exception {
+
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("searchType", searchType);
+		searchMap.put("keyword", keyword);
+		searchMap.put("cri", cri);
+		searchMap.put("sdto", sdto);
+
+		return sqlSession.selectList(NAMESPACE + ".combinedMaterialList", searchMap);
+
+	}
+
+	@Override
+	public int updateOrderStatus(String status, int orders_index) throws Exception {
+		logger.debug(" DAO - 상태 변경  updateStatus(String status, int orders_index) ");
 		Map<String, Object> params = new HashMap<>();
 		params.put("status", status);
-		params.put("product_code", product_code);
+		params.put("orders_index", orders_index);
 
 		return sqlSession.update(NAMESPACE + ".updateOrderStatus", params);
 	}
 
-
-
-
 	@Override
-	public PurchaseDTO getProductByCategory(String product_code, String category) throws Exception {
-	    Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("product_code", product_code);
-        paramMap.put("category", category);
-        
-		return  sqlSession.selectOne(NAMESPACE + ".getProductByCategory" , paramMap);
-		
+	public productDTO getProductByCategory(String product_code) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("product_code", product_code);
+
+		return sqlSession.selectOne(NAMESPACE + ".getProductByCategory", paramMap);
+
 	}
 
-
-
 	@Override
-	public List<PurchaseDTO> getUpdateStatus(String product_code) throws Exception {	
-		logger.debug("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"+ product_code);
-		return sqlSession.selectList(NAMESPACE + ".getStatus" , product_code);
-	
+	public List<productDTO> selectMaterialCategoryList(String category) throws Exception {
+		Map<String, Object> parammap = new HashMap<>();
+		parammap.put("category", category);
+
+		return sqlSession.selectList(NAMESPACE + ".selectMaterialCategoryList", parammap);
 	}
 
 
 	@Override
 	public void updateQuantity(String product_code, int quantity, String category) throws Exception {
-	    Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("product_code", product_code);
-        paramMap.put("quantity", quantity);
-        paramMap.put("category", category);
-        
-        sqlSession.update(NAMESPACE + ".PurchaseupdateQuantity", paramMap);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("product_code", product_code);
+		paramMap.put("quantity", quantity);
+		paramMap.put("category", category);
+
+		sqlSession.update(NAMESPACE + ".PurchaseupdateQuantity", paramMap);
 	}
+
+	@Override public int getPurchaseCount(Criteria cri, String searchType, String keyword) throws Exception {
+		 Map<String, Object> paramMap = new HashMap<>();
+		 paramMap.put("cri", cri); 
+		 paramMap.put("searchType", searchType); 
+		 paramMap.put("keyword", keyword);
+	 return sqlSession.selectOne(NAMESPACE + ".combinedMaterialListCount" , paramMap); 
+	 }
 
 
 	@Override
-	public List<PurchaseDTO> getPurchaseListPage(int page) throws Exception {
-		logger.debug(" DAO : getPurchaseListPage() ");
+	public List<PurchaseDTO> searchMaterial(String searchType, String keyword, Criteria cri) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("searchType", searchType);
+		paramMap.put("keyword", keyword);
+		paramMap.put("startPage", cri.getStartPage());
+		paramMap.put("pageSize", cri.getPageSize());
 		
-		// 페이징처리 계산
-		// page 1 => 1~10  page 2 => 11~20 ... page 3 => 21-30
-		//  => limit 0,10   =>  limit  10,10    => limit 20,10
-		
-		page = (page - 1) * 10;
-		
-		return null;/* sqlSession.selectList(NAMESPACE + ".PurchaselistPage",page);*/
+		return sqlSession.selectList(NAMESPACE + ".combinedMaterialList", paramMap);
 	}
-
-
-	@Override
-	public List<PurchaseDTO> getPurchaseListPage(Criteria cri, SearchDTO sdto) throws Exception {
-		return sqlSession.selectList(NAMESPACE + ".combinedMaterialList", cri);
-	}
-
-
 	
-	  @Override public int getPurchaseCount(SearchDTO sdto) throws Exception {
-	  return sqlSession.selectOne(NAMESPACE + ".PurchaseCount", sdto); }
-	 
-
-
 	@Override
 	public void MaterialReceipt(String product_code, int quantity) throws Exception {
-		  Map<String, Object> paramMap = new HashMap<>();
-	        paramMap.put("product_code", product_code);
-	        paramMap.put("quantity", quantity);
-	
-	        sqlSession.update(NAMESPACE + ".insertMaterialReceipt", paramMap);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("product_code", product_code);
+		paramMap.put("quantity", quantity);
+
+		sqlSession.update(NAMESPACE + ".insertMaterialReceipt", paramMap);
 	}
 
-
-	@Override
-	public List<PurchaseDTO> searchMaterial(String searchType, String keyword) throws Exception {
-		  Map<String, Object> paramMap = new HashMap<>();
-	        paramMap.put("searchType", searchType);
-	        paramMap.put("keyword", keyword);
-	        return sqlSession.selectList(NAMESPACE + ".searchMaterial" + paramMap);
-	}
-
-
-	
-	
-	
 }
