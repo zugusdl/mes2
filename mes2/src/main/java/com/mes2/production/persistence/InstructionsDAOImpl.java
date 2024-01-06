@@ -193,10 +193,11 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 
 
 	@Override
-	public OutDTO selectByBaseCodeForOutDTO(String baseCode) {
+	public OutDTO selectByBaseCodeForOutDTO(String baseCode, String productCode) {
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("baseCode", baseCode);
-		//paramMap.put("status", status);
+		log.debug("@@@@@@@@@@@@@@baseCode : "+ baseCode);
+		paramMap.put("productCode", productCode);
 		
 		return sqlSession.selectOne(NAMESAPCE+".selectOutWarehouseForMaterials",paramMap);
 	}
@@ -208,6 +209,19 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 	public int getTotalCountWithSearchParam(InstructionsSearchParam searchParam) {
 		return sqlSession.selectOne(NAMESAPCE+".selectBySearchParamCodeForTotalCount",searchParam);
 	}
+
+
+
+	@Override
+	public List<OutDTO> selectByBaseCodeForOutDTOList(String baseCode) {
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("baseCode", baseCode);
+		log.debug("@@@@@@@@@@@@@@baseCode : "+ baseCode);
+		//paramMap.put("status", status);
+		
+		return sqlSession.selectList(NAMESAPCE+".selectOutWarehouseForMaterialsList",paramMap);
+	}
+	
 	
 	
 	

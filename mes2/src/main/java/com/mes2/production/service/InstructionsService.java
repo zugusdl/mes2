@@ -40,8 +40,11 @@ public interface InstructionsService {
 	public void requestMaterials(String productCode, int quantity);
 	
 	//자재 출고 내용 조회
-	public OutDTO findBySopCodeForOutDTO(String sopCode);
+	public OutDTO findBySopCodeForOutDTO(String sopCode, String productCode);
 	
 	public int getTotalCountWithSearchParam(InstructionsSearchParam searchParam);
+	
+	//자재 출고 내용 조회
+	public List<OutDTO> findBySopCodeForOutDTOList(String sopCode);
 	
 }

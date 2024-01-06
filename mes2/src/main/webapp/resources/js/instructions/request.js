@@ -89,10 +89,11 @@ function showMaterials(data){
 		bottomContent.appendChild(requestButton);
 	}
 	
-	if(requestButton.onclick){
-		requestMaterials(detailSopCode,salesQuantity);
+	if (requestButton) {
+	    requestButton.onclick = function() {
+	        requestMaterials(detailSopCode, salesQuantity);
+	    };
 	}
-	
 	
 }
 

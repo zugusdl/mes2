@@ -82,8 +82,16 @@
 											</form>	
 										</td>
 										<td>
-											<input type="hidden" name="sopCode" value="${item.sopCode}">
-											<button type="submit" class="btn btn-secondary" id="accept" onclick="window.open('/instructions/accept/${item.sopCode}','result','width=800px, height=640px')">수락</button>
+											<c:if test="${item.materialStatus.equals('Y') }">
+												<input type="hidden" name="sopCode" value="${item.sopCode}">
+												<button type="submit" class="btn btn-secondary" id="accept" onclick="window.open('/instructions/accept/${item.sopCode}','result','width=800px, height=640px')">수락</button>
+											</c:if>
+											<c:if test="${item.materialStatus.equals('N')}">
+												자재필요
+											</c:if>
+											<c:if test="${item.materialStatus.equals('R')}">
+												자재준비중
+											</c:if>
 										</td>
 					
 									</tr>

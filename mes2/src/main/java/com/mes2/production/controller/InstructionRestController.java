@@ -79,14 +79,18 @@ public class InstructionRestController {
 		//전체 비교를 위한 Map 객체 소환
 		Map<Integer, String> requestStatusMap = new HashMap();
 		int count = 1;
+		log.debug("@@@@@@@@@@@@@@@@"+rqml.getMaterialList().toString());
 		for(RequestMaterialDTO dto : rqml.getMaterialList()) {
+			
+			log.debug("@@@@@@@@@@@@@ - DTO의 ProductCode값 "+ dto.getProductCode()+"@@@@@@@@@@@@@@");
+			
 			dto.setTotalAmount(dto.getAmount()*info.getSalesQuantity());
 			
 			//조회해서 상태코드를 보고 상태값 입력해줘야함
-			if(instructionsService.findBySopCodeForOutDTO(info.getSopCode())==null) {
+			if(instructionsService.findBySopCodeForOutDTO(info.getSopCode(),dto.getMaterialCode())==null) {
 				log.debug("(_ _ ) instructionService [getMaterials] : 조회 결과 : NULL");
-			}else if(instructionsService.findBySopCodeForOutDTO(info.getSopCode())!=null) {
-				OutDTO outDTO = instructionsService.findBySopCodeForOutDTO(info.getSopCode());
+			}else if(instructionsService.findBySopCodeForOutDTO(info.getSopCode(),dto.getMaterialCode())!=null) {
+				OutDTO outDTO = instructionsService.findBySopCodeForOutDTO(info.getSopCode(),dto.getMaterialCode());
 				if(outDTO.getStatus().equals("waiting")) {
 					requestStatusMap.put(count, "waiting");
 				}else if(outDTO.getStatus().equals("complete")) {

@@ -285,6 +285,13 @@
 	<select id="selectOutWarehouseForMaterials" resultType="com.mes2.materials.domain.OutDTO" parameterType="java.util.Map" >
 		select * 
 		from out_warehouse 
-		where based_code = #{basedCode} and out_type = 'p'
+		where based_code = #{baseCode} and out_type = 'p' and product_code = #{productCode}
+	</select>
+	
+	<!-- 자재 전달 상황 조회 리턴값 리스트 -->
+	<select id="selectOutWarehouseForMaterialsList" resultType="com.mes2.materials.domain.OutDTO" parameterType="java.util.Map" >
+		select * 
+		from out_warehouse 
+		where based_code = #{baseCode} and out_type = 'p'
 	</select>
 </mapper>

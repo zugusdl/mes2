@@ -20,6 +20,7 @@ public class InstructionsDTO {
 	private int fault;
 	private int salesQuantity;
 	private int targetQuantity; //실제 생산 량 = salesQuantity * 1.1(수주 물량 + 10%)
+	private String materialStatus;
 	
 	
 	public String getCode() {
@@ -121,6 +122,13 @@ public class InstructionsDTO {
 	}
 	public void setTargetQuantity(int targetQuantity) {
 		this.targetQuantity = targetQuantity;
+	}
+	
+	public String getMaterialStatus() {
+		return materialStatus;
+	}
+	public void setMaterialStatus(String materialStatus) {
+		this.materialStatus = materialStatus;
 	}
 	@Override
 	public String toString() {

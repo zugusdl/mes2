@@ -1,13 +1,12 @@
 package com.mes2.production.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -25,16 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mes2.materials.domain.OutDTO;
 import com.mes2.production.domain.InstructionsDTO;
-import com.mes2.production.domain.ProductionLineDTO;
 import com.mes2.production.etc.Criteria;
-import com.mes2.production.etc.InstructionResultParam;
 import com.mes2.production.etc.InstructionsSearchParam;
 import com.mes2.production.etc.PageVO;
-import com.mes2.production.etc.RequestMaterialsDTO;
 import com.mes2.production.exception.ValidationValueErrorException;
 import com.mes2.production.service.InstructionsService;
 import com.mes2.production.service.ProductionLineService;
-import com.mes2.production.vo.InstructionsState;
 
 @Controller
 @RequestMapping("/instructions")
@@ -261,9 +256,35 @@ public class InstructionsController {
 		//List<InstructionsDTO> instructions = instructionsService.findByState(state);
 		List<InstructionsDTO> instructions = instructionsService.findBySearchParam(param);
 		for(InstructionsDTO isDTO : instructions) {
+			//해당 수주번호를 가진 자재 요청건 모두 꺼내와서 
+			//리스트를 돌면서 넣어줘야함
+			Map<Integer, String> requestStatusMap = new HashMap();
+			int count =1;
+
+			if(!instructionsService.findBySopCodeForOutDTOList(isDTO.getSopCode()).isEmpty()) {
+				List<OutDTO> outDTOS = instructionsService.findBySopCodeForOutDTOList(isDTO.getSopCode());
+				for(OutDTO outDTO : outDTOS) {
+					if(outDTO.getStatus().equals("complete")) {
+						requestStatusMap.put(count, "Y");
+					}else if(!outDTO.getStatus().equals("complete")) {
+						requestStatusMap.put(count, "N");
+					}
+					count ++;
+				}
 			
-			OutDTO outDTO = instructionsService.findBySopCodeForOutDTO(isDTO.getSopCode());
-			isDTO.setState(isDTO.getState());
+				if(requestStatusMap.isEmpty()) {
+					isDTO.setMaterialStatus("N");
+				}else if(requestStatusMap.containsValue("Y") &&!requestStatusMap.containsValue("N") ) {
+					isDTO.setMaterialStatus("Y");
+				}else if(requestStatusMap.containsValue("N") &&!requestStatusMap.containsValue("Y") ) {
+					isDTO.setMaterialStatus("R");
+				}else if(requestStatusMap.containsValue("N") &&requestStatusMap.containsValue("Y") ) {
+					isDTO.setMaterialStatus("R");
+				}				
+				log.debug("@@@@@@@@@@@@@@@"+isDTO.getMaterialStatus());
+			}else if(instructionsService.findBySopCodeForOutDTOList(isDTO.getSopCode()).isEmpty()) {
+				isDTO.setMaterialStatus("N");
+			}
 		}
 		
 		

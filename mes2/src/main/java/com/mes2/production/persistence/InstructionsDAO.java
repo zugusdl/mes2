@@ -41,8 +41,11 @@ public interface InstructionsDAO {
 
 	public int updateSopByIsCode(String isCode, String status);
 	
-	public OutDTO selectByBaseCodeForOutDTO(String baseCode);
+	public OutDTO selectByBaseCodeForOutDTO(String baseCode, String productCode);
 	
 	public int getTotalCountWithSearchParam(InstructionsSearchParam searchParam);
+	
+	
+	public List<OutDTO> selectByBaseCodeForOutDTOList(String baseCode);
 	
 }

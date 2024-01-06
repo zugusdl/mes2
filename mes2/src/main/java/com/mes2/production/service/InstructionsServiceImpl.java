@@ -391,14 +391,20 @@ public class InstructionsServiceImpl implements InstructionsService {
 
 	//출고요청 상태 조회
 	@Override
-	public OutDTO findBySopCodeForOutDTO(String sopCode) {
-		return instructionsDAO.selectByBaseCodeForOutDTO(sopCode);
+	public OutDTO findBySopCodeForOutDTO(String sopCode, String productCode) {
+		return instructionsDAO.selectByBaseCodeForOutDTO(sopCode, productCode);
 	}
 
 	@Override
 	public int getTotalCountWithSearchParam(InstructionsSearchParam searchParam) {
 		return instructionsDAO.getTotalCountWithSearchParam(searchParam);
 	}
+
+	@Override
+	public List<OutDTO> findBySopCodeForOutDTOList(String sopCode) {
+		return instructionsDAO.selectByBaseCodeForOutDTOList(sopCode);
+	}
+	
 	
 	
 	
