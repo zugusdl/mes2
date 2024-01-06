@@ -17,7 +17,7 @@ public class Product_DAOImpl implements Product_DAO{
 	
 	private static final Logger logger = LoggerFactory.getLogger(PlatformDAOImpl.class);
 	
-	private static final String NAMESPACE ="com.mes2.mapper.metadataMapper";
+	private static final String NAMESPACE ="com.mes2.mapper.product_Mapper";
 	
 	@Inject
 	private SqlSession sqlSession;
