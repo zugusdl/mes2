@@ -25,8 +25,7 @@ public interface Product_Service {
 	
 	//카테고리 공통코드
 	public List<common_DTO> selectbox() throws Exception;
-	
+
 	//단위 공통코드
 	public List<common_DTO> selectbox2() throws Exception;
-
 }

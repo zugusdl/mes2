@@ -6,7 +6,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>품목기준정보</title>
+<title>거래처기준정보</title>
 <!-- jqery cdn입니다-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -18,7 +18,7 @@
 	crossorigin="anonymous" />
 
 <!-- 추가 css 입니다. -->
-<link rel="stylesheet" href="/resources/css/metadata/product.css">
+<link rel="stylesheet" href="/resources/css/metadata/business.css">
 
 <!--  부트스트랩 js cdn입니다. -->
 <script
@@ -28,7 +28,7 @@
 </script>
 
 <!-- 추가 js 입니다. -->
-<script src="/resources/js/metadata/product.js"></script>
+<script src="/resources/js/metadata/business.js"></script>
 </head>
 
 <body>
@@ -37,10 +37,8 @@
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
 		<div class="son_serch">
-			<form action="/product/firstpage" method="POST">
-				<span>등록기간</span>
-				<input type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
-				<input type="date" name="endDate" min="2020-01-01" max="2030-12-31" width="100px"/>					
+			<form action="/business/firstpage" method="POST">
+				<span>등록기간</span>			
 				<input type="text" name="search" placeholder="검색어를 입력하세요" />
 				<input type="submit" value="검색"/>
 			</form>
@@ -61,76 +59,72 @@
 			<thead>
 				<tr class="table-success" id="table_head">
 					<th scope="col"></th>
-					<th scope="col">품목코드</th>
-					<th scope="col">품명</th>
-					<th scope="col">카테고리</th>
-					<th scope="col">재고단위</th>
-					<th scope="col">원가</th>
-					<th scope="col">단가</th>
-					<th scope="col">취급유무</th>
-					<th scope="col">등록일</th>
-					<th scope="col" width="100px">사진</th>
+					<th scope="col">거래처코드</th>
+					<th scope="col">유형</th>
+					<th scope="col">비밀번호</th>
+					<th scope="col">거래처명</th>
+					<th scope="col">담당자</th>
+					<th scope="col">주소</th>
+					<th scope="col">전화번호</th>
+					<th scope="col">fax</th>
+					<th scope="col">email</th>
+					<th scope="col">거래상황</th>									
 					<th scope="col"></th>									
 				</tr>
 			</thead>
 			
 			<!-- 테이블 바디 -->				
 			<tbody>
-				<!-- 품목 추가시 생기는 행 -->				
+				<!-- 거래처 추가시 생기는 행 -->				
 				<tr id="insert_hang" style="display: none; text-align: center; vertical-align: middle;">										
 					<td></td>							
-					<td>[코드자동생성]</td>
-					<td><input type="text" name="name" size="5"></td>																				
-					<td><select id="ins_cate" name="ins_cate"></select></td>										    								      												
-					<td><select id="ins_unit" name="ins_unit"></select></td>
-					<td><input type="text" name="cost" size="5"></td>
-					<td><input type="text" name="price" size="5"></td>				
-					<td>1</td>				
-					<td>[현재날짜]</td>				
-					<td>													
-						<img id="img" width="250px"/> 						
-						<input type="file"  value="사진 추가" id="file_insert" style="width: 200px;">									
-					</td>
+					<td>[코드자동생성]</td>																				
+					<td>
+					<select id="typeSelect">
+					<option>유통업체</option>
+					<option>고객사</option>
+					</select>
+					</td>										    								      												
+					<td><input type="text" name="pw" size="5"></td>
+					<td><input type="text" name="name" size="5"></td>
+					<td><input type="text" name="manager" size="5"></td>				
+					<td><input type="text" name="address" size="5"></td>													
+					<td><input type="text" name="call" size="5"></td>				
+					<td><input type="text" name="fax" size="5"></td>
+					<td><input type="text" name="email" size="5"></td>
+					<td>1</td>														
 					<td><button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">저장</button></td>														
 				</tr>	
 													
-				<!-- 품목리스트 행들을 가져옴 -->								
-				<c:forEach var="plist" items="${productList }">
+				<!-- 거래처리스트 행들을 가져옴 -->								
+				<c:forEach var="blist" items="${businessList }">
 				<tr style="text-align: center; vertical-align: middle; ">
 					
-					<!-- 품목리스트 -->
+					<!-- 거래처 리스트 -->
 					<td><input type="checkbox" class="updatecheckbox" style="display: none;" onchange="a(this)"/></td>															
-					<td class="a">${plist.product_code }</td>
-					<td class="a">${plist.name }</td>
-					<td class="a">${plist.category }</td>
-					<td class="a">${plist.unit }</td>
-					<td class="a">${plist.cost }</td>
-					<td class="a">${plist.price }</td>
-					<td class="a">${plist.production_status }</td>
-					<td class="a">${plist.regdate }</td>
-					<td class="a"><img src="../../../../resources/img/metadata/${plist.ofileName }" width="200px"></td>
-					<td class="a" style="content: '\00a0'"></td>
+					<td class="a">${blist.company_code }</td>
+					<td class="a">${blist.category }</td>
+					<td class="a">${blist.pw }</td>
+					<td class="a">${blist.name }</td>
+					<td class="a">${blist.manager }</td>
+					<td class="a">${blist.address }</td>
+					<td class="a">${blist.call }</td>
+					<td class="a">${blist.fax }</td>
+					<td class="a">${blist.email }</td>
+					<td class="a">${blist.contract_status}</td>
+					<td class="a" style="content: '\00a0'"></td>				
 									
-									
-					<!-- 품목수정 시 나타나는 행 -->									
-					<td class="b" style="display: none;">${plist.product_code }</td>
-					<td class="b" style="display: none;"><input type="text" name="name" size="5" value="${plist.name }"></td>	
-					<td class="b" style="display: none;"><select id="upd_cate" name="upd_cate"></select></td>
-					<td class="b" style="display: none;"><select id="upd_unit" name="upd_unit"></select></td>
-					<td class="b" style="display: none;"><input type="text" name="cost" size="5" value="${plist.cost }"></td>
-					<td class="b" style="display: none;"><input type="text" name="price" size="5" value="${plist.price }"></td>
-					<td class="b" style="display: none;">
-						<select id="upd_status" name="upd_status">
-							<option value="option1" selected>${plist.production_status }</option>
-							<option value="option1">1</option>
-							<option value="option2">0</option>
-						</select>
-					</td>
-					<td class="b" style="display: none;">${plist.regdate }</td>
-					<td class="b" style="display: none; width: 80px;">								
-						<img id="img2" src="../../../../resources/img/metadata/${plist.ofileName }" width="200px">						
-						<input type="file" id="file_update" style="width: 200px;">
-					</td>
+					<!-- 거래처 수정 시 나타나는 행 -->									
+					<td class="b" style="display: none;">${blist.company_code }</td>
+					<td class="b" style="display: none;">${blist.category }</td>
+					<td class="b" style="display: none;"><input type="text" name="pw" size="5" value="${blist.pw }"></td>
+					<td class="b" style="display: none;"><input type="text" name="name" size="5" value="${blist.name }"></td>
+					<td class="b" style="display: none;"><input type="text" name="manager" size="5" value="${blist.manager }"></td>
+					<td class="b" style="display: none;"><input type="text" name="address" size="5" value="${blist.address }"></td>
+					<td class="b" style="display: none;"><input type="text" name="call" size="5" value="${blist.call }"></td>
+					<td class="b" style="display: none;"><input type="text" name="fax" size="5" value="${blist.fax }"></td>
+					<td class="b" style="display: none;"><input type="text" name="email" size="5" value="${blist.email }"></td>
+					<td class="b" style="display: none;"><input type="text" name="contract_status" size="5" value="${blist.contract_status }"></td>
 					<td class="b" style="display: none; width: 80px; ">
 						<button type="button" style="margin: 10px 0;" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button>
 						<button type="button" style="margin: 10px 0;" class="btn btn-secondary" id="submitbtn3" onclick="submitData3(this)" >삭제</button>																		 									

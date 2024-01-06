@@ -52,11 +52,12 @@
   	<!-- 글 갯수 세기 -->
   	<select id="count" resultType="int">
   		select count(*) from meta_data_product
-  		<where>
-  		
+  		<where>	  		
+	  		
 	  		<if test="startDate !=null and endDate !=null and !startDate.equals('') and !endDate.equals('')">
 	  		and regdate between #{startDate} and #{endDate}
 	  		</if>
+	  		
 	  		
 	  		<if test="search !=null and !search.equals('')">
 	  		and name like '%${search }%'
