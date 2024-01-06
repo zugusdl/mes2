@@ -60,6 +60,7 @@
 									<th scope="col">주문번호</th>
 									<th scope="col">발주일자</th>
 									<th scope="col">납품요청일</th>
+									<th scope="col">물품수령일</th>
 									<th scope="col">진행상태</th>
 								</tr>
 							</thead>
@@ -69,6 +70,7 @@
 										<td>${soiDTO.order_code }</td>
 										<td>${soiDTO.request_date }</td>
 										<td>${soiDTO.order_date }</td>
+										<td>${soiDTO.complete_date }</td>
 										<td>
 											<c:choose>
 												<c:when test="${soiDTO.sales_status eq 'requested' }">

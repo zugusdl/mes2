@@ -45,7 +45,7 @@ function modifyOrder(order_code, sales_status) {
 			async: false,
 			success : function(data) {
 				alert('발주 수정이 완료되었습니다.');
-				location.reload();
+				location.href='/platform/orderList';
 			},
 			error : function() {
 				alert("발주 수정에 실패했습니다.");
