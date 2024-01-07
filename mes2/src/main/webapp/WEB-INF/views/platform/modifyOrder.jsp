@@ -55,7 +55,7 @@
 											<td><input type="hidden" name="product_code" value="${sopList.product_code }">${sopList.product_code }</td>
 											<td>${sopList.mdpDTO.name }</td>
 											<td><input type="hidden" name="price" value="${sopList.mdpDTO.price }"><fmt:formatNumber value="${sopList.mdpDTO.price }"/>원</td>
-											<td><input type="number" name="sales_quantity" step="100" min="300" oninput="cal(this);" value="${sopList.sales_quantity }">EA</td>
+											<td><input type="number" name="sales_quantity" step="500" min="500" oninput="cal(this);" value="${sopList.sales_quantity }">EA</td>
 											<td><input type="text" id="s${sopList.product_code }" value="<fmt:formatNumber value="${sopList.mdpDTO.price * sopList.sales_quantity }"/>"readonly>원</td>
 											<td><button type="button" onclick="trRemove(this);" class="deleteBtn">x</button></td>
 										</tr>

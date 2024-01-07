@@ -18,6 +18,8 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/orderList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>

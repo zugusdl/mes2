@@ -55,12 +55,20 @@ function modifyPw() {
 	var checkPwVal = checkPw.value; // 비밀번호 확인
 	
 	if(pwVal != nowPwVal) {
-		alert("현재 비밀번호가 틀립니다.");
+		Swal.fire({
+			text: "현재 비밀번호가 틀립니다",
+			confirmButtonColor: "#577D71",
+			icon: "warning"
+		});
 		return false;
 	}
 	
 	if(!reg.test(newPwVal) || newPwVal != checkPwVal) {
-		alert("수정 비밀번호를 확인해주세요.");
+		Swal.fire({
+			text: "수정 비밀번호를 확인하세요",
+			confirmButtonColor: "#577D71",
+			icon: "warning"
+		});
 		return false;
 	}
 	
@@ -77,11 +85,21 @@ function modifyPw() {
 		},
 		async: false,
 		success : function(){
-			alert("비밀번호를 수정했습니다. 다시 로그인해주세요.");
-			location.href = "/platform/logout";
+			Swal.fire({
+				text: "비밀번호를 수정했습니다. 다시 로그인해주세요",
+				confirmButtonColor: "#577D71",
+				icon: "success"
+			})
+			.then(function(){
+				location.href = "/platform/logout";
+			});
 		},
 		error : function(){
-			console.log("실패");
+			Swal.fire({
+				text: "비밀번호 수정에 실패했습니다.",
+				confirmButtonColor: "#577D71",
+				icon: "error"
+			});
 		}
 	});
 }

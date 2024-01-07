@@ -6,7 +6,11 @@ function modifyOrder(order_code, order_date, sales_status) {
 	console.log(sales_status);
 
 	if (sales_status != 'requested') {
-		alert('신청중인 발주만 수정 가능합니다.');
+		Swal.fire({
+			text: "신청중인 발주만 수정 가능합니다.",
+			confirmButtonColor: "#577D71",
+			icon: "warning"
+		});
 		return false;
 	}
 
@@ -20,7 +24,11 @@ function modifyOrder(order_code, order_date, sales_status) {
 			$("#bottomContent").html(response);
 		},
 		error : function() {
-			alert("fail");
+			Swal.fire({
+				text: "발주 수정이 불가능합니다.",
+				confirmButtonColor: "#577D71",
+				icon: "error"
+			});
 		}
 	});
 }
@@ -30,17 +38,37 @@ function deleteOrder(order_code, sales_status) {
 	console.log(sales_status);
 
 	if (sales_status != 'requested') {
-		alert('신청중인 발주만 취소 가능합니다.');
+		Swal.fire({
+			text: "신청중인 발주만 취소 가능합니다.",
+			confirmButtonColor: "#577D71",
+			icon: "warning"
+		});
 		return false;
 	}
 
-	var deleteCheck = confirm('발주를 취소하시겠습니까?');
-
-	if (deleteCheck == false) {
-		alert('발주 현황을 유지합니다.');
-		return false;
-	}
-	
-	location.href = "/platform/deleteOrder?order_code=" + order_code;
+	Swal.fire({
+		text: "발주를 취소하시겠습니까?",
+		icon: "question",
+		showCancelButton: true,
+		confirmButtonColor: "#577D71", // confirm 버튼 색상
+		cancelButtonColor: '#d33', // cancle 버튼 색상
+		confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+		cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+	}).then((result) => {
+		if (result.isConfirmed) {
+			Swal.fire({
+				text: "발주를 취소합니다.",
+				confirmButtonColor: "#577D71",
+			})
+			.then(function(){
+				location.href = "/platform/deleteOrder?order_code=" + order_code;
+			});
+		} else {
+			Swal.fire({
+				text: "발주 현황을 유지합니다.",
+				confirmButtonColor: "#577D71",
+			});
+			return false;
+		}
+	});
 }
-
