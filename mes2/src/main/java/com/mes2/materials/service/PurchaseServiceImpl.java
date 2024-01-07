@@ -54,8 +54,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 	 
 
 	@Override
-	public void MaterialReceipt(String product_code, int quantity) throws Exception {
-		pdao.MaterialReceipt(product_code, quantity);
+	public void MaterialReceipt(String product_code, int quantity  , String pd_lot) throws Exception {
+		pdao.MaterialReceipt(product_code, quantity , pd_lot);
 	}
 
 	

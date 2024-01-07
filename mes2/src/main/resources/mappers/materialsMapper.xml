@@ -65,8 +65,8 @@
 	<!-- 원재료, 부자재 입고 수량 in_warehouse 테이블 업데이트 -->
 	<insert id="insertMaterialReceipt" parameterType="java.util.Map">
 		INSERT into
-		in_warehouse (product_code, quantity)
-		values(#{product_code},#{quantity})
+		in_warehouse (product_code, quantity, pd_lot)
+		values(#{product_code},#{quantity}, #{pd_lot})
 	</insert>
 	<!-- 발주 신청시 매퍼 같이 -->
 
@@ -183,54 +183,134 @@
 	</select>
 
 
+	<!-- 입고 완료 -->
+	<!-- 상태변경된 입고 원재료 로트번호 리스트 -->
+	<select id="listIncomingProductCodes"
+		resultType="com.mes2.materials.domain.InDTO"
+		parameterType="java.util.Map">
+		SELECT * from in_warehouse where pd_lot =#{pd_lot}
+	</select>
+	<!-- 상태변경된 입고 원재료 로트번호 리스트 -->
+
+
+
+
+	<!-- 품목코드 없을 경우 입고 로트번호 stock 입력 -->
+	<insert id="insertIncomingLotNumber">
+		INSERT INTO stock (product_code, pd_lot, category)
+		values (#{product_code}, #{pd_lot}, #{category})
+	</insert>
+	<!-- 품목코드 없을 경우 입고 로트번호 stock 입력 -->
+
+	<!-- 품목코드 있을 경우 입고 로트번호 stock 입력 -->
+	<update id="updateStock">
+		UPDATE stock
+		<set>
+			<if test="product_code != null">
+				product_code = #{product_code},
+			</if>
+			pd_lot = #{pd_lot}, category = #{category}
+		</set>
+		WHERE product_code = #{product_code}
+	</update>
+	<!-- 품목코드 있을 경우 입고 로트번호 stock 입력 -->
+
+
+
+
+	<!-- 완제품 수량 등록 -->
+	<insert id="insertStock" parameterType="java.util.Map">
+		INSERT INTO stock
+		(quantity, product_code, category) values (#{quantity},
+		#{product_code} ,#{category})
+	</insert>
+	<!-- 완제품 수량 등록 -->
+
+	<!-- 완제품 수량 업데이트 -->
+	<update id="updateStockOnIncoming" parameterType="java.util.Map">
+		UPDATE stock
+		SET quantity = quantity + #{quantity} WHERE
+		product_code=#{product_code}
+	</update>
+	<!-- 완제품 수량 업데이트 -->
+
+	<!-- 전체 리스트 -->
+	<select id="selectStock"
+		resultType="com.mes2.materials.domain.InDTO"
+		parameterType="java.util.Map">
+		select * from stock where product_code =#{product_code}
+	</select>
+
+
+
+	<!-- stuats complete 로 변경했을때 같이 실행 -->
 	<!-- 입고 상태 complete로 업데이트 -->
 	<update id="updateInStatus" parameterType="java.util.Map">
 		UPDATE in_warehouse
 		SET status=#{status} WHERE in_index=#{in_index}
 	</update>
 
-	<!-- 입고 품목코드 리스트 -->
-	<select id="listIncomingProductCodes"
-		resultType="com.mes2.materials.domain.productDTO"
-		parameterType="java.util.Map">
-		SELECT * from meta_data_product where product_code
-		=#{product_code}
-	</select>
 
-	<!-- 입고 품목코드 카테고리 리스트 -->
-	<select id="getIncomingProductCodesByCategory"
-		resultType="com.mes2.materials.domain.productDTO"
-		parameterType="java.util.Map">
-		SELECT * from meta_data_product where category
-		=#{category}
-	</select>
 
-	<!-- 입고 등록시 같이 -->
-
-	<!-- 입고 등록 -->
-	<insert id="insertIncomingRequest" parameterType="java.util.Map">
-		INSERT into
-		in_warehouse (in_code, product_code, quantity, user_id) values
-		(#{in_code},#{product_code},#{quantity},#{user_id})
-	</insert>
-
+	<!-- 입고 등록 시 같이 -->
 	<!-- 입고코드 및 담당자 업데이트 -->
-	<update id="updateInWarehouse" parameterType="java.util.Map">
-		UPDATE in_warehouse
-		SET in_code = #{in_code}, user_id = #{user_id}
-		WHERE product_code = #{product_code}
+	<update id="updateIncomingRequest" parameterType="java.util.Map">
+		UPDATE
+		in_warehouse
+		SET in_code = #{in_code}, user_id = #{user_id},
+		status='complete'
+		where pd_lot =#{pd_lot}
 	</update>
+	<!-- 입고 등록 시 같이 -->
 
-	<!-- 입고 로트번호 stock 입력 -->
-	<insert id="insertIncomingLotNumber">
-		INSERT INTO stock (product_code, pd_lot, category) values (#{product_code}, #{pd_lot}, #{category})
-	</insert>
 
-	<!-- 완제품 수량 업데이트 -->
-	<update id="updateStockOnIncoming" parameterType="java.util.Map">
-		UPDATE stock SET quantity = quantity + #{quantity} WHERE product_code =#{product_code}
-	</update>
-	<!-- 입고 등록시 같이 -->
+	<!-- 원재료 코드 -->
+	<select id="selectMaxMaterialsLot" resultType="String">
+      <![CDATA[
+      select max(pd_lot)
+      from in_warehouse
+      where pd_lot like concat (#{value}, '%')
+      ]]>
+	</select>
+	
+	
+	
+	<!-- 입고 상태 complete로 업데이트 -->
+	<!-- stuats complete 로 변경했을때 같이 실행 -->
+
+	<!-- 상태 완료된 품목리스트 -->
+	<select id="InDetailCompletedWarehouse"
+		resultType="com.mes2.materials.domain.InDTO"
+		parameterType="java.util.Map">
+		select iw.in_code, mdp.name, mdp.product_code, mdp.cost,
+		mdp.category, iw.pd_lot, iw.quantity, mdp.unit, in_regdate, user_id, iw.status 
+		from in_warehouse iw
+		join meta_data_product mdp 
+		on mdp.product_code = iw.product_code 
+		where status = 'complete'
+		<if test="keyword!=null and !keyword.equals('')">
+			AND product_code LIKE concat('%' , #{keyword}, '%')
+		</if>
+		ORDER BY in_index
+		<if test="startPage != null and pageSize != null ">
+			LIMIT #{startPage}, #{pageSize}
+		</if>
+	</select>
+
+	<!-- 상태 완료된 품목리스트 -->
+
+
+	<!-- 입고 상태 개수 카운트 -->
+	<select id="inDetailCount" resultType="integer"
+		parameterType="java.util.Map">
+		select count(*) from in_warehouse where status = 'complete'
+			<if test="keyword!=null and !keyword.equals('')">
+				AND product_code LIKE concat('%' , #{keyword}, '%')
+			</if>
+		<if test="startPage != null and pageSize != null ">
+			LIMIT #{startPage}, #{pageSize}
+		</if>
+	</select>
 
 
 </mapper>

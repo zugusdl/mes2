@@ -107,10 +107,12 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 	}
 	
 	@Override
-	public void MaterialReceipt(String product_code, int quantity) throws Exception {
+	public void MaterialReceipt(String product_code, int quantity  , String pd_lot) throws Exception {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("product_code", product_code);
 		paramMap.put("quantity", quantity);
+		paramMap.put("pd_lot", pd_lot);
+		
 
 		sqlSession.update(NAMESPACE + ".insertMaterialReceipt", paramMap);
 	}

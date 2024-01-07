@@ -28,7 +28,7 @@ public interface PurchaseService {
 	public void updateQuantity(String product_code, int quantity, String category) throws Exception;
 	
 	// in_warehouse 입고 수량 업데이트 
-	public void MaterialReceipt(String product_code, int quantity) throws Exception;
+	public void MaterialReceipt(String product_code, int quantity , String pd_lot) throws Exception;
 	
 	// 개수 카운트
 	public int totalPurchaseCount(Criteria cri, String searchType, String keyword) throws Exception;

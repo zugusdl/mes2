@@ -26,7 +26,7 @@ public interface PurchaseDAO {
 	public void updateQuantity(String product_code, int quantity, String category) throws Exception;
 
 	// in_warehouse 수량 업데이트
-	public void MaterialReceipt(String product_code, int quantity) throws Exception;
+	public void MaterialReceipt(String product_code, int quantity , String pd_lot) throws Exception;
 
 	// 품목코드 리스트
 	public productDTO getProductByCategory(String product_code) throws Exception;

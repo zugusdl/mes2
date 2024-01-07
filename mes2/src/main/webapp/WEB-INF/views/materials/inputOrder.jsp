@@ -82,13 +82,13 @@
 
         <label for="unitPrice">단가</label>
         <input type="text" id="unitPrice" name="price"  readonly="readonly">
-
+		
         <label for="orderQuantity">발주수량</label>
         <input type="text" id="orderQuantity" name="quantity" required>
 
         <label for="orderManager">발주담당자</label>
         <input type="text" id="orderManager" name="orderManager">
-
+        
         <button type="submit">발주 신청</button>
     </form>
 
@@ -143,8 +143,7 @@
 				console.log(data.name);
 				document.getElementById("name").value = data.name;
 				document.getElementById("cost").value = data.cost;
-				document.getElementById("unitPrice").value =  data.price;
-								
+				document.getElementById("unitPrice").value =  data.price;								
 			}
 		});
 	};

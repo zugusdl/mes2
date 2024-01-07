@@ -21,6 +21,7 @@ import com.mes2.materials.domain.PageVO;
 import com.mes2.materials.domain.PurchaseDTO;
 import com.mes2.materials.domain.SearchDTO;
 import com.mes2.materials.domain.productDTO;
+import com.mes2.materials.service.InService;
 import com.mes2.materials.service.PurchaseService;
 
 @Controller
@@ -31,6 +32,9 @@ public class PurchaseController {
 
 	@Inject
 	private PurchaseService pService;
+	
+	@Inject
+	private InService iService;
 
 	// http://localhost:8080/materials/purchaselist
 
@@ -40,6 +44,33 @@ public class PurchaseController {
 		logger.debug("/purchase/insertPurchase -> insertPurchaseGET() 호출 ");
 		logger.debug("/purchase/insertPurchase.jsp 뷰페이지로 이동");
 	}
+	
+	@ResponseBody @GetMapping(value = "/getProductCode")
+	public List<String> testGET(@RequestParam("category") String category) throws Exception {
+		productDTO product = new productDTO();
+
+		List<String> productlist = new ArrayList<String>();
+
+		List<productDTO> purchaselist = pService.selectMaterialCategoryList(category);
+
+		for (productDTO pdto : purchaselist) {
+			productlist.add(pdto.getProduct_code());
+		}
+
+		return productlist;
+	}
+	
+	@GetMapping(value = "/productInfo")
+	@ResponseBody
+	public productDTO getProductByCategory(@RequestParam("productCode") String product_code) throws Exception {
+		productDTO product = new productDTO();
+
+		List<String> productlist = new ArrayList<String>();
+
+		return pService.getProductByCategory(product_code);
+	}
+
+	
 
 	// 발주 정보 처리 - POST
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -47,10 +78,15 @@ public class PurchaseController {
 
 		// 한글인코딩 (필터)
 		// 전달정보 저장
-		logger.debug(" (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ppto : " + pdto);
+		logger.debug(" (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ : " + pdto);
 
 		// 서비스 - DB에 글쓰기(insert) 동작 호출
 		String orders_code = ("ORD-" + pdto.getProduct_code());
+		
+		
+		String pd_lot = iService.createRmLOT(pdto.getProduct_code());
+		
+		
 		pdto.setOrders_code(orders_code);
 		pService.purchaseOrder(pdto);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + orders_code);
@@ -60,7 +96,7 @@ public class PurchaseController {
 		pService.updateQuantity(pdto.getProduct_code(), pdto.getQuantity(), pdto.getCategory());
 
 		// 서비스 - in_warehouse 수량 업데이트 호출
-		pService.MaterialReceipt(pdto.getProduct_code(), pdto.getQuantity());
+		pService.MaterialReceipt(pdto.getProduct_code(), pdto.getQuantity(), pd_lot);
 
 		logger.debug(" /materials/purchaselist 이동 ");
 
@@ -97,37 +133,13 @@ public class PurchaseController {
 
 	}
 
-	@ResponseBody @GetMapping(value = "/getProductCode")
-	public List<String> testGET(@RequestParam("category") String category) throws Exception {
-		productDTO product = new productDTO();
-
-		List<String> productlist = new ArrayList<String>();
-
-		List<productDTO> purchaselist = pService.selectMaterialCategoryList(category);
-
-		for (productDTO pdto : purchaselist) {
-			productlist.add(pdto.getProduct_code());
-		}
-
-		return productlist;
-	}
-
 	@GetMapping(value = "/inputOrder")
 	public String test() throws Exception {
 
 		return "materials/inputOrder";
 	}
 
-	@GetMapping(value = "/productInfo")
-	@ResponseBody
-	public productDTO getProductByCategory(@RequestParam("productCode") String product_code) throws Exception {
-		productDTO product = new productDTO();
-
-		List<String> productlist = new ArrayList<String>();
-
-		return pService.getProductByCategory(product_code);
-	}
-
+	
 	@GetMapping(value = "/close")
 	public void closePurchase() throws Exception {
 

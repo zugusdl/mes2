@@ -28,6 +28,9 @@
 			value="검색하기">
 	</form>
 
+
+	
+	
 	
 
 	<a href="/materials/in"></a>
@@ -59,7 +62,7 @@
 			<td>
 				<c:if test="${in.status.equals('waiting')}">
 						<form action="/materials/updateInStatus" method="post">
-							<input type ="hidden" value="${in.in_index}" name="in_index">
+							<input type ="hidden" value="${in.pd_lot}" name="in_pd_lot">
 							<button type="submit" class="btn btn-primary statusButton" >대기</button>
 						</form>
 					</c:if>

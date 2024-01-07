@@ -31,4 +31,6 @@ public class PurchaseDTO {
 	private String user_id; // 담당자 ** 
 	
 	private String status; // 진행상황 대기: waiting /완료: complete
+	
+	private String pd_lot;
 }

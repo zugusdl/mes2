@@ -30,7 +30,7 @@ public class InDAOImpl implements InDAO {
 
 	@Override
 	public List<InDTO> getAllInboundInfo(String searchType, String keyword, Criteria cri, SearchDTO sdto) throws Exception {
-		
+		System.out.println(" 리스트 페이징 처리 검색");
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("searchType", searchType);
 		searchMap.put("keyword", keyword);
@@ -41,15 +41,14 @@ public class InDAOImpl implements InDAO {
 	}
 	
 
-	@Override
-    public void InupdateQuantity(String product_code, int quantity, String category) throws Exception {
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("product_code", product_code);
-        paramMap.put("quantity", quantity);
-        paramMap.put("category", category);
-
-        sqlSession.update(NAMESPACE + ".StockupdateQuantity", paramMap);
-    }
+	/*
+	 * @Override public void InupdateQuantity(String product_code, int quantity,
+	 * String category) throws Exception { Map<String, Object> paramMap = new
+	 * HashMap<>(); paramMap.put("product_code", product_code);
+	 * paramMap.put("quantity", quantity); paramMap.put("category", category);
+	 * 
+	 * sqlSession.update(NAMESPACE + ".insertStock", paramMap); }
+	 */
 
 	@Override
 	public int getInCount(Criteria cri, String searchType, String keyword) throws Exception {
@@ -71,39 +70,85 @@ public class InDAOImpl implements InDAO {
 		return sqlSession.selectList(NAMESPACE + ".getInList", paramMap);
 	}
 	
+	
+
+
 	@Override
-	public int updateInStatus(String status, int in_index) throws Exception {
+	public int updateIncomingRequest(String in_code, String pd_lot, String user_id) throws Exception {
 		Map<String, Object> params = new HashMap<>();
-		params.put("status", status);
-		params.put("in_index", in_index);
-
-		return sqlSession.update(NAMESPACE + ".updateInStatus", params);
-	}
-
-
-	@Override
-	public productDTO listIncomingProductCodes(String product_code) throws Exception {
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("product_code", product_code);
-
-		return sqlSession.selectOne(NAMESPACE + ".listIncomingProductCodes", paramMap);
-	}
-
-
-	@Override
-	public List<productDTO> getIncomingProductCodesByCategory(String category) throws Exception {
-		Map<String, Object> parammap = new HashMap<>();
-		parammap.put("category", category);
+		params.put("in_code", in_code);
+		params.put("user_id", user_id);
+		params.put("pd_lot", pd_lot);
 		
-		return sqlSession.selectList(NAMESPACE + ".getIncomingProductCodesByCategory", parammap);
+		return sqlSession.insert(NAMESPACE +".updateIncomingRequest", params);
+		
 	}
 
 
 	@Override
-	public void insertIncomingRequest(InDTO idto) throws Exception {
-		System.out.println("발주신청");
-		sqlSession.insert(NAMESPACE + ".insertIncomingRequest", idto);
+	public void insertStock(int quantity, String product_code, String category) throws Exception {
+		Map<String, Object> paramap = new HashMap<>();
+		paramap.put("quantity", quantity);
+		paramap.put("product_code", product_code);
+		paramap.put("category", category);
+		sqlSession.insert(NAMESPACE + ".insertStock", paramap);
 	}
+
+
+	@Override
+	public void updateStockOnIncoming(int quantity, String product_code) throws Exception {
+		Map<String, Object> paramap = new HashMap<>();
+		 paramap.put("quantity", quantity);
+		 paramap.put("product_code", product_code);
+		 sqlSession.update(NAMESPACE + ".updateStockOnIncoming" , paramap);
+	}
+
+
+	@Override
+	public List<InDTO> selectStock(String product_code) throws Exception {
+		Map<String, Object> paramap = new HashMap<>();
+		 paramap.put("product_code", product_code);
+		 
+		return sqlSession.selectList(NAMESPACE + ".selectStock", paramap);
+	}
+
+
+	@Override
+	public InDTO listIncomingProductCodes(String pd_lot) throws Exception {
+		Map<String, Object> paramap = new HashMap<>();
+		 paramap.put("pd_lot", pd_lot);
+		return sqlSession.selectOne(NAMESPACE + ".listIncomingProductCodes", paramap);
+	}
+
+
+	@Override
+	public List<InDTO> InDetailCompletedWarehouse(String searchType, String keyword, Criteria cri, SearchDTO sdto)
+			throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("searchType", searchType);
+		paramMap.put("keyword", keyword);
+		paramMap.put("startPage", cri.getStartPage());
+		paramMap.put("pageSize", cri.getPageSize());
+		
+		return sqlSession.selectList(NAMESPACE + ".InDetailCompletedWarehouse", paramMap);
+	}
+
+
+	@Override
+	public int inDetailCount(Criteria cri, String searchType, String keyword) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		 paramMap.put("cri", cri); 
+		 paramMap.put("searchType", searchType); 
+		 paramMap.put("keyword", keyword);
+		return sqlSession.selectOne(NAMESPACE + ".inDetailCount", paramMap);
+	}
+
+
+	@Override
+	public String selectMaxMaterialsLot(String pd_lot) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".selectMaxMaterialsLot", pd_lot);
+	}
+	
 	
 	
 
