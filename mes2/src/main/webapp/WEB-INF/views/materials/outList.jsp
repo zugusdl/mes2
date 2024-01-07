@@ -13,6 +13,8 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materials/outList.css">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -22,7 +24,7 @@
 	<div class="container">
 		<section class="section1">
 			<form class="search">
-				<select id="status" name="sales_status">
+				<select id="status" name="status">
 					<option value="">-- 진행상태 --</option>
 					<option value="waiting">대기</option>
 					<option value="complete">완료</option>
@@ -45,7 +47,6 @@
 			<!-- 표 -->
 			<div class="list">
 				<div class="list-btn">
-<!-- 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button> -->
 				</div>
 
 				<div class="list-box">
@@ -63,14 +64,14 @@
 							</thead>
 							<tbody>
 								<c:forEach var="oList" items="${oList }">
-									<tr onclick="getOutDetail('${oList.out_index, oList.out_code }')" class="selectOrder">
+									<tr onclick="getOutDetail('${oList.out_index }','${oList.out_code }');" class="selectOrder">
 										<td>${oList.out_code }</td>
 										<td>${oList.product_code }</td>
 										<td>${oList.quantity } ${oList.pdto.unit}</td>
 										<td>
 											<c:choose>
 												<c:when test="${oList.status eq 'waiting' }">
-													<i class="fa-solid fa-circle fa-2xs" style="color: #ff9924;"></i> 요청
+													<i class="fa-solid fa-circle fa-2xs" style="color: #ff9924;"></i> 대기
 												</c:when>
 												<c:when test="${oList.status eq 'complete' }">
 													<i class="fa-solid fa-circle fa-2xs" style="color: #6b6b6b;"></i> 완료
@@ -88,29 +89,104 @@
 			</div>
 			
 			<!-- 페이징 -->
-<!-- 			<div class="box-footer clearfix"> -->
-<!-- 				<div style="margin: 0 auto; width: fit-content;"> -->
-<!-- 				<ul class="pagination pagination-sm no-margin pull-right"> -->
+			<div class="box-footer clearfix">
+				<div style="margin: 0 auto; width: fit-content;">
+				<ul class="pagination pagination-sm no-margin pull-right">
 				
-<%-- 					<c:if test="${pageVO.prev }"> --%>
-<%-- 						<li><a href="/platform/orderList?page=${pageVO.startPage - 1 }&sales_status=${sDTO.sales_status }&startDate=${sDTO.startDate }&endDate=${sDTO.endDate}">«</a></li> --%>
-<%-- 					</c:if> --%>
+					<c:if test="${pageVO.prev }">
+						<li><a href="/materials/outList?page=${pageVO.startPage - 1 }&status=${osDTO.status }&startDate=${osDTO.startDate }&endDate=${osDTO.endDate}&product_code=${osDTO.product_code}">«</a></li>
+					</c:if>
 					
-<%-- 					<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1"> --%>
-<%-- 						<li><a href="/platform/orderList?page=${i }&sales_status=${sDTO.sales_status }&startDate=${sDTO.startDate }&endDate=${sDTO.endDate}">${i }</a></li> --%>
-<%-- 					</c:forEach> --%>
+					<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+						<li><a href="/materials/outList?page=${i }&status=${osDTO.status }&startDate=${osDTO.startDate }&endDate=${osDTO.endDate}&product_code=${osDTO.product_code}">${i }</a></li>
+					</c:forEach>
 					
-<%-- 					<c:if test="${pageVO.next }"> --%>
-<%-- 						<li><a href="/platform/orderList?page=${pageVO.endPage + 1 }&sales_status=${sDTO.sales_status }&startDate=${sDTO.startDate }&endDate=${sDTO.endDate}">»</a></li> --%>
-<%-- 					</c:if> --%>
-<!-- 				</ul> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
+					<c:if test="${pageVO.next }">
+						<li><a href="/materials/outList?page=${pageVO.endPage + 1 }&status=${osDTO.status }&startDate=${osDTO.startDate }&endDate=${osDTO.endDate}&product_code=${osDTO.product_code}">»</a></li>
+					</c:if>
+				</ul>
+				</div>
+			</div>
 			<!-- 페이징 끝 -->
 		</section>
 
 		<div id="bottomContent"></div>
 	</div>
+	<script type="text/javascript">
+		var result = '${result}';
+		var quantitySum = '${quantitySum}';
+		var product_code = '${product_code}';
+		console.log(quantitySum, product_code);
+		
+		if(result == 'SUCCESS') {
+			Swal.fire({
+				text: "출고 등록이 완료되었습니다.",
+				confirmButtonColor: "#577D71",
+				icon: "success"
+			});
+		}
+		
+		if(quantitySum != "") {
+			Swal.fire({
+				text: product_code + " 재고가 " + quantitySum + "개 입니다. 생산 지시 하시겠습니까?",
+				icon: "question",
+				showCancelButton: true,
+				confirmButtonColor: "#577D71", // confirm 버튼 색상
+				cancelButtonColor: '#d33', // cancle 버튼 색상
+				confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+				cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+			}).then((result) => {
+				if (result.isConfirmed) {
+					var prompt = prompt("생산 지시 수량을 입력하세요.");
+					insertInstructions(prompt, product_code);
+					(async () => {
+					    const { value: quantity } = await Swal.fire({
+					        text: '생산 지시 수량을 입력하세요.',
+					        input: 'number',
+					        inputPlaceholder: '500개 단위로 숫자만 입력하세요'
+					    })
+
+					    if (quantity) {
+					    	insertInstructions(${quantity}, product_code);
+					    }
+					})()
+				} else {
+					return false;
+				}
+			});
+		}
+		
+		// 생산 지시
+		function insertInstructions(quantity, product_code) {
+			var instructData = {
+				"mdp_code" : product_code,
+				"sales_quantity" : quantity
+			}
+			
+			$.ajax({
+				url : "/rOut/instruction",
+				type : "POST",
+				data : JSON.stringify(instructData),
+				contentType : "application/json",
+				success : function(data) {
+					Swal.fire({
+						text: "생산 지시를 완료하였습니다.",
+						confirmButtonColor: "#577D71",
+						icon: "success"
+					}).then(function(){
+						location.reload();
+					});
+				},
+				error : function() {
+					Swal.fire({
+						text: "생산 지시에 실패하였습니다.",
+						confirmButtonColor: "#577D71",
+						icon: "error"
+					});
+				}
+			});
+		}
+	</script>
 	<script src="${pageContext.request.contextPath}/resources/js/materials/out/outList.js"></script>
 </body>
 </html>

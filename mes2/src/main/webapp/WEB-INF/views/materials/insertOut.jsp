@@ -12,7 +12,7 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materials/outDetail.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materials/insertOut.css">
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -22,9 +22,14 @@
 	<div class="container">
 		<section class="section1">
 			<div class="list">
-				<form action="/insertOut" method="post" class="list-form">
+				<form action="/materials/insertOut" method="post" class="list-form" id="frm">
+					<input type="hidden" name="out_index" value="${outDTO.out_index}">
+					<input type="hidden" name="quantity" value="${outDTO.quantity}">
 					<div class="list-btn">
+							<button type="button" class="btn btn-secondary" onclick="insertOutProduct('${outDTO.product_code}');">출고 품목 입력</button>
+							<button type="button" class="btn btn-secondary" onclick="insertOut();">출고 등록</button>
 					</div>
+
 					<div class="list-box">
 						<table class="table table-hover">
 							<thead>
@@ -37,17 +42,6 @@
 								</tr>
 							</thead>
 							<tbody id="outProductList">
-								<c:if test="${!empty opList }">
-										<c:forEach var="opDTO" items="${opList }">
-											<tr>
-												<td></td>
-												<td>${opDTO.pd_lot }</td>
-												<td>${opDTO.product_code }</td>
-												<td>${opDTO.out_quantity }</td>
-												<td></td>
-											</tr>
-										</c:forEach>
-								</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -57,6 +51,6 @@
 
 		<div id="bottomContent"></div>
 	</div>
-	<script src="${pageContext.request.contextPath}/resources/js/materials/out/outDetail.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/materials/out/insertOut.js"></script>
 </body>
 </html>

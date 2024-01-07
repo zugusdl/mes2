@@ -40,19 +40,108 @@
 
 	<!-- 출고 목록 조회 -->
 	<select id="getOutList" resultMap="oDTO">
-		SELECT * FROM c7d2307t2_2.out_warehouse
+		SELECT * FROM out_warehouse
 		JOIN meta_data_product
-		ON out_warehouse.product_code = meta_data_product.product_code;
+		ON out_warehouse.product_code = meta_data_product.product_code
+		<where>
+			<if test="status != null and !status.equals('')">
+				AND out_warehouse.status = #{status}
+			</if>
+			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
+                AND out_warehouse.out_request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE) + 1
+			</if>
+			<if test="product_code != null and !product_code.equals('')">
+				AND out_warehouse.product_code = #{product_code}
+			</if>
+		</where>
+		ORDER BY status DESC, out_request_date
+		LIMIT #{cri.startPage}, #{cri.pageSize}
 	</select>
 	
-	<!-- 출고 상세 조회 -->
-	<select id="getOutDetail" resultMap="oDTO">
-		SELECT ow.out_index, owp.out_code, owp.product_code, mdp.name, pd_lot, out_quantity
-		FROM out_warehouse_product owp 
-		LEFT JOIN out_warehouse ow
-		ON owp.out_code = ow.out_code
-		LEFT JOIN meta_data_product mdp
-		ON owp.product_code = mdp.product_code 
-		WHERE out_index = #{out_index};
+	<!-- 목록 개수 조회 -->
+	<select id="getTotalOutCount" resultType="int">
+		SELECT count(*) FROM out_warehouse 
+		<where>
+			<if test="status != null and !status.equals('')">
+				AND status = #{status}
+			</if>
+			<if test="startDate != null and endDate != null and !startDate.equals('') and !endDate.equals('') ">
+                AND out_request_date BETWEEN CAST(#{startDate} as DATE) AND CAST(#{endDate} as DATE) + 1
+			</if>
+			<if test="product_code != null and !product_code.equals('')">
+				AND product_code = #{product_code}
+			</if>
+		</where>
 	</select>
+	
+	<!-- 출고 상세 조회(출고코드 O) -->
+	<select id="getOutDetail" resultType="com.mes2.materials.domain.OpDTO">
+		SELECT * FROM out_warehouse_product ow
+		JOIN meta_data_product mdp
+		ON ow.product_code = mdp.product_code
+		WHERE out_code = #{out_code}
+	</select>
+	
+	<!-- 출고 상세 조회(출고코드 X) -->
+	<select id="getOutInfo" resultType="com.mes2.materials.domain.OutDTO">
+		SELECT * FROM out_warehouse 
+		WHERE out_index = #{out_index}
+	</select>
+	
+	<!-- 출고 품목 재고 조회 -->
+	<select id="getStockList" resultType="com.mes2.materials.domain.StockDTO">
+		SELECT * FROM stock
+		WHERE product_code = #{product_code} AND quantity != 0
+	</select>
+	
+	<!-- 출고 품목 등록 -->
+	<insert id="insertOutProduct">
+		INSERT INTO out_warehouse_product (out_code, product_code, pd_lot, out_quantity) 
+		VALUES
+		<foreach collection="stockList" item="stockDTO" separator="," close=";">
+			(#{out_code}, #{stockDTO.product_code}, #{stockDTO.pd_lot}, #{stockDTO.useQuantity})
+		</foreach>
+	</insert>
+	
+	<!-- 재고 감소 -->
+	<update id="decreaseStock">
+		<foreach collection="list" item="stockDTO" separator=";">
+			UPDATE stock 
+			SET quantity = quantity - #{stockDTO.useQuantity}
+			WHERE stock_index = #{stockDTO.stock_index} 
+		</foreach>
+	</update>
+
+	<!-- 출고 목록 업데이트 -->
+	<update id="updateOutInfo">
+		UPDATE out_warehouse SET out_code = #{out_code}, status = #{status}, out_regdate = now()
+		WHERE out_index = #{out_index} 
+	</update>
+	
+	<!-- 수주 상태 업데이트 -->
+	<update id="updateProductStatus">
+		UPDATE sales_order_product SET product_status = "complete"
+		WHERE order_code = #{based_code } AND product_code = #{product_code}
+	</update>
+	
+	<!-- 품목 전체 재고 가져오기 -->
+	<select id="getQuantitySum" resultType="int">
+		SELECT sum(quantity) FROM stock
+		WHERE product_code = #{product_code}
+	</select>
+	
+	<!-- 생산 지시 등록 -->
+	<insert id="insertIns">
+		INSERT INTO instructions (mdp_code, type, sop_code, state, sales_quantity) 
+		VALUES(#{mdp_code}, 'S', #{sop_code}, 'requested', #{sales_quantity})
+	</insert>
+	
+	<!-- Stock 테이블 출고 예정 수량 입력 -->
+<!-- 	<update id="updatePlannedQuantity"> -->
+<!-- 		<foreach collection="list" item="stockDTO" separator=";"> -->
+<!-- 			UPDATE stock  -->
+<!-- 			SET planned_quantity = #{stockDTO.planned_quantity}  -->
+<!-- 			WHERE stock_index = #{stockDTO.stock_index} -->
+<!-- 		</foreach> -->
+<!-- 	</update> -->
 </mapper>

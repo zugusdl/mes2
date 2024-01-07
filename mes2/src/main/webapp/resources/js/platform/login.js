@@ -46,5 +46,12 @@ login.addEventListener("click", () => {
 
 
 if(result == "loginFail") {
-	alert("회사 정보를 확인하세요");
+	Swal.fire({
+		text: "회사 정보를 확인하세요",
+		confirmButtonColor: "#577D71",
+		icon: "warning"
+	})
+	.then(function(){
+		location.reload();
+	});
 }
