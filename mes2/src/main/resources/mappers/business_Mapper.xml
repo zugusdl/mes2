@@ -7,9 +7,17 @@
   
 	
   	<insert id="insert" parameterType="com.mes2.metadata.domain.md_businessDTO">
-  		INSERT INTO meta_data_business (company_code, category, pw, name, manager, address, `call`, fax, email)
-    	VALUES (#{company_code}, #{category}, #{pw}, #{name}, #{manager}, #{address}, #{call}, #{fax}, #{email})
-  	</insert>
+  INSERT INTO meta_data_business (company_code, category, pw, name, manager, address, `call`, fax, email, auth)
+  VALUES (#{company_code}, #{category}, #{pw}, #{name}, #{manager}, #{address}, #{call}, #{fax}, #{email},
+  <choose>
+    <when test="category == '고객사'">
+      'ROLE_CLIENT'
+    </when>
+    <otherwise>
+      ''
+    </otherwise>
+  </choose>)
+	</insert>
   	
   	<!--  공통코드 가져오는 부분 -->
   	<select id="common" resultType="String">

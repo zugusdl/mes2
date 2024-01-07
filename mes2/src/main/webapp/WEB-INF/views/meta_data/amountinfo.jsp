@@ -6,7 +6,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<title>거래처기준정보</title>
+<title>BOM기준정보</title>
 <!-- jqery cdn입니다-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -18,7 +18,7 @@
 	crossorigin="anonymous" />
 
 <!-- 추가 css 입니다. -->
-<link rel="stylesheet" href="/resources/css/metadata/business.css">
+<link rel="stylesheet" href="/resources/css/metadata/amount.css">
 
 <!--  부트스트랩 js cdn입니다. -->
 <script
@@ -28,7 +28,7 @@
 </script>
 
 <!-- 추가 js 입니다. -->
-<script src="/resources/js/metadata/business.js"></script>
+<script src="/resources/js/metadata/amount.js"></script>
 </head>
 
 <body>
@@ -37,9 +37,9 @@
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
 		<div class="son_serch">
-			<form action="/business/firstpage" method="POST">
-				<span>등록기간</span>			
-				<input type="text" name="search" placeholder="검색어를 입력하세요" />
+			<form action="/amount/firstpage" method="POST">
+				<span>완제품 검색 : </span>			
+				<input type="text" name="search" placeholder="완제품 코드를 입력하세요" />
 				<input type="submit" value="검색"/>
 			</form>
 			
@@ -59,16 +59,13 @@
 			<thead>
 				<tr class="table-success" id="table_head">
 					<th scope="col"></th>
-					<th scope="col">거래처코드</th>
-					<th scope="col">유형</th>
-					<th scope="col">비밀번호</th>
-					<th scope="col">거래처명</th>
-					<th scope="col">담당자</th>
-					<th scope="col">주소</th>
-					<th scope="col">전화번호</th>
-					<th scope="col">fax</th>
-					<th scope="col">email</th>
-					<th scope="col">거래상황</th>									
+					<th scope="col" style="width: 0px; "></th>
+					<th scope="col">완제품코드</th>
+					<th scope="col">원재료코드</th>
+					<th scope="col">량</th>
+					<th scope="col">단위</th>
+					<th scope="col">등록날짜</th>
+					<th scope="col">수정날짜</th>													
 					<th scope="col"></th>									
 				</tr>
 			</thead>
@@ -78,53 +75,39 @@
 				<!-- 거래처 추가시 생기는 행 -->				
 				<tr id="insert_hang" style="display: none; text-align: center; vertical-align: middle;">										
 					<td></td>							
-					<td>[코드자동생성]</td>																				
-					<td>
-					<select id="typeSelect">
-					<option>유통업체</option>
-					<option>고객사</option>
-					</select>
-					</td>										    								      												
-					<td><input type="text" name="pw" size="5"></td>
-					<td><input type="text" name="name" size="5"></td>
-					<td><input type="text" name="manager" size="5"></td>				
-					<td><input type="text" name="address" size="5"></td>													
-					<td><input type="text" name="call" size="5"></td>				
-					<td><input type="text" name="fax" size="5"></td>
-					<td><input type="text" name="email" size="5"></td>
-					<td>1</td>														
+					<td></td>																				
+					<td><select id="ins_pcode" name="ins_productcode"></select></td>
+					<td><select id="ins_mcode" name="ins_meterialcode"></select></td>										    								      												
+					<td><input type="text" id="amount" name="amount" size="5"></td>
+					<td><select id="ins_unit" name="ins_unit"></select></td>
+					<td>[등록날짜]</td>				
+					<td>[수정날짜]</td>																															
 					<td><button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">저장</button></td>														
 				</tr>	
-													
+						
 				<!-- 거래처리스트 행들을 가져옴 -->								
-				<c:forEach var="blist" items="${businessList }">
+				<c:forEach var="alist" items="${amountList }">
 				<tr style="text-align: center; vertical-align: middle; ">
 					
 					<!-- 거래처 리스트 -->
 					<td><input type="checkbox" class="updatecheckbox" style="display: none;" onchange="a(this)"/></td>															
-					<td class="a">${blist.company_code }</td>
-					<td class="a">${blist.category }</td>
-					<td class="a">${blist.pw }</td>
-					<td class="a">${blist.name }</td>
-					<td class="a">${blist.manager }</td>
-					<td class="a">${blist.address }</td>
-					<td class="a">${blist.call }</td>
-					<td class="a">${blist.fax }</td>
-					<td class="a">${blist.email }</td>
-					<td class="a">${blist.contract_status}</td>
+					<td class="a"></td>
+					<td class="a">${alist.product_code }</td>
+					<td class="a">${alist.material_code }</td>
+					<td class="a">${alist.amount }</td>
+					<td class="a">${alist.amount_unit }</td>
+					<td class="a">${alist.registration_date }</td>
+					<td class="a">${alist.modification_date }</td>					
 					<td class="a" style="content: '\00a0'"></td>				
 									
 					<!-- 거래처 수정 시 나타나는 행 -->									
-					<td class="b" style="display: none;">${blist.company_code }</td>
-					<td class="b" style="display: none;">${blist.category }</td>
-					<td class="b" style="display: none;"><input type="text" name="pw" size="5" value="${blist.pw }"></td>
-					<td class="b" style="display: none;"><input type="text" name="name" size="5" value="${blist.name }"></td>
-					<td class="b" style="display: none;"><input type="text" name="manager" size="5" value="${blist.manager }"></td>
-					<td class="b" style="display: none;"><input type="text" name="address" size="5" value="${blist.address }"></td>
-					<td class="b" style="display: none;"><input type="text" name="call" size="5" value="${blist.call }"></td>
-					<td class="b" style="display: none;"><input type="text" name="fax" size="5" value="${blist.fax }"></td>
-					<td class="b" style="display: none;"><input type="text" name="email" size="5" value="${blist.email }"></td>
-					<td class="b" style="display: none;"><input type="text" name="contract_status" size="5" value="${blist.contract_status }"></td>
+					<td class="b" style="display: none;"><input type="hidden" name="index" value="${alist.index }"></td>
+					<td class="b" style="display: none;"><select id="upd_pcode" name="product_code"></select></td>
+					<td class="b" style="display: none;"><select id="upd_mcode" name="material_code"></select></td>
+					<td class="b" style="display: none;"><input type="text" name="amount" size="5" value="${alist.amount }"></td>
+					<td class="b" style="display: none;"><select id="upd_unit" name="amount_unit"></select></td>
+					<td class="b" style="display: none;">${alist.registration_date }</td>
+					<td class="b" style="display: none;">${alist.modification_date }</td>					
 					<td class="b" style="display: none; width: 80px; ">
 						<button type="button" style="margin: 10px 0;" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button>
 						<button type="button" style="margin: 10px 0;" class="btn btn-secondary" id="submitbtn3" onclick="submitData3(this)" >삭제</button>																		 									
@@ -141,19 +124,19 @@
 				<ul class="pagination pagination-sm no-margin pull-right">
 				
 				<c:if test="${pageVO.prev }">
-					<li><a href="/business/firstpage?page=${pageVO.startPage - 1 }">«</a></li>
+					<li><a href="/amount/firstpage?page=${pageVO.startPage - 1 }">«</a></li>
 				</c:if>
 				
 				<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
 					<li class=${pageVO.cri.page == i ? "active":"" }>
-						<a href="/business/firstpage?page=${i }&search=${aDTO.search }">
+						<a href="/amount/firstpage?page=${i }&search=${aDTO.search }">
 							${i }
 						</a>
 					</li>
 				</c:forEach>
 				
 				<c:if test="${pageVO.next }">
-					<li><a href="/business/first?page=${pageVO.endPage + 1 }">»</a></li>
+					<li><a href="/amount/first?page=${pageVO.endPage + 1 }">»</a></li>
 				</c:if>
 			
 				</ul>

@@ -11,36 +11,37 @@ import org.springframework.stereotype.Repository;
 
 import com.mes2.metadata.domain.alllistDTO;
 import com.mes2.metadata.domain.common_DTO;
-import com.mes2.metadata.domain.md_businessDTO;
+import com.mes2.metadata.domain.md_amountDTO;
+import com.mes2.metadata.domain.md_productDTO;
 import com.mes2.platform.persistence.PlatformDAOImpl;
 
 @Repository
-public class Business_DAOImpl implements Business_DAO{
-	
+public class Amount_DAOImpl implements Amount_DAO {
+
 private static final Logger logger = LoggerFactory.getLogger(PlatformDAOImpl.class);
 	
-	private static final String NAMESPACE ="com.mes2.mapper.business_Mapper";
+	private static final String NAMESPACE ="com.mes2.mapper.amount_Mapper";
 	
 	@Inject
 	private SqlSession sqlSession;
 
 	@Override
-	public int businessinsert(md_businessDTO dto) throws Exception {
-		logger.debug(" DAO : businessinsert() " + dto);
+	public int amountinsert(md_amountDTO dto) throws Exception {
+		logger.debug(" DAO : amountinsert() " + dto);
 		return sqlSession.insert(NAMESPACE + ".insert", dto);
 	}
 
 
 	@Override
-	public int businessupdate(md_businessDTO dto) throws Exception {
-		logger.debug(" DAO : businessupdate() " + dto);
+	public int amountupdate(md_amountDTO dto) throws Exception {
+		logger.debug(" DAO : amountupdate() " + dto);
 		return sqlSession.update(NAMESPACE + ".update", dto);
 	}
 
 
 	@Override
-	public int businessdelete(md_businessDTO dto) throws Exception {
-		logger.debug(" DAO : businessdelete() " + dto);
+	public int amountdelete(md_amountDTO dto) throws Exception {
+		logger.debug(" DAO : amountdelete() " + dto);
 		return sqlSession.update(NAMESPACE + ".delete", dto);
 	}
 
@@ -53,25 +54,29 @@ private static final Logger logger = LoggerFactory.getLogger(PlatformDAOImpl.cla
 
 
 	@Override
-	public List<md_businessDTO> getlist(alllistDTO aDTO) throws Exception {
+	public List<md_amountDTO> getlist(alllistDTO aDTO) throws Exception {
 		
 		return sqlSession.selectList(NAMESPACE + ".list", aDTO);
 	}
-
-
+	
 	@Override
-	public String commoncode(String category) throws Exception {
+	public List<md_productDTO> selectbox() throws Exception {
 		
-		return sqlSession.selectOne(NAMESPACE + ".common", category);
+		return sqlSession.selectList(NAMESPACE + ".selectbox");
+	}
+	
+	@Override
+	public List<md_productDTO> selectbox2() throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE + ".selectbox2");
+	}
+	
+	@Override
+	public List<common_DTO> selectbox3() throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE + ".selectbox3");
 	}
 
 
-	@Override
-	public String number(String commoncode) throws Exception {
-		
-		return sqlSession.selectOne(NAMESPACE + ".number", commoncode);
-	}
-
-
-
+	
 }

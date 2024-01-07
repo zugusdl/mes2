@@ -22,6 +22,5 @@ public interface Business_DAO {
 	
 	public String number(String commoncode) throws Exception;
 	
-	public List<common_DTO> selectbox() throws Exception;
 	
 }

@@ -27,7 +27,7 @@ public class Business_Controller {
 	
 	// 거래처관리 페이지, 모든 거래처정보리스트 호출
 		@RequestMapping(value="/firstpage", method= {RequestMethod.POST, RequestMethod.GET})
-		public String productdataGET(Model model, Criteria cri, alllistDTO aDTO) throws Exception{
+		public String businessdataGET(Model model, Criteria cri, alllistDTO aDTO) throws Exception{
 			
 			aDTO.setCri(cri);
 			

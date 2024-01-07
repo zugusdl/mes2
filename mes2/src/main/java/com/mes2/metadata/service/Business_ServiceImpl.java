@@ -73,11 +73,6 @@ public class Business_ServiceImpl implements Business_Service {
 		return bdao.getlist(aDTO);
 	}
 
-	@Override
-	public List<common_DTO> selectbox() throws Exception {
-		
-		return bdao.selectbox();
-	}
 	
 
 }

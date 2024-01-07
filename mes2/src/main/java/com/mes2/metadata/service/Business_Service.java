@@ -3,7 +3,6 @@ package com.mes2.metadata.service;
 
 import java.util.List;
 import com.mes2.metadata.domain.alllistDTO;
-import com.mes2.metadata.domain.common_DTO;
 import com.mes2.metadata.domain.md_businessDTO;
 
 public interface Business_Service {
@@ -23,6 +22,4 @@ public interface Business_Service {
 	//리스트(페이징)
 	public List<md_businessDTO> getlist(alllistDTO aDTO) throws Exception;
 	
-	//거래처 카테고리 공통코드
-	public List<common_DTO> selectbox() throws Exception;
 }
