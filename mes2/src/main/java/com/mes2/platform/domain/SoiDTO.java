@@ -18,6 +18,8 @@ public class SoiDTO {
 	private Date complete_date;
 	private String user_id;
 	private String sales_status;
+	private String instructions;
+	private String sign_file_name;
 	private List<SopDTO> sopList;
 	
 }

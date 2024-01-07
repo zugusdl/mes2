@@ -10,7 +10,8 @@ function modifyOrder(order_code, sales_status) {
 	if(allProduct_code.length === 0) {
 		Swal.fire({
 			text: "품목추가 버튼을 통해 품목을 1개 이상 선택하세요",
-			confirmButtonColor: "#577D71"
+			confirmButtonColor: "#577D71",
+			icon: "warning"
 		});
 		return false;
 	}
@@ -81,7 +82,7 @@ function modifyOrder(order_code, sales_status) {
 	}
 }
 
-// 취소하기
+// 수정 취소하기
 function cancleModify() {
 		Swal.fire({
 			text: "수정을 취소하시겠습니까?",

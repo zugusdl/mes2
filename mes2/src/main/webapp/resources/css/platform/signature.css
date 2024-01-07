@@ -75,9 +75,8 @@
 	margin-top: 10px;
 }
 
-#canvas {
-	display: flex;
-	justify-content: center;
+#sign {
 	border: 1px solid;
-	background-color: #fafafa;
+	text-align: center;
+	margin: 10px;
 }

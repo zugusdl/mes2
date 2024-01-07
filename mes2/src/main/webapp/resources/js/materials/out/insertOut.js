@@ -18,7 +18,11 @@ function insertOut() {
 	});
 	
 	if(sum != quantity) {
-		alert('요청 수량과 출고 수량이 다릅니다');
+		Swal.fire({
+			text: "요청 수량과 출고 수량이 다릅니다",
+			confirmButtonColor: "#577D71",
+			icon: "warning"
+		});
 		return false;
 	}
 	

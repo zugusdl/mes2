@@ -13,6 +13,8 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materials/outList.css">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -92,7 +94,7 @@
 				<ul class="pagination pagination-sm no-margin pull-right">
 				
 					<c:if test="${pageVO.prev }">
-						<li><a href="/materials/outListt?page=${pageVO.startPage - 1 }&status=${osDTO.status }&startDate=${osDTO.startDate }&endDate=${osDTO.endDate}&product_code=${osDTO.product_code}">«</a></li>
+						<li><a href="/materials/outList?page=${pageVO.startPage - 1 }&status=${osDTO.status }&startDate=${osDTO.startDate }&endDate=${osDTO.endDate}&product_code=${osDTO.product_code}">«</a></li>
 					</c:if>
 					
 					<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
@@ -117,15 +119,41 @@
 		console.log(quantitySum, product_code);
 		
 		if(result == 'SUCCESS') {
-			alert('출고 등록이 완료되었습니다.');
+			Swal.fire({
+				text: "출고 등록이 완료되었습니다.",
+				confirmButtonColor: "#577D71",
+				icon: "success"
+			});
 		}
 		
 		if(quantitySum != "") {
-			var productionConfirm = confirm(product_code + " 재고가 " + quantitySum + "개 입니다. 생산 지시 하시겠습니까?");
-			if(productionConfirm) {
-				var prompt = prompt("생산 지시 수량을 입력하세요.");
-				insertInstructions(prompt, product_code);
-			}
+			Swal.fire({
+				text: product_code + " 재고가 " + quantitySum + "개 입니다. 생산 지시 하시겠습니까?",
+				icon: "question",
+				showCancelButton: true,
+				confirmButtonColor: "#577D71", // confirm 버튼 색상
+				cancelButtonColor: '#d33', // cancle 버튼 색상
+				confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+				cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+			}).then((result) => {
+				if (result.isConfirmed) {
+					var prompt = prompt("생산 지시 수량을 입력하세요.");
+					insertInstructions(prompt, product_code);
+					(async () => {
+					    const { value: quantity } = await Swal.fire({
+					        text: '생산 지시 수량을 입력하세요.',
+					        input: 'number',
+					        inputPlaceholder: '500개 단위로 숫자만 입력하세요'
+					    })
+
+					    if (quantity) {
+					    	insertInstructions(${quantity}, product_code);
+					    }
+					})()
+				} else {
+					return false;
+				}
+			});
 		}
 		
 		// 생산 지시
@@ -141,11 +169,20 @@
 				data : JSON.stringify(instructData),
 				contentType : "application/json",
 				success : function(data) {
-					alert("생산 지시를 완료하였습니다.")
-					location.reload();
+					Swal.fire({
+						text: "생산 지시를 완료하였습니다.",
+						confirmButtonColor: "#577D71",
+						icon: "success"
+					}).then(function(){
+						location.reload();
+					});
 				},
 				error : function() {
-					alert("생산 지시에 실패했습니다.");
+					Swal.fire({
+						text: "생산 지시에 실패하였습니다.",
+						confirmButtonColor: "#577D71",
+						icon: "error"
+					});
 				}
 			});
 		}

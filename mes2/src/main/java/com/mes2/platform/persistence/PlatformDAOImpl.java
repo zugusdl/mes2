@@ -105,9 +105,9 @@ public class PlatformDAOImpl implements PlatformDAO {
 
 	// 주문 상세 조회
 	@Override
-	public List<SoiDTO> getOrderDetail(String order_code) throws Exception {
+	public SoiDTO getOrderDetail(String order_code) throws Exception {
 		logger.debug("DAO: getOrderDetail() 호출");
-		return sqlSession.selectList(NAMESPACE + ".getOrderDetail", order_code);
+		return sqlSession.selectOne(NAMESPACE + ".getOrderDetail", order_code);
 	}
 	
 	// 발주 공통코드
@@ -161,19 +161,19 @@ public class PlatformDAOImpl implements PlatformDAO {
 		sqlSession.update(NAMESPACE + ".modifyPw", mdDTO);
 	}
 	
-	// 수령 완료(수주 테이블 complete로 변경)
+	// 수령 완료(출하 테이블 업데이트)
 	@Override
-	public void receiveDelivery(String order_code) throws Exception {
+	public void completeShipping(SoiDTO sdto) throws Exception {
 		logger.debug("DAO: ");
-		sqlSession.update(NAMESPACE + ".receiveDelivery", order_code);
+		sqlSession.update(NAMESPACE + ".completeShipping", sdto);
 		
 	}
 	
-	// 수령 완료(주문 테이블 complete로 변경)
+	// 수령 완료(수주 테이블 업데이트)
 	@Override
-	public void changeOrderStatus(String order_code) throws Exception {
+	public void completeOrder(SoiDTO sdto) throws Exception {
 		logger.debug("DAO: ");
-		sqlSession.update(NAMESPACE + ".changeOrderStatus", order_code);
+		sqlSession.update(NAMESPACE + ".completeOrder", sdto);
 	}
 
 }

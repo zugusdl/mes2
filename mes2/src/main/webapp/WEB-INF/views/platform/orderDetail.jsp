@@ -26,12 +26,15 @@
 			<hr>
 			<h1>상세 조회</h1>
 				<span class="list-btn2">
-					<c:if test="${soiList[0].sales_status eq 'requested'}">
-						<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${soiList[0].order_code}', '${soiList[0].order_date }', '${soiList[0].sales_status }');">발주 수정</button>
-						<button type="button" class="btn btn-secondary" id="addBtn" onclick="deleteOrder('${soiList[0].order_code}', '${soiList[0].sales_status }');">발주 취소</button>
+					<c:if test="${soiDTO.sales_status eq 'requested'}">
+						<button type="button" class="btn btn-secondary" id="addBtn" onclick="modifyOrder('${soiDTO.order_code}', '${soiDTO.order_date }', '${soiDTO.sales_status }');">발주 수정</button>
+						<button type="button" class="btn btn-secondary" id="addBtn" onclick="deleteOrder('${soiDTO.order_code}', '${soiDTO.sales_status }');">발주 취소</button>
 					</c:if>
-					<c:if test="${soiList[0].sales_status eq 'deliver'}">
-						<button type="button" class="btn btn-secondary" id="addBtn" onclick="completeOrder('${soiList[0].order_code}');">수령 완료</button>
+					<c:if test="${soiDTO.sales_status eq 'deliver'}">
+						<button type="button" class="btn btn-secondary" id="addBtn" onclick="completeOrder('${soiDTO.order_code}');">수령 완료</button>
+					</c:if>
+					<c:if test="${soiDTO.sales_status eq 'complete'}">
+						<button type="button" class="btn btn-secondary" id="addBtn" onclick="getSignature('${soiDTO.order_code}');">서명 조회</button>
 					</c:if>
 				</span> <br>
 				납품 요청일: <input type="date" id="dtIp" name="order_date" value="${order_date }" readonly/><br>
@@ -49,8 +52,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="soiList" items="${soiList }">
-									<c:forEach var="sopList" items="${soiList.sopList }">
+								<c:forEach var="sopList" items="${soiDTO.sopList }">
 									<tr>
 										<td>${sopList.product_code }</td>
 										<td>${sopList.mdpDTO.name }</td>
@@ -58,7 +60,6 @@
 										<td>${sopList.sales_quantity }EA</td>										
 										<td><fmt:formatNumber value="${sopList.mdpDTO.price * sopList.sales_quantity }"/>원</td>										
 									</tr>
-									</c:forEach>
 								</c:forEach>
 							</tbody>
 						</table>

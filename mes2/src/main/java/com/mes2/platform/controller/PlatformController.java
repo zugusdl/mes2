@@ -169,8 +169,7 @@ public class PlatformController {
 	@GetMapping(value="/orderDetail")
 	public void orderDetailGET(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
 		logger.debug("orderDetailGET() 호출");
-		List<SoiDTO> soiList = pService.getOrderDetail(order_code);
-		model.addAttribute("soiList", soiList);
+		model.addAttribute("soiDTO", pService.getOrderDetail(order_code));
 		model.addAttribute("order_date", order_date);
 	}
 	
@@ -178,8 +177,8 @@ public class PlatformController {
 	@GetMapping(value="/modifyOrder")
 	public void orderModifyGET(@RequestParam("order_code") String order_code, @RequestParam("order_date") String order_date, Model model) throws Exception {
 		logger.debug("orderModifyGET() 호출");
-		List<SoiDTO> soiList = pService.getOrderDetail(order_code);
-		model.addAttribute("soiList", soiList);
+		SoiDTO soiDTO = pService.getOrderDetail(order_code);
+		model.addAttribute("soiDTO", soiDTO);
 		model.addAttribute("order_date", order_date);
 	}
 	
@@ -208,43 +207,52 @@ public class PlatformController {
 		pService.modifyPw(mpDTO);
 	}
 	
-	// 완료 처리 페이지
+	// 수령 완료 처리(버튼으로)
 	@GetMapping(value="/completeOrder")
-	public void completeOrderGET(@RequestParam("order_code") String order_code) throws Exception {
+	public void completeOrderGET(@RequestParam("order_code") String order_code, Model model) throws Exception {
 		logger.debug("completeOrderGET()호출");
+		model.addAttribute("order_code", order_code);
 	}
 	
-	// 완료 처리 페이지
-	@PostMapping(value="/completeOrder")
-	public void completeOrderPOST(@RequestParam("order_code") String order_code, MultipartFile uploadFile) throws Exception {
-		logger.debug("completeOrderPOST()호출");
-		logger.debug("@@@@@uploadFile: " + uploadFile);
-		String uploadFolder = "C:\\Users\\ITWILL\\Desktop\\upload";
-		String uploadFileName = order_code;
-		File signature = new File(uploadFolder+uploadFileName+".png");
+	// 서명 조회
+	@GetMapping(value="/signature")
+	public void getSignatureGET(@RequestParam("order_code") String order_code, Model model) throws Exception {
+		logger.debug("getSignatureGET() 호출");
+		model.addAttribute("soiDTO", pService.getOrderDetail(order_code));
 	}
 	
-	//test
-	@PostMapping(value="/testCompleteOrder")
-	public void testCompleteOrderPOST(@RequestParam("order_code") String order_code,MultipartFile formdata) throws Exception {
-		logger.debug("testCompleteOrderPOST()호출");
-		logger.debug("@@@@@uploadFile: " + formdata);
-		String uploadFolder = "C:\\Users\\ITWILL\\Desktop\\upload";
-		
-		logger.debug("@@@@@");
-		logger.debug(formdata.getOriginalFilename());
-		
-		
-		String path =uploadFolder + order_code + ".png";
-		try {
-			formdata.transferTo(new File(path));
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	// 완료 처리 페이지
+//	@PostMapping(value="/completeOrder")
+//	public void completeOrderPOST(@RequestParam("order_code") String order_code, MultipartFile uploadFile) throws Exception {
+//		logger.debug("completeOrderPOST()호출");
+//		logger.debug("@@@@@uploadFile: " + uploadFile);
+//		String uploadFolder = "C:\\Users\\ITWILL\\Desktop\\upload";
+//		String uploadFileName = order_code;
+//		File signature = new File(uploadFolder+uploadFileName+".png");
+//	}
+	
+//	//test
+//	@PostMapping(value="/testCompleteOrder")
+//	public void testCompleteOrderPOST(@RequestParam("order_code") String order_code, @RequestParam("file") MultipartFile file) throws Exception {
+//		logger.debug("testCompleteOrderPOST()호출");
+//		logger.debug("@@@@@uploadFile: " + file);
+//		logger.debug("@@@@@uploadFile: " + file.getOriginalFilename());
+////		String uploadFolder = "C:\\Users\\ITWILL\\Desktop\\upload";
+////		
+////		logger.debug("@@@@@");
+////		logger.debug(formdata.getOriginalFilename());
+////		
+////		
+////		String path =uploadFolder + order_code + ".png";
+////		try {
+////			formdata.transferTo(new File(path));
+////		} catch (IllegalStateException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		} catch (IOException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		}
+//	}
 	
 }

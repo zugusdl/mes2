@@ -11,33 +11,27 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>Document</title>
+<sec:csrfMetaTags/>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/completeOrder.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/signature.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
 	<div class="container2">
-		<h3 id="h3">수령 확인</h3>
+		<h3 id="h3">서명 확인</h3>
 		<section class="section1">
-			<form method="post" onsubmit="completeOrder('${order_code}');" enctype="mulipart/form-data">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<span>* 성함을 정자로 작성하세요</span>
-				<div>
-					<canvas id="canvas" width="500" height="300"></canvas>
-				</div>
-				<div>
-					<button type="submit" class="btn btn-secondary">수령 완료</button>
-				</div>
-			</form>
+			<div id="sign">
+				<img alt="서명" src="../../../../resources/img/platform/signature/${soiDTO.sign_file_name }" width="500">
+			</div>
+			<div>
+				<button type="button" class="btn btn-secondary" onclick="window.close();">닫기</button>
+			</div>
 		</section>
 	</div>
-
-
-	<script src="${pageContext.request.contextPath}/resources/js/platform/completeOrder.js"></script>
 </body>
 </html>

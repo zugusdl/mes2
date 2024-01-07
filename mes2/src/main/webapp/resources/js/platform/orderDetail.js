@@ -72,3 +72,13 @@ function deleteOrder(order_code, sales_status) {
 		}
 	});
 }
+
+//수령 완료 처리
+function completeOrder(order_code) {
+	var complete = window.open("/platform/completeOrder?order_code="+order_code, "_blank","height=400, width=600");
+}
+
+// 서명 확인
+function getSignature(order_code) {
+	var complete = window.open("/platform/signature?order_code="+order_code, "_blank","height=400, width=600");
+}

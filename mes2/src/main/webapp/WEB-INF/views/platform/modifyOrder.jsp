@@ -30,7 +30,7 @@
 			<form method="post">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<span class="list-btn2">
-					<button type="button" class="btn btn-secondary" onclick="modifyOrder('${soiList[0].order_code}','${soiList[0].sales_status}');">수정하기</button>
+					<button type="button" class="btn btn-secondary" onclick="modifyOrder('${soiDTO.order_code}','${soiDTO.sales_status}');">수정하기</button>
 					<button type="button" class="btn btn-secondary" onclick="cancleModify();">수정 취소</button>
 				</span> <br>
 				납품 요청일: <input type="date" id="dtIp" name="order_date" min="${minDay }" max="${maxDay }" value="${order_date }" readonly/><br>
@@ -49,8 +49,7 @@
 								</tr>
 							</thead>
 							<tbody id="modifyProductList">
-								<c:forEach var="soiList" items="${soiList }">
-									<c:forEach var="sopList" items="${soiList.sopList }">
+								<c:forEach var="sopList" items="${soiDTO.sopList }">
 										<tr>
 											<td><input type="hidden" name="product_code" value="${sopList.product_code }">${sopList.product_code }</td>
 											<td>${sopList.mdpDTO.name }</td>
@@ -59,7 +58,6 @@
 											<td><input type="text" id="s${sopList.product_code }" value="<fmt:formatNumber value="${sopList.mdpDTO.price * sopList.sales_quantity }"/>"readonly>원</td>
 											<td><button type="button" onclick="trRemove(this);" class="deleteBtn">x</button></td>
 										</tr>
-									</c:forEach>
 								</c:forEach>
 							</tbody>
 						</table>

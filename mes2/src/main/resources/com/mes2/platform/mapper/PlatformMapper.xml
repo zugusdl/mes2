@@ -9,6 +9,7 @@
 		<result property="order_code" column="order_code" />
 		<result property="order_date" column="order_date" />
 		<result property="sales_status" column="sales_status" />
+		<result property="sign_file_name" column="sign_file_name" />
 		<collection property="sopList" resultMap="detail" />
 	</resultMap>
 	
@@ -130,7 +131,7 @@
 	
 	<!-- 주문 상세 조회(주문 품목 조회) -->
 	<select id="getOrderDetail" resultMap="order">
-		SELECT soi.order_code, soi.order_date, sales_status, sop.product_code, sop.sales_quantity, mdp.name, mdp.price
+		SELECT soi.order_code, soi.order_date, sales_status, sign_file_name, sop.product_code, sop.sales_quantity, mdp.name, mdp.price
 		FROM sales_order_info soi 
 		JOIN sales_order_product sop
 		ON soi.order_code = sop.order_code
@@ -180,17 +181,17 @@
 		WHERE company_code = #{company_code} AND pw = #{pw}
 	</update>
 	
-	<!-- 수령 완료(수주 테이블 complete로 변경) -->
-	<update id="receiveDelivery">
+	<!-- 수령 완료(출하 테이블 progress_status는 complete로, confirm_status는 파일명으로) -->
+	<update id="completeShipping">
 		UPDATE shipping 
-		SET confirm_status = 'complete' 
+		SET progress_status='complete', confirm_status = #{sign_file_name} 
 		WHERE order_code = #{order_code}
 	</update>
 	
-	<!-- 수령 완료(주문 테이블 complete로 변경) -->
-	<update id="changeOrderStatus">
+	<!-- 수령 완료(수주 테이블 order_status는 complete로, sign_file_name은 파일명으로) -->
+	<update id="completeOrder">
 		UPDATE sales_order_info 
-		SET sales_status = 'complete', complete_date = now()
+		SET sales_status = 'complete', complete_date = now(), sign_file_name = #{sign_file_name}
 		WHERE order_code = #{order_code}
 	</update>
 </mapper>

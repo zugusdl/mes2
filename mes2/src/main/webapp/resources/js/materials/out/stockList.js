@@ -26,7 +26,11 @@ function registProduct() {
 		});
 		window.close();
 	} else {
-		alert('재고를 하나 이상 선택하세요');
+		Swal.fire({
+			text: "재고를 하나 이상 선택하세요.",
+			confirmButtonColor: "#577D71",
+			icon: "error"
+		});
 	}
 	
 }

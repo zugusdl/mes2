@@ -13,10 +13,20 @@ function getOutDetail(out_index, out_code) {
 		},
 		error : function() {
 			console.log(out_index, out_code);
-			alert("fail");
+			Swal.fire({
+				text: "상세 조회에 실패했습니다.",
+				confirmButtonColor: "#577D71",
+				icon: "error"
+			});
 		}
 	});
-	
+}
+
+function trRemove(ths) {
+	var $tr = $(ths).parents("tr");
+	$tr.remove();
+}
+
 //	if(out_code === '') {
 //		$.ajax({
 //			url : "/materials/outDetail",
@@ -52,9 +62,3 @@ function getOutDetail(out_index, out_code) {
 //			}
 //		});
 //	}
-}
-
-function trRemove(ths) {
-	var $tr = $(ths).parents("tr");
-	$tr.remove();
-}
