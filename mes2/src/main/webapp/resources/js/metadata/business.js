@@ -140,8 +140,14 @@ function submitData() {
         type: 'POST',
         data: data,
         success: function() {
-            alert('추가완료');
-            location.reload();
+        	Swal.fire({
+                text: "거래처정보가 추가되었습니다.",
+                confirmButtonColor: "#577D71",
+                icon: "success"
+             })
+             .then(function(){
+          	   location.reload();
+             });
         },
         error: function(error) {
             console.error('에러 발생:', error);
@@ -168,8 +174,16 @@ function submitData2(submitbtn2) {
     
     // 추가 행에서 카테고리, 단위 확인 alert 창
     if (contractStatus === "거래상황") {        
-    	alert('거래상황을 다시 확인해주세요.');            
-        
+    	          
+    	Swal.fire({
+            text: "거래상황을 다시 확인해주세요.",
+            confirmButtonColor: "#577D71",
+            icon: "success"
+         })
+         .then(function(){
+      	   
+         });
+    	
     	return;
     }
     
@@ -192,8 +206,16 @@ function submitData2(submitbtn2) {
         type: 'POST',
         data: data,
         success: function(response) {
-        	alert('수정완료');
-            location.reload();
+        	
+        	Swal.fire({
+                text: "거래처정보가 수정되었습니다.",
+                confirmButtonColor: "#577D71",
+                icon: "success"
+             })
+             .then(function(){
+          	   location.reload();
+             });
+            
         },
         error: function(error) {
             // 에러 시 처리
@@ -216,8 +238,14 @@ function submitData3(submitbtn3) {
             company_code: company_Code,
         },
         success: function(response) {
-            alert('삭제완료');
-            location.reload();
+        	Swal.fire({
+                text: "거래처정보가 삭제되었습니다.",
+                confirmButtonColor: "#577D71",
+                icon: "success"
+             })
+             .then(function(){
+          	   location.reload();
+             });
         },
         error: function(error) {
             console.error(error);

@@ -139,8 +139,16 @@ function submitData() {
 	
 	// 추가 행에서 카테고리, 단위 확인 alert 창
     if (category === "카테고리" || unit == "단위") {        
-    	alert('카테고리와 단위를 다시 확인해주세요.');            
-        
+    	              
+    	Swal.fire({
+            text: "드롭박스 옵션을 다시 확인해주세요.",
+            confirmButtonColor: "#577D71",
+            icon: "success"
+         })
+         .then(function(){
+      	   
+         });
+    	
     	return;
     }
 
@@ -157,8 +165,14 @@ function submitData() {
         contentType: false,
         success: function() {
         	
-            alert('추가완료');
-            location.reload();
+        	Swal.fire({
+                text: "품목정보가 추가되었습니다.",
+                confirmButtonColor: "#577D71",
+                icon: "success"
+             })
+             .then(function(){
+          	   location.reload();
+             });
             
         },
         error: function(error) {
@@ -185,8 +199,15 @@ function submitData2(submitbtn2) {
 
     // 수정 행에서 카테고리, 단위 확인 alert 창
     if (hiddenCategory === "카테고리" || hiddenUnit == "단위" || hiddenProductionStatus == "생산유무") {
-        alert('카테고리, 단위, 생산유무를 다시 확인해주세요.');            
-        
+                  
+        Swal.fire({
+            text: "드롭박스 옵션을 다시 확인해주세요.",
+            confirmButtonColor: "#577D71",
+            icon: "success"
+         })
+         .then(function(){
+      	   
+         });
         return;
     }
 
@@ -212,8 +233,14 @@ function submitData2(submitbtn2) {
         
         success: function(response) {
             
-            alert('수정완료');
-            location.reload();
+        	Swal.fire({
+                text: "품목정보가 수정되었습니다.",
+                confirmButtonColor: "#577D71",
+                icon: "success"
+             })
+             .then(function(){
+          	   location.reload();
+             });
         },
         error: function(error) {
             
@@ -237,8 +264,14 @@ function submitData3(submitbtn3) {
             product_code: ProductCode,
         },
         success: function(response) {
-            alert('삭제완료');
-            location.reload();
+        	Swal.fire({
+                text: "품목정보가 삭제되었습니다.",
+                confirmButtonColor: "#577D71",
+                icon: "success"
+             })
+             .then(function(){
+          	   location.reload();
+             });
         },
         error: function(error) {
             console.error(error);

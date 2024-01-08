@@ -7,6 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>품목기준정보</title>
+
+<!--  sweetalert cdn입니다. -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
+
+
 <!-- jqery cdn입니다-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
