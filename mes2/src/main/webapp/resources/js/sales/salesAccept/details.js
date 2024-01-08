@@ -10,7 +10,12 @@ function goContent(order_code){
 		  success: function(data) {
 			  content(data, order_code);
 		  },
-		  error: function(){alert("error");}
+		  error: function(){
+			  Swal.fire({
+				  title: "관계자에게 문의하십시오.",
+				  icon: "warning"
+				});
+		  }
 	  });
 	  
 	  
@@ -76,10 +81,11 @@ function goContent(order_code){
 //	 var salesQuantity = $(".sales_quantity").eq(index).val();
 //	 var processingReg = $(".product-processing").eq(index).val();
 	 
+	 $("#mo-close").trigger('click');
 	 var list = [];
 
 	 for (var i = 0; i < intNum; i++) {
-		 var order = $("#order_code").val();
+		 var order = $(".order_code").val();
 		 var scode = $(".sales_code").eq(i).val();
 		 var pcode = $(".product_code").eq(i).val();
 		 var salesQuantity = $(".sales_quantity").eq(i).val();
@@ -91,45 +97,108 @@ function goContent(order_code){
 
 
 	 }
-	 console.log(list);
+	
 	 $.ajax({
 		  url: "acceptSave",
 		  method: "POST",
 		  contentType: "application/json",
-		 // dataType:"text",
-		  //data: data,
 		  data: JSON.stringify(list), 
 		  success: function(data) {
 			  intNum = 0;
-			  goContent(data);
+			  Swal.fire({
+				  title: "등록되었습니다!",				 
+				  icon: "success"
+				}).then((result) => {
+					goContent(data);
+				});
+
+			  
 			 
 			 
 			},
 		 
-			error: function(xhr, textStatus, errorThrown) {
-		        console.log("AJAX Error:", textStatus);
-		        console.log("Error thrown:", errorThrown);
-		        console.log("Response:", xhr.responseText);
-		        alert("Error during save. Check console for details.");
+			error: function() {
+		       
+				  Swal.fire({
+					  title: "관계자에게 문의하십시오.",
+					  icon: "warning"
+					});
 		    }
 		});
  }
 
- function checkProReg(processing_reg,sales_code){
+ function saveCheck(order_code){
 	 Swal.fire({
-		  title: "처리 변경",
-		  text: "이미 처리된 수주입니다. 변경하시겠습니까?",
+		  title: "등록하시겠습니까?",
 		  icon: "question",
 		  showCancelButton: true,
 		  confirmButtonColor: "#3085d6",
 		  cancelButtonColor: "#d33",
-		  confirmButtonText: "변경", 
+		  confirmButtonText: "등록",
 		  cancelButtonText: "취소"
 		}).then((result) => {
 		  if (result.isConfirmed) {
-
+			  $.ajax({
+				  url:"getRegUser", 
+				  type:"post",
+				  dataType:"json", 
+				  data: {"order_code" : order_code}, 
+				  success: function (data) {
+					  
+					  moReg(data,order_code)
+				      
+				    },
+				  error: function(){
+					  Swal.fire({
+						  title: "관계자에게 문의하십시오.",
+						  icon: "warning"
+						});
+						
+				  }
+			  });
 		  }
 		});
+	 
+ }
+ 
+ function moReg(data,order_code){
+	 $("#salesModal").modal("show");
+	 $("#salesModalLabel").html('비밀번호 확인');
+	 var listHtml = "<div>아이디 : <input type='text' id='user_id' value='"+data.user_id+"' disabled/> </div>";
+	 listHtml += "<div>비밀번호: <input type='password' id='user_pw'/></div>"
+	 listHtml += "<button type='button' class='btn btn-primary' onclick='return regPw(\""+data.user_id+"\")'>비밀번호 확인</button>";
+	 $("#sales-modal").html(listHtml);
+ }
+ 
+ function regPw(user_id){
+	 var user_pw = $("#user_pw").val();
+	  $.ajax({
+		  url:"getRegPw", 
+		  type:"post",
+		  dataType:"text", 
+		  data: {"user_id" : user_id, 
+			  	"user_pw" : user_pw
+		  }, 
+		  success: function (data) {
+			  if(data == 'true'){
+				  save();  
+			  } else{
+				  Swal.fire({
+					  title: "비밀번호 오류!",
+					  text: "등록이 취소되었습니다.",
+					  icon: "error"
+					});
+			  }
+			 
+		    },
+		  error: function(){
+			  Swal.fire({
+				  title: "관계자에게 문의하십시오.",
+				  icon: "warning"
+				});
+				
+		  }
+	  });
  }
  
  function info(order_code){
@@ -174,22 +243,22 @@ function goContent(order_code){
  
  
   function content(data, order_code){ 
-	 // <i class="fa-solid fa-rectangle-xmark"></i>
-//	  var listHtml ="<div class='list-box'>";
-//	  listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
-//	  listHtml +="<input type='hidden' id='order_code' value='"+order_code+"'>";
-	  
-	 
+       
 	  var listHtml = "<div class='list-box'>";
 	  listHtml += "<div>";
 	  listHtml += "<p>주문번호: "+order_code+"</p>";
 	  
 	  listHtml += "<button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#salesModal' onclick='info(\""+order_code+"\")'>상세</button>";
-	  listHtml += " <button type='button' class='btn btn-primary' onclick='save()'>저장</button>";
+	  if(data[0].instructions=='N'){
+		  
+		  listHtml += " <button type='button' class='btn btn-primary' id='save-btn' onclick='return saveCheck(\""+order_code+"\")'>저장</button>";
+	  }
+	
+	  
 	  listHtml += "</div>";
 	  listHtml += "<div>";
 	  listHtml +="<i class='fa-solid fa-rectangle-xmark'id='closeBtn' onclick='cancle()'></i>";
-	 // listHtml +="<button type='button' class='btn btn-secondary' id='closeBtn' onclick='cancle()'>닫기</button>";
+	 
 	  listHtml += "</div>";
 	  listHtml += "<table class='table table-hover'>";
 	  listHtml += "<thead>";
@@ -208,11 +277,10 @@ function goContent(order_code){
 	  
 	  
 	  $.each(data,function(index,obj){
-		  intNum++;
-		 
+		  
 		  
 		  listHtml += "<tr>";
-		  listHtml +="<input type='hidden' id='order_code' value='"+order_code+"'>";
+		  listHtml +="<input type='hidden' class='order_code' value='"+order_code+"'>";
 		  listHtml +="<input type='hidden' name='sales_code' class='sales_code' value='"+obj.sales_code+"'>";
 		  listHtml += "<td>"+obj.sales_code+"</td>";
 		  if(obj.product_name == null){
@@ -233,11 +301,10 @@ function goContent(order_code){
 			  listHtml += "<option value='production' class='check-processing'>생산처리</option>";
 			  listHtml += "<option value='multi' class='check-processing'>복합처리</option>";  
 			  listHtml += "</select></td>";
-			 // listHtml += "<td><button type='button' class='btn btn-primary' onclick='save(" + index + ")'>저장</button></td>";
+			 
 		  }  
 		  if(obj.processing_reg != 'N'){
-			  
-			  listHtml += "<td><button type='button' class='btn btn-success product-processing' onclick=\"checkProReg('" + obj.processing_reg + "','" + obj.sales_code + "')\">" + obj.processing_reg + "</button></td>";
+			  listHtml += "<td><button type='button' class='btn btn-success product-processing'>" + obj.processing_reg + "</button></td>";
 			  listHtml += "<td></td>";
 
 		  }

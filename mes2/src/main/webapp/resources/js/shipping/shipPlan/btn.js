@@ -1,26 +1,54 @@
 var selectedOrder; 
+var radioCnt;
 $(document).ready(function() {
-  
+	radioCnt =0;
 
   
   $('.ck').on('change', function() {
    
     selectedOrder = $('input[name="order_code"]:checked').val();
 
-   alert(selectedOrder);
+ 
   });
 
   
 });
- 
 
-function statusList(ship_status) {
-    location.href = "/shipping/shipCheck?ship_status=" + ship_status;
-}
+function showStatus() {
+	radioCnt++;
+	  const inputOptions = new Promise((resolve) => {
+	    setTimeout(() => {
+	      resolve({
+	        "plan": "계획",
+	        "waiting": "대기",
+	        "instruction": "지시가능"
+	      });
+	    }, 1000);
+	  });
 
-function userList(){
-	location.href="/shipping/userShipPlanList";
-}
+	  Swal.fire({
+	    title: "진행현황을 선택하세요.",
+	    input: "radio",
+	    inputOptions,
+	    inputValidator: (value) => {
+	      if (!value) {
+	        return "아무것도 선택하지 않았습니다.";
+	      }
+	    }
+	  }).then((result) => {
+	    if (!result.isConfirmed) {
+	      return;
+	    }
+
+	    const shipStatus = result.value;
+	    if (shipStatus) {
+	      $("#shipSta").val(shipStatus);
+	      $("#sfrm").submit();
+	    }
+	  });
+	}
+
+
 
  function reg(order_code){
 	 Swal.fire({
@@ -41,11 +69,15 @@ function userList(){
 	 			  data: {"order_code":order_code},
 	 			  success: function(data) {
 	 				
-	 				 $('#exampleModal').modal('show');
+	 				 $('#shippngPlanModal').modal('show');
 
 	 				    moReg(data,order_code);
 	 			  }, 
-	 			  error: function(){alert(" 지시등록모달error");}
+	 			  error: function(){
+	 				  Swal.fire({
+					  title: "관계자에게 문의하세요",				
+					  icon: "warning"
+					});}
 	 		  });
 		  }
 		});
@@ -74,7 +106,10 @@ function userList(){
 			    register(data,order_code);
 		  }, 
 		  error: function() {
-		    alert(" regupdatePW모달오류 ");
+			  Swal.fire({
+				  title: "관계자에게 문의하세요",				
+				  icon: "warning"
+				});
 		  }
 		});
 	 
@@ -118,8 +153,8 @@ function userList(){
 					    text: "주문번호 " + data + "의 출하지시가 완료되었습니다.",
 					    icon: "success"
 					}).then(() => {
-					    
-						location.href="shipPlan";
+						$("#pageForm").submit();
+						//location.href="shipPlan";
 					});
 
 					
@@ -145,9 +180,14 @@ function userList(){
 	 var count = ckArr.filter(":checked").length; 
 	 
 	 if(count==0){	 	
-	 	$("#exampleModalLabel").html('수정');
-		 var listHtml = "<div>선택된 항목이 없습니다. </div>";		
-		 $("#shippngPlan-modal").html(listHtml);
+	 	
+		 Swal.fire({
+			    title: "선택된 항목이 없습니다.",
+			    icon: "warning"
+			}).then(() => {
+				
+			    $("#mo-close").trigger("click");
+			});
 	 	
 	 }else{
 	 	 if(count==1){
@@ -157,7 +197,12 @@ function userList(){
 	 			  dataType:"json",
 	 			  data: {"order_code":selectedOrder},
 	 			  success:moUpdate,
-	 			  error: function(){alert(" 등록모달error");}
+	 			  error: function(){
+	 				 Swal.fire({
+						  title: "관계자에게 문의하세요",
+						  icon: "warning"
+						});
+	 			  }
 	 		  });
 	 		 
 	 	 }
@@ -188,7 +233,10 @@ function userList(){
 			    moUpdateCheck(data);
 		  }, 
 		  error: function() {
-		    alert(" updatePW모달오류 ");
+				 Swal.fire({
+					  title: "관계자에게 문의하세요",
+					  icon: "warning"
+					});
 		  }
 		});
 	 
@@ -200,17 +248,17 @@ function userList(){
 		 
 		 // 시작일 설정 (신청일 3주후)
 		 	var requestDate = new Date(data.request_date);
-		 	 alert(requestDate);
+		 	
 		 	var minDate = new Date(requestDate);
-		    minDate.setDate(requestDate.getDate() + 21);
-		    alert(minDate);
+		    minDate.setDate(requestDate.getDate() + 1);
+		   
 		    
 		// 마지막일 설정 (납품요청일 4일전)    
 		    var orderDate = new Date(data.order_date);
-             alert(orderDate);
+            
 		    var maxDate = new Date(orderDate);
-		    maxDate.setDate(orderDate.getDate() - 4);
-		    alert(maxDate);
+		    maxDate.setDate(orderDate.getDate() - 3);
+		   
 		    
 		 Swal.fire({
 			  title: "출하예정일을 입력하세요.",
@@ -228,7 +276,7 @@ function userList(){
 		    }).then((result) => {
 			  if (result.value) {
 			    const scheduled_date = result.value; 
-			    //  Swal.fire("Departure date", date);
+			    
 			    $.ajax({
 					  url: "checkSchedule",
 					  type: "post",
@@ -238,7 +286,10 @@ function userList(){
 						  scheduleCheck(data,scheduled_date);
 					  },
 					  error: function() {
-					    alert(" updatePW모달오류 ");
+							 Swal.fire({
+								  title: "관계자에게 문의하세요",
+								  icon: "warning"
+								});
 					  }
 					});
 			  }
@@ -261,7 +312,7 @@ function userList(){
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#95c4a2",
+		  confirmButtonColor: "#3085d6",
 		  cancelButtonColor: "#d33",
 		  confirmButtonText: "확인"
 		}).then((result) => {
@@ -273,7 +324,10 @@ function userList(){
 				  data: {"scheduled_date": scheduled_date, "order_code":selectedOrder},
 				  success: scheduledUpdateSuccess,
 				  error: function() {
-				    alert(" 다시 시도하세요 ");
+						 Swal.fire({
+							  title: "관계자에게 문의하세요",
+							  icon: "warning"
+							});
 				  }
 				});
 		  }
@@ -286,207 +340,70 @@ function scheduledUpdateSuccess(data){
 	    text: "주문번호 " + data + "의 출하예정일이 변경되었습니다.",
 	    icon: "success"
 	}).then(() => {
-	    
-	    $("#loadPage").trigger('click');
+		
+		$("#pageForm").submit();
+
 	});
 }
- function registration(user_id){
-	 $("#u_id").val(user_id).prop("disabled", false);
-	 $('#planListForm').submit();
- }
 
-// function reject(order_code){
-//	 alert("함수호출 거절");
-//	 $.ajax({
-//		  
-//		  url:"rejectSales",
-//		  type:"post",
-//		  data: {"order_code": order_code },
-//		  success: function () {
-//			  alert("거절되었습니다.");
-//			  location.href="/sales/salesPlanTest";
-//	           // $('#closeBtn').trigger('click');
-//	        },
-//		  error: function(){alert("거절error");}
-//	        
-//	  });
+// function registration(user_id){
+//	 $("#u_id").val(user_id).prop("disabled", false);
+//	 $('#planListForm').submit();
 // }
- 
-// function reject(order_code){
-//	 $('#odi').prop('disabled', false);
-//	 $('#odi').val(order_code);
-//	 var ckArr = $(".ck");
-//	 var count = ckArr.filter(":checked").length; 
-//
-//	 if(count>0){
-//	 	alert("체크박스 선택을 해제하십시오.");
-//	 	return false;
-//	 }else {
-//		 $('#planListForm').submit();
-//	 }
-//	 
-// }
- 
- function reject() {
-	    alert("함수 호출 거절");
-	    // $('#odi').prop('disabled', false);
-	    //$('#odi').val(order_code);
-	    var ckArr = $(".ck");
-	    var count = ckArr.filter(":checked").length;
-
-	    if(count==0){
-		 	
-		 	$("#exampleModalLabel").html('거절');
-			 var listHtml = "<div>선택된 항목이 없습니다. </div>";
-			
-			 $("#sales-modal").html(listHtml);
-	        //return false;
-	    } else {
-	        alert("에이젝스 시작");
-	        //$('#planListForm').submit();
-	        $.ajax({
-	            url: "regIdCheck",
-	            type: "get",
-	            dataType: "text",
-	            success: moRej,
-	            error: function () { alert(" 등록거부모달error"); }
-	        });
-	    }
-	}
-
-	function moRej(data) {
-	    $("#exampleModalLabel").html('비밀번호 확인');
-	    //var listHtml = "<form action='rejectSales' id='reject-fm' method='post'>";
-	   // listHtml += "<input type='hidden' id='order_code' name='order_code' value='"+order_code+"'/>"
-	    var listHtml = "<div>아이디 : <input type='text' id='user_id' value='" + data + "' disabled/> </div>";
-	    listHtml += "<div>비밀번호: <input type='password' id='user_pw'/></div>"
-	    //listHtml += "<button type='button' class='btn btn-secondary' onclick='return rejPw('"+order_code+"')'>비밀번호 확인</button>";
-	    listHtml += "<button type='button' class='btn btn-secondary' onclick='return rejPw()'>비밀번호 확인</button>";
-	    $("#sales-modal").html(listHtml);
-	}
-
-	function rejPw() {
-	    var user_pw = $("#user_pw").val();
-
-	    $.ajax({
-	        url: "regPwCheck",
-	        type: "post",
-	        dataType: "text",
-	        data: { "user_pw": user_pw },
-	        success: moRejPwCheck,
-	        error: function () {
-	            alert(" 등록모달비번error");
-	        }
-	    });
-	}
-
-	function moRejPwCheck(data) {
-	    if (data === "true") {
-	      //  var result = confirm('거부하시겠습니까?');
-	       // if (result) {
-	         //   alert("이동");
-	           // $("#reject-fm").submit();
-	        //    var newAction = "rejectSales"; //**
-	         //   $("#planListForm").attr("action", newAction); //**
-	         //   $('#planListForm').submit(); //**
-	            //return true;
-	      //  } //else {
-	          //  return false;
-	       // }
-	    	 $("#exampleModalLabel").html('수주거절');
-			 var listHtml = "<div>거절하시겠습니까?</div>"; 
-		     listHtml += "<button type='button' class='btn btn-danger' onclick='return refuse()'>거절</button>";
-			 $("#sales-modal").html(listHtml);
-	    } else if (data === "false") {
-	        alert("비밀번호 오류");
-	       //return false;
-	    }
-	}
-
- function refuse(){
-	 var newAction = "rejectSales";
-	 $("#planListForm").attr("action", newAction); 
-	 $('#planListForm').submit();
- }
-  function save(idx){
-	  var title = $("#titlec").val();
-	  var contents = $("#contentsc").val();
-	  
-	  $.ajax({
-		  
-		  url:"testUpdate.do",
-		  type:"post",
-		  dataType:"json",
-		  data: {"idx":idx,"title": title , "contents":contents },
-		  success: function (data) {
-			
-	            loadList();
-	            
-	            var receivedIdx = data.idx;
-	            goContent(receivedIdx);
-	            updateBtn = false;
-	            
-	        },
-		  error: function(){alert("error");}
-	  });
-	 
-	  
-  }
 
 
- function upCon(data){
-	  content(data);
-	  
-  }
 
-
-function del(){
-	  var ckArr = $(".ck");
-	    var count = ckArr.filter(":checked").length; 
-
-	   if (count < 1) {
-	       alert("최소 하나는 선택하세여");
-		   return false; // 선택된 항목이 없을 때 폼 제출을 막기 위해 false 반환
-	    }
-	    	 else {
-	    	        let result = confirm('삭제하시겠습니까?');
-	    	        if(result){
-	    	        	$('#delForm').submit();
-	    	        }
-	    	    }   
-		       
-  }
-
-function load(){
-	
-	location.href="shipPlan";
-}
+//function load(){
+//	
+//	location.href="shipPlan";
+//}
 
 function checkSearchSub(e){
-	
+	if(radioCnt>=1){
+		return true;
+	}
+
 	if($("#searchType").val() === ""){
-		alert("검색타입을 선택하세요.");
-		$("#searchType").focus();
-		return false;
+		 Swal.fire({
+		        title: "검색타입을 선택하세요.",
+		        icon: "warning"
+		    }).then((result) => {
+		        if (result.isConfirmed) {
+		            $("#searchType").focus();
+		        }       
+		    });
+	             return false;
+		
+		
 	}
 	
 	if($("#searchType").val() == "order_code" && $("#putSearch").val() == ""){
-		alert("검색어를 입력하세요.");
-		$("#putSearch").focus();
-		return false;
+		 Swal.fire({
+		        title: "검색타입을 선택하세요.",
+		        icon: "warning"
+		    }).then((result) => {
+		        if (result.isConfirmed) {
+		            $("#putSearch").focus();
+		        }       
+		    });
+	             return false;
 	}
 	
 	if($("#searchType").val() == "company_name" && $("#putSearch").val() == ""){
-		alert("검색어를 입력하세요.");
-		$("#putSearch").focus();
-		return false;
+		Swal.fire({
+	        title: "검색타입을 선택하세요.",
+	        icon: "warning"
+	    }).then((result) => {
+	        if (result.isConfirmed) {
+	            $("#putSearch").focus();
+	        }       
+	    });
+             return false;
 	}
 	
-	if($("#searchType").val() == "company_name" && $("#putSearch").val() == ""){
-		alert("검색어를 입력하세요.");
-		$("#putSearch").focus();
-		return false;
-	}
+	
+
+
 	
 	
 }

@@ -53,9 +53,9 @@
   
   <sql id="salesJoin">
     from  sales_order_info I 
-	join meta_data_business B 
+	left join meta_data_business B 
 	on I.company_code = B.company_code 
-	join sales_order_product P 
+	left join sales_order_product P 
 	on I.order_code = P.order_code 
 	left join meta_data_product M 
 	on M.product_code = P.product_code 
@@ -66,20 +66,36 @@
   </sql>
   
   <sql id="searchList">
+  
 	<if test="type == 'order_code'">
-	    where I.order_code like concat('%',#{search},'%')
+	    and I.order_code like concat('%',#{search},'%')
 	    <include refid="searchDate"/>
 	</if>	
   	<if test="type == 'company_name'">
-  	where B.name like concat('%',#{search},'%') 
+  	and B.name like concat('%',#{search},'%') 
   	<include refid="searchDate"/> 
   	</if>  	
   	<if test="type == 'order_date'">
-  	where I.order_date between #{startDay} and #{endDay} 
+  	and I.order_date between #{startDay} and #{endDay} 
   	</if> 	
   	<if test="type == 'request_date'">
-  	where I.request_date between #{startDay} and #{endDay}
+  	and I.request_date between #{startDay} and #{endDay}
   	</if>
+  	<if test="newOrder == 'true'">
+    and DATE(I.request_date) = DATE(NOW())
+	</if>
+	<if test="instructions != null and instructions != ''">
+	    and I.instructions = #{instructions}
+	</if>
+	<if test="userId != null and userId != ''">
+		and I.user_id =#{userId}
+	</if>
+  	<if test="newO == 'true'">
+    and DATE(I.request_date) = DATE(NOW())
+	</if>
+	<if test="instruct != null and instruct != ''">
+	    and I.instructions = #{instruct}
+	</if>
   </sql>
   
  
@@ -88,24 +104,32 @@
     select I.order_code, B.name AS company_name ,I.order_date, I.request_date , I.instructions 
      <include refid="salesJoin"/> 
      <where>
-     I.sales_status = #{sales_status}
+     I.sales_status = #{sales_status} 
+     <include refid="searchList"/>
      </where>
      <include refid="salesGroup"/>
-    order by I.request_date ASC
+    order by I.request_date ASC 
+    LIMIT #{pageStart}, #{perPageNum} 
   </select>
   
-  <select id="getNewSales" resultMap="SalesDTO">
-     select I.order_code, B.name AS company_name ,I.order_date, I.request_date 
+     <select id="listCount" resultMap="SalesDTO" >
+    select I.order_code, B.name AS company_name ,I.order_date, I.request_date , I.instructions 
      <include refid="salesJoin"/> 
-     where I.sales_status = 'requested' 
-     and I.request_date = CURDATE() 
-     <include refid="salesGroup"/> 
-     order by I.request_date ASC 
+     <where>
+     I.sales_status = #{sales_status}
+     <include refid="searchList"/>
+     </where>
+     <include refid="salesGroup"/>
+    order by I.request_date ASC 
+    
   </select>
+  
+  
   
   <select id="getPlanNewCnt" resultType="Integer">
-  select count(order_code) from sales_order_info 
-  where sales_status =#{sales_status} and request_date = CURDATE() 
+  select count(order_code) from sales_order_info I
+  where I.sales_status =#{sales_status} 
+  <include refid="searchList"/> 
   </select>
   
   <select id="getPlanWaitCnt" resultType="Integer">
@@ -132,7 +156,7 @@
     
     <select id="getStockQuantity"  resultMap="SalesDTO">
 	select  
-    (select sum(quantity) from stock where product_code = #{product_code}) -
+    (select IFNULL(SUM(quantity),0 )from  stock where product_code = #{product_code}) -
     (select IFNULL(SUM(quantity),0) from out_warehouse where product_code = #{product_code} AND status = 'waiting') AS stock_quantity,
     name, 
     product_code 
@@ -140,18 +164,6 @@
     where product_code = #{product_code} 
     </select>
     
- <select id="planSearch"  resultMap="SalesDTO" >
-    select I.order_code, B.name AS company_name, I.order_date, 
-    I.request_date 
-    <include refid="salesJoin"/>
-    <include refid="searchList"/>
-    and sales_status = #{sales_status} 
-    <include refid="salesGroup"/>
-    order by I.request_date ASC
-  </select>
-  
-
-
 
   <update id="registerPlan">
   update sales_order_info 
@@ -192,7 +204,7 @@
  
   
   <select id="getAcceptContent" resultMap="SalesDTO">
-  select P.sales_code, M.name , P.sales_quantity, P.product_status,P.processing_reg, P.product_code , P.order_code
+  select P.sales_code, M.name , P.sales_quantity, P.product_status,P.processing_reg, P.product_code , P.order_code, I.instructions
   <include refid="salesJoin"/>
   where P.order_code =#{order_code} 
   </select>
@@ -224,9 +236,9 @@
   
   <insert id="productInst">
   insert into instructions 
-  (sop_code, sales_quantity, mdp_code, state) 
+  (sop_code, sales_quantity, mdp_code, state, type) 
   values 
-  (#{sales_code},#{lack_quantity},#{product_code},'requested') 
+  (#{sales_code},#{lack_quantity},#{product_code},'requested', 'O') 
   </insert>
   
   <update id="updateStockQuan">
@@ -249,21 +261,9 @@
  select processing_reg from sales_order_product where order_code= #{order_code} 
 </select>
 
-<select id="getNewAccept" resultMap="SalesDTO" >
-    select I.order_code, B.name AS company_name ,I.order_date, I.request_date 
-     <include refid="salesJoin"/> 
-    where I.sales_status = 'accept' and I.acceptance_date = CURDATE() 
-     <include refid="salesGroup"/>
-    order by I.request_date ASC
-</select>
 
-<select id="getUserAccept" resultMap="SalesDTO" >
-    select I.order_code, B.name AS company_name ,I.order_date, I.request_date ,I.instructions  
-     <include refid="salesJoin"/> 
-    where I.sales_status = 'accept' and I.user_id =#{user_id}
-     <include refid="salesGroup"/>
-    order by I.request_date ASC
-</select>
+
+
   
   <select id="getOrderInfo" resultMap="AcceptSaveDTO">
   select I.request_date, E.user_id, E.user_name, E.user_department, E.user_position, E.user_auth, 
@@ -281,15 +281,12 @@
  where order_code =#{order_code} 
  </update>
  
- <select id="getInstructionsList" resultMap="SalesDTO" >
- select I.order_code, B.name AS company_name ,I.order_date, I.request_date , I.instructions 
-     <include refid="salesJoin"/> 
-     where 
-     I.sales_status = 'accept' and 
-     I.instructions = #{instructions}
-     <include refid="salesGroup"/>
-    order by I.request_date ASC 
+
+ 
+ <select id="getRegUser" resultMap="SalesDTO">
+ select user_id from sales_order_info where order_code =#{order_code} 
  </select>
  
+
 
   </mapper>

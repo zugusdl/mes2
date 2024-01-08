@@ -4,17 +4,18 @@ import java.util.Date;
 import java.util.List;
 
 import com.mes2.sales.domain.AcceptSaveDTO;
+import com.mes2.sales.domain.Criteria;
 import com.mes2.sales.domain.PlanRegisterDTO;
 import com.mes2.sales.domain.SalesDTO;
 import com.mes2.sales.domain.SearchDTO;
 
 public interface SalesDAO {
 
-	public List<SalesDTO> getSalesList(String sales_status);
+	public List<SalesDTO> getSalesList(Criteria cri);
 	public List<SalesDTO> getPlanContent(String order_code);
 	public void rejectSales(List<String> odList);
 	public SalesDTO getStockQuantity(SalesDTO sd);
-	public List<SalesDTO> planSearch(SearchDTO sed);
+	//public List<SalesDTO> planSearch(SearchDTO sed);
 	//public void registerPlan(List<String>list, String user_id);
 	public void registerPlan(PlanRegisterDTO pdto);
 	public String checkRegPw(String user_id);
@@ -33,17 +34,22 @@ public interface SalesDAO {
 	public void insertShippingPlan(SalesDTO sd);
 	public Date checkOrdeDate(String order_code);
 	
-	public List<SalesDTO> getNewSales();
+	//public List<SalesDTO> getNewSales();
 	public int getPlanWaitCnt();
-	public int getPlanNewCnt(String sales_status); 
+	public int getPlanNewCnt(Criteria cri); 
 	
 	public List<SalesDTO>makeOrderStates(String order_code);
-	public List<SalesDTO>getNewAccept();
-	public List<SalesDTO>getUserAccept(String user_id);
+	//public List<SalesDTO>getNewAccept();
+	//public List<SalesDTO>getUserAccept(String user_id);
 	
 	public AcceptSaveDTO getOrderInfo(String oreder_code);
 	public void updateInstruction(String order_code);
 	
-	public List<SalesDTO>getInstructionsList(String instructions);
+	//public List<SalesDTO>getInstructionsList(String instructions);
+	
+	//public int totalCount(String sales_status);
+	public List<SalesDTO> listCount(Criteria cri);
+	
+	public SalesDTO getRegUser(String order_code);
 	
 }

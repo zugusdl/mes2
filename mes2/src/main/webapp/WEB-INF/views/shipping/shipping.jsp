@@ -8,7 +8,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>shipping</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -18,6 +18,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/38bf29a217.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="stylesheet" href="/resources/css/contents/contents.css">  
     
     <style>
@@ -79,6 +80,22 @@
    
   }
     </style>
+    
+    <script type="text/javascript">
+    //페이지번호클릭시이동하기 
+    $(document).ready(function() {
+        var pageFrm = $("#pageForm");
+
+        $(".page-item a").on("click", function(e) {
+            
+            e.preventDefault(); //a태그기능막기
+            var page = $(this).attr("href"); //페이지번호
+            pageFrm.find("#page").val(page);
+            pageFrm.submit();
+        });
+    });
+</script>
+
   </head>
   
   <body>
@@ -113,30 +130,78 @@
      <div class="box" onclick="location.href='/shipping/shipping'">
       <span >출하</span>
     </div>
-    <div class="box3" onclick="statusList('waiting')">
+    <div class="box3" onclick="location.href='/shipping/shipping?progressStatus=waiting'">
       <span >대기 ${status.waitingCnt }건</span>
     </div>
-    <div class="box3" onclick="statusList('progressing')">
-      <span >출하중 ${status.planCnt }건</span>
-    </div>
-    <div class="box3" onclick="statusList('shipping')">
+    <div class="box3" onclick="location.href='/shipping/shipping?progressStatus=shipping'">
       <span >배송중  ${status.instructionCnt }건</span>
     </div>
-    <div class="box2" onclick="userList()">
+     <div class="box3" onclick="location.href='/shipping/shipping?progressStatus=complete'">
+      <span >완료  ${status.completeCnt }건</span>
+    </div>
+    <div class="box2" onclick="location.href='/shipping/shipping?user=true'">
       <i class="fa-solid fa-user" ></i>
     </div>
 
-    <!-- 검색창  style="clear: both;"-->
+   <!-- 페이징 -->
+    
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+    <!-- 이전페이지 -->
+    <c:if test="${pm.prev }">
+        <li class="page-item">
+            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+</c:if>
+		<!-- 페이지번호처리  -->
+        <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+            <c:if test="${pm.cri.page != pageNum}">
+                <li class="page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+            <c:if test="${pm.cri.page == pageNum}">
+                <li class="active page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+        </c:forEach>
+
+<!-- 다음페이지 -->
+<c:if test="${pm.next }">
+        <li class="page-item">
+            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        </c:if>
+    </ul>
+</nav>
+
+		<form id="pageForm" action="shipping" method="post">
+			<input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
+		    <input type="hidden" id="prePageNum" name="perPageNum" value="${pm.cri.perPageNum }"/>
+		    <input type="hidden" id="type" name="type" value="${pm.cri.type }"/>
+		    <input type="hidden" id="search" name="search" value="${pm.cri.search }"/>
+		    <input type="hidden" id="userId" name="userId" value="${pm.cri.userId }"/>
+		    <input type="hidden"  name="progressStatus" value="${pm.cri.progressStatus }"/>
+		</form>
     
     <div class="container" >
     <section class="section1">
-      <form action="searchShipping" method="post" class="search" onsubmit="return checkSearchSub()">
+      <form action="shipping" method="post" id="sfrm" class="search" onsubmit="return checkSearchSub()">
+      	
+      	
+      	 <input type="hidden"  id="frmId" name="userId" value="${pm.cri.userId }"/>
+      	 <input type="hidden" id="progressStatus" name="progressStatus" value="${pm.cri.progressStatus }"/>
+      	  <input type="hidden" id="progressSta" name="progressSta" value=""/>
+      	 
+      	  
       	 <select name="type" id="searchType">
           <option value="">-- 검색선택 --</option>
-          <option value="ship_code">출하코드</option>
-          <option value="ship_date">출하일자</option>
-          <option value="company_name">수주처</option>
-          <option value="order_date">납품요청일</option>
+          <option value="ship_code" ${pm.cri.type=='ship_code' ? 'selected' : ''}>출하코드</option>
+          <option value="ship_date" ${pm.cri.type=='ship_date' ? 'selected' : ''}>출하일자</option>
+          <option value="company_name" ${pm.cri.type=='company_name' ? 'selected' : ''}>수주처</option>
+          <option value="order_date" ${pm.cri.type=='order_date' ? 'selected' : ''}>납품요청일</option>
+          <option value="user_id" ${pm.cri.type=='user_id' ? 'selected' : ''}>등록인</option>
         </select>
         
    
@@ -146,30 +211,28 @@
           <input  type="date" min="2023-12-01" name="startDay" />
 
           <span class="search-font">검색종료일</span>
-          <input
-            
-            type="date"
-            max="2030-12-31"
-            name="endDay"
-          />
+          <input type="date" name="endDay"/>
         </div>
 		
 
-        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" />
+        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" value="${pm.cri.search }" />
         <input type="submit" value="검색"  />
       </form>
 
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
+        <c:if test="${not empty pm.cri.userId}">
+      	 <i class="fa-solid fa-truck" onclick="showStatus()"></i>
+      	 </c:if>
          <button type='button' class='btn btn-secondary' data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return update()">수정</button>   
           <button type="button" class="btn btn-secondary" id="loadPage" onclick="load()">로드</button>         
         </div>
 
         <div class="list-box">
-          <form class="list-form" id="planListForm" action="updateShipDate" method="post">
-          <input type="hidden" id="u_id" name="user_id" value="dd" disabled/>
-          <input type="hidden" id="odi" name="order_code" value="dd" disabled/>
+          <form class="list-form"  >
+          <!-- <input type="hidden" id="u_id" name="user_id" value="dd" disabled/> -->
+          <!-- <input type="hidden" id="odi" name="order_code" value="dd" disabled/> -->
             <table class="table table-hover">
               <thead>
                 <tr class="table-success">
@@ -186,10 +249,18 @@
                 <tr>
                   <td><input type="radio" class="ck" value="${data.order_code }" name="order_code"/></td>  
                   <td><a href="javascript:goContent('${data.order_code }')"> ${data.ship_code } </a></td> 
-                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${data.ship_date }"/></td>  
+                  <td class="ship-date"><fmt:formatDate pattern="yyyy-MM-dd" value="${data.ship_date }"/></td>  
                   <td>${data.company_name }</td>       
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${data.order_date}"/></td>            
-                  <td>${data.progress_status }</td>                                            
+                  <c:if test="${data.progress_status eq 'complete'}">
+                  <td><button type="button" class="btn btn-primary" >완료</button></td>
+                  </c:if>
+                 	 <c:if test="${data.progress_status eq 'waiting'}">
+   				 	<td><button type="button" class="btn btn-secondary waite-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return complete('${data.order_code}', '${data.ship_date}')">대기</button></td>
+					</c:if> 
+					 <c:if test="${data.progress_status eq 'shipping'}">
+   				 	<td><button type="button" class="btn btn-secondary" >배송</button></td>
+					</c:if>                                      
                 </tr>
              </c:forEach> 
                 

@@ -22,7 +22,7 @@ function goContent(order_code){
  
  function info(order_code){
 	 
-	 alert(order_code);
+	 
 	  $.ajax({
 		  url:"getOrderInfo", 
 		  type:"post",
@@ -33,7 +33,14 @@ function goContent(order_code){
 		      moInfo(data,order_code); 
 		    },
 		  error: function(){
-			  alert("정보겟오류");
+			 
+			  Swal.fire({
+				  title: "정보입력중",
+				  text: "잠시 후 다시 시도하세요",
+				  icon: "warning"
+				}).then(() => {
+					 $("#mo-close").trigger("click");
+				});
 				
 		  }
 	  });
@@ -57,30 +64,51 @@ function goContent(order_code){
 		 listHtml += "<div>담당자부서 : <input type='text' value='"+data.user_auth+"' readonly/></div>";	 
 		 
 	      
-		 $("#shippngPlan-modal").html(listHtml);
+		 $("#shippng-modal").html(listHtml);
  }
  
  function productInfo(order_code,sales_code) {
-	 alert(order_code);
-	 alert(sales_code);
-	 
-//	  $.ajax({
-//		  url:"productInfo", 
-//		  type:"post",
-//		  dataType:"json", 
-//		  data: {"order_code" : order_code}, 
-//		  success: function (data) {
-//			  
-//		      moInfo(data,order_code); 
-//		    },
-//		  error: function(){
-//			  alert("정보겟오류");
-//				
-//		  }
-//	  });
- }
 
-  function content(data,order_code){ //에이젝스에서 받은 값으로 출력하기 
+	  $.ajax({
+		  url:"productInfo", 
+		  type:"post",
+		  dataType:"text", 
+		  data: {"sales_code" : sales_code}, 
+		  success: function (data) {
+			  
+		      moproduct(data); 
+		    },
+		  error: function(){
+			  $("#mo-close").trigger("click");
+			  Swal.fire({
+				  title: "정보입력중",
+				  text: "잠시 후 다시 시도하세요",
+				  icon: "warning"
+				}).then(() => {
+					 $("#mo-close").trigger("click");
+				});
+		  }
+	  });
+ }
+ 
+ function moproduct(data){
+	 
+		 
+	 Swal.fire({
+		  title: "창고위치",
+		  input: "text",
+		  inputValue: data,  
+		  inputAttributes: {
+		    readonly: true
+		  }
+		});
+
+
+
+ }
+ 
+ 
+  function content(data,order_code){ 
 
 	  var listHtml = "<div class='list-box'>";
 	  listHtml += "<div>";
@@ -117,7 +145,7 @@ function goContent(order_code){
 		  listHtml += "복합처리";  
 		  }
 		  listHtml += "</td>"
-		  listHtml += "<td><button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='productInfo(\""+obj.order_code+"\", \""+obj.sales_code+"\")'>상세</button></td>";
+		  listHtml += "<td><button type='button' class='btn btn-danger' onclick='productInfo(\""+obj.order_code+"\", \""+obj.sales_code+"\")'>상세</button></td>";
 		  listHtml += "</tr>";
 	  });
     
@@ -125,6 +153,6 @@ function goContent(order_code){
 	  listHtml += "</tbody>";
 	  listHtml += "</table>";
 	 
-	//위 표가 들어갈 자리의 아이디값 가져와서 입력하기 
+	
 	  $("#view2").html(listHtml);
   }

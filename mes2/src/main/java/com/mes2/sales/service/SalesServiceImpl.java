@@ -3,7 +3,9 @@ package com.mes2.sales.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.mes2.platform.service.PlatformServiceImpl;
 import com.mes2.sales.domain.AcceptSaveDTO;
+import com.mes2.sales.domain.Criteria;
 import com.mes2.sales.domain.PlanRegisterDTO;
 import com.mes2.sales.domain.SalesDTO;
 import com.mes2.sales.domain.SearchDTO;
@@ -21,15 +24,18 @@ import com.mes2.sales.persistence.SalesDAO;
 @Service
 public class SalesServiceImpl implements SalesService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PlatformServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(SalesServiceImpl.class);
 	
 	@Inject
 	private SalesDAO sdao;
 	
 	@Override
-	public List<SalesDTO> salesList(String sales_status) {
+	public List<SalesDTO> salesList(Criteria cri) {
 		logger.debug(" S : salesList() ");
-		return sdao.getSalesList(sales_status);
+		List<SalesDTO> list = sdao.getSalesList(cri);
+		logger.debug(" list@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!! "+list);
+		System.out.println(" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!! "+list);
+		return sdao.getSalesList(cri);
 	}
 	
 	@Override
@@ -51,32 +57,15 @@ public class SalesServiceImpl implements SalesService {
 		return sdao.getStockQuantity(sd);
 	}
 	
-	@Override
-	public List<SalesDTO> searchListPlan(SearchDTO sed) {
-		logger.debug(" S : searchListPlan(SearchDTO sed) ");
-		
-		List<SalesDTO> list = sdao.planSearch(sed);
-//		for(SalesDTO sdt : list) {
-//			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-//			int size = olist.size();
-//			int count =0;
-//			for(SalesDTO pdt : olist) {
-//				if(!pdt.getProcessing_reg().equals("N")) {
-//					count ++;
-//				}
-//			}
-//			
-//			if(count == size) {
-//				sdt.setOrderStatus("complete");
-//				
-//			}else {
-//				sdt.setOrderStatus("waiting");
-//			}
-//	
-//		}
-		return list;
-		
-	}
+//	@Override
+//	public List<SalesDTO> searchListPlan(SearchDTO sed) {
+//		logger.debug(" S : searchListPlan(SearchDTO sed) ");
+//		
+//		List<SalesDTO> list = sdao.planSearch(sed);
+//
+//		return list;
+//		
+//	}
 	
 	@Override
 	public void registerPlan(PlanRegisterDTO pdto) {
@@ -186,17 +175,21 @@ public class SalesServiceImpl implements SalesService {
 		
 	}
 	
-	@Override
-	public List<SalesDTO> getNewSales() {
-		
-		return sdao.getNewSales();
-	}
+//	@Override
+//	public List<SalesDTO> getNewSales() {
+//		
+//		return sdao.getNewSales();
+//	}
 	
 	@Override
 	public SalesDTO salesPlanCnt() {
 		SalesDTO sdt = new SalesDTO();
-		sdt.setNewCnt(sdao.getPlanNewCnt("requested"));
-		sdt.setWaitingCnt(sdao.getPlanWaitCnt());
+		Criteria cri = new Criteria();
+		cri.setSales_status("requested");
+		cri.setNewOrder("true");
+		sdt.setNewCnt(sdao.getPlanNewCnt(cri));
+		cri.setNewOrder("false");
+		sdt.setWaitingCnt(sdao.getPlanNewCnt(cri));
 		return sdt;
 	}
 	
@@ -226,11 +219,11 @@ public class SalesServiceImpl implements SalesService {
 //		return null;
 //	}
 	
-	@Override
-	public List<SalesDTO> instructionList(String instrucions) {
-		sdao.getInstructionsList(instrucions);
-		return null;
-	}
+//	@Override
+//	public List<SalesDTO> instructionList(String instrucions) {
+//		sdao.getInstructionsList(instrucions);
+//		return null;
+//	}
 	
 //	@Override
 //	public List<SalesDTO> waitList() {
@@ -264,52 +257,42 @@ public class SalesServiceImpl implements SalesService {
 //		return list;
 //	}
 	
-	@Override
-	public List<SalesDTO> newAcceptList() {
-		
-		return sdao.getNewAccept();
-	}
+//	@Override
+//	public List<SalesDTO> newAcceptList() {
+//		
+//		return sdao.getNewAccept();
+//	}
 	
 	@Override
 	public SalesDTO proCnt() {
-		//List<SalesDTO> completeList = completeList();
-		//List<SalesDTO> waitList = waitList();
-		List<SalesDTO> newList = newAcceptList();
-		List<SalesDTO> completeList = sdao.getInstructionsList("Y");
-		List<SalesDTO> waitList = sdao.getInstructionsList("N");
 		SalesDTO dto = new SalesDTO();
-		dto.setNewCnt(newList.size());
-		dto.setWaitingCnt(waitList.size());
-		dto.setCompleteCnt(completeList.size());
+		Criteria cri = new Criteria();
+		cri.setSales_status("accept");
+        cri.setNewOrder("true");
+        dto.setNewCnt(sdao.getPlanNewCnt(cri));	
+		
+		cri.setNewOrder("false");
+					
+		cri.setInstructions("Y");
+		dto.setCompleteCnt(sdao.getPlanNewCnt(cri));	
+	
+		cri.setInstructions("N");
+		dto.setWaitingCnt(sdao.getPlanNewCnt(cri));
+	
+		
+		
 		return dto;
 	}
 	
-	@Override
-	public List<SalesDTO> UserAccept(String user_id) {
-		
-		List<SalesDTO> list = sdao.getUserAccept(user_id);
-//		for(SalesDTO sdt : list) {
-//			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-//			int size = olist.size();
-//			int count =0;
-//			for(SalesDTO pdt : olist) {
-//				if(!pdt.getProcessing_reg().equals("N")) {
-//					count ++;
-//				}
-//			}
-//			
-//			if(count == size) {
-//				sdt.setOrderStatus("complete");
-//				
-//			}else {
-//				sdt.setOrderStatus("waiting");
-//			}
+//	@Override
+//	public List<SalesDTO> UserAccept(String user_id) {
+//		
+//		List<SalesDTO> list = sdao.getUserAccept(user_id);
+//
+//		return list;
+//		
+//	}
 //	
-//		}
-		return list;
-		
-	}
-	
 	@Override
 	public AcceptSaveDTO orderInfo(String order_code) {
 		
@@ -318,7 +301,8 @@ public class SalesServiceImpl implements SalesService {
 	
 	@Override
 	public String instructSales(List<SalesDTO> list) {
-
+		
+		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+list);
 		SalesDTO sdt = list.get(0);
 
         String order_code = sdt.getOrder_code();
@@ -371,4 +355,20 @@ public class SalesServiceImpl implements SalesService {
 		
 		return order_code;
 	}
+	
+@Override
+	public int totalCount(Criteria cri) {
+	  
+	  
+	List<SalesDTO> list =sdao.listCount(cri);
+	 int totalCount =  list.size();
+	 System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+totalCount);
+	 return totalCount;
+	}
+
+@Override
+public SalesDTO getRegUser(String order_code) {
+	
+	return sdao.getRegUser(order_code);
+}
 }

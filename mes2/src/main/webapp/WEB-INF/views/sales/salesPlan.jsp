@@ -83,13 +83,34 @@
    font-size: 40px;
   }
     </style>
+    
+    <script type="text/javascript">
+    //페이지번호클릭시이동하기 
+    $(document).ready(function() {
+        var pageFrm = $("#pageForm");
+
+        $(".page-action a").on("click", function(e) {
+            
+            e.preventDefault(); //a태그기능막기
+            var page = $(this).attr("href"); //페이지번호
+            pageFrm.find("#page").val(page);
+            pageFrm.submit();
+        });
+       
+       
+        
+        
+    });
+</script>
+
+
   </head>
   
   <body>
   
   <script src="/resources/js/sales/salesPlan/btn.js"></script>
   <script src="/resources/js/sales/salesPlan/details.js"></script>
-  <script src="/resources/js/sales/salesPlan/search.js"></script>
+ 
   
 <!-- Modal -->
 <div id="modalcon">
@@ -119,60 +140,96 @@
     <div class="box3" onclick="location.href='/sales/salesPlan'">
       <span >대기 ${status.waitingCnt }건</span>
     </div>
-    <div class="box2" onclick="location.href='/sales/newSalesPlan'">
+    <div class="box2" onclick="location.href='/sales/salesPlan?newOrder=true'">
       <span >신규 ${status.newCnt }건</span>
     </div>
     
-    <!-- 검색창  style="clear: both;"-->
+    <!-- 페이징 -->
+    
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+    <!-- 이전페이지 -->
+    <c:if test="${pm.prev }">
+        <li class="page-item page-action">
+            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+</c:if>
+		<!-- 페이지번호처리  -->
+        <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+            <c:if test="${pm.cri.page != pageNum}">
+                <li class="page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+            <c:if test="${pm.cri.page == pageNum}">
+                <li class="active page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+        </c:forEach>
 
+<!-- 다음페이지 -->
+<c:if test="${pm.next }">
+        <li class="page-item">
+            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        </c:if>
+    </ul>
+</nav>
 
+		<form id="pageForm" action="salesPlan" method="post">
+			<input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
+		    <input type="hidden" id="prePageNum" name="perPageNum" value="${pm.cri.perPageNum }"/>
+		    <input type="hidden" id="type" name="type" value="${pm.cri.type }"/>
+		    <input type="hidden" id="search" name="search" value="${pm.cri.search }"/>
+		    <input type="hidden" id="newOrder" name="newOrder" value="${pm.cri.newOrder }"/>
+		</form>
 
 
     <!-- 검색창 -->
     <div class="container">
     <section class="section1">
-      <form action="searchPlan" method="post" class="search" onsubmit="return checkSearchSub()">
+      <form action="salesPlan" method="post" class="search" onsubmit="return checkSearchSub()">
+      	 <input type="hidden"  name="newOrder" value="${pm.cri.newOrder }"/>
       	 <select name="type" id="searchType">
           <option value="">-- 검색선택 --</option>
-          <option value="order_code">주문번호</option>
-          <option value="company_name">수주처</option>
-          <option value="order_date">납기요청일</option>
-          <option value="request_date">수주신청일</option>
+          <option value="order_code" ${pm.cri.type=='order_code' ? 'selected' : ''}>주문번호</option>
+          <option value="company_name" ${pm.cri.type=='company_name' ? 'selected' : ''}>수주처</option>
+          <option value="order_date" ${pm.cri.type=='order_date' ? 'selected' : ''}>납품요청일</option>
+          <option value="request_date" ${pm.cri.type=='request_date' ? 'selected' : ''}>수주신청일</option>
         </select>
         
    
 		
         <div>
           <span class="search-font">검색시작일</span>
-          <input  type="date" min="2023-12-01" name="startDay" />
-
+          <input  type="date" value="${pm.cri.startDay }" name="startDay" />
           <span class="search-font">검색종료일</span>
-          <input
-            
-            type="date"
-            max="2030-12-31"
-            name="endDay"
-          />
+          <input type="date" name="endDay" value="${pm.cri.endDay }"/>
         </div>
 		
 
-        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" />
+        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" value="${pm.cri.search }" />
         <input type="submit" value="검색"  />
       </form>
-
+ 
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
          <button type='button' class='btn btn-secondary'  id="reg-mo-btn" onclick="return register()">등록</button>
           <button type='button' class='btn btn-secondary' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절</button>
-         <!--  <button type="button" class="btn btn-secondary" onclick="load()">로드</button>  -->
-         <!--  <i class="fa-solid fa-rotate-right" onclick="load()"></i> -->        
+     
         </div>
 
         <div class="list-box">
           <form class="list-form" id="planListForm" action="planRegister" method="post">
           <input type="hidden" id="u_id" name="user_id" value="dd" disabled/>
           <input type="hidden" id="odi" name="order_code" value="dd" disabled/>
+          <input type="hidden"  name="page" value="${pm.cri.page }"/>
+		  <input type="hidden"  name="perPageNum" value="${pm.cri.perPageNum }"/>
+		  <input type="hidden"  name="type" value="${pm.cri.type }"/>
+		  <input type="hidden"  name="search" value="${pm.cri.search }"/>
+		  <input type="hidden"  name="newOrder" value="${pm.cri.newOrder }"/>
             <table class="table table-hover">
               <thead>
                 <tr class="table-success">
@@ -193,9 +250,7 @@
                   <td>${dto.company_name }</td>         
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.order_date}"/></td>
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.request_date }"/></td>
-                  <%-- <td><button type='submit' class='btn btn-secondary' formaction="rejectSales" onclick='return reject("${dto.order_code}")'>거절</button></td> --%>
-                  <%-- <td><button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='return reject("${dto.order_code}")'>거절모</button></td> --%>
-					
+                
                 </tr>
                </c:forEach> 
                 
@@ -203,11 +258,12 @@
             </table>
           </form>
         </div>
+             
       </div>
     </section>
 
     <section class="section1" >
-      <form class='list-form' id="view2">
+      <form class='list-form' id="salesPlanContent">
       
       </form>
       </section>

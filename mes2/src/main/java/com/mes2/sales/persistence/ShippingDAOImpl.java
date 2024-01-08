@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.mes2.sales.domain.AcceptSaveDTO;
+import com.mes2.sales.domain.Criteria;
 import com.mes2.sales.domain.PlanRegisterDTO;
 import com.mes2.sales.domain.SearchDTO;
 import com.mes2.sales.domain.ShippingDTO;
@@ -27,10 +28,10 @@ public class ShippingDAOImpl implements ShippingDAO {
 	private static final String NAMESPACE ="com.mes2.mapper.shippingMapper";
 	
 	@Override
-	public List<ShippingDTO> getShippingList() {
+	public List<ShippingDTO> getShippingList(Criteria cri) {
 		
 		logger.debug(" DAO : getShippingList(ShippingDTO sdt) ");
-		return sqlSession.selectList(NAMESPACE+".getShippingList");
+		return sqlSession.selectList(NAMESPACE+".getShippingList",cri);
 	}
 	
 	@Override
@@ -52,11 +53,11 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectList(NAMESPACE+".getPlanContent", order_code);
 	}
 
-	@Override
-	public List<ShippingDTO> planSearch(SearchDTO sed) {
-		logger.debug(" DAO : planSearch(SearchDTO sed)");
-		return sqlSession.selectList(NAMESPACE+".planSearch", sed);
-	}
+//	@Override
+//	public List<ShippingDTO> planSearch(SearchDTO sed) {
+//		logger.debug(" DAO : planSearch(SearchDTO sed)");
+//		return sqlSession.selectList(NAMESPACE+".planSearch", sed);
+//	}
 	
 	@Override
 	public ShippingDTO getId(String order_code) {
@@ -100,11 +101,11 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectOne(NAMESPACE+".countShipStatus",ship_status );
 	}
 	
-	@Override
-	public List<ShippingDTO> getStatusList(String ship_status) {
-		
-		return sqlSession.selectList(NAMESPACE+".getStatusList",ship_status );
-	}
+//	@Override
+//	public List<ShippingDTO> getStatusList(String ship_status) {
+//		
+//		return sqlSession.selectList(NAMESPACE+".getStatusList",ship_status );
+//	}
 	
 	@Override
 	public void updateShipDate(ShippingDTO sdto) {
@@ -123,16 +124,16 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectOne(NAMESPACE+".getShipDate",order_code);
 	}
 	
-	@Override
-	public List<ShippingDTO> getUserShipPlanList(String user_id) {
-		
-		return sqlSession.selectList(NAMESPACE+".getUserShipPlanList",user_id);
-	}
+//	@Override
+//	public List<ShippingDTO> getUserShipPlanList(String user_id) {
+//		
+//		return sqlSession.selectList(NAMESPACE+".getUserShipPlanList",user_id);
+//	}
 	
 	@Override
-	public List<ShippingDTO> instructionList() {
+	public List<ShippingDTO> instructionList(Criteria cri) {
 		
-		return sqlSession.selectList(NAMESPACE+".instructionList");
+		return sqlSession.selectList(NAMESPACE+".instructionList",cri);
 	}
 	
 	@Override
@@ -141,11 +142,11 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectOne(NAMESPACE+".countShipProgressing", progress_status);
 	}
 	
-	@Override
-	public List<ShippingDTO> GetprogressList(String progress_status) {
-		
-		return sqlSession.selectList(NAMESPACE+".GetprogressList", progress_status);
-	}
+//	@Override
+//	public List<ShippingDTO> GetprogressList(String progress_status) {
+//		
+//		return sqlSession.selectList(NAMESPACE+".GetprogressList", progress_status);
+//	}
 	
 	@Override
 	public void updateShipProgressing(ShippingDTO sdto) {
@@ -160,20 +161,43 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectList(NAMESPACE+".getshipContent", order_code);
 	}
 	
+//	@Override
+//	public List<ShippingDTO> userInstructionList(String user_id) {
+//		return sqlSession.selectList(NAMESPACE+".userInstructionList", user_id);
+//	}
+//	
+//	@Override
+//	public List<ShippingDTO> shippingSearch(SearchDTO sed) {
+//		
+//		return sqlSession.selectList(NAMESPACE+".shippingSearch", sed);
+//	}
+//	
 	@Override
-	public List<ShippingDTO> userInstructionList(String user_id) {
-		return sqlSession.selectList(NAMESPACE+".userInstructionList", user_id);
-	}
-	
-	@Override
-	public List<ShippingDTO> shippingSearch(SearchDTO sed) {
-		
-		return sqlSession.selectList(NAMESPACE+".shippingSearch", sed);
-	}
-	
-	@Override
-	public void udpateSaleStatus(ShippingDTO sdto) {
+	public void updateSaleStatus(ShippingDTO sdto) {
 		
 		sqlSession.update(NAMESPACE+".udpateSaleStatus", sdto);
+	}
+	
+	@Override
+	public List<ShippingDTO> totalCount(Criteria cri) {
+		return sqlSession.selectList(NAMESPACE+".totalCount",cri);
+	}
+	
+	@Override
+	public List<ShippingDTO> shippingTotalCount(Criteria cri) {
+		
+		return sqlSession.selectList(NAMESPACE+".shippingTotalCount",cri);
+	}
+	
+	@Override
+	public String getProductCode(String sales_code) {
+		
+		return sqlSession.selectOne(NAMESPACE+".getProductCode",sales_code);
+	}
+	
+	@Override
+	public String getWarehouseInfo(String product_code) {
+		
+		return sqlSession.selectOne(NAMESPACE+".getWarehouseInfo",product_code);
 	}
 }

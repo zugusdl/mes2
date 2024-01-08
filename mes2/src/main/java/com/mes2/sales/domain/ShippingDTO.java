@@ -29,10 +29,12 @@ public class ShippingDTO {
 	private int planCnt; // 계획 카운트
 	private int waitingCnt;
 	private int instructionCnt;
+	private int completeCnt;
 	
 	private String progress_status; // shipping테이블 출하진행상태
 	private String sales_status; // 
-	private String confirm_status;//
+	private String confirm_status;//**
+	private Date complete_date; // 수령완료일
 	
 
 	

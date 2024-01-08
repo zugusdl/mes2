@@ -8,7 +8,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>salesAccept</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/38bf29a217.js" crossorigin="anonymous"></script>   
@@ -83,6 +83,22 @@
    
 
     </style>
+    
+<script type="text/javascript">
+    //페이지번호클릭시이동하기 
+    $(document).ready(function() {
+        var pageFrm = $("#pageForm");
+
+        $(".page-item a").on("click", function(e) {
+            
+            e.preventDefault(); //a태그기능막기
+            var page = $(this).attr("href"); //페이지번호
+            pageFrm.find("#page").val(page);
+            pageFrm.submit();
+        });
+    });
+</script>
+
   </head>
   
   <body>
@@ -117,29 +133,78 @@
      <div class="box" onclick="location.href='/sales/salesAccept'">
       <span >등록수주</span>
     </div>
-    <div class="box3" onclick="location.href='/sales/completePro'">
+    <div class="box3" onclick="location.href='/sales/salesAccept?instructions=Y'">
       <span >처리완료 ${status.completeCnt }건</span>
     </div>
-    <div class="box3" onclick="location.href='/sales/waitPro'">
+    <div class="box3" onclick="location.href='/sales/salesAccept?instructions=N'">
       <span >처리대기 ${status.waitingCnt }건</span>
     </div>
-    <div class="box3" onclick="location.href='/sales/newPro'">
+    <div class="box3" onclick="location.href='/sales/salesAccept?newOrder=true'">
       <span >신규 ${status.newCnt }건 </span>
     </div>
-    <div class="box2" onclick="location.href='/sales/userPro'">
+    <div class="box2" onclick="location.href='/sales/salesAccept?user=true'">
       <i class="fa-solid fa-user" ></i>
     </div>
     
+    <!-- 페이징 -->
+    
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+    <!-- 이전페이지 -->
+    <c:if test="${pm.prev }">
+        <li class="page-item">
+            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+</c:if>
+		<!-- 페이지번호처리  -->
+        <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+            <c:if test="${pm.cri.page != pageNum}">
+                <li class="page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+            <c:if test="${pm.cri.page == pageNum}">
+                <li class="active page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+        </c:forEach>
+
+<!-- 다음페이지 -->
+<c:if test="${pm.next }">
+        <li class="page-item">
+            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        </c:if>
+    </ul>
+</nav>
+
+		<form id="pageForm" action="salesAccept" method="post">
+			<input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
+		    <input type="hidden" id="prePageNum" name="perPageNum" value="${pm.cri.perPageNum }"/>
+		    <input type="hidden" id="type" name="type" value="${pm.cri.type }"/>
+		    <input type="hidden" id="search" name="search" value="${pm.cri.search }"/>
+		    <input type="hidden" id="instructions" name="instructions" value="${pm.cri.instructions }"/>
+		    <input type="hidden" id="newOrder" name="newOrder" value="${pm.cri.newOrder }"/>
+		    <input type="hidden" id="userId" name="userId" value="${pm.cri.userId }"/>
+		</form>
+    
+
     <!-- 검색창 -->
     <div class="container">
     <section class="section1">
-      <form action="searchAccept" method="post" class="search" onsubmit="return checkSearchSub()">
+      <form action="salesAccept" method="post" id="sfrm" class="search" onsubmit="return checkSearchSub()">
+            <input type="hidden" id="instructions" name="instructions" value="${pm.cri.instructions }"/>
+		    <input type="hidden" id="newOrder" name="newOrder" value="${pm.cri.newOrder }"/>
+		    <input type="hidden" id="userId" name="userId" value="${pm.cri.userId }"/>
+      		<input type="hidden" id="instruct" name="instruct" value=""/>
+      		<input type="hidden" id="newO" name="newO" value=""/>
       	 <select name="type" id="searchType">
           <option value="">-- 검색선택 --</option>
-          <option value="order_code">주문번호</option>
-          <option value="company_name">수주처</option>
-          <option value="order_date">납기요청일</option>
-          <option value="request_date">수주신청일</option>
+          <option value="order_code" ${pm.cri.type=='order_code' ? 'selected' : ''}>주문번호</option>
+          <option value="company_name" ${pm.cri.type=='company_name' ? 'selected' : ''}>수주처</option>
+          <option value="order_date" ${pm.cri.type=='order_date' ? 'selected' : ''}>납기요청일</option>
+          <option value="request_date" ${pm.cri.type=='request_date' ? 'selected' : ''}>수주신청일</option>
         </select>
         
    
@@ -153,17 +218,17 @@
         </div>
 		
 
-        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" />
+        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" value="${pm.cri.search }"/>
         <input type="submit" value="검색"  />
       </form>
 
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
-        <!--  <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' id="reg-mo-btn" onclick="return register()">등록모</button> -->
-          <!-- <button type="button" class="btn btn-secondary" onclick="return register()">등록</button> -->
-          <!-- <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절모</button> -->
-          <button type="button" class="btn btn-secondary" onclick="load()">로드</button>         
+       <c:if test="${not empty pm.cri.userId}">
+      	 <i class="fa-solid fa-truck" onclick="showStatus()"></i>
+      	 </c:if>
+             
         </div>
 
         <div class="list-box">
@@ -199,7 +264,9 @@
               </tbody>
             </table>
           </form>
+          
         </div>
+			  
       </div>
     </section>
 

@@ -22,7 +22,7 @@ function goContent(order_code){
  
  function info(order_code){
 	 
-	 alert(order_code);
+	 
 	  $.ajax({
 		  url:"getOrderInfo", 
 		  type:"post",
@@ -33,7 +33,16 @@ function goContent(order_code){
 		      moInfo(data,order_code); 
 		    },
 		  error: function(){
-			  alert("정보겟오류");
+			  $("#mo-close").trigger('click');
+			  Swal.fire({
+				    title: "관계자에게 문의하세요",
+				    icon: "warning"
+				}).then((result) => {
+				    if (result.isConfirmed) {
+				        
+				        $("#mo-close").trigger('click');
+				    }
+				});
 				
 		  }
 	  });
@@ -60,12 +69,12 @@ function goContent(order_code){
 		 $("#shippngPlan-modal").html(listHtml);
  }
 
-  function content(data,order_code){ //에이젝스에서 받은 값으로 출력하기 
+  function content(data,order_code){ 기 
 
 	  var listHtml = "<div class='list-box'>";
 	  listHtml += "<div>";
 	  listHtml += "<p>주문번호: "+order_code+"</p>";
-	  listHtml += "<button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='info(\""+order_code+"\")'>상세</button>";
+	  listHtml += "<button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#shippngPlanModal' onclick='info(\""+order_code+"\")'>상세</button>";
 	  listHtml += "</div>";
 	  listHtml += "<div>";
 	  listHtml +="<button type='button' class='btn btn-secondary' id='closeBtn' onclick='cancle()'>닫기</button>";
@@ -85,8 +94,7 @@ function goContent(order_code){
 	  listHtml += "<tbody>";
 	  
 	  $.each(data,function(index,obj){
-		  listHtml += "<tr>";
-		 // listHtml += "<td scope='row'><input type='checkbox' class='ck' name='idx' value='"+obj.product_code+"' id='"+obj.product_code+"'/></td>";
+		  listHtml += "<tr>";		
 		  listHtml += "<td>"+obj.sales_code+"</td>";				  
 		  listHtml += "<td>"+obj.product_name+"</td>";
 		  listHtml += "<td>"+obj.sales_quantity+"</td>";
@@ -124,6 +132,6 @@ function goContent(order_code){
 	  listHtml += "</tbody>";
 	  listHtml += "</table>";
 	 
-	//위 표가 들어갈 자리의 아이디값 가져와서 입력하기 
+	
 	  $("#view2").html(listHtml);
   }

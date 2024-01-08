@@ -1,24 +1,24 @@
 
- function regCheck(){
-	 var ckArr = $(".ck");
-	 var count = ckArr.filter(":checked").length; 
-
-	 if(count==0){
-		 Swal.fire({
-			  title: "선택된 항목이 없습니다.",
-			  icon: "warning"
-			});
-	 	return false;
-	 	
-	 }else{
-	 	var result = confirm('삭제하시겠습니까?');	
-	 	 if(result){
-	 		$('#salesForm').submit();
-	 	 }else{
-	 		return false;
-	 	 }
-	 }
- }
+// function regCheck(){
+//	 var ckArr = $(".ck");
+//	 var count = ckArr.filter(":checked").length; 
+//
+//	 if(count==0){
+//		 Swal.fire({
+//			  title: "선택된 항목이 없습니다.",
+//			  icon: "warning"
+//			});
+//	 	return false;
+//	 	
+//	 }else{
+//	 	var result = confirm('삭제하시겠습니까?');	
+//	 	 if(result){
+//	 		$('#salesForm').submit();
+//	 	 }else{
+//	 		return false;
+//	 	 }
+//	 }
+// }
  
 
  
@@ -108,8 +108,15 @@
  }
  
  function registration(user_id){
-	 $("#u_id").val(user_id).prop("disabled", false);
-	 $('#planListForm').submit();
+	 Swal.fire({
+		  title: "등록되었습니다!",		
+		  icon: "success"
+		}).then((result) => {
+			 $("#u_id").val(user_id).prop("disabled", false);
+			 $('#planListForm').submit();
+		});
+	// $("#u_id").val(user_id).prop("disabled", false);
+	// $('#planListForm').submit();
  }
 
  function reject() {   
@@ -177,7 +184,7 @@
 	    		  showCancelButton: true,
 	    		  confirmButtonColor: "#3085d6",
 	    		  cancelButtonColor: "#d33",
-	    		  cancelButtonText: "확인",
+	    		  confirmButtonText: "확인",
 	    		  cancelButtonText: "취소"
 	    		}).then((result) => {
 	    		  if (result.isConfirmed) {
@@ -202,46 +209,44 @@
  
 
 
-function load(){
-	
-	location.href="salesPlan";
-}
 
 function checkSearchSub(e){
-	
-	if($("#searchType").val() === ""){	
-		Swal.fire({
-			  title: "검색타입을 선택하세요.",			  
-			  icon: "warning"
-			}).then((result) => {
-			  if (result.isConfirmed) {
-				  $("#searchType").focus();
-					return false;
-			  }
-			});
+
+	if ($("#searchType").val() === "") {
+	    Swal.fire({
+	        title: "검색타입을 선택하세요.",
+	        icon: "warning"
+	    }).then((result) => {
+	        if (result.isConfirmed) {
+	            $("#searchType").focus();
+	        }       
+	    });
+             return false;
 	}
+	
+
 	
 	if($("#searchType").val() == "order_code" && $("#putSearch").val() == ""){
 		Swal.fire({
 			  title: "검색타입을 선택하세요.",			  
 			  icon: "warning"
 			}).then((result) => {
-			  if (result.isConfirmed) {
-					$("#putSearch").focus();
-					return false;
-			  }
-			});
-	}
+		        if (result.isConfirmed) {
+		            $("#putSearch").focus();
+		        }       
+		    });
+	             return false;
+		}
 	
 	if($("#searchType").val() == "company_name" && $("#putSearch").val() == ""){
 		Swal.fire({
 			  title: "검색타입을 선택하세요.",			  
 			  icon: "warning"
 			}).then((result) => {
-			  if (result.isConfirmed) {
-				  $("#putSearch").focus();
-					return false;
-			  }
-			});
-	}
+		        if (result.isConfirmed) {
+		            $("#putSearch").focus();
+		        }       
+		    });
+	             return false;
+		}
 }

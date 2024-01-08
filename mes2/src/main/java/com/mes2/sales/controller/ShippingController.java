@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mes2.sales.domain.AcceptSaveDTO;
+import com.mes2.sales.domain.Criteria;
 import com.mes2.sales.domain.PlanRegisterDTO;
 import com.mes2.sales.domain.SearchDTO;
 import com.mes2.sales.domain.ShippingDTO;
+import com.mes2.sales.domain.pageMaking;
 import com.mes2.sales.service.ShippingService;
 
 @Controller
@@ -33,52 +35,54 @@ public class ShippingController {
 
 	// http://localhost:8080/shipping/shipPlan
 	// http://localhost:8088/shipping/shipPlan
-//	@RequestMapping(value = "/shipPlan")
-//	public String shippingGET() throws Exception {
-//		logger.debug("/sales/shipping -> shippingGET 호출 ");
-//		logger.debug("/sales/shipping.jsp 뷰페이지로 이동");
+
+	@RequestMapping(value = "/shipPlan")
+	public String salesPlan(HttpSession session, Model model, Criteria cri, @RequestParam(name = "user", required = false) String user) {	
+		//--------------------------------------//
+		String id ="sawon8";
+		session.setAttribute("id",id );
+		//--------------------------------------//
+		String user_id = cri.getUserId();
+		if (user != null && user.equals("true")) {
+	        user_id = (String) session.getAttribute("id");
+         }
+        cri.setUserId(user_id);
+		List<ShippingDTO> list = pService.shippingList(cri);
+		ShippingDTO sdto = pService.countShipStatus();
+		model.addAttribute("status", sdto);
+		model.addAttribute("list", list);
+		
+		pageMaking pm = new pageMaking();
+		pm.setCri(cri);
+		pm.setTotalCount(pService.totalCount(cri));
+		model.addAttribute("pm", pm);		
+		return "/shipping/shipPlan";
+	}
+	
+//	@RequestMapping(value = "/shipCheck" , method = RequestMethod.GET) //**
+//	public String salesPlanPost(HttpSession session, Model model, String ship_status) {	
+//		//--------------------------------------//
+//		String user_id ="sawon4";
+//		session.setAttribute("user_id",user_id );
+//		//--------------------------------------//	
 //		
+//		List<ShippingDTO> list = pService.statusList(ship_status);
+//		ShippingDTO sdto = pService.countShipStatus();
+//		model.addAttribute("status", sdto);
+//		model.addAttribute("list", list);
 //		return "/shipping/shipPlan";
 //	}
 	
-	
-	@RequestMapping(value = "/shipPlan")
-	public String salesPlan(HttpSession session, Model model) {	
-		//--------------------------------------//
-		String user_id ="sawon4";
-		session.setAttribute("user_id",user_id );
-		//--------------------------------------//	
-		List<ShippingDTO> list = pService.shippingList();
-		ShippingDTO sdto = pService.countShipStatus();
-		model.addAttribute("status", sdto);
-		model.addAttribute("list", list);
-		return "/shipping/shipPlan";
-	}
-	
-	@RequestMapping(value = "/shipCheck" , method = RequestMethod.GET)
-	public String salesPlanPost(HttpSession session, Model model, String ship_status) {	
-		//--------------------------------------//
-		String user_id ="sawon4";
-		session.setAttribute("user_id",user_id );
-		//--------------------------------------//	
-		
-		List<ShippingDTO> list = pService.statusList(ship_status);
-		ShippingDTO sdto = pService.countShipStatus();
-		model.addAttribute("status", sdto);
-		model.addAttribute("list", list);
-		return "/shipping/shipPlan";
-	}
-	
-	@RequestMapping(value = "userShipPlanList" , method = RequestMethod.GET)
-	public String userShipPlanList(HttpSession session, Model model){
-		
-		String user_id = (String)session.getAttribute("user_id");
-		List<ShippingDTO> list = pService.UserShipPlanList(user_id);
-		ShippingDTO sdto = pService.countShipStatus();
-		model.addAttribute("status", sdto);
-		model.addAttribute("list", list);
-		return "/shipping/shipPlan";
-	}
+//	@RequestMapping(value = "userShipPlanList" , method = RequestMethod.GET)//**
+//	public String userShipPlanList(HttpSession session, Model model){
+//		
+//		String user_id = (String)session.getAttribute("user_id");
+//		List<ShippingDTO> list = pService.UserShipPlanList(user_id);
+//		ShippingDTO sdto = pService.countShipStatus();
+//		model.addAttribute("status", sdto);
+//		model.addAttribute("list", list);
+//		return "/shipping/shipPlan";
+//	}
 	
 	
 	@RequestMapping(value ="/planContent")
@@ -87,23 +91,19 @@ public class ShippingController {
 		return list;
 	}
 	
-	@RequestMapping(value="/searchPlan")
-	public String searchPlan(SearchDTO sed, Model model){
-		
-		List<ShippingDTO> list = pService.planSearch(sed);
-		ShippingDTO sdto = pService.countShipStatus();
-		model.addAttribute("status", sdto);
-		model.addAttribute("list", list);
-		return "/shipping/shipPlan";
-	}
+//	@RequestMapping(value="/searchPlan")
+//	public String searchPlan(SearchDTO sed, Model model){
+//		
+//		List<ShippingDTO> list = pService.planSearch(sed);
+//		ShippingDTO sdto = pService.countShipStatus();
+//		model.addAttribute("status", sdto);
+//		model.addAttribute("list", list);
+//		return "/shipping/shipPlan";
+//	}
 	
 	@RequestMapping(value = "updateIdCheck")
 	public @ResponseBody ShippingDTO regIdCheck(String order_code) {		
-		//String user_id = (String) session.getAttribute("user_id");
-		//System.out.println("!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:"+user_id);
-		// 선택된 주문번호에 해당하는 user_id가져오기 
 		ShippingDTO sdt = pService.getId(order_code);
-		//sdt.setCheck("true");
 		return sdt;
 	}
 	
@@ -111,17 +111,14 @@ public class ShippingController {
 	public @ResponseBody ShippingDTO regPwCheck(String user_pw,String user_id,String order_code ){
 		
 		ShippingDTO sdt = pService.checkUpdatePw(user_id,user_pw,order_code);
-		
 		return sdt;
 	}
 	
 
 	@RequestMapping(value = "checkSchedule", method = RequestMethod.POST)
 	public @ResponseBody Integer checkSchedule(@RequestParam("scheduled_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date scheduledDate){
-		// date와 일치하는 주문번호 가져오기 
-		int count = pService.getScheduleDate(scheduledDate);
-		
-		return count;
+           int count = pService.getScheduleDate(scheduledDate);
+           return count;
 	}
 	
 	@RequestMapping(value = "updateSchedule", method = RequestMethod.POST)
@@ -152,42 +149,53 @@ public class ShippingController {
 	// http://localhost:8080/shipping/shipping
 	// http://localhost:8088/shipping/shipping
 	@RequestMapping(value = "/shipping")
-	public String shipping(HttpSession session, Model model) {	
+	public String shipping(HttpSession session, Model model, Criteria cri, @RequestParam(name = "user", required = false) String user)  {	
 		//--------------------------------------//
-		String user_id ="sawon4";
-		session.setAttribute("user_id",user_id );
-		//--------------------------------------//	
-		List<ShippingDTO> list = pService.instructionList();
-		ShippingDTO sdto = pService.countShipProgressing();
-		model.addAttribute("status", sdto);
-		model.addAttribute("list", list);
-		return "/shipping/shipping";
-	}
-	
-	@RequestMapping(value = "userShipList" , method = RequestMethod.GET)
-	public String userShipList(HttpSession session, Model model){
+		String id ="sawon8";
+		session.setAttribute("id",id );
+		//--------------------------------------//
+		String user_id = cri.getUserId();
+		if (user != null && user.equals("true")) {
+		user_id = (String) session.getAttribute("id");
+		 }
 		
-		String user_id = (String)session.getAttribute("user_id");
-		List<ShippingDTO> list = pService.userInstructionList(user_id);
-		ShippingDTO sdto = pService.countShipStatus();
+		cri.setUserId(user_id);
+		List<ShippingDTO> list = pService.instructionList(cri);
+		ShippingDTO sdto = pService.countShipProgressing();
+		pageMaking pm = new pageMaking();
+		pm.setCri(cri);
+		pm.setTotalCount(pService.shippingTotalCount(cri));
+		model.addAttribute("pm", pm);
 		model.addAttribute("status", sdto);
 		model.addAttribute("list", list);
+		
 		return "/shipping/shipping";
 	}
 	
+//	@RequestMapping(value = "userShipList" , method = RequestMethod.GET)
+//	public String userShipList(HttpSession session, Model model){
+//		
+//		String user_id = (String)session.getAttribute("user_id");
+//		List<ShippingDTO> list = pService.userInstructionList(user_id);
+//		ShippingDTO sdto = pService.countShipStatus();
+//		model.addAttribute("status", sdto);
+//		model.addAttribute("list", list);
+//		return "/shipping/shipping";
+//	}
+//	
 
-	@RequestMapping(value = "/shippingCheck")
-	public String shippingCheck(HttpSession session, Model model, String progress_status) {	
-		//--------------------------------------//
-		String user_id ="sawon4";
-		session.setAttribute("user_id",user_id );
-		//--------------------------------------//	
-		List<ShippingDTO> list = pService.progressList(progress_status);
-		ShippingDTO sdto = pService.countShipProgressing();
-		model.addAttribute("status", sdto);
-		model.addAttribute("list", list);
-		return "/shipping/shipping";
-	}
+//	@RequestMapping(value = "/shippingCheck")
+//	public String shippingCheck(HttpSession session, Model model, String progress_status) {	
+//		//--------------------------------------//
+//		String user_id ="sawon4";
+//		session.setAttribute("user_id",user_id );
+//		//--------------------------------------//	
+//		List<ShippingDTO> list = pService.progressList(progress_status);
+//		ShippingDTO sdto = pService.countShipProgressing();
+//		model.addAttribute("status", sdto);
+//		model.addAttribute("list", list);
+//		return "/shipping/shipping";
+//	}
 	
 
 	@RequestMapping(value ="/shipContent")
@@ -206,15 +214,26 @@ public class ShippingController {
 		
 	} 
 	
-	@RequestMapping(value = "/searchShipping" , method = RequestMethod.POST)
-	public String searchShipping(SearchDTO sed, Model model) {	
-        	
-		List<ShippingDTO> list = pService.shippingSearch(sed);
-		ShippingDTO sdto = pService.countShipProgressing();
-		model.addAttribute("status", sdto);
-		model.addAttribute("list", list);
-		return "/shipping/shipping";
+//	@RequestMapping(value = "/searchShipping" , method = RequestMethod.POST)
+//	public String searchShipping(SearchDTO sed, Model model) {	
+//        	
+//		List<ShippingDTO> list = pService.shippingSearch(sed);
+//		ShippingDTO sdto = pService.countShipProgressing();
+//		model.addAttribute("status", sdto);
+//		model.addAttribute("list", list);
+//		return "/shipping/shipping";
+//	}
+	
+	@RequestMapping(value = "/outComplete", method = RequestMethod.POST)
+	public @ResponseBody String outComplete(String order_code) {			
+		pService.outComplete(order_code);
+		return order_code;
 	}
 	
 
+	@RequestMapping(value = "/productInfo", method = RequestMethod.POST , produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String productInfo(String sales_code) {	
+
+		return pService.getWarehouseInfo(sales_code);
+	}
 }
