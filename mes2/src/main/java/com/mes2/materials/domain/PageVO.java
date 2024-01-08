@@ -11,8 +11,8 @@ public class PageVO {
 	
 	private int displayPageNum = 10; //페이지 블럭의 크기
 	
-	private int page;
-	private int pageSize;
+	//private int page;
+	//private int pageSize;
 	private Criteria cri;
 	
 	// => 페이지번호, 페이지 사이즈 저장

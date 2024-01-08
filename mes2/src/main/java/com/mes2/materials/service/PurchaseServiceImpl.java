@@ -24,17 +24,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public void purchaseOrder(PurchaseDTO pdto) throws Exception {
-		logger.debug(" @@@@@@@@@@Service : purchaseOrder(PurchaseDTO pdto) ");
 		pdao.insertPurchase(pdto);
 	}
 	
 	@Override 
 	  public List<PurchaseDTO> PurchaseInfo(String searchType, String search, Criteria cri, SearchDTO sdto) throws Exception {
-	 logger.debug(" Service - PurchaserInfo(PurchaseDTO pdto) "); 
-	 logger.debug(" searT " + search); 
-	 logger.debug(" TTTT" + searchType); 
-	 logger.debug(" DDDD"+ cri.toString()); 
-	 
+
 	 return pdao.listPurchase(searchType, search, cri, sdto); 
 	 }
 	 
@@ -72,6 +67,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public List<productDTO> selectMaterialCategoryList(String category) throws Exception {
 		return pdao.selectMaterialCategoryList(category);
+	}
+
+	@Override
+	public List<PurchaseDTO> getAllPurchaseData(PurchaseDTO pdto) throws Exception {
+		return pdao.getAllPurchaseData(pdto);
 	}
 
 	

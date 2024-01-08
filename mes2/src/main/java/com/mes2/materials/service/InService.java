@@ -10,41 +10,29 @@ import com.mes2.materials.domain.productDTO;
 
 public interface InService {
 
-	// 입고 등록 버튼시 입고코드 부여
-	public int updateIncomingRequest(String in_code, String pd_lot, String user_id) throws Exception;
+	public int updateIncomingRequest(String in_code, String pd_lot) throws Exception;
 
-	// 입고 전체 조회
 	public List<InDTO> getIncomingStockInfo(String searchType, String keyword, Criteria cri, SearchDTO sdto) throws Exception;
 
-	// 완제품 수량 등록
 	public void insertStock(int quantity, String product_code, String category) throws Exception;
-	// 완제품 수량 업데이트
+
 	public void updateStockOnIncoming(int quantity, String product_code) throws Exception;
-	// stock 품목코드 리스트
+
 	public List<InDTO> selectStock(String product_code) throws Exception;
 		
-	// 로트번호 리스트
 	public InDTO listIncomingProductCodes(String pd_lot) throws Exception;
 	
-	// 상태 완료된 품목리스트
 	public List<InDTO> InDetailCompletedWarehouse(String searchType, String keyword, Criteria cri, SearchDTO sdto) throws Exception;
 	
-	// 나중에 
-	//public void InupdateQuantity(String product_code, int quantity, String category) throws Exception;
-
-
-	// 원재료 
 	public String selectMaxMaterialsLot(String pd_lot) throws Exception;
 	
-	// 개수 카운트
 	public int totalInCount(Criteria cri, String searchType, String keyword) throws Exception;
 
-	// 검색
 	public List<InDTO> searchIn(String searchType, String keyword, Criteria cri) throws Exception;
 
-	
-	// 상태 완료된 품목 리스트 
 	public int inDetailCount(Criteria cri, String searchType, String keyword) throws Exception;
 
-	public String createRmLOT(String productCode) throws Exception ;
+	public String createRmLOT(String productCode) throws Exception;
+	
+	public List<InDTO> getAllInData(InDTO idto) throws Exception;
 }

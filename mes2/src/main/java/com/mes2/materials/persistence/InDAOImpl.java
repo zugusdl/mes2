@@ -30,7 +30,6 @@ public class InDAOImpl implements InDAO {
 
 	@Override
 	public List<InDTO> getAllInboundInfo(String searchType, String keyword, Criteria cri, SearchDTO sdto) throws Exception {
-		System.out.println(" 리스트 페이징 처리 검색");
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("searchType", searchType);
 		searchMap.put("keyword", keyword);
@@ -40,15 +39,6 @@ public class InDAOImpl implements InDAO {
 		return sqlSession.selectList(NAMESPACE + ".getInList", searchMap);
 	}
 	
-
-	/*
-	 * @Override public void InupdateQuantity(String product_code, int quantity,
-	 * String category) throws Exception { Map<String, Object> paramMap = new
-	 * HashMap<>(); paramMap.put("product_code", product_code);
-	 * paramMap.put("quantity", quantity); paramMap.put("category", category);
-	 * 
-	 * sqlSession.update(NAMESPACE + ".insertStock", paramMap); }
-	 */
 
 	@Override
 	public int getInCount(Criteria cri, String searchType, String keyword) throws Exception {
@@ -74,10 +64,9 @@ public class InDAOImpl implements InDAO {
 
 
 	@Override
-	public int updateIncomingRequest(String in_code, String pd_lot, String user_id) throws Exception {
+	public int updateIncomingRequest(String in_code, String pd_lot) throws Exception {
 		Map<String, Object> params = new HashMap<>();
 		params.put("in_code", in_code);
-		params.put("user_id", user_id);
 		params.put("pd_lot", pd_lot);
 		
 		return sqlSession.insert(NAMESPACE +".updateIncomingRequest", params);
@@ -147,6 +136,12 @@ public class InDAOImpl implements InDAO {
 	@Override
 	public String selectMaxMaterialsLot(String pd_lot) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + ".selectMaxMaterialsLot", pd_lot);
+	}
+
+
+	@Override
+	public List<InDTO> getAllInData(InDTO idto) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".getAllInData", idto);
 	}
 	
 	

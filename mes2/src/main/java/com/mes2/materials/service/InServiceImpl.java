@@ -25,8 +25,8 @@ public class InServiceImpl implements InService {
 	private InDAO idao;
 
 	@Override
-	public int updateIncomingRequest(String in_code, String pd_lot, String user_id) throws Exception {
-		return idao.updateIncomingRequest(in_code, pd_lot, user_id);
+	public int updateIncomingRequest(String in_code, String pd_lot) throws Exception {
+		return idao.updateIncomingRequest(in_code, pd_lot);
 	}
 
 	@Override
@@ -35,11 +35,6 @@ public class InServiceImpl implements InService {
 		return idao.getAllInboundInfo(searchType, keyword, cri, sdto);
 	}
 
-	/*
-	 * @Override public void InupdateQuantity(String product_code, int quantity,
-	 * String category) throws Exception { idao.InupdateQuantity(product_code,
-	 * quantity, category); }
-	 */
 
 	@Override
 	public int totalInCount(Criteria cri, String searchType, String keyword) throws Exception {
@@ -95,8 +90,6 @@ public class InServiceImpl implements InService {
 	@Override
 	public String createRmLOT(String product_code) throws Exception {
 
-		System.out.println("????????????????????????????");
-		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyyMMdd");
 
 		String inputStrDate = sf.format(Date.valueOf(LocalDate.now()));
@@ -121,5 +114,12 @@ public class InServiceImpl implements InService {
 
 		return result;
 	}
+
+	@Override
+	public List<InDTO> getAllInData(InDTO idto) throws Exception {
+		return idao.getAllInData(idto);
+	}
+	
+	
 
 }

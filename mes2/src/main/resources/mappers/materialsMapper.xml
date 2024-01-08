@@ -5,7 +5,6 @@
 
 <mapper namespace="com.mes2.mapper.MaterialsMapper">
 
-	<!-- 테이블 데이터 매핑 -->
 	<resultMap id="InDTO" type="com.mes2.materials.domain.InDTO">
 		<result property="in_code" column="in_code" />
 		<result property="in_regdate" column="in_regdate" />
@@ -44,17 +43,14 @@
 		<result property="keyword" column="keyword" />
 	</resultMap>
 
-	<!-- 발주 신청 -->
+
 	<insert id="insertMaterialOrderWithCode">
 		INSERT into material_order (orders_code,
 		product_code,
-		quantity,
-		user_id) values
-		(#{orders_code},#{product_code},#{quantity},#{user_id})
+		quantity) values
+		(#{orders_code},#{product_code},#{quantity})
 	</insert>
 
-	<!-- 발주 신청시 매퍼 같이 -->
-	<!-- 원재료, 부자재 입고 수량 stock 테이블 업데이트 -->
 	<update id="PurchaseupdateQuantity"
 		parameterType="java.util.Map">
       <![CDATA[
@@ -62,16 +58,16 @@
     	]]>
 	</update>
 
-	<!-- 원재료, 부자재 입고 수량 in_warehouse 테이블 업데이트 -->
+
 	<insert id="insertMaterialReceipt" parameterType="java.util.Map">
 		INSERT into
 		in_warehouse (product_code, quantity, pd_lot)
 		values(#{product_code},#{quantity}, #{pd_lot})
 	</insert>
-	<!-- 발주 신청시 매퍼 같이 -->
 
 
-	<!-- 품목코드 리스트 -->
+
+
 	<select id="getProductByCategory"
 		resultType="com.mes2.materials.domain.productDTO"
 		parameterType="java.util.Map">
@@ -79,7 +75,7 @@
 		=#{product_code}
 	</select>
 
-	<!-- 품목코드 카테고리 리스트 -->
+
 	<select id="selectMaterialCategoryList"
 		resultType="com.mes2.materials.domain.productDTO"
 		parameterType="java.util.Map">
@@ -87,7 +83,6 @@
 		=#{category}
 	</select>
 
-	<!-- 자재 페이징 처리, 검색 -->
 	<select id="combinedMaterialList"
 		resultType="com.mes2.materials.domain.PurchaseDTO"
 		parameterType="java.util.Map">
@@ -99,17 +94,22 @@
 		LEFT OUTER JOIN meta_data_product mdp
 		ON mdp.product_code = mo.product_code
 		<where>
-			<if test="keyword!=null and !keyword.equals('')">
+			<if
+				test="searchType != null and searchType.equals('name') and keyword != null and !keyword.equals('')">
 				AND name LIKE concat('%' , #{keyword}, '%')
 			</if>
+			<if
+				test="searchType != null and searchType.equals('category') and keyword != null and !keyword.equals('')">
+				AND category LIKE concat('%' , #{keyword}, '%')
+			</if>
 		</where>
+
 		ORDER BY orders_index
 		<if test="startPage != null and pageSize != null ">
 			LIMIT #{startPage}, #{pageSize}
 		</if>
 	</select>
 
-	<!-- 자재 글 개수 카운트 -->
 	<select id="combinedMaterialListCount" resultType="integer"
 		parameterType="java.util.Map">
 		SELECT count(*) FROM material_order mo
@@ -117,22 +117,25 @@
 		meta_data_product mdp ON mdp.product_code =
 		mo.product_code
 		<where>
-			<if test="keyword!=null and !keyword.equals('')">
+			<if
+				test="searchType != null and searchType.equals('name') and keyword != null and !keyword.equals('')">
 				AND name LIKE concat('%' , #{keyword}, '%')
 			</if>
+			<if
+				test="searchType != null and searchType.equals('category') and keyword != null and !keyword.equals('')">
+				AND category LIKE concat('%' , #{keyword}, '%')
+			</if>
 		</where>
+
 	</select>
 
 
-
-	<!-- 자재 상태 변경 업데이트 -->
 	<update id="updateOrderStatus" parameterType="java.util.Map">
 		UPDATE
 		material_order SET status=#{status} WHERE orders_index=#{orders_index}
 	</update>
 
 
-	<!-- 자재 상태 변경 리스트 출력 -->
 	<select id="getStatus" parameterType="String"
 		resultType="com.mes2.materials.domain.PurchaseDTO">
 		SELECT status FROM material_order WHERE
@@ -140,25 +143,39 @@
 	</select>
 
 
+	<select id="getAllPurchaseData"
+		resultType="com.mes2.materials.domain.PurchaseDTO">
+		SELECT mo.orders_index, mo.orders_code, mo.product_code,
+		mdp.name,
+		mdp.cost, mdp.price,
+		mdp.category, mo.quantity, mo.regdate,
+		mo.status
+		FROM material_order mo
+		LEFT OUTER JOIN meta_data_product mdp
+		ON mdp.product_code = mo.product_code
+	</select>
 
 
-
-
-	<!-- 입고 상태 waiting인 입고 리스트 -->
 	<select id="getInList"
 		resultType="com.mes2.materials.domain.InDTO"
 		parameterType="java.util.Map">
 		select iw.in_code, mdp.name, mdp.product_code, mdp.cost,
 		mdp.category,
-		iw.pd_lot, iw.quantity, mdp.unit, in_regdate, user_id, iw.status
+		iw.pd_lot, iw.quantity, mdp.unit, in_regdate, iw.status
 		from
 		in_warehouse iw join meta_data_product mdp on
 		mdp.product_code =
 		iw.product_code
 		<where>
-			<if test="keyword!=null and !keyword.equals('')">
-				AND status LIKE concat('%' , #{keyword}, '%')
+			<if
+				test="searchType != null and searchType.equals('name') and keyword != null and !keyword.equals('')">
+				AND name LIKE concat('%' , #{keyword}, '%')
 			</if>
+			<if
+				test="searchType != null and searchType.equals('category') and keyword != null and !keyword.equals('')">
+				AND category LIKE concat('%' , #{keyword}, '%')
+			</if>
+			AND iw.status = 'waiting' or iw.status = 'requested'
 		</where>
 		ORDER BY in_index
 		<if test="startPage != null and pageSize != null ">
@@ -167,15 +184,20 @@
 	</select>
 
 
-	<!-- 입고 상태 개수 카운트 -->
 	<select id="InCount" resultType="integer"
 		parameterType="java.util.Map">
 		select count(*) from in_warehouse iw join meta_data_product mdp on
 		mdp.product_code = iw.product_code
 		<where>
-			<if test="keyword!=null and !keyword.equals('')">
-				AND status LIKE concat('%' , #{keyword}, '%')
+			<if
+				test="searchType != null and searchType.equals('name') and keyword != null and !keyword.equals('')">
+				AND name LIKE concat('%' , #{keyword}, '%')
 			</if>
+			<if
+				test="searchType != null and searchType.equals('category') and keyword != null and !keyword.equals('')">
+				AND category LIKE concat('%' , #{keyword}, '%')
+			</if>
+			AND iw.status = 'waiting' or iw.status = 'requested'
 		</where>
 		<if test="startPage != null and pageSize != null ">
 			LIMIT #{startPage}, #{pageSize}
@@ -183,26 +205,20 @@
 	</select>
 
 
-	<!-- 입고 완료 -->
-	<!-- 상태변경된 입고 원재료 로트번호 리스트 -->
 	<select id="listIncomingProductCodes"
 		resultType="com.mes2.materials.domain.InDTO"
 		parameterType="java.util.Map">
 		SELECT * from in_warehouse where pd_lot =#{pd_lot}
 	</select>
-	<!-- 상태변경된 입고 원재료 로트번호 리스트 -->
 
 
 
-
-	<!-- 품목코드 없을 경우 입고 로트번호 stock 입력 -->
 	<insert id="insertIncomingLotNumber">
 		INSERT INTO stock (product_code, pd_lot, category)
 		values (#{product_code}, #{pd_lot}, #{category})
 	</insert>
-	<!-- 품목코드 없을 경우 입고 로트번호 stock 입력 -->
 
-	<!-- 품목코드 있을 경우 입고 로트번호 stock 입력 -->
+
 	<update id="updateStock">
 		UPDATE stock
 		<set>
@@ -213,28 +229,26 @@
 		</set>
 		WHERE product_code = #{product_code}
 	</update>
-	<!-- 품목코드 있을 경우 입고 로트번호 stock 입력 -->
 
 
 
 
-	<!-- 완제품 수량 등록 -->
+
 	<insert id="insertStock" parameterType="java.util.Map">
 		INSERT INTO stock
 		(quantity, product_code, category) values (#{quantity},
 		#{product_code} ,#{category})
 	</insert>
-	<!-- 완제품 수량 등록 -->
 
-	<!-- 완제품 수량 업데이트 -->
+
+
 	<update id="updateStockOnIncoming" parameterType="java.util.Map">
 		UPDATE stock
 		SET quantity = quantity + #{quantity} WHERE
 		product_code=#{product_code}
 	</update>
-	<!-- 완제품 수량 업데이트 -->
 
-	<!-- 전체 리스트 -->
+
 	<select id="selectStock"
 		resultType="com.mes2.materials.domain.InDTO"
 		parameterType="java.util.Map">
@@ -243,8 +257,6 @@
 
 
 
-	<!-- stuats complete 로 변경했을때 같이 실행 -->
-	<!-- 입고 상태 complete로 업데이트 -->
 	<update id="updateInStatus" parameterType="java.util.Map">
 		UPDATE in_warehouse
 		SET status=#{status} WHERE in_index=#{in_index}
@@ -252,19 +264,16 @@
 
 
 
-	<!-- 입고 등록 시 같이 -->
-	<!-- 입고코드 및 담당자 업데이트 -->
 	<update id="updateIncomingRequest" parameterType="java.util.Map">
 		UPDATE
 		in_warehouse
-		SET in_code = #{in_code}, user_id = #{user_id},
-		status='complete'
-		where pd_lot =#{pd_lot}
+		SET in_code = #{in_code}, status='complete'
+		where pd_lot
+		=#{pd_lot}
 	</update>
-	<!-- 입고 등록 시 같이 -->
 
 
-	<!-- 원재료 코드 -->
+
 	<select id="selectMaxMaterialsLot" resultType="String">
       <![CDATA[
       select max(pd_lot)
@@ -272,24 +281,22 @@
       where pd_lot like concat (#{value}, '%')
       ]]>
 	</select>
-	
-	
-	
-	<!-- 입고 상태 complete로 업데이트 -->
-	<!-- stuats complete 로 변경했을때 같이 실행 -->
 
-	<!-- 상태 완료된 품목리스트 -->
+
 	<select id="InDetailCompletedWarehouse"
 		resultType="com.mes2.materials.domain.InDTO"
 		parameterType="java.util.Map">
 		select iw.in_code, mdp.name, mdp.product_code, mdp.cost,
-		mdp.category, iw.pd_lot, iw.quantity, mdp.unit, in_regdate, user_id, iw.status 
-		from in_warehouse iw
-		join meta_data_product mdp 
-		on mdp.product_code = iw.product_code 
+		mdp.category,
+		iw.pd_lot, iw.quantity, mdp.unit, in_regdate, iw.status
+		from
+		in_warehouse iw
+		join meta_data_product mdp
+		on mdp.product_code =
+		iw.product_code
 		where status = 'complete'
 		<if test="keyword!=null and !keyword.equals('')">
-			AND product_code LIKE concat('%' , #{keyword}, '%')
+			AND pd_lot LIKE concat('%' , #{keyword}, '%')
 		</if>
 		ORDER BY in_index
 		<if test="startPage != null and pageSize != null ">
@@ -297,20 +304,29 @@
 		</if>
 	</select>
 
-	<!-- 상태 완료된 품목리스트 -->
 
-
-	<!-- 입고 상태 개수 카운트 -->
 	<select id="inDetailCount" resultType="integer"
 		parameterType="java.util.Map">
 		select count(*) from in_warehouse where status = 'complete'
-			<if test="keyword!=null and !keyword.equals('')">
-				AND product_code LIKE concat('%' , #{keyword}, '%')
-			</if>
+		<if test="keyword!=null and !keyword.equals('')">
+			AND pd_lot LIKE concat('%' , #{keyword}, '%')
+		</if>
 		<if test="startPage != null and pageSize != null ">
 			LIMIT #{startPage}, #{pageSize}
 		</if>
 	</select>
 
 
+	<select id="getAllInData"
+		resultType="com.mes2.materials.domain.PurchaseDTO">
+		select iw.in_code, mdp.name, mdp.product_code, mdp.cost,
+		mdp.category,
+		iw.pd_lot, iw.quantity, mdp.unit, in_regdate, iw.status
+		from
+		in_warehouse iw
+		join meta_data_product mdp
+		on mdp.product_code =
+		iw.product_code
+		where status = 'complete'
+	</select>
 </mapper>

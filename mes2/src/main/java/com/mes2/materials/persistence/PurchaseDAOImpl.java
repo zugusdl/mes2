@@ -21,7 +21,6 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(PurchaseDAOImpl.class);
 
-	// 디비에 접근할 객체
 	@Inject
 	private SqlSession sqlSession;
 
@@ -29,8 +28,6 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 
 	@Override
 	public void insertPurchase(PurchaseDTO pdto) throws Exception {
-
-		logger.debug(" DAO : 발주 신청 insertPurchase(PurchaseDTO pdto) ");
 		sqlSession.insert(NAMESPACE + ".insertMaterialOrderWithCode", pdto);
 	}
 
@@ -50,7 +47,6 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 
 	@Override
 	public int updateOrderStatus(String status, int orders_index) throws Exception {
-		logger.debug(" DAO - 상태 변경  updateStatus(String status, int orders_index) ");
 		Map<String, Object> params = new HashMap<>();
 		params.put("status", status);
 		params.put("orders_index", orders_index);
@@ -117,4 +113,10 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		sqlSession.update(NAMESPACE + ".insertMaterialReceipt", paramMap);
 	}
 
+	@Override
+	public List<PurchaseDTO> getAllPurchaseData(PurchaseDTO pdto) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".getAllPurchaseData" , pdto);
+	}
+
+	
 }

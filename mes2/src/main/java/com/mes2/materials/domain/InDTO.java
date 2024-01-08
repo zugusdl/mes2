@@ -34,6 +34,5 @@ public class InDTO {
 
 	private PageVO pageVo;
 	
-	private Criteria cri;
 	
 }
