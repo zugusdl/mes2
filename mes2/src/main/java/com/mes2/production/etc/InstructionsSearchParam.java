@@ -12,6 +12,7 @@ public class InstructionsSearchParam {
 	private Timestamp startTime;
 	private Timestamp endTime;
 	private String searchType;
+	private String requestCode;
 	
 	private int page;
 	private int pageSize;
@@ -85,6 +86,15 @@ public class InstructionsSearchParam {
 		this.pageSize = pageSize;
 	}
 
+	public String getRequestCode() {
+		return requestCode;
+	}
+
+	public void setRequestCode(String requestCode) {
+		this.requestCode = requestCode;
+	}
+
+	
 	
 	
 	

@@ -57,8 +57,8 @@
 	<select id="selectByCode" resultMap="instructionsDTOMap" parameterType="String">
 		select *
 		from instructions iss 
-		join sales_order_product sop 
-		on iss.sop_code = sop.sales_code 
+<!-- 		join sales_order_product sop 
+		on iss.sop_code = sop.sales_code --> 
 		where code = #{value}
 	</select>
 	
@@ -145,6 +145,12 @@
 
             <if test="startDate != null and endDate != null ">
                 AND due_Date between #{startDate} AND #{endDate}
+            </if>
+            
+            <if test="requestCode !=null and !requestCode.equals('')">
+               <![CDATA[
+               	and sop_code like concat('%',#{requestCode},'%')
+               ]]>    
             </if>	
 <!--             
             <if test="startTime != null  and endTime == null ">
@@ -234,8 +240,8 @@
 	<select id="selectByStateAndDueTime" resultMap="instructionsDTOMap">
 		select *
 		from instructions iss 
-		join sales_order_product sop 
-		on iss.sop_code = sop.sales_code 
+<!-- 		join sales_order_product sop 
+		on iss.sop_code = sop.sales_code  -->
 		where state = #{state} and due_date between #{startDate} and #{endDate} 
 	</select>
 	
@@ -254,16 +260,16 @@
 	<select id="selectBySopCode" resultMap="instructionsDTOMap" parameterType="java.util.Map">
 		select *
 		from instructions iss 
-		join sales_order_product sop 
-		on iss.sop_code = sop.sales_code 
+<!-- 		join sales_order_product sop 
+		on iss.sop_code = sop.sales_code  -->
 		where sop_code = #{sopCode} and state = #{state}
 	</select>
 	
 	<select id="selectByState" resultMap="instructionsDTOMap">
 		select *
 		from instructions iss 
-		join sales_order_product sop 
-		on iss.sop_code = sop.sales_code 
+<!-- 		join sales_order_product sop 
+		on iss.sop_code = sop.sales_code  -->
 		where state = #{state} 
 	</select>
 	

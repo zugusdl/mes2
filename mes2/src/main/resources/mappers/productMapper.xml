@@ -22,7 +22,7 @@
 	</select>
 	
 	<!-- 총 개수 구하기 -->
-	<select id="selectBySearchForTotal" resultType="com.mes2.production.domain.ProductDTO" >
+	<select id="selectBySearchForTotal" resultType="int" >
         select count(*) from product
 		
 		<where>
@@ -81,6 +81,12 @@
 		]]>
 	</select>
 	
+	<insert id="insertInWarehouse">
+		insert into in_warehouse
+		(product_code, pd_lot, quantity, status)
+		values 
+		(#{pd_mdp_code}, #{pd_lot}, #{pd_quantity}, 'requested') 
+	</insert>
 	
 	
 </mapper>

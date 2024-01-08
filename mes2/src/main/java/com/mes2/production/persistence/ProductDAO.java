@@ -20,4 +20,8 @@ public interface ProductDAO {
 	public int insertProduct(ProductDTO productDTO);
 	
 	public int updateProduct(ProductDTO productDTO);
+	
+	public int insertInWarehouse(ProductDTO productDTO);
+	
+	public int selectBySearchForTotalCount(ProductSearchParam productSearchParam);
 }

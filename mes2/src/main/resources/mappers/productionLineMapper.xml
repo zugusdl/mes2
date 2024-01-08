@@ -32,6 +32,16 @@
 		SELECT * 
 		FROM production_line
 		WHERE start_date BETWEEN #{startDate} AND #{endDate} or end_date BETWEEN #{startDate} AND #{endDate}
+		<if test="status.equals('WAITING')">
+			and status = 'WAITING'
+		</if>
+		<if test="status.equals('PROGRESSING')">
+			and status = 'PROGRESSING'
+		</if>
+		<if test="status.equals('COMPLETE')">
+			and status = 'COMPLETE'
+		</if>
+		
 	</select>
 	
 	<update id="updateState">

@@ -86,6 +86,8 @@ function showMaterials(data){
 		var requestButton = document.createElement("button");
 		requestButton.id = "requestButton";
 		requestButton.textContent ="자재요청";
+		requestButton.classList.add("btn");
+		requestButton.classList.add("btn-secondary");
 		bottomContent.appendChild(requestButton);
 	}
 	

@@ -29,6 +29,7 @@ import com.mes2.production.etc.InstructionsSearchParam;
 import com.mes2.production.etc.PageVO;
 import com.mes2.production.exception.ValidationValueErrorException;
 import com.mes2.production.service.InstructionsService;
+import com.mes2.production.service.ProductService;
 import com.mes2.production.service.ProductionLineService;
 
 @Controller
@@ -40,6 +41,9 @@ public class InstructionsController {
 	
 	@Inject
 	private ProductionLineService productionLineService;
+	
+	@Inject
+	private ProductService productService;
 	
 	private final Logger log = LoggerFactory.getLogger(ProductController.class);
 	
@@ -234,15 +238,14 @@ public class InstructionsController {
 	
 	//http://localhost:8088/instructions/request
 	@GetMapping("/request")
-	public String requestGET(Model model, Criteria cri) {
+	public String requestGET(Model model, Criteria cri, @RequestParam(value="code", required = false)String code) {
 
-		
-		
 		String state="REQUESTED";
 		
 		InstructionsSearchParam param = new InstructionsSearchParam();
 		param.setState(state);
 		param.setSearchType("isCode");
+		param.setRequestCode(code);
 		
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
@@ -289,7 +292,7 @@ public class InstructionsController {
 		
 		
 		
-		
+		model.addAttribute("code", code);
 		model.addAttribute("instructions" , instructions);
 		
 		
@@ -313,7 +316,9 @@ public class InstructionsController {
 			@RequestParam("line") int line ,HttpServletResponse response) {
 		
 		//수락 누를시 productionLine, instructions 전부 상태 변환 적용
-		instructionsService.acceptRequestedInstructions(sopCode, dueDate, line);;
+		instructionsService.acceptRequestedInstructions(sopCode, dueDate, line);
+		
+		
 		
 		try {
 			response.setContentType("text/html; charset=utf-8");
@@ -344,10 +349,10 @@ public class InstructionsController {
 	
 	@PostMapping("/result")
 	public String resultPOST(@RequestParam("isCode") String isCode, @RequestParam("quantity") int quantity,
-			@RequestParam("fault") int fault,
-			HttpServletResponse response) {
+			@RequestParam("fault") int fault, HttpServletResponse response) {
 		
 		instructionsService.completeInstructions(isCode,quantity, fault);
+		
 		
 		try {
 			response.setContentType("text/html; charset=utf-8"); 
@@ -365,6 +370,7 @@ public class InstructionsController {
 	
 	@PostMapping("/materials")
 	public String materialsPOST() {
+		
 		
 		
 		return null;

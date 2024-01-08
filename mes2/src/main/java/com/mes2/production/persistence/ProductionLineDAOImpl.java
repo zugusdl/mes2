@@ -32,9 +32,10 @@ public class ProductionLineDAOImpl implements ProductionLineDAO {
 	@Override
 	public List<ProductionLineDTO> selectByDate(Date startDate, Date endDate) {
 		
-		Map<String, Date> paramMap = new HashMap<String, Date>(); 
+		Map<String, Object> paramMap = new HashMap<String, Object>(); 
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
+		paramMap.put("status", "COMPLETE");
 		return sqlSession.selectList(NAMESPACE+".selectByDateForList", paramMap);
 	}
 

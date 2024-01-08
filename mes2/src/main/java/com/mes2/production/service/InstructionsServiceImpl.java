@@ -95,7 +95,6 @@ public class InstructionsServiceImpl implements InstructionsService {
 	@Override
 	public List<InstructionsDTO> findBySearchParam(InstructionsSearchParam param) {
 		List<InstructionsDTO> instructions = new ArrayList();
-		
 		if(param.getSearchType().equals("isCode")) {
 			
 			instructions = instructionsDAO.selectByParamCode(param);
@@ -104,6 +103,10 @@ public class InstructionsServiceImpl implements InstructionsService {
 		}else if(param.getSearchType().equals("mdpCode")){
 			instructions= instructionsDAO.selectByParamMdpCode(param);
 			
+		}else if(param.getSearchType()==null) {
+			instructions = instructionsDAO.selectByParamCode(param);
+		}else if(param.getSearchType().equals("")) {
+			instructions = instructionsDAO.selectByParamCode(param);
 		}
 		
 		
@@ -128,7 +131,11 @@ public class InstructionsServiceImpl implements InstructionsService {
 		isDTO.setCode(createIsCode(dueDate, line));
 		isDTO.setDueDate(dueDate);
 		isDTO.setLine(line);
-		isDTO.setTargetQuantity(isDTO.getTargetQuantity()+(isDTO.getTargetQuantity()/10));
+		if(isDTO.getType().equals("O")) {
+			isDTO.setTargetQuantity(isDTO.getTargetQuantity()+(isDTO.getTargetQuantity()/10));			
+		}else if(isDTO.getType().equals("S")) {
+			isDTO.setTargetQuantity(isDTO.getTargetQuantity());
+		}
 		log.debug("InstructionsService : saveInstructions : 새로 생성된 코드" +isDTO.getCode());
 		
 		
@@ -330,6 +337,9 @@ public class InstructionsServiceImpl implements InstructionsService {
 
 		log.debug("instructionsService : product 저장 완료");
 		
+		// 입고 등록하기  
+		productDAO.insertInWarehouse(product);
+		
 	}
 	
 	
@@ -404,9 +414,6 @@ public class InstructionsServiceImpl implements InstructionsService {
 	public List<OutDTO> findBySopCodeForOutDTOList(String sopCode) {
 		return instructionsDAO.selectByBaseCodeForOutDTOList(sopCode);
 	}
-	
-	
-	
 	
 	
 	

@@ -26,7 +26,7 @@
 			<form class="search" action="/instructions/request">
 
 				
-				<input type="text" name="code" placeholder="작업지시코드" />
+				<input type="text" name="code" placeholder="수주번호, 생산요청 코드" />
 				<div>
 					<span class="search-font">검색시작일</span>
 					<input id="dtIp" type="date" name="searchStartDate" min="2023-12-01" max="2024-12-31" value="${searchStartDate}" />
@@ -76,10 +76,7 @@
 										<td onclick="getMaterials('${item.mdpCode}')">${item.mdpCode}</td>
 										<td onclick="getMaterials('${item.sopCode}','${item.salesQuantity }')">${item.sopCode}</td>
 										<td>
-											<form action="/instructions/refuse"  method="post">
-												<input type="hidden" name="sopCode" value="${item.sopCode}">
-												<button type="button" class="btn btn-secondary" id="refuse" onclick="location.href='/instructions/refuse';">자재요청</button>
-											</form>	
+										<!-- 현재 공백 -->
 										</td>
 										<td>
 											<c:if test="${item.materialStatus.equals('Y') }">
@@ -111,15 +108,15 @@
 				<ul class="pagination pagination-sm no-margin pull-right">
 				
 					<c:if test="${pageVO.prev }">
-						<li><a href="/instructions/request?page=${pageVO.startPage - 1 }&searchType=${searchType }&startDate=${sDTO.startDate }&endDate=${sDTO.endDate}">«</a></li>
+						<li><a href="/instructions/search?page=${pageVO.startPage - 1 }&searchType=${searchType }&searchStartDate=${startDate }&searchEndDate=${endDate}">«</a></li>
 					</c:if>
 					
 					<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
-						<li><a href="/instructions/request?page=${i }&searchType=${searchType}&startDate=${startDate }&searchState=${searchState}&endDate=${endDate}">${i }</a></li>
+						<li><a href="/instructions/request?page=${i }&searchType=${searchType}&searchStartDate=${startDate }&code=${code}&searchEndDate=${endDate}">${i }</a></li>
 					</c:forEach>
 					
 					<c:if test="${pageVO.next }">
-						<li><a href="/instructions/request?page=${pageVO.endPage + 1 }&searchType=${searchType}&searchState=${searchState}&startDate=${startDate }&endDate=${endDate}">»</a></li>
+						<li><a href="/instructions/search?page=${pageVO.endPage + 1 }&searchType=${searchType}&code=${code}&searchStartDate=${startDate}&searchEndDate=${endDate}">»</a></li>
 					</c:if>
 				</ul>
 				</div>
