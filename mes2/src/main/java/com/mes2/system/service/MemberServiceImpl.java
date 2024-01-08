@@ -197,9 +197,25 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-	
-	
 
+
+	@Override
+	public Integer totalOk() {
+		return mdao.totalOk();
+	}
+
+
+
+
+	@Override
+	public Integer totalNo() {
+		return mdao.totalNo();
+	}
+
+
+	
+	
+	
 	
 	
 	

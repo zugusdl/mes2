@@ -74,7 +74,7 @@ div p {
 
 #weather-card-frame{
 	margin-left : 50px;
-	background-image: url('/resources/img/people.png');
+	background-image: url('/resources/img/mainpage/people.png');
  	background-size: contain; /* 배경 이미지를 요소에 맞춰서 보여주도록 설정 */
     background-repeat: no-repeat;
     background-position: center bottom;	
@@ -99,9 +99,6 @@ div p {
     box-shadow: 0 0 15px rgba(0, 128, 0, 0.9); /* 그림자 효과 강화 */
   }
 
-
-.fc-sun { background-color:red; } 
-.fc-sat { background-color:red; }
 
 
 </style>
@@ -395,20 +392,20 @@ div p {
 
       function drawChart() {
 		
-    	var totalInValue = ${totalIn != null && !totalIn.equals('[null]') ? totalIn : 0};  	
-      	var totalOutValue = ${totalOut != null && !totalOut.equals('[null]') ? totalOut : 0};  	  
+    	var totalOkValue = ${totalOk != null && !totalOk.equals('[null]') ? totalOk : 0};  	
+      	var totalNoValue = ${totalNo != null && !totalNo.equals('[null]') ? totalNo : 0};  	  
     	  
     	  
         var data = google.visualization.arrayToDataTable([
           ['인사', 'Hours per Day'],
-          ['입고',    totalInValue],
-          ['출고',      totalOutValue],
-          ['생산',  ${totalProduct}]
+          ['양품',    totalOkValue],
+          ['불량품',      totalNoValue]
+        
  
         ]);
 
         var options = {
-          title: '생산/입고/출고현황',
+          title: '불량품비율',
           backgroundColor: '#F5FBF0',
           is3D: true
        	  
