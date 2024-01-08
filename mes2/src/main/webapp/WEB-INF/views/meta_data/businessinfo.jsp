@@ -80,9 +80,9 @@
 					<td></td>							
 					<td>[코드자동생성]</td>																				
 					<td>
-					<select id="typeSelect">
-					<option>유통업체</option>
+					<select id="typeSelect" onchange="handleTypeSelect()">					
 					<option>고객사</option>
+					<option>유통업체</option>
 					</select>
 					</td>										    								      												
 					<td><input type="text" name="pw" size="5"></td>
@@ -117,7 +117,11 @@
 					<!-- 거래처 수정 시 나타나는 행 -->									
 					<td class="b" style="display: none;">${blist.company_code }</td>
 					<td class="b" style="display: none;">${blist.category }</td>
-					<td class="b" style="display: none;"><input type="text" name="pw" size="5" value="${blist.pw }"></td>
+					<td class="b" style="display: none;">
+					<c:if test="${blist.category eq '고객사'}">
+					<input type="text" name="pw" size="5" value="${blist.pw }">
+					</c:if>
+					</td>
 					<td class="b" style="display: none;"><input type="text" name="name" size="5" value="${blist.name }"></td>
 					<td class="b" style="display: none;"><input type="text" name="manager" size="5" value="${blist.manager }"></td>
 					<td class="b" style="display: none;"><input type="text" name="address" size="5" value="${blist.address }"></td>

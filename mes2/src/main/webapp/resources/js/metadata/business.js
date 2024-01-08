@@ -20,6 +20,7 @@ function replaceButton() {
     } else {
         row.style.display = "none";
     }
+    
             
 }
 
@@ -222,4 +223,24 @@ function submitData3(submitbtn3) {
 function redirectToFirstPage() {
     window.location.href = '/business/firstpage';
 }
+
+
+//추가할 때 유통업체면 비밀번호를 못치게끔 하는 js
+function handleTypeSelect() {
+    var typeSelect = document.getElementById("typeSelect");
+    var pwInput = document.querySelector('input[name="pw"]');
+    
+
+    if (typeSelect.value === "유통업체") {
+        // 선택된 값이 "유통업체"인 경우 pwInput을 비활성화하고 내용을 지움
+        pwInput.disabled = true;
+        pwInput.value = "";
+        
+    } else {
+        // 다른 경우 pwInput을 활성화하고 저장 버튼을 보이게 함
+        pwInput.disabled = false;
+        
+    }
+}
+
 
