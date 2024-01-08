@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 
 
+
 import lombok.Data;
 
 
@@ -16,6 +17,7 @@ public class MemberDTO {
 	private String user_name;
 	private String user_department;
 	private String user_position;
+	private String user_address;
 	private String user_jumin;
 	private String user_joindate;
 	private String user_tel;
@@ -23,5 +25,6 @@ public class MemberDTO {
 	private Timestamp user_updatedate;
 	private String user_auth;
 	private int count;
-
+	private String user_img;
+	private String menu_status;
 }

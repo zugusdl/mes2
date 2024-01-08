@@ -2,6 +2,7 @@ package com.mes2.system.service;
 
 import java.util.List;
 
+import com.mes2.system.domain.Criteria;
 import com.mes2.system.domain.MemberDTO;
 
 public interface MemberService {
@@ -26,6 +27,61 @@ public interface MemberService {
 	
 	//아이디중복 확인
 	public boolean checkID(String user_id);
+	
+	
+	//파일업로드
+	public void fileUpload(MemberDTO dto);
+	
+	//메뉴리스트출력
+	public List<MemberDTO> getMenuList(MemberDTO dto);
+	
+	
+	//메뉴상태업데이트
+	public List<MemberDTO> updateMenu(MemberDTO dto);
+	
+	
+	//사원검색결과 출력
+	public List<MemberDTO> searchMemberList(String searchOption, String searchWord);
+	
+	
+	// 페이징처리 1 
+	public List<MemberDTO> MemberListPage(Criteria cri) throws Exception;
+	
+	// 페이징처리 2
+	public int totalMemberCount() throws Exception;
+	
+	
+
+	//전체사원합산출력
+	public int totalMember();
+	
+	
+	//제품합산
+	public int totalPd();
+	
+	
+	
+	//총입고
+	public Integer totalIn();
+	
+	
+	
+	//총출고
+	public Integer totalOut();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

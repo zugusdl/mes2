@@ -50,6 +50,39 @@
 		</delete>
 		
 	
+		<!-- 공통코드 검색 -->
+		<select id="searchCode" resultType="com.mes2.system.domain.CommonCodeDTO">
+			select * from common_code 
+		 <where>
+		 	  <if test="searchOption == 'option1'">
+            	 and code_group like concat('%', #{searchWord}, '%')
+       		  </if>
+        	  <if test="searchOption == 'option2'">
+                 and code_code like concat('%', #{searchWord}, '%')
+        	  </if>
+		 </where>
+	   </select>
+	
+	
+	
+	
+	 
+		 <!-- 페이징처리 메퍼1 --> 
+		 <select id="listCommonCode" resultType="com.mes2.system.domain.CommonCodeDTO">
+		 	select * from common_code
+		 	limit #{startPage},#{pageSize}
+		 </select>
+		  
+		  
+		  
+		<!-- 전체 인원수 조회 (페이징2) -->
+		<select id = "countCommonCode" resultType="int">
+			<![CDATA[ select count(*) from common_code where code_index > 0 ]]>
+		</select>
+  
+	
+	
+	
 	
 	
 	

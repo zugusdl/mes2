@@ -55,7 +55,7 @@
         <i class="fas fa-xmark close-form"></i>
         <div class="form login-form">
           <form action="" method="post">
-            <img src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg" id="login-icon">
+            <img src="/resources/img/awesometic2.jpg" id="login-icon">
             <div class="input-box">
               <input type="text" id="id" name="user_id" placeholder="아이디를 입력하세요" value="${rememberedId != null ? rememberedId : ''}" />
               <i class="fas fa-envelope email"></i>

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.mes2.system.domain.Criteria;
 import com.mes2.system.domain.MemberDTO;
 import com.mes2.system.persistence.MemberDAO;
 
@@ -103,6 +104,103 @@ public class MemberServiceImpl implements MemberService {
 
 
 
+	// 파일업로드
+	@Override
+	public void fileUpload(MemberDTO dto) {
+		logger.debug("S : 파일업로드 메서드 호출");
+		mdao.fileUpload(dto);
+			
+	}
+
+
+
+	//메뉴리스트출력
+	@Override
+	public List<MemberDTO> getMenuList(MemberDTO dto) {
+		logger.debug("S : 메뉴리스트출력");
+		List<MemberDTO> resultDTO = mdao.getMenuList(dto);
+		return resultDTO; 
+	}
+
+
+
+	// 메뉴업데이트
+	@Override
+	public List<MemberDTO> updateMenu(MemberDTO dto) {
+		logger.debug("S : 메뉴업데이트");
+		List<MemberDTO> resultDTO  = mdao.updateMenu(dto);
+		return resultDTO;
+	}
+
+
+
+	// 사원검색결과
+	@Override
+	public List<MemberDTO> searchMemberList(String searchOption, String searchWord) {
+		 logger.debug("S : 검색결과출력");
+		 List<MemberDTO> resultDTO = mdao.searchMemberlist(searchOption, searchWord);
+		 return resultDTO;
+	}
+
+
+
+	
+	@Override
+	public List<MemberDTO> MemberListPage(Criteria cri) throws Exception {
+		logger.debug(" S : MemberListPage(Criteria cri) ");
+		return mdao.getMemberListPage(cri);
+	}
+
+
+
+
+	@Override
+	public int totalMemberCount() throws Exception {
+		logger.debug(" S : totalMemberCount()  ");
+		return mdao.getMemberCount();
+	}
+
+
+
+
+	@Override
+	public int totalMember() {
+		logger.debug("S : 총합계산출력");
+		return mdao.totalMember();
+	}
+
+
+
+
+	@Override
+	public int totalPd() {
+		
+		return mdao.totalPd();
+	}
+
+
+
+
+	@Override
+	public Integer totalIn() {
+		
+		return mdao.totalIn();
+	}
+
+
+
+
+	@Override
+	public Integer totalOut() {
+		
+		return mdao.totalOut();
+	}
+
+
+	
+	
+
+	
 	
 	
 	

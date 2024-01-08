@@ -1,6 +1,8 @@
 package com.mes2.system.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -9,12 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.mes2.system.domain.Criteria;
 import com.mes2.system.domain.MemberDTO;
 
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
 
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImpl.class);
 	
@@ -106,6 +110,122 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 
+	// 파일업로드
+
+	@Override
+	public void fileUpload(MemberDTO dto) {
+		logger.debug("DAO - fileUpload 호출");
+		sqlSession.update(NAMESPACE+".fileUpload", dto);
+		
+	}
+
+
+
+	//메뉴리스트출력
+	@Override
+	public List<MemberDTO> getMenuList(MemberDTO dto) {
+		logger.debug("DAO - MENULIST 출력");
+		List<MemberDTO> resultDTO = sqlSession.selectList(NAMESPACE+".getMenuList", dto);
+		
+		return resultDTO;
+	}
+
+
+
+	//메뉴상태업데이트
+	@Override
+	public List<MemberDTO> updateMenu(MemberDTO dto) {
+		logger.debug("DAO - updateMenu 출력");
+		List<MemberDTO> resultDTO = sqlSession.selectList(NAMESPACE+".updateMenu", dto);
+		return resultDTO;
+	}
+
+
+
+
+	@Override
+	public List<MemberDTO> searchMemberlist(String searchOption, String searchWord) {
+	    Map<String, String> parameters = new HashMap<>();
+	    parameters.put("searchOption", searchOption);
+	    parameters.put("searchWord", searchWord);
+	    
+	    return sqlSession.selectList(NAMESPACE + ".searchMember", parameters);
+	}
+
+
+
+
+	
+	
+	
+	@Override
+	public List<MemberDTO> getMemberListPage(int page) throws Exception {
+		logger.debug("DAO : getMemberListPage(int page) 호출!");
+		
+		page = (page - 1) * 10;
+		
+		return sqlSession.selectList(NAMESPACE+".listMember",page);
+	}
+
+
+
+
+	@Override
+	public List<MemberDTO> getMemberListPage(Criteria cri) throws Exception {
+		logger.debug("DAO - getMemberList(Criteria) 호출!");
+		
+		return sqlSession.selectList(NAMESPACE+".listMember", cri);
+	}
+
+
+
+
+	@Override
+	public int getMemberCount() throws Exception {
+		logger.debug("DAO - getMemberCount()");
+		return sqlSession.selectOne(NAMESPACE+".countMember");
+	}
+
+
+
+
+	@Override
+	public int totalMember() {
+		logger.debug("DAO-totalMember 출력!");
+		return sqlSession.selectOne(NAMESPACE+".totalMember");
+	}
+
+
+
+
+	@Override
+	public int totalPd() {
+		
+		return sqlSession.selectOne(NAMESPACE+".totalPd");	}
+
+
+
+
+	@Override
+	public Integer totalIn() {
+		
+		return sqlSession.selectOne(NAMESPACE+".totalIn");
+	}
+
+
+
+
+	@Override
+	public Integer totalOut() {
+
+		return sqlSession.selectOne(NAMESPACE+".totalOut");
+	}
+
+
+
+	
+	
+	
 	
 	
 	

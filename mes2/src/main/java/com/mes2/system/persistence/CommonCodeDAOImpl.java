@@ -1,6 +1,8 @@
 package com.mes2.system.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.mes2.system.domain.CommonCodeDTO;
+import com.mes2.system.domain.Criteria;
 
 
 @Repository
@@ -86,6 +89,65 @@ public class CommonCodeDAOImpl implements CommonCodeDAO {
 		logger.debug("DAO - 공통코드삭제실행!");
 		return sqlSession.delete(NAMESPACE+".deleteCommonCode",dto);
 	}
+
+
+
+
+
+	// 공통코드 검색
+	@Override
+	public List<CommonCodeDTO> searchCommonCodelist(String searchOption, String searchWord) {
+		logger.debug("DAO - 공통코드검색실행!");
+		 Map<String, String> parameters = new HashMap<>();
+		 parameters.put("searchOption", searchOption);
+		 parameters.put("searchWord", searchWord);
+
+		return sqlSession.selectList(NAMESPACE + ".searchCode", parameters);
+	}
+
+
+
+
+
+	
+	
+
+	@Override
+	public List<CommonCodeDTO> getCommonCodeListPage(int page) throws Exception {
+		
+		page = (page - 1) * 10;
+		
+		return sqlSession.selectList(NAMESPACE+".listCommonCode",page);
+	}
+
+
+
+
+
+
+	@Override
+	public List<CommonCodeDTO> getCommonCodeListPage(Criteria cri) throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE+".listCommonCode", cri);
+	}
+
+
+
+
+
+
+	@Override
+	public int getCommonCodeCount() throws Exception {
+		
+		
+		return sqlSession.selectOne(NAMESPACE+".countCommonCode");
+	}
+
+
+
+	
+
+
 
 	
 	

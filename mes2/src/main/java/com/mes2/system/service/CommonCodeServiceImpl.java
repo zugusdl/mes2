@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.mes2.system.domain.CommonCodeDTO;
+import com.mes2.system.domain.Criteria;
 import com.mes2.system.persistence.CommonCodeDAO;
 
 
@@ -85,6 +86,38 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 
 		return cdao.deleteCommonCode(dto);
 	}
+
+
+
+	// 공통코드 검색
+	@Override
+	public List<CommonCodeDTO> searchCommonCodeList(String searchOption, String searchWord) {
+		logger.debug("S : 검색결과 호출!");
+		List<CommonCodeDTO> resultDTO = cdao.searchCommonCodelist(searchOption, searchWord);
+		return resultDTO;
+	}
+
+
+
+
+	
+	@Override
+	public List<CommonCodeDTO> CommonCodeListPage(Criteria cri) throws Exception {
+		
+		return cdao.getCommonCodeListPage(cri);
+	}
+
+
+
+
+	@Override
+	public int totalCommonCodeCount() throws Exception {
+		
+		return cdao.getCommonCodeCount();
+	}
+
+
+	
 	
 	
 	

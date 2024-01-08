@@ -65,28 +65,28 @@ body{
 	   	<form method="post">
 		  <div class="mb-3">
 		    <label for="exampleInputEmail1" class="form-label">코드그룹</label>
-		    <input type="text" class="form-control" placeholder="코드그룹을입력하세요" name="code_group" value ="${commonCodeDTO.code_group}">
+		    <input type="text" class="form-control" placeholder="코드그룹을입력하세요" name="code_group">
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">코드그룹이름</label>
-		    <input type="text" class="form-control" placeholder="코드그룹명을입력하세요" name="code_group_name" value ="${commonCodeDTO.code_group_name}">
+		    <input type="text" class="form-control" placeholder="코드그룹명을입력하세요" name="code_group_name">
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">세부코드</label>
-		    <input type="text" class="form-control" placeholder="세부코드를입력하세요" name="code_code" value ="${commonCodeDTO.code_code}">
+		    <input type="text" class="form-control" placeholder="세부코드를입력하세요" name="code_code">
 		  </div>	
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">세부코드명</label>
-		    <input type="text" class="form-control" placeholder="세부코드명을입력하세요" name="code_name"  value ="${commonCodeDTO.code_name}">
-		  </div>	
-		   <div class="mb-3">
-		    <label for="exampleInputPassword1" class="form-label">코드사용여부</label>
-		    <input type="text" class="form-control" placeholder="사용여부를입력하세요0/1" value ="${commonCodeDTO.code_usestatus}">
+		    <input type="text" class="form-control" placeholder="세부코드명을입력하세요" name="code_name">
 		  </div>	
 		  <div class="mb-3">
-		    <label for="exampleInputPassword1" class="form-label">코드인덱스번호</label>
-		    <input type="text" class="form-control" value ="${commonCodeDTO.code_index}" readonly>
+		    <label for="exampleInputPassword1" class="form-label">코드사용여부</label>
+		   <select name="code_usestatus">
+				<option>1</option>
+				<option>0</option>
+		   </select> 
 		  </div>	
+	
 		  <button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">공통코드수정</button>
 		</form>
    </div>
