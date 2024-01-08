@@ -32,7 +32,7 @@
 </head>
 
 <body>
-<%@ include file="../sidehead/sidehead.jsp" %>
+<%@ include file="../system/sidehead.jsp" %>
 	<!-- 내용 칸 -->
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
@@ -92,7 +92,7 @@
 					<td><input type="text" name="call" size="5"></td>				
 					<td><input type="text" name="fax" size="5"></td>
 					<td><input type="text" name="email" size="5"></td>
-					<td><i class="fa-solid fa-circle fa-2xs" style="color: #01DF01;"></i>계약 중</td>														
+					<td><i class="fa-solid fa-circle fa-2xs" style="color: #416ca4;"></i>계약 중</td>														
 					<td><button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">저장</button></td>														
 				</tr>	
 													
@@ -114,10 +114,10 @@
 					<td class="a">
                     <c:choose>
                        <c:when test="${blist.contract_status eq '1' }">
-                          <i class="fa-solid fa-circle fa-2xs" style="color: #01DF01;"></i> 계약 중
+                          <i class="fa-solid fa-circle fa-2xs" style="color: #416ca4;"></i> 계약 중
                        </c:when>
                        <c:when test="${blist.contract_status eq '0' }">
-                          <i class="fa-solid fa-circle fa-2xs" style="color: #848484;"></i> 계약만료
+                          <i class="fa-solid fa-circle fa-2xs" style="color: #6b6b6b;"></i> 계약만료
                        </c:when>
                     </c:choose>                            
 					</td>
