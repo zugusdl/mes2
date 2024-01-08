@@ -34,7 +34,6 @@ public class Criteria {
 		this.pageSize = pageSize;
 	}
 	
-	
 	public int getPage() {
 		return page;
 	}
@@ -48,8 +47,6 @@ public class Criteria {
 		// 페이지 정보를 쿼리사용되는 값(시작인덱스)으로 변경
 		return (this.page - 1) * pageSize;
 	}
-
-	
 	
 	// alt shift s + s
 	@Override
