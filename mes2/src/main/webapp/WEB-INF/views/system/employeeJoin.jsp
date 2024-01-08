@@ -39,7 +39,7 @@
 		    		  <div class="card mb-3" style="max-width: 1100px;"> 
 		    		  	 <div class="row g-0">
 		    		   				<div class="col-md-4">
-            						    <img src="${pageContext.request.contextPath}/resources/img/joining.jpg" class="img-fluid rounded-start" alt="...">
+            						    <img src="${pageContext.request.contextPath}/resources/img/join/joining.jpg" class="img-fluid rounded-start" alt="...">
           							</div>
 		    		          <div class="col-md-8">
 		    		               <div class="card-body">
@@ -140,6 +140,6 @@
 
 
 
- <script src="${pageContext.request.contextPath}/resources/img/address.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/join/address.js"></script>
 </body>
 </html>
