@@ -99,7 +99,7 @@
 		INSERT INTO out_warehouse_product (out_code, product_code, pd_lot, out_quantity) 
 		VALUES
 		<foreach collection="stockList" item="stockDTO" separator="," close=";">
-			(#{out_code}, #{stockDTO.product_code}, #{stockDTO.pd_lot}, #{stockDTO.useQuantity})
+			(CONCAT((SELECT code_group FROM common_code WHERE code_group_name = '출고'), #{out_code}), #{stockDTO.product_code}, #{stockDTO.pd_lot}, #{stockDTO.useQuantity})
 		</foreach>
 	</insert>
 	
@@ -114,7 +114,8 @@
 
 	<!-- 출고 목록 업데이트 -->
 	<update id="updateOutInfo">
-		UPDATE out_warehouse SET out_code = #{out_code}, status = #{status}, out_regdate = now()
+		UPDATE out_warehouse 
+		SET out_code = CONCAT((SELECT code_group FROM common_code WHERE code_group_name = '출고'), #{out_code}), status = #{status}, out_regdate = now()
 		WHERE out_index = #{out_index} 
 	</update>
 	
