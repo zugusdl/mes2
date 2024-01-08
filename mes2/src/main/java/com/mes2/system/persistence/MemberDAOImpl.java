@@ -223,6 +223,22 @@ public class MemberDAOImpl implements MemberDAO {
 
 
 
+
+	@Override
+	public Integer totalOk() {
+		return sqlSession.selectOne(NAMESPACE+".okProduct");
+	}
+
+
+
+
+	@Override
+	public Integer totalNo() {
+		return sqlSession.selectOne(NAMESPACE+".noProduct");
+	}
+
+
+
 	
 	
 	

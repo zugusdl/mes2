@@ -86,7 +86,12 @@ public interface MemberDAO {
 	public Integer totalOut();
 	
 	
+	//합산 양품갯수출력
+	public Integer totalOk();
 	
+	
+	//합산 불량품갯수출력
+	public Integer totalNo();
 	
 	
 	

@@ -70,8 +70,13 @@ public interface MemberService {
 	public Integer totalOut();
 	
 	
+	//총양품
+	public Integer totalOk();
 	
 	
+	
+	//총불량품
+	public Integer totalNo();
 	
 	
 	
