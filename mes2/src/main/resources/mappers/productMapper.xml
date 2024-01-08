@@ -6,14 +6,14 @@
   <!-- produceMapper.xml -->
   
 <mapper namespace="com.mes2.mapper.ProductMapper">
-	
+
 	<select id="getTime" resultType="java.sql.Date">
 		select now()
 	</select>
 	
 	<insert id="insertProduct">
-		insert into product (pd_lot,pd_mdp_code, pd_quantity, pd_period, pd_date, pd_soi_id, pd_qc_result, pd_count)
-		value(#{pd_lot},#{pd_mdp_code},#{pd_quantity},#{pd_period},#{pd_date},#{pd_soi_id},#{pd_qc_result},#{pd_count})
+		insert into product (pd_lot,pd_mdp_code, pd_quantity, pd_period, pd_date, pd_soi_id, pd_qc_result, pd_count, pd_is_code)
+		value(#{pd_lot},#{pd_mdp_code},#{pd_quantity},#{pd_period},#{pd_date},#{pd_soi_id},#{pd_qc_result},#{pd_count}, #{pd_is_code})
 	</insert>
 
 	<select id="selectByLot" resultType="com.mes2.production.domain.ProductDTO">
@@ -50,4 +50,13 @@
 			</foreach>
 		</where>
 	</delete>
+	
+	<select id="getLastLot" parameterType="String" resultType="String">
+		<![CDATA[
+		select max(pd_lot)
+		from product
+		where pd_lot like concat (#{searchLot}, '%')
+		]]>
+	</select>
+	
 </mapper>

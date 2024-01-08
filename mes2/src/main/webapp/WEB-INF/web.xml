@@ -10,6 +10,10 @@
 				/WEB-INF/spring/root-context.xml
 			 </param-value>
 	</context-param>
+	<context-param>
+		<param-name>securityClass</param-name>
+		<param-value>com.mes2.config.SecurityConfig</param-value>
+	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>

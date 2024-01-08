@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LoginForm</title>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
 	integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -24,7 +25,7 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="stylesheet" href="/resources/css/platform/login.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/login.css">
 <!-- css 불러오기 (경로설정 중요!!) -->
 </head>
 
@@ -41,9 +42,8 @@
 			<i class="fas fa-xmark close-form"></i>
 			<div class="form login-form">
 				<form method="post">
-					<img
-						src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg"
-						id="login-icon">
+					
+					<img src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg" id="login-icon">
 					<div class="input-box">
 						<input type="text" id="id" name="company_code" placeholder="아이디를 입력하세요" />
 						<i class="fas fa-envelope email"></i>
@@ -51,10 +51,10 @@
 
 					<div class="input-box">
 						<input type="password" name="pw" placeholder="패스워드를 입력하세요" />
-						<i class="fas fa-lock password"></i> <i
-							class="fas fa-eye-slash pass-hide"></i>
+						<i class="fas fa-lock password"></i>
+						<i class="fas fa-eye-slash pass-hide"></i>
 					</div>
-
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 					<button class="btn" id="btn-post" type="submit">로그인하기</button>
 				</form>
 			</div>
@@ -63,7 +63,7 @@
 
 	<!-- 자바스크립트 동작 불러오기 (경로설정 중요!!) -->
 
-	<script src="/resources/js/platform/login.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/platform/login.js"></script>
 	<script>
 		var result = "${result}";
 		if(result == "loginFail") {
