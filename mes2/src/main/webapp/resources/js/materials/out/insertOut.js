@@ -26,20 +26,6 @@ function insertOut() {
 		return false;
 	}
 	
-	Swal.fire({
-		text: "출고하시겠습니까?",
-		icon: "question",
-		showCancelButton: true,
-		confirmButtonColor: "#577D71", // confirm 버튼 색상
-		cancelButtonColor: '#d33', // cancle 버튼 색상
-		confirmButtonText: '확인', // confirm 버튼 텍스트 지정
-		cancelButtonText: '취소', // cancel 버튼 텍스트 지정
-	}).then((result) => {
-		if (result.isConfirmed) {
-			document.getElementById('frm').submit();
-		} else {
-			return false;
-		}
-	});
+	document.getElementById('frm').submit();
 	
 }

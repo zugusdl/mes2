@@ -24,9 +24,11 @@
 	crossorigin="anonymous">
 
 <!-- Font Awesome 라이브러리 추가 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -44,14 +46,22 @@
 				</div>
 			</li>
 			<li>
+				<div class="iocn-link">
+					<a href="#"> <i class="fa-solid fa-check"></i> <span
+						class="link_name">공지사항</span>
+					</a>
+				</div>
+			</li>
+			<li>
 				<div class="profile-details">
-<!-- 					<div class="profile-content"> -->
-<!-- 						<img src="" alt="프로필 사진 자리"> -->
-<!-- 					</div> -->
-					<div class="name-job">
-						<div class="profile_name">AWESOMETIC</div>
-<!-- 						<div class="job">Web Desginer</div> -->
+					<div class="profile-content">
+						<img src="" alt="프로필 사진 자리">
 					</div>
+					<div class="name-job">
+						<div class="profile_name">Prem Shahi</div>
+						<div class="job">Web Desginer</div>
+					</div>
+					<i class="fa-brands fa-google-play"></i>
 				</div>
 			</li>
 		</ul>

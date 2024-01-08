@@ -17,8 +17,6 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/completeOrder.css">
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
@@ -30,11 +28,10 @@
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<span>* 성함을 정자로 작성하세요</span>
 				<div>
-					<canvas id="canvas" width="500" height="250"></canvas>
+					<canvas id="canvas" width="500" height="300"></canvas>
 				</div>
 				<div>
-<!-- 					<button type="submit" class="btn btn-secondary">수령 완료</button> -->
-					<button type="button" class="btn btn-secondary" onclick="completeOrder('${order_code}');">수령 완료</button>
+					<button type="submit" class="btn btn-secondary">수령 완료</button>
 				</div>
 			</form>
 		</section>

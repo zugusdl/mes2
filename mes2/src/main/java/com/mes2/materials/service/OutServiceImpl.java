@@ -103,7 +103,7 @@ public class OutServiceImpl implements OutService {
 		// 전체 수량
 		int quantity = stockList.get(0).getQuantity();
 		
-		return dtfToday + "-" + product_code + "-" + quantity + "-" + out_index;
+		return "OUT" + dtfToday + "-" + product_code + "-" + quantity + "-" + out_index;
 	}
 	
 	// 출고 상세 조회(출고코드 O)
