@@ -100,6 +100,9 @@ div p {
   }
 
 
+.fc-sun { background-color:red; } 
+.fc-sat { background-color:red; }
+
 
 </style>
 
@@ -371,13 +374,20 @@ div p {
 
 										],
 										eventColor : '#378006'
-
+										
 									});
 
 							calendar.render();
 						});
 	</script>
 	
+	
+	
+	
+	
+	
+	
+   <!-- 구글차트 js -->
    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -399,7 +409,8 @@ div p {
 
         var options = {
           title: '생산/입고/출고현황',
-          backgroundColor: '#F5FBF0'
+          backgroundColor: '#F5FBF0',
+          is3D: true
        	  
         };
 
