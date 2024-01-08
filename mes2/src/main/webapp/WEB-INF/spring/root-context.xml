@@ -36,11 +36,6 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
-
-	<!-- com.itwillbs.service 패키지 등록 -->
- 	<context:component-scan base-package="com.mes2.system.service" />
- 	
-
 	<!-- com.mes2.persistence 패키지 등록 <context:component-scan base-package="com.mes2.platform.persistence" 
 		/> com.mes2.service 패키지 등록 <context:component-scan base-package="com.mes2.platform.service" 
 		/> -->
