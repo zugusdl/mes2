@@ -69,7 +69,7 @@ function goContent(order_code){
 		 $("#shippngPlan-modal").html(listHtml);
  }
 
-  function content(data,order_code){ 기 
+  function content(data,order_code){
 
 	  var listHtml = "<div class='list-box'>";
 	  listHtml += "<div>";

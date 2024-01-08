@@ -40,13 +40,13 @@
    <sql id="searchDate">
     <choose>
         <when test="startDay != null and endDay != null">
-            and I.request_date between #{startDay} and #{endDay}
+            and I.request_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59')  
         </when>
         <when test="startDay != null and endDay == null">
-            and I.request_date = #{startDay}
+           AND I.request_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{startDay}, '%Y-%m-%d 23:59:59')  
         </when>
         <when test="startDay == null and endDay != null">
-            and I.request_date between now() and #{endDay}
+            and I.request_date BETWEEN DATE(NOW()) AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59')  
         </when>  
     </choose>
   </sql>
@@ -76,10 +76,10 @@
   	<include refid="searchDate"/> 
   	</if>  	
   	<if test="type == 'order_date'">
-  	and I.order_date between #{startDay} and #{endDay} 
+  	and I.order_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59')  
   	</if> 	
   	<if test="type == 'request_date'">
-  	and I.request_date between #{startDay} and #{endDay}
+  	and I.request_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59') 
   	</if>
   	<if test="newOrder == 'true'">
     and DATE(I.request_date) = DATE(NOW())

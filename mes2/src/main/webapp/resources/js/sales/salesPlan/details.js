@@ -35,13 +35,18 @@
 		      moStock(data, sales_quantity); 
 		    },
 		  error: function(){
-			  $("#salesModal").modal("show");
-			  $("#salesModalLabel").html('재고조회');
-			  var listHtml = "<div>창고에 보유 재고 없음</div>";			
-			  listHtml += "<div>부족수량 : <input type='text' value='"+sales_quantity+"' readonly/></div>"; 
-			  listHtml += "<button type='button' class='btn btn-danger'>재고부족</button>";
-			  $("#sales-modal").html(listHtml);
+//			  $("#salesModal").modal("show");
+//			  $("#salesModalLabel").html('재고조회');
+//			  var listHtml = "<div>창고에 보유 재고 없음</div>";			
+//			  listHtml += "<div>부족수량 : <input type='text' value='"+sales_quantity+"' readonly/></div>"; 
+//			  listHtml += "<button type='button' class='btn btn-danger'>재고부족</button>";
+//			  $("#sales-modal").html(listHtml);
 				
+			  Swal.fire({
+				  title: "창고확인 필요",
+				  text: "해당 상품은 현재 창고에 보유재고가 없습니다.",
+				  icon: "warning"
+				});
 		  }
 	  });
  }
@@ -74,7 +79,7 @@ function info(order_code){
 		  dataType:"json", 
 		  data: {"order_code" : order_code}, 
 		  success: function (data) {
-			  
+			  $('#salesModal').modal('show');
 		      moInfo(data,order_code); 
 		    },
 		  error: function(){
@@ -108,7 +113,7 @@ function info(order_code){
 		 listHtml += "<div>담당자직책: <input type='text' value='"+data.user_position+"' readonly/></div>";
 		 listHtml += "<div>담당자부서 : <input type='text' value='"+data.user_auth+"' readonly/></div>";	 
 		 
-	      
+		 
 		 $("#sales-modal").html(listHtml);
  }
   function content(data, order_code){  
@@ -117,7 +122,7 @@ function info(order_code){
 	  listHtml += "<div>";
 	  listHtml += "<p>주문번호: "+order_code+"</p>";
 	  
-	  listHtml += "<button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#salesModal' onclick='info(\""+order_code+"\")'>상세</button>";
+	  listHtml += "<button type='button' class='btn btn-danger'   onclick='info(\""+order_code+"\")'>상세</button>";
 	
 	  listHtml += "</div>";
 	//  var listHtml ="<div class='list-box'>";

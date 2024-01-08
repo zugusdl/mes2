@@ -214,7 +214,7 @@ function checkSearchSub(e){
 
 	if ($("#searchType").val() === "") {
 	    Swal.fire({
-	        title: "검색타입을 선택하세요.",
+	        title: "검색어를 선택하세요.",
 	        icon: "warning"
 	    }).then((result) => {
 	        if (result.isConfirmed) {

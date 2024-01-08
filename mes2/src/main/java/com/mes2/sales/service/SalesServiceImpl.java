@@ -302,6 +302,7 @@ public class SalesServiceImpl implements SalesService {
 	@Override
 	public String instructSales(List<SalesDTO> list) {
 		
+		
 		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+list);
 		SalesDTO sdt = list.get(0);
 
@@ -310,46 +311,31 @@ public class SalesServiceImpl implements SalesService {
 		
 		for(SalesDTO dto : list) {
 			
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@!!!"+dto);
+			if (dto != null) {
+		        if ("stock".equals(dto.getProcessing_reg())) {
+		            dto.setProduct_status("progressing");
+		            stockReg(dto);
+		        } else if ("production".equals(dto.getProcessing_reg())) {
+		            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@!!!" + dto);
+		            dto.setProduct_status("progressing");
+		            dto.setLack_quantity(dto.getSales_quantity());
+		            productInst(dto);
+		            stockReg(dto);
+		        } else if ("multi".equals(dto.getProcessing_reg())) {
+		            dto.setProduct_status("progressing");
+		            int stock_quantity = stockQuantity(dto).getStock_quantity();
+		            int lack_quantity = (dto.getSales_quantity() - stock_quantity);
+		            dto.setLack_quantity(lack_quantity);
+		            stockReg(dto);
+		            productInst(dto);
+		        } else if ("N".equals(dto.getProcessing_reg())) {
+		            // 아무 동작이 필요하지 않은 경우
+		        }
+		    }
 			
-			if(dto != null && dto.getProcessing_reg().equals("stock")) {
-				
-				dto.setProduct_status("progressing");			
-				stockReg(dto);
-				
-				
-			}
-			
-			if(dto != null && dto.getProcessing_reg().equals("production")) {
-				// 전체 부족인 경우 
-				
-				dto.setProduct_status("progressing");
-				dto.setLack_quantity(dto.getSales_quantity());
-				productInst(dto);
-				
-				//dto.setStock_quantity(dto.getSales_quantity());
-				stockReg(dto); 
-				
-			}
-			
-			if(dto.getProcessing_reg().equals("multi")) {
-				
-				// 4. stock_quantity < sales_quantity 
-				// 재고가 있는 경우 
-				dto.setProduct_status("progressing");
-				// 현재고 가져오기 
-				int stock_quantity = stockQuantity(dto).getStock_quantity();
-				
-				// 부족재고 가져오기 
-				int lack_quantity =(dto.getSales_quantity() - stock_quantity);
-				
-				dto.setLack_quantity(lack_quantity);		
-				
-				stockReg(dto);
-				
-				productInst(dto);
-			}
-			if(dto.getProcessing_reg().equals("N")) {
-				// 아무 동작이 필요하지 않은 경우
+			if(dto==null) {
+				logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@null");
 			}
 		}
 		

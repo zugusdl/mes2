@@ -81,9 +81,9 @@ function goContent(order_code){
 //	 var salesQuantity = $(".sales_quantity").eq(index).val();
 //	 var processingReg = $(".product-processing").eq(index).val();
 	 
-	 $("#mo-close").trigger('click');
+	 //$("#mo-close").trigger('click');
 	 var list = [];
-
+	 alert(intNum);
 	 for (var i = 0; i < intNum; i++) {
 		 var order = $(".order_code").val();
 		 var scode = $(".sales_code").eq(i).val();
@@ -97,18 +97,20 @@ function goContent(order_code){
 
 
 	 }
-	
+	alert(list);
 	 $.ajax({
 		  url: "acceptSave",
 		  method: "POST",
 		  contentType: "application/json",
 		  data: JSON.stringify(list), 
 		  success: function(data) {
-			  intNum = 0;
+			 
 			  Swal.fire({
 				  title: "등록되었습니다!",				 
 				  icon: "success"
 				}).then((result) => {
+					$("#mo-close").trigger('click');
+					intNum = 0;
 					goContent(data);
 				});
 
@@ -278,6 +280,7 @@ function goContent(order_code){
 	  
 	  $.each(data,function(index,obj){
 		  
+		  intNum++;
 		  
 		  listHtml += "<tr>";
 		  listHtml +="<input type='hidden' class='order_code' value='"+order_code+"'>";

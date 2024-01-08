@@ -194,11 +194,11 @@
     <div class="container">
     <section class="section1">
       <form action="salesAccept" method="post" id="sfrm" class="search" onsubmit="return checkSearchSub()">
-            <input type="hidden" id="instructions" name="instructions" value="${pm.cri.instructions }"/>
-		    <input type="hidden" id="newOrder" name="newOrder" value="${pm.cri.newOrder }"/>
-		    <input type="hidden" id="userId" name="userId" value="${pm.cri.userId }"/>
-      		<input type="hidden" id="instruct" name="instruct" value=""/>
-      		<input type="hidden" id="newO" name="newO" value=""/>
+            <input type="hidden"  name="instructions" value="${pm.cri.instructions }"/>
+		    <input type="hidden"  name="newOrder" value="${pm.cri.newOrder }"/>
+		    <input type="hidden"  name="userId" value="${pm.cri.userId }"/>
+      		<input type="hidden"  id="instruct" name="instruct" value=""/>
+      		<input type="hidden"  id="newO" name="newO" value=""/>
       	 <select name="type" id="searchType">
           <option value="">-- 검색선택 --</option>
           <option value="order_code" ${pm.cri.type=='order_code' ? 'selected' : ''}>주문번호</option>
