@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mes2.materials.domain.InsDTO;
 import com.mes2.materials.domain.OpDTO;
@@ -54,6 +55,7 @@ public class OutServiceImpl implements OutService {
 	
 	// 출고 등록
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int insertOut(String out_index, List<StockDTO> stockList) throws Exception {
 		logger.debug("insertOut() 호출");
 		

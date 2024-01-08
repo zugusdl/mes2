@@ -67,3 +67,17 @@ td{
 .selectOrder:hover {
 	cursor: pointer;
 }
+
+#status {
+	width: 200px;
+	margin-left: 200px;
+}
+
+#searchSub {
+	width: 600px;
+}
+
+#button-addon2 {
+	width: 150px;
+	margin-right: 200px;
+}

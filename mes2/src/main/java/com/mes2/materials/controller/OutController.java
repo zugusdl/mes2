@@ -107,6 +107,7 @@ public class OutController {
 		logger.debug("@@stockList : " + stockList);
 		
 		int quantitySum = oService.insertOut(out_index, stockList);
+		logger.debug("@@@@quantitySum: " + quantitySum);
 
 		if(product_code.contains("PS")) {
 			if(quantitySum <= 2000) {

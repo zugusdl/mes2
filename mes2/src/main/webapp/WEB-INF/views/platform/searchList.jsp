@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Document</title>
+<title>품목 등록</title>
 <sec:csrfMetaTags/>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -26,14 +26,16 @@
 		<h3 id="h3">발주 품목 등록</h3>
 		<section class="section1">
 			<form class="search" id="searchForm">
-				<select name="searchType" id="searchType">
+				<select name="searchType" id="searchType" class="form-select" aria-label="Default select example">
 					<option value="default">구분</option>
 					<option value="품목코드">품목코드</option>
 					<option value="품목명">품목명</option>
 				</select>
-				<input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
+				<div class="input-group searchSub">
+					<input type="text" name="search" id="search" class="form-control" placeholder="검색어를 입력하세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+				</div>
 <%-- 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
-				<button type="button" class="btn btn-secondary" onclick="searchProduct();">조회</button>
+				<button class="btn btn-secondary" type="button" id="button-addon2" onclick="searchProduct();">검색</button>
 			</form>
 
 			<!-- 표 -->
@@ -57,7 +59,7 @@
 											<tr>
 												<td scope="row"><input type="radio" name="idx" value="${loop.index}"></td>
 												<td><input type="hidden" name="product_code${loop.index}" value="${mdpDTO.product_code}">${mdpDTO.product_code}</td>
-												<td><input type="hidden" name="image${loop.index}" ><img alt="" src=""></td>
+												<td><input type="hidden" name="image${loop.index}" ><img alt="형상정보" src="../../../../resources/img/metadata/${mdpDTO.ofileName }" ></td>
 												<td><input type="hidden" name="name${loop.index}" value="${mdpDTO.name}">${mdpDTO.name}</td>
 												<td><input type="hidden" name="price${loop.index}" value="${mdpDTO.price}"><fmt:formatNumber value="${mdpDTO.price}" />원</td>
 											</tr>

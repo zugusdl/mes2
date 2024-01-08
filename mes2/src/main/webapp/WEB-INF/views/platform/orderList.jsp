@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Document</title>
+<title>발주 목록</title>
 <sec:csrfMetaTags/>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -28,24 +28,22 @@
 	<div class="container">
 		<section class="section1">
 			<form class="search">
-				<select id="sales_status" name="sales_status">
-					<option value="">-- 진행상태 --</option>
-					<option value="requested">신청중</option>
-					<option value="accept">생산중</option>
-					<option value="deliver">배송중</option>
-					<option value="complete">완료</option>
-					<option value="reject">발주 불가</option>
-				</select>
-				
-				<div>
-					<span class="search-font">발주일자: </span>
-					<input id="dtIp" type="date" name="startDate" />
-					<span> ~ </span>
-					<input id="dtIp" type="date" name="endDate" />
-				</div>
-				
-<!-- 				<button type="button" class="btn btn-secondary" onclick="searchList();">검색</button> -->
-				<input type="submit" class="btn btn-secondary" value="검색" />
+					<select name="sales_status" id="sales_status" class="form-select" aria-label="Default select example">
+						<option value="">-- 진행상태 --</option>
+						<option value="requested">신청중</option>
+						<option value="accept">생산중</option>
+						<option value="deliver">배송중</option>
+						<option value="complete">완료</option>
+						<option value="reject">발주 불가</option>
+					</select>
+					
+					<div class="input-group">
+						<span class="input-group-text">발주일자</span>
+						<input type="date" aria-label="First name" class="form-control" name="startDate" />
+						<input type="date" aria-label="Last name" class="form-control" name="endDate" />
+					</div>
+	<!-- 				<button type="button" class="btn btn-secondary" onclick="searchList();">검색</button> -->
+					<button class="btn btn-secondary" type="submit" id="button-addon2">검색</button>
 			</form>
 
 			<!-- 표 -->

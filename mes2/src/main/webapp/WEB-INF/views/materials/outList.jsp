@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>출고 목록</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -24,25 +24,23 @@
 	<div class="container">
 		<section class="section1">
 			<form class="search">
-				<select id="status" name="status">
-					<option value="">-- 진행상태 --</option>
-					<option value="waiting">대기</option>
-					<option value="complete">완료</option>
-				</select>
-				
-				<div>
-					<span class="search-font">요청일자: </span>
-					<input id="dtIp" type="date" name="startDate" />
-					<span> ~ </span>
-					<input id="dtIp" type="date" name="endDate" />
-				</div>
-				
-				<div>
-					<span class="search-font">품목코드: </span>
-					<input type="text" name="product_code" />
-				</div>
-				
-				<input type="submit" class="btn btn-secondary" value="검색" />
+					<select name="status" id="status" class="form-select" aria-label="Default select example">
+						<option value="">-- 진행상태 --</option>
+						<option value="waiting">대기</option>
+						<option value="complete">완료</option>
+					</select>
+					
+					<div class="input-group">
+						<span class="input-group-text">요청일자 </span>
+						<input type="date" aria-label="First name" class="form-control" name="startDate" />
+						<input type="date" aria-label="Last name" class="form-control" name="endDate" />
+					</div>
+					
+					<div class="input-group searchSub" id="searchSub">
+						<input type="text" name="product_code"  id="product_code" class="form-control" placeholder="품목코드를 입력하세요" aria-label="Recipient's username" aria-describedby="button-addon2"/>
+					</div>
+					
+					<button class="btn btn-secondary" type="submit" id="button-addon2">검색</button>
 			</form>
 			<!-- 표 -->
 			<div class="list">
@@ -128,7 +126,7 @@
 		
 		if(quantitySum != "") {
 			Swal.fire({
-				text: product_code + " 재고가 " + quantitySum + "개 입니다. 생산 지시 하시겠습니까?",
+				text: '${product_code} 재고가 ${quantitySum}개 입니다. 생산 지시 하시겠습니까?',
 				icon: "question",
 				showCancelButton: true,
 				confirmButtonColor: "#577D71", // confirm 버튼 색상
@@ -141,13 +139,12 @@
 // 					insertInstructions(prompt, product_code);
 					(async () => {
 					    const { value: quantity } = await Swal.fire({
-					        text: '생산 지시 수량을 입력하세요.',
+					        title: '생산 지시 수량을 입력하세요.',
 					        input: 'number',
 					        inputPlaceholder: '500개 단위로 숫자만 입력하세요'
 					    })
-
 					    if (quantity) {
-					    	insertInstructions(${quantity}, product_code);
+					    	insertInstructions(quantity, product_code);
 					    }
 					})()
 				} else { 

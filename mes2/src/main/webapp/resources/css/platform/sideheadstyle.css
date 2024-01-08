@@ -280,9 +280,9 @@ body{
 }
 
 /* 모달 */
-.modal a.close-modal {
-	display: none;
-}
+/* #updateModal { */
+/* 	height: 500px; */
+/* } */
 
 .list {
 	padding: 10px;
@@ -296,4 +296,9 @@ body{
 .explainCheckPw {
 	margin-left: 100px;
 	font-size: 12px;
+}
+
+#modifyBtn {
+	background-color: #577D71;
+	border: none;
 }
