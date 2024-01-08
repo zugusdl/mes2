@@ -86,6 +86,8 @@ public class controller1 {
 		int totalProduct = mService.totalPd();
 		Integer totalInP = mService.totalIn();
 		Integer totalOutP = mService.totalOut();
+		Integer totalOk = mService.totalOk();
+		Integer totalNo = mService.totalNo();
 		MemberDTO resultDTO = mService.memberLogin(dto);
 		
 		
@@ -105,8 +107,8 @@ public class controller1 {
 			session.setAttribute("totalProduct", totalProduct);
 			session.setAttribute("totalIn", totalInP);
 			session.setAttribute("totalOut", totalOutP);
-			
-			
+			session.setAttribute("totalOk", totalOk);
+			session.setAttribute("totalNo", totalNo);
 				
 			
 			if (remember != null && remember.equals("chk")) {

@@ -9,7 +9,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/main/weather.js"></script>
 
 
-
+ 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -74,7 +74,7 @@ div p {
 
 #weather-card-frame{
 	margin-left : 50px;
-	background-image: url('/resources/img/people.png');
+	background-image: url('/resources/img/mainpage/people.png');
  	background-size: contain; /* 배경 이미지를 요소에 맞춰서 보여주도록 설정 */
     background-repeat: no-repeat;
     background-position: center bottom;	
@@ -371,13 +371,20 @@ div p {
 
 										],
 										eventColor : '#378006'
-
+										
 									});
 
 							calendar.render();
 						});
 	</script>
 	
+	
+	
+	
+	
+	
+	
+   <!-- 구글차트 js -->
    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -385,21 +392,22 @@ div p {
 
       function drawChart() {
 		
-    	var totalInValue = ${totalIn != null && !totalIn.equals('[null]') ? totalIn : 0};  	
-      	var totalOutValue = ${totalOut != null && !totalOut.equals('[null]') ? totalOut : 0};  	  
+    	var totalOkValue = ${totalOk != null && !totalOk.equals('[null]') ? totalOk : 0};  	
+      	var totalNoValue = ${totalNo != null && !totalNo.equals('[null]') ? totalNo : 0};  	  
     	  
     	  
         var data = google.visualization.arrayToDataTable([
           ['인사', 'Hours per Day'],
-          ['입고',    totalInValue],
-          ['출고',      totalOutValue],
-          ['생산',  ${totalProduct}]
+          ['양품',    totalOkValue],
+          ['불량품',      totalNoValue]
+        
  
         ]);
 
         var options = {
-          title: '생산/입고/출고현황',
-          backgroundColor: '#F5FBF0'
+          title: '불량품비율',
+          backgroundColor: '#F5FBF0',
+          is3D: true
        	  
         };
 

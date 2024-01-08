@@ -129,15 +129,19 @@
   	
   	
   	
+  	<!-- 합산 양품갯수 -->
+  	<select id="okProduct" resultType="Integer">
+  		select sum(quantity) AS total_quantity from instructions
+  	</select>
+  	
   
   
   
   
-  
-  
-  
-  
-  
+  	<!--  합산 불량품갯수 -->
+	<select id="noProduct" resultType="Integer">
+	  	 select sum(fault) AS total_quantity from instructions
+	</select>
   
   
   

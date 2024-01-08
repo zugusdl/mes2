@@ -165,8 +165,8 @@
     <ul class="nav-links">
     
     <c:choose>
-     <c:when test="${auth.equals('시스템관리')}">
-       <c:if test="${status eq 'Y' }">
+     <c:when test="${auth.equals('시스템관리') && id.equals('admin')}">
+       <c:if test="${status eq 'Y'&& id.equals('admin') }">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -200,9 +200,10 @@
     </c:otherwise>
   </c:choose> 
       
+      
    <c:choose>
-     <c:when test="${auth.equals('기준정보관리')}">
-      <c:if test="${status eq 'Y' }">
+  	<c:when test="${auth.equals('기준정보관리') || id.equals('admin') }">
+    	<c:if test="${status eq 'Y' || id.equals('admin') }">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -233,24 +234,31 @@
               </script>
       	</c:if>
      </c:when>
-    <c:otherwise>
-     <li>
+ <c:otherwise>
+    <li>
       <div class="iocn-link">
-        <a href="#" onclick="Deny()">
-          <i class="fa-solid fa-database"></i>
-          <span class="link_name">기준정보관리</span>
-        </a>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-     </li>
-    </c:otherwise>
-   </c:choose> 
+        <c:choose>
+          <c:when test="${not id.equals('admin')}">
+            <a href="#" onclick="Deny()">
+          </c:when>
+          <c:otherwise>
+            <a href="#">
+          </c:otherwise>
+        </c:choose>
+        <i class="fa-solid fa-database"></i>
+        <span class="link_name">기준정보관리</span>
+      </a>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </li>
+ </c:otherwise>
+</c:choose> 
    
    
    
   <c:choose>
-     <c:when test="${auth.equals('영업관리')}">
-      <c:if test="${status eq 'Y' }">
+     <c:when test="${auth.equals('영업관리') || id.equals('admin')}">
+      <c:if test="${status eq 'Y' || id.equals('admin')}">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -281,23 +289,30 @@
               </script>
       	</c:if>
      </c:when>
-    <c:otherwise>
-     <li>
-      <div class="iocn-link">
-        <a href="#" onclick="Deny()">
-			<i class="fa-solid fa-building"></i>
-          <span class="link_name">영업관리</span>
-        </a>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-     </li>
-    </c:otherwise>
-  </c:choose> 
+	<c:otherwise>
+	    <li>
+	      <div class="iocn-link">
+	        <c:choose>
+	          <c:when test="${not id.equals('admin')}">
+	            <a href="#" onclick="Deny()">
+	          </c:when>
+	          <c:otherwise>
+	            <a href="#">
+	          </c:otherwise>
+	        </c:choose>
+	        <i class="fa-solid fa-database"></i>
+	        <span class="link_name">영업관리</span>
+	      </a>
+	      <i class="fa-solid fa-chevron-down"></i>
+	    </div>
+	  </li>
+	 </c:otherwise>
+	</c:choose> 
       
       
    <c:choose>
-     <c:when test="${auth.equals('생산관리')}">
-      <c:if test="${status eq 'Y' }">
+     <c:when test="${auth.equals('생산관리') || id.equals('admin')}">
+      <c:if test="${status eq 'Y' || id.equals('admin')}">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -328,22 +343,31 @@
               </script>
       	</c:if>
      </c:when>
-    <c:otherwise>
-     <li>
-      <div class="iocn-link">
-        <a href="#" onclick="Deny()">
-			<i class="fa-solid fa-industry"></i>
-          <span class="link_name">생산관리</span>
-        </a>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-     </li>
-    </c:otherwise>
-  </c:choose> 
+     
+      <c:otherwise>
+	    <li>
+	      <div class="iocn-link">
+	        <c:choose>
+	          <c:when test="${not id.equals('admin')}">
+	            <a href="#" onclick="Deny()">
+	          </c:when>
+	          <c:otherwise>
+	            <a href="#">
+	          </c:otherwise>
+	        </c:choose>
+	        <i class="fa-solid fa-database"></i>
+	        <span class="link_name">생산관리</span>
+	      </a>
+	      <i class="fa-solid fa-chevron-down"></i>
+	    </div>
+	  </li>
+	 </c:otherwise>
+	</c:choose> 
+  
   
    <c:choose>
-     <c:when test="${auth.equals('자재관리')}">
-      <c:if test="${status eq 'Y' }">
+     <c:when test="${auth.equals('자재관리') || id.equals('admin')}">
+      <c:if test="${status eq 'Y' || id.equals('admin')}">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -374,17 +398,26 @@
               </script>
       	</c:if>
      </c:when>
-    <c:otherwise>
-     <li>
-      <div class="iocn-link">
-        <a href="#" onclick="Deny()">
-			<i class="fa-solid fa-warehouse"></i>
-          <span class="link_name">자재관리</span>
-        </a>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-     </li>
-    </c:otherwise>
+     
+     
+     <c:otherwise>
+	    <li>
+	      <div class="iocn-link">
+	        <c:choose>
+	          <c:when test="${not id.equals('admin')}">
+	            <a href="#" onclick="Deny()">
+	          </c:when>
+	          <c:otherwise>
+	            <a href="#">
+	          </c:otherwise>
+	        </c:choose>
+	        <i class="fa-solid fa-database"></i>
+	        <span class="link_name">자재관리</span>
+	      </a>
+	      <i class="fa-solid fa-chevron-down"></i>
+	    </div>
+	  </li>
+	 </c:otherwise>
   </c:choose> 
   
   
