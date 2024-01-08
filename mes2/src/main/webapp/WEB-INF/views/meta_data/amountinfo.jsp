@@ -38,7 +38,7 @@
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
 		<div class="son_serch">
 			<form action="/amount/firstpage" method="POST">
-				<span>완제품 검색 : </span>			
+				<span></span>			
 				<input type="text" name="search" placeholder="완제품 코드를 입력하세요" />
 				<input type="submit" value="검색"/>
 			</form>

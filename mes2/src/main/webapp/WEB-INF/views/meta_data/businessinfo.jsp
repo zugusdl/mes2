@@ -38,8 +38,8 @@
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
 		<div class="son_serch">
 			<form action="/business/firstpage" method="POST">
-				<span>등록기간</span>			
-				<input type="text" name="search" placeholder="검색어를 입력하세요" />
+				<span></span>			
+				<input type="text" name="search" placeholder="거래처명을 입력하세요" />
 				<input type="submit" value="검색"/>
 			</form>
 			
