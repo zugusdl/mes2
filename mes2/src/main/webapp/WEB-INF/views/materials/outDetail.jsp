@@ -13,56 +13,45 @@
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/materials/outDetail.css">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
-	<!-- 검색창 -->
 	<div class="container">
 		<section class="section1">
-			<!-- 표 -->
 			<div class="list">
-				<div class="list-btn">
-<!-- 					<button type="button" class="btn btn-secondary" id="addbtn" onclick="insertOrder()">발주 신청</button> -->
-				</div>
-
-				<div class="list-box">
-					<form action="test" class="list-form">
+				<form action="/insertOut" method="post" class="list-form">
+					<div class="list-btn">
+					</div>
+					<div class="list-box">
 						<table class="table table-hover">
 							<thead>
 								<tr class="table-success">
-									<th scope="col">출고코드</th>
-									<th scope="col">출고품목</th>
+									<th scope="col"></th>
+									<th scope="col">로트번호</th>
+									<th scope="col">품목코드</th>
 									<th scope="col">출고수량</th>
-									<th scope="col">출고유형</th>
-									<th scope="col">출고요청일</th>
-									<th scope="col">출고등록일</th>
+									<th scope="col"></th>
 								</tr>
 							</thead>
-							<tbody>
-								<c:forEach var="oList" items="${oList }">
-									<tr onclick="getOutDetail('${oList.out_index }')" class="selectOrder">
-										<td>${oList.out_code }</td>
-										<td>${oList.product_code }</td>
-										<td>${oList.quantity } ${oList.pdto.unit}</td>
-										<td>
-											<c:choose>
-												<c:when test="${oList.status eq 'waiting' }">
-													<i class="fa-solid fa-circle fa-2xs" style="color: #ff9924;"></i> 요청
-												</c:when>
-												<c:when test="${oList.status eq 'complete' }">
-													<i class="fa-solid fa-circle fa-2xs" style="color: #6b6b6b;"></i> 완료
-												</c:when>
-											</c:choose>
-										</td>
-										<td>${oList.out_request_date }</td>
-										<td>${oList.out_regdate }</td>
-									</tr>
-								</c:forEach>
+							<tbody id="outProductList">
+								<c:if test="${!empty opList }">
+										<c:forEach var="opDTO" items="${opList }">
+											<tr>
+												<td></td>
+												<td>${opDTO.pd_lot }</td>
+												<td>${opDTO.product_code }</td>
+												<td>${opDTO.out_quantity }</td>
+												<td></td>
+											</tr>
+										</c:forEach>
+								</c:if>
 							</tbody>
 						</table>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 		</section>
 

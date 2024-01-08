@@ -28,22 +28,22 @@
 				</thead>
 				<c:forEach var="member" items="${memberlist}">
 				<tbody>
-					<td>${member.emp_id}</td>
-					<td>${member.emp_pw}</td>
-					<td>${member.emp_name}</td>
-					<td>${member.emp_department}</td>
-					<td>${member.emp_position}</td>
-					<td>${member.emp_jumin}</td>
-					<td>${member.emp_joindate}</td>
-					<td>${member.emp_tel}</td>
+					<td>${member.user_id}</td>
+					<td>${member.user_pw}</td>
+					<td>${member.user_name}</td>
+					<td>${member.user_department}</td>
+					<td>${member.user_position}</td>
+					<td>${member.user_jumin}</td>
+					<td>${member.user_joindate}</td>
+					<td>${member.user_tel}</td>
 					   <form method="post">
 					<td>
-						<a href="/login/adminupdate?emp_id=${member.emp_id}">
+						<a href="/login/adminupdate?user_id=${member.user_id}">
 							<button type="button" class="btn btn-primary">수정</button>
 						</a>
 					</td>
 					<td>
-						<a href="/login/admindelete?emp_id=${member.emp_id}">
+						<a href="/login/admindelete?user_id=${member.user_id}">
 							<button type="button" class="btn btn-danger">삭제</button>
 						</a>					
 					</td>

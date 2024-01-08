@@ -36,7 +36,7 @@ public interface PlatformService {
 	public int getTotalOrderCount(SearchDTO sDTO) throws Exception;
 	
 	// 주문 상세 조회
-	public List<SoiDTO> getOrderDetail(String order_code) throws Exception;
+	public SoiDTO getOrderDetail(String order_code) throws Exception;
 	
 	// 주문 수정
 	public void modifyOrder(List<SopDTO> sopList) throws Exception;
@@ -46,4 +46,10 @@ public interface PlatformService {
 	
 	// 비밀번호 변경
 	public void modifyPw(ModifyPwDTO mpDTO) throws Exception;
+
+	// 수령 완료(서명으로)
+	public void completeOrder(SoiDTO sdto) throws Exception;
+	
+//	// 수령 완료(버튼으로)
+//	public void receiveDelivery(String order_code) throws Exception;
 }
