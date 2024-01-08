@@ -242,7 +242,7 @@ body{
 
 
   <!-- 주소입력 js  -->
-<script src="${pageContext.request.contextPath}/resources/img/address.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/join/address.js"></script>
 
 	
 	

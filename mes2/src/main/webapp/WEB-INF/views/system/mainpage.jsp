@@ -6,7 +6,7 @@
 <link href="${pageContext.request.contextPath}/resources/fullcalander/main.css" rel='stylesheet' />
 <script src="${pageContext.request.contextPath}/resources/fullcalander/main.js"></script>
 <script src="${pageContext.request.contextPath}/resources/fullcalander/locales-all.js"></script>
-<script src="${pageContext.request.contextPath}/resources/img/weather.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main/weather.js"></script>
 
 
 

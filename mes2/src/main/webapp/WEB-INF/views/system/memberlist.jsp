@@ -167,7 +167,7 @@
 				<c:forEach var="member" items="${memberlist}">
                     <tbody>
 	                    <td>${member.user_num}</td>
-						<td><img src="${pageContext.request.contextPath}/resources/img/${member.user_img}" class="profile-img" width="20" height="20"></td>
+						<td><img src="${pageContext.request.contextPath}/resources/img/members/${member.user_img}" class="profile-img" width="20" height="20"></td>
 						<td>${member.user_id}</td>
 						<td>${member.user_pw}</td>
 						<td>${member.user_name}</td>

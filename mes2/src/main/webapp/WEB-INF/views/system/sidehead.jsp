@@ -414,7 +414,7 @@
 	  <li>
 	    <div class="profile-details">
 	      <div class="profile-content">
-	        <img src="${pageContext.request.contextPath}/resources/img/${img}" class="user-img">
+	        <img src="${pageContext.request.contextPath}/resources/img/members/${img}" class="user-img">
 	      </div>
 	      	<div class="name-job">
 		        <div class="profile_name">${name}(${department})</div>
@@ -430,10 +430,10 @@
   
   <section class="home-section">
     <div class="home-content">
-      <span class="text-header"><img src="${pageContext.request.contextPath}/resources/img/logo2.jpg" style="width : 40px; height:32px;">&nbsp;AWESOMETIC</span>
+      <span class="text-header"><img src="${pageContext.request.contextPath}/resources/img/icons/logo2.jpg" style="width : 40px; height:32px;">&nbsp;AWESOMETIC</span>
       	  <div class="user-greeting">
 	      	  <div class="user-img-container">
-	      	  	<img src="${pageContext.request.contextPath}/resources/img/${img}" class="user-img">
+	      	  	<img src="${pageContext.request.contextPath}/resources/img/members/${img}" class="user-img">
 	      	  </div>
 			<p class="id-greeting">${id } 님 안녕하세요</p>
 			

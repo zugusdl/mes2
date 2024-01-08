@@ -26,7 +26,7 @@
 <div class="card mb-3" style="max-width: 540px;">
   <div class="row g-0">
     <div class="col-md-4">
-		<img src="${pageContext.request.contextPath}/resources/img/${memberDTO.user_img}" class="info-profile-img">    
+		<img src="${pageContext.request.contextPath}/resources/img/members/${memberDTO.user_img}" class="info-profile-img">    
 	</div>
     <div class="col-md-8">
       <div class="card-body">
