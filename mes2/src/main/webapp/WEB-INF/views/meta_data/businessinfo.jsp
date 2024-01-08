@@ -37,6 +37,7 @@
 <script src="/resources/js/metadata/business.js"></script>
 </head>
 
+
 <body>
 <%@ include file="../system/sidehead.jsp" %>
 	<!-- 내용 칸 -->
