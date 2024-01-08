@@ -32,7 +32,7 @@
 </head>
 
 <body>
-<%@ include file="../sidehead/sidehead.jsp" %>
+<%@ include file="../system/sidehead.jsp" %>
 	<!-- 내용 칸 -->
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
