@@ -181,11 +181,11 @@ function submitData2(submitbtn2) {
     var hiddenUnit = row.find('.b select[name="upd_unit"] option:selected').text();    
     var hiddenCost = row.find('.b input[name="cost"]').val();
     var hiddenPrice = row.find('.b input[name="price"]').val();
-    var hiddenProductionStatus = row.find('.b select[name="upd_status"] option:selected').text();
+    var hiddenProductionStatus = row.find('.b select[name="upd_status"]').val();
 
     // 수정 행에서 카테고리, 단위 확인 alert 창
-    if (hiddenCategory === "카테고리" || hiddenUnit == "단위") {
-        alert('카테고리와 단위를 다시 확인해주세요.');            
+    if (hiddenCategory === "카테고리" || hiddenUnit == "단위" || hiddenProductionStatus == "생산유무") {
+        alert('카테고리, 단위, 생산유무를 다시 확인해주세요.');            
         
         return;
     }

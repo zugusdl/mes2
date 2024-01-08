@@ -136,7 +136,7 @@ public class  Product_Controller{
 				logger.debug(" oFileName : "+ofileName);
 						
 				// 실제 폴더 생성
-				File file = new File("C:\\Users\\qhtjd\\git\\mes2\\mes2\\src\\main\\webapp\\resources\\img\\metadata\\"+ofileName);
+				File file = new File("C:\\Users\\ITWILL\\git\\mes2\\mes2\\src\\main\\webapp\\resources\\img\\metadata\\"+ofileName);
 				// 파일업로드
 				if(mFile.getSize() != 0) { //첨부파일이 있을때
 					if(!file.exists()) { // 파일,디렉터리(폴더)가 존재하는지 체크

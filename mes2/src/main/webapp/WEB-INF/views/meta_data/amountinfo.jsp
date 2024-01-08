@@ -62,7 +62,7 @@
 					<th scope="col" style="width: 0px; "></th>
 					<th scope="col">완제품코드</th>
 					<th scope="col">원재료코드</th>
-					<th scope="col">량</th>
+					<th scope="col">용량</th>
 					<th scope="col">단위</th>
 					<th scope="col">등록날짜</th>
 					<th scope="col">수정날짜</th>													

@@ -92,7 +92,7 @@
 					<td><input type="text" name="call" size="5"></td>				
 					<td><input type="text" name="fax" size="5"></td>
 					<td><input type="text" name="email" size="5"></td>
-					<td>1</td>														
+					<td><i class="fa-solid fa-circle fa-2xs" style="color: #01DF01;"></i>계약 중</td>														
 					<td><button type="button" class="btn btn-secondary" id="submitbtn" onclick="submitData()" style="display: none;">저장</button></td>														
 				</tr>	
 													
@@ -111,7 +111,16 @@
 					<td class="a">${blist.call }</td>
 					<td class="a">${blist.fax }</td>
 					<td class="a">${blist.email }</td>
-					<td class="a">${blist.contract_status}</td>
+					<td class="a">
+                    <c:choose>
+                       <c:when test="${blist.contract_status eq '1' }">
+                          <i class="fa-solid fa-circle fa-2xs" style="color: #01DF01;"></i> 계약 중
+                       </c:when>
+                       <c:when test="${blist.contract_status eq '0' }">
+                          <i class="fa-solid fa-circle fa-2xs" style="color: #848484;"></i> 계약만료
+                       </c:when>
+                    </c:choose>                            
+					</td>
 					<td class="a" style="content: '\00a0'"></td>				
 									
 					<!-- 거래처 수정 시 나타나는 행 -->									
@@ -128,7 +137,14 @@
 					<td class="b" style="display: none;"><input type="text" name="call" size="5" value="${blist.call }"></td>
 					<td class="b" style="display: none;"><input type="text" name="fax" size="5" value="${blist.fax }"></td>
 					<td class="b" style="display: none;"><input type="text" name="email" size="5" value="${blist.email }"></td>
-					<td class="b" style="display: none;"><input type="text" name="contract_status" size="5" value="${blist.contract_status }"></td>
+					<td class="b" style="display: none;">
+					<select id="upd_status" name="upd_status">
+							<option>거래상황</option>
+							<option value="1">계약 중</option>
+							<option value="0">계약 중단</option>
+					</select>
+					
+					</td>
 					<td class="b" style="display: none; width: 80px; ">
 						<button type="button" style="margin: 10px 0;" class="btn btn-secondary" id="submitbtn2" onclick="submitData2(this)" >수정</button>
 						<button type="button" style="margin: 10px 0;" class="btn btn-secondary" id="submitbtn3" onclick="submitData3(this)" >삭제</button>																		 									

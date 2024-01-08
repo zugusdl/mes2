@@ -164,7 +164,15 @@ function submitData2(submitbtn2) {
     var call = row.find('.b input[name="call"]').val();
     var fax = row.find('.b input[name="fax"]').val();
     var email = row.find('.b input[name="email"]').val();
-    var contractStatus = row.find('.b input[name="contract_status"]').val();
+    var contractStatus = row.find('.b select[name="upd_status"]').val();
+    
+    // 추가 행에서 카테고리, 단위 확인 alert 창
+    if (contractStatus === "거래상황") {        
+    	alert('거래상황을 다시 확인해주세요.');            
+        
+    	return;
+    }
+    
     
     var data = {
         

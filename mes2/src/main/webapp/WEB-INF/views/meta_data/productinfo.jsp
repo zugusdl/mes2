@@ -67,7 +67,7 @@
 					<th scope="col">재고단위</th>
 					<th scope="col">원가</th>
 					<th scope="col">단가</th>
-					<th scope="col">취급유무</th>
+					<th scope="col">생산여부</th>
 					<th scope="col">등록일</th>
 					<th scope="col" width="100px">사진</th>
 					<th scope="col"></th>									
@@ -85,7 +85,7 @@
 					<td><select id="ins_unit" name="ins_unit"></select></td>
 					<td><input type="text" name="cost" size="5"></td>
 					<td><input type="text" name="price" size="5"></td>				
-					<td>1</td>				
+					<td><i class="fa-solid fa-circle fa-2xs" style="color: #01DF01;"></i>생산 중</td>				
 					<td>[현재날짜]</td>				
 					<td>													
 						<img id="img" width="250px"/> 						
@@ -106,7 +106,16 @@
 					<td class="a">${plist.unit }</td>
 					<td class="a">${plist.cost }</td>
 					<td class="a">${plist.price }</td>
-					<td class="a">${plist.production_status }</td>
+					<td class="a">
+					<c:choose>
+                       <c:when test="${plist.production_status eq '1' }">
+                          <i class="fa-solid fa-circle fa-2xs" style="color: #01DF01;"></i> 생산 중
+                       </c:when>
+                       <c:when test="${plist.production_status eq '0' }">
+                          <i class="fa-solid fa-circle fa-2xs" style="color: #848484;"></i> 생산 중단
+                       </c:when>
+                    </c:choose>					
+					</td>
 					<td class="a">${plist.regdate }</td>
 					<td class="a"><img src="../../../../resources/img/metadata/${plist.ofileName }" width="200px"></td>
 					<td class="a" style="content: '\00a0'"></td>
@@ -121,9 +130,9 @@
 					<td class="b" style="display: none;"><input type="text" name="price" size="5" value="${plist.price }"></td>
 					<td class="b" style="display: none;">
 						<select id="upd_status" name="upd_status">
-							<option value="option1" selected>${plist.production_status }</option>
-							<option value="option1">1</option>
-							<option value="option2">0</option>
+							<option>생산유무</option>
+							<option value="1">생산 중</option>
+							<option value="0">생산 중단</option>
 						</select>
 					</td>
 					<td class="b" style="display: none;">${plist.regdate }</td>
