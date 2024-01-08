@@ -9,7 +9,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/main/weather.js"></script>
 
 
-
+ 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
