@@ -167,7 +167,7 @@ body{
   position: fixed;
   bottom: 0;
   width: 260px;
-  display: flex;
+/*   display: flex; */
   align-items: center;
   justify-content: space-between;
   background: #6E9888;
@@ -202,6 +202,7 @@ body{
   font-size: 18px;
   font-weight: 500;
   white-space: nowrap;
+    text-align: center;
 }
 .sidebar.close .profile-details i,
 .sidebar.close .profile-details .profile_name,
