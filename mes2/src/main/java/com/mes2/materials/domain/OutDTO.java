@@ -18,7 +18,7 @@ public class OutDTO {
 	private String out_type; // 출고 유형(P:생산/S:출하)
 	private Date out_request_date; // 출고 요청 일자
 	private Date out_regdate; // 출고 등록 일자
-	private productDTO pdto; // 상품코드에 해당하는 상품 정보
+	private productDTO pdto; // 상품 정보
 	private List<OpDTO> opList; // 출고 품목 리스트
 	
 	@Override
