@@ -50,5 +50,35 @@ public class ProductDAOImpl implements ProductDAO{
 		log.debug("ProductDAO : deleteByLot 호출");
 		return sqlSession.delete(NAMESPACE+".deleteByLot", lotList);
 	}
+
+	@Override
+	public String searchLastLot(String searchLot) {
+		
+		return sqlSession.selectOne(NAMESPACE+".getLastLot", searchLot);
+	}
+
+	@Override
+	public int insertProduct(ProductDTO productDTO) {
+		return sqlSession.insert(NAMESPACE+".insertProduct", productDTO);
+	}
+
+	@Override
+	public int updateProduct(ProductDTO productDTO) {
+		return sqlSession.update(NAMESPACE+".updateProduct", productDTO);
+	}
+
+	@Override
+	public int insertInWarehouse(ProductDTO productDTO) {
+		return sqlSession.insert(NAMESPACE+".insertInWarehouse",productDTO);
+	}
+
+	@Override
+	public int selectBySearchForTotalCount(ProductSearchParam productSearchParam) {
+		return sqlSession.selectOne(NAMESPACE+".selectBySearchForTotal",productSearchParam);
+	}									
+	
+	
+	
+	
 	
 }

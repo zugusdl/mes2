@@ -1,5 +1,7 @@
 package com.mes2.platform.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -14,4 +16,5 @@ public class MdbDTO {
 	private String fax; // 팩스번호
 	private String email; // 이메일
 	private boolean contract_status; // 거래유무
+	private String auth; // 권한설정
 }

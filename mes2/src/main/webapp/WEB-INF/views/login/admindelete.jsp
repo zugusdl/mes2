@@ -65,13 +65,13 @@ body{
 	   	<form action ="" method="post">
 		  <div class="mb-3">
 		    <label for="exampleInputEmail1" class="form-label">아이디</label>
-		    <input type="text" class="form-control" placeholder="아이디를입력하세요" value="${memberDTO.emp_id}" readonly>
+		    <input type="text" class="form-control" placeholder="아이디를입력하세요" value="${memberDTO.user_id}" readonly>
 		  </div>
 		  <div class="mb-3">
 		    <label for="exampleInputPassword1" class="form-label">비밀번호</label>
-		    <input type="password" class="form-control" placeholder="비밀번호를입력하세요" name="emp_pw" id="exampleInputPassword1">
+		    <input type="password" class="form-control" placeholder="비밀번호를입력하세요" name="user_pw" id="exampleInputPassword1">
 		  </div>
-		  	<button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">회원탈퇴</button>
+		  	<button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">사원삭제</button>
 		</form>
    </div>
 </div>

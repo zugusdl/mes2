@@ -16,6 +16,9 @@
     <!-- Font Awesome 라이브러리 추가 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
+   
    </head>
 <body>
   <div class="sidebar close">
@@ -64,12 +67,20 @@
         </ul>
       </li>
       <li>
-        <a href="#">
-          <i class="fa-solid fa-industry"></i>
-          <span class="link_name">생산관리</span>
-        </a>
-        <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Analytics</a></li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class="fa-solid fa-building"></i>
+            <span class="link_name">생산관리</span>
+          </a>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Posts</a></li>
+          <li><a href="/instructions/request">생산요청관리</a></li>
+          <li><a href="/instructions/search">작업지시관리</a></li>
+          <li><a href="/productionLine/search">라인관리</a></li>
+          <li><a href="/product/search">생산제품</a></li>
+          <li><a href="/validation/search">품질검사</a></li>
         </ul>
       </li>
       <li>
@@ -158,8 +169,7 @@
   <script src="${pageContext.request.contextPath}/resources/js/sidehead/sideheadscript.js"></script> <!-- 사이드바 script -->
 
   <!-- 부트스트랩 js 추가-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 </html>

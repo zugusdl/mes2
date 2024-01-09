@@ -1,18 +1,19 @@
 package com.mes2.materials.domain;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
 public class StockDTO {
+	// 재고관리 품목 DTO
+	private int stock_index; // 인덱스
+	private String product_code; // 품목코드
+	private String warehouse_code; // 창고코드
+	private int quantity; // 현재 재고
+	private String category; // 부자재,원재료,완제품
+	private String pd_lot; // 로트번호
+	private Date regdate; // 등록일자
 
-	private int stock_index;
-	private String pd_lot;
-	private String product_code;
-	private String name;
-	private int quantity;
-	private String status;
-	private String category;
-	private String out_code;
-	private String in_code;
-	private String warehouse_code;
+	private int useQuantity; // 출고 수량	
 }
