@@ -463,41 +463,18 @@ function moClear(){
 
 		 // 시작일 설정 (신청일 3주후)
 		 	var requestDate = new Date(data.request_date);
-		 	// alert(requestDate);
-		 	//var minDate = new Date();
-		 	//alert(minDate);
+		 	
 		 	var minDate = new Date(requestDate);
 		    minDate.setDate(requestDate.getDate() + 1);
-		    //alert(minDate);
+		 
 		    
 		// 마지막일 설정 (납품요청일 4일전)    
 		    var orderDate = new Date(data.order_date);
-            // alert(orderDate);
+          
 		    var maxDate = new Date(orderDate);
 		    maxDate.setDate(orderDate.getDate() - 3);
-		    //alert(maxDate);
 		
-		 // 만약 오늘 기준 신청일3주후(B)가 과거면 오늘이 min
-		// 오늘 기준 B가 미래면 B가 min
-//		    var startDate;
-//		    
-//		    if (today >= maxDate) {
-//		    	  Swal.fire({
-//		    	    title: "일정을 변경할 수 없습니다. ",
-//		    	    text: "이미 출하되었습니다.",
-//		    	    icon: "error"
-//		    	  }).then((result) => {
-//		    	    return; 
-//		    	  });
-//		    	}
-		    	
 
-		    //else if (today >minDate) {
-//		    	startDate = today; //오늘이 이후 
-//		    	alert("오늘이 미래");
-//		    } else {
-//		        startDate = minDate; // 같은경우
-//		    }
 		    
 		    
 		 Swal.fire({
