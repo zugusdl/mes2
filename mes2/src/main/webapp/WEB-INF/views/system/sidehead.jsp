@@ -213,10 +213,10 @@
           <i class="fa-solid fa-chevron-down"></i> <!--드롭다운 아이콘 클래스명 지정하는 곳-->
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Category</a></li>
-          <li><a href="#">HTML & CSS</a></li>
-          <li><a href="#">JavaScript</a></li>
-          <li><a href="#">PHP & MySQL</a></li>
+          <li><a class="link_name" href="#">기준정보관리</a></li>
+          <li><a href="http://localhost:8088/product/firstpage">품목정보</a></li>
+          <li><a href="http://localhost:8088/amount/firstpage">BOM정보</a></li>
+          <li><a href="http://localhost:8088/business/firstpage">거래처정보</a></li>
         </ul>
       </li>
      </c:if>
