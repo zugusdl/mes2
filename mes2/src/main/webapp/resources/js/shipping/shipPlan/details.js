@@ -49,6 +49,7 @@ function goContent(order_code){
  }
  
  function moInfo(data, order_code){
+	 
 	 var title = "<div>주문번호 : "+order_code+"</div>";
 	 $("#exampleModalLabel").html(title);
 	 var listHtml = "<p>&lt;회사정보></p>"
@@ -73,35 +74,27 @@ function goContent(order_code){
 
 	  var listHtml = "<div class='content-box'>"
 		  listHtml += "<div class='content-container'>"
-	 listHtml += "<div class='content-title'>"
-		 
-		  //listHtml += "<div class='list-btn'>";
-		
-		  //listHtml += "<div class='content-title'>" 
+	      listHtml += "<div class='content-title'>"		  
 		  listHtml += "<div>"
-		  listHtml += "<p class='list-font' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  
-		  //listHtml += "<button type='button' class='btn btn-warning info-btn'  onclick='info(\""+order_code+"\")'>상세</button>";	
+		  listHtml += "<p class='list-font' data-bs-toggle='modal' data-bs-target='#shippngPlanModal' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  
 		  listHtml += "</div>"
 		  listHtml += " <button type='button' class='btn-close' aria-label='Close' onclick='cancle()'></button>"
-		  //listHtml += "</div>"
 		  listHtml += "</div>";
-	  listHtml += "<div class='list-box'>";
- 
-	 // listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
-	  
-	  listHtml += "<table class='table table-hover'>";
-	  listHtml += "<thead>";
-	  listHtml += "<tr class='table-success' >";
-	  listHtml += "<th scope='col'>수주번호</th>";
-	  listHtml += "<th scope='col'>제품명</th>";
-	  listHtml += "<th scope='col'>출하계획량</th>";
-	  listHtml += "<th scope='col'>제품진행</th>";
-	  listHtml += "<th scope='col'>처리</th>";
-	  listHtml += "<th scope='col'>출하준비</th>";
-	  listHtml += "</tr>";
-	  listHtml += "</thead>";
-	  
-	  listHtml += "<tbody>";
+	      listHtml += "<div class='list-box'>";
+ 	  
+		  listHtml += "<table class='table table-hover'>";
+		  listHtml += "<thead>";
+		  listHtml += "<tr class='table-success' >";
+		  listHtml += "<th scope='col'>수주번호</th>";
+		  listHtml += "<th scope='col'>제품명</th>";
+		  listHtml += "<th scope='col'>출하계획량</th>";
+		  listHtml += "<th scope='col'>제품진행</th>";
+		  listHtml += "<th scope='col'>처리</th>";
+		  listHtml += "<th scope='col'>출하준비</th>";
+		  listHtml += "</tr>";
+		  listHtml += "</thead>";
+		  
+		  listHtml += "<tbody>";
 	  
 	  $.each(data,function(index,obj){
 		  listHtml += "<tr>";		

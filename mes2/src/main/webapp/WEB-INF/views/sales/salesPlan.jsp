@@ -21,34 +21,9 @@
     
     <link rel="stylesheet" href="/resources/css/sales/salesPlan.css">
    
-    <script type="text/javascript">
-    //페이지번호클릭시이동하기 
-    $(document).ready(function() {
-        var pageFrm = $("#pageForm");
 
-        $(".page-action a").on("click", function(e) {
-            
-            e.preventDefault(); //a태그기능막기
-            var page = $(this).attr("href"); //페이지번호
-            pageFrm.find("#page").val(page);
-            pageFrm.submit();
-        });
-       
-        
-    });
-</script>
 
-<style>
-a {
-  text-decoration: none; /* 밑줄 제거 */
-  color:#000000; /* 원하는 텍스트 색상으로 변경 */
-}
 
-a:hover {
-  
-  color: #95c4a2; /* 마우스 호버 시에는 다른 텍스트 색상으로 변경 */
-}
-</style>
 
   </head>
   
@@ -128,7 +103,7 @@ a:hover {
           <button type='button' class='btn btn-secondary' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절</button>
           <!-- Example single danger button -->
 			<div class="btn-group">
-			  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
+			  <button type="button" class="btn dark-green-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
 			    <ul class="dropdown-menu">
 			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesPlan'">신청수주</li>
 			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesPlan'">대기 ${status.waitingCnt }건</li>
@@ -162,8 +137,7 @@ a:hover {
               <tbody>
              <c:forEach var="dto" items="${list }">
                 <tr>                  
-                  <td scope="row"><input type="checkbox" class="ck" value="${dto.order_code }" name="order_code"/></td>
-                 <%--  <td><a href="javascript:goContent('${dto.order_code }')"> ${dto.order_code } </a></td>  --%>
+                  <td scope="row"><input type="checkbox" class="ck" value="${dto.order_code }" name="order_code"/></td>               
                   <td onclick="goContent('${dto.order_code }')"><span class="od-content">${dto.order_code }</span></td>
                   <td>${dto.company_name }</td>         
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.order_date}"/></td>

@@ -32,7 +32,7 @@ public class ShippingServiceImpl implements ShippingService {
 	@Override
 	public List<ShippingDTO> shippingList(Criteria cri) {
 		logger.debug(" S : shippingList(ShippingDTO sdt) ");
-		System.out.println("cri@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+cri);
+		
 		List<ShippingDTO> list = sdao.getShippingList(cri);
 		
 		for(ShippingDTO sdto : list) {
@@ -76,6 +76,8 @@ public class ShippingServiceImpl implements ShippingService {
 		return ShippingPlanlist;
 	}
 	
+	
+	
 	@Override
 	public List<String> productStatusCnt(String order_code) {
 		logger.debug(" S :  productStatusCnt(ShippingDTO sdto) ");
@@ -96,11 +98,6 @@ public class ShippingServiceImpl implements ShippingService {
 		return sdao.getPlanContent(order_code);
 	}
 	
-//	@Override
-//	public List<ShippingDTO> planSearch(SearchDTO sed) {
-//		logger.debug(" S : planSearch(SearchDTO sedto)");
-//		return sdao.planSearch(sed);
-//	}
 	 
 	@Override
 		public ShippingDTO getId(String order_code) {
@@ -162,11 +159,7 @@ public class ShippingServiceImpl implements ShippingService {
 		return sdto;
 	}
 	
-//	@Override
-//	public List<ShippingDTO> statusList(String ship_status) {
-//		
-//		return sdao.getStatusList(ship_status);
-//	}
+
 	
 	@Override
 	public String shipRegister(String order_code) {
@@ -183,61 +176,19 @@ public class ShippingServiceImpl implements ShippingService {
 		
 	}
 	
-//	@Override
-//	public List<ShippingDTO> UserShipPlanList(String user_id) {
-//		
-//		return sdao.getUserShipPlanList(user_id);
-//	}
+
 	
 	@Override
 	public List<ShippingDTO> instructionList(Criteria cri) {
 		List<ShippingDTO> list = sdao.instructionList(cri);
-		//List<ShippingDTO> list =sdao.shippingTotalCount(cri);
-//		Date today = new Date();
-//
-//		for(ShippingDTO sdt : list) {
-//			Date shipd = sdt.getShip_date(); //scheduled_date가져오기 출하지시일
-//			Calendar shipCal = Calendar.getInstance();
-//			shipCal.setTime(shipd);
-//			
-//			Calendar calendarToday = Calendar.getInstance();
-//	        calendarToday.setTime(today); //오늘날짜
-//	        
-//	        int result =shipCal.compareTo(calendarToday);
-//	        
-//	        if (result > 0) {
-//	            //출하지시일이 오늘 이후인 경우 
-//	            sdt.setProgress_status("waiting");
-//	            
-//	        } 
-//	        if (result <= 0) {
-	         
-	            // 출하지시일이 오늘 이전인 경우
-//	            sdt.setProgress_status("shipping");
-//	        	sdt.setProgress_status("out");
-//	            sdt.setSales_status("deliver");
-//	            sdao.updateSaleStatus(sdt);
-//	            
-//	        } else {
-//	            //출하지시일이 오늘인 경우
-//	            sdt.setProgress_status("progressing");
-//	        }
-//
-//	        sdao.updateShipProgressing(sdt);
-//			
-//		}
-//		
-		
-		
-//	}
+
 		return list;
 	}
 	
-
+	
 	@Override
 	public ShippingDTO countShipProgressing() {
 		ShippingDTO sdto = new ShippingDTO();
-		//sdto.setPlanCnt(sdao.countShipProgressing("progressing"));
 		sdto.setWaitingCnt(sdao.countShipProgressing("waiting"));
 		sdto.setInstructionCnt(sdao.countShipProgressing("shipping"));
 		sdto.setCompleteCnt(sdao.countShipProgressing("complete"));
@@ -245,11 +196,7 @@ public class ShippingServiceImpl implements ShippingService {
 		return sdto;
 	}
 	
-//	@Override
-//	public List<ShippingDTO> progressList(String progress_status) {
-//		
-//		return sdao.GetprogressList(progress_status);
-//	}
+
 	
 	@Override
 	public List<ShippingDTO> shipContent(String order_code) {
@@ -266,17 +213,7 @@ public class ShippingServiceImpl implements ShippingService {
 		
 	}
 	
-//	@Override
-//	public List<ShippingDTO> userInstructionList(String user_id) {
-//		
-//		return sdao.userInstructionList(user_id);
-//	}
-	
-//	@Override
-//	public List<ShippingDTO> shippingSearch(SearchDTO sed) {
-//		
-//		return sdao.shippingSearch(sed);
-//	}
+
 	
 	@Override
 	public int totalCount(Criteria cri) {
@@ -292,16 +229,18 @@ public class ShippingServiceImpl implements ShippingService {
 		return list.size();
 	}
 	
+	
+	
 	@Override
 	public void outComplete(String order_code) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@서비스도착!!!");
+		
 		ShippingDTO sdt = new ShippingDTO();
 		 sdt.setOrder_code(order_code);
 		 sdt.setProgress_status("shipping");
          sdt.setSales_status("deliver");
          sdao.updateSaleStatus(sdt);
          sdao.updateShipProgressing(sdt);
-         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@끛!!!");
+       
 	}
 	
 	@Override

@@ -54,11 +54,7 @@ public class SalesDAOImpl implements SalesDAO {
 		return sqlSession.selectOne(NAMESPACE+".getStockQuantity", sd);
 	}
 	
-//	@Override
-//	public List<SalesDTO> planSearch(SearchDTO sed) {
-//		logger.debug(" DAO : planSearch(SearchDTO sed) ");
-//		return sqlSession.selectList(NAMESPACE+".planSearch", sed);
-//	}
+
 	
 	@Override
 	public void registerPlan(PlanRegisterDTO pdto) {
@@ -86,11 +82,7 @@ public class SalesDAOImpl implements SalesDAO {
 		
 	}
 	
-//	@Override
-//	public List<SalesDTO> getSalesAcceptList() {
-//		logger.debug(" DAO : getSalesAcceptList()");
-//		return sqlSession.selectList(NAMESPACE+".getSalesAcceptList");
-//	}
+
 	
 	@Override
 	public List<SalesDTO> getAcceptContent(String order_code) {
@@ -150,10 +142,7 @@ public class SalesDAOImpl implements SalesDAO {
 		return sqlSession.selectOne(NAMESPACE+".checkOrdeDate",order_code);
 	}
 	
-//	@Override
-//	public List<SalesDTO> getNewSales() {		
-//		return sqlSession.selectList(NAMESPACE+".getNewSales");
-//	}
+
 	
 	@Override
 	public int getPlanWaitCnt() {
@@ -174,17 +163,7 @@ public class SalesDAOImpl implements SalesDAO {
 		return sqlSession.selectList(NAMESPACE+".makeOrderStates", order_code);
 	}
 	
-//	@Override
-//	public List<SalesDTO> getNewAccept() {
-//		
-//		return sqlSession.selectList(NAMESPACE+".getNewAccept");
-//	}
-//	
-//	@Override
-//	public List<SalesDTO> getUserAccept(String user_id) {
-//		
-//		return sqlSession.selectList(NAMESPACE+".getUserAccept", user_id);
-//	}
+
 	
 	@Override
 	public AcceptSaveDTO getOrderInfo(String order_code) {
@@ -198,17 +177,7 @@ public class SalesDAOImpl implements SalesDAO {
 		
 	}
 	
-//	@Override
-//	public List<SalesDTO> getInstructionsList(String instructions) {
-//		
-//		return sqlSession.selectList(NAMESPACE+".getInstructionsList", instructions);
-//	}
-	
-//	@Override
-//	public int totalCount(String sales_status) {
-//		
-//		return sqlSession.selectList(NAMESPACE+".totalCount",sales_status);
-//	}
+
 	
 	@Override
 	public List<SalesDTO> listCount(Criteria cri) {

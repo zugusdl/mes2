@@ -53,11 +53,7 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectList(NAMESPACE+".getPlanContent", order_code);
 	}
 
-//	@Override
-//	public List<ShippingDTO> planSearch(SearchDTO sed) {
-//		logger.debug(" DAO : planSearch(SearchDTO sed)");
-//		return sqlSession.selectList(NAMESPACE+".planSearch", sed);
-//	}
+
 	
 	@Override
 	public ShippingDTO getId(String order_code) {
@@ -101,11 +97,7 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectOne(NAMESPACE+".countShipStatus",ship_status );
 	}
 	
-//	@Override
-//	public List<ShippingDTO> getStatusList(String ship_status) {
-//		
-//		return sqlSession.selectList(NAMESPACE+".getStatusList",ship_status );
-//	}
+
 	
 	@Override
 	public void updateShipDate(ShippingDTO sdto) {
@@ -124,11 +116,7 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectOne(NAMESPACE+".getShipDate",order_code);
 	}
 	
-//	@Override
-//	public List<ShippingDTO> getUserShipPlanList(String user_id) {
-//		
-//		return sqlSession.selectList(NAMESPACE+".getUserShipPlanList",user_id);
-//	}
+
 	
 	@Override
 	public List<ShippingDTO> instructionList(Criteria cri) {
@@ -142,11 +130,7 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectOne(NAMESPACE+".countShipProgressing", progress_status);
 	}
 	
-//	@Override
-//	public List<ShippingDTO> GetprogressList(String progress_status) {
-//		
-//		return sqlSession.selectList(NAMESPACE+".GetprogressList", progress_status);
-//	}
+
 	
 	@Override
 	public void updateShipProgressing(ShippingDTO sdto) {
@@ -161,17 +145,7 @@ public class ShippingDAOImpl implements ShippingDAO {
 		return sqlSession.selectList(NAMESPACE+".getshipContent", order_code);
 	}
 	
-//	@Override
-//	public List<ShippingDTO> userInstructionList(String user_id) {
-//		return sqlSession.selectList(NAMESPACE+".userInstructionList", user_id);
-//	}
-//	
-//	@Override
-//	public List<ShippingDTO> shippingSearch(SearchDTO sed) {
-//		
-//		return sqlSession.selectList(NAMESPACE+".shippingSearch", sed);
-//	}
-//	
+
 	@Override
 	public void updateSaleStatus(ShippingDTO sdto) {
 		
@@ -200,4 +174,6 @@ public class ShippingDAOImpl implements ShippingDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".getWarehouseInfo",product_code);
 	}
+	
+	
 }

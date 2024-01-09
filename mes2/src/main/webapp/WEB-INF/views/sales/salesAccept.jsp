@@ -28,7 +28,7 @@
     
 <script type="text/javascript">
     //페이지번호클릭시이동하기 
-    $(document).ready(function() {
+/*      $(document).ready(function() {
         var pageFrm = $("#pageForm");
 
         $(".page-item a").on("click", function(e) {
@@ -38,7 +38,7 @@
             pageFrm.find("#page").val(page);
             pageFrm.submit();
         });
-    });
+    });  */
 </script>
 
   </head>
@@ -71,56 +71,7 @@
 </div>
 
 
-<!-- 진행현황 바  -->
-   <%--   <div class="box" onclick="location.href='/sales/salesAccept'">
-      <span >등록수주</span>
-    </div>
-    <div class="box3" onclick="location.href='/sales/salesAccept?instructions=Y'">
-      <span >처리완료 ${status.completeCnt }건</span>
-    </div>
-    <div class="box3" onclick="location.href='/sales/salesAccept?instructions=N'">
-      <span >처리대기 ${status.waitingCnt }건</span>
-    </div>
-    <div class="box3" onclick="location.href='/sales/salesAccept?newOrder=true'">
-      <span >신규 ${status.newCnt }건 </span>
-    </div>
-    <div class="box2" onclick="location.href='/sales/salesAccept?user=true'">
-      <i class="fa-solid fa-user" ></i>
-    </div> --%>
-    
-    <!-- 페이징 -->
-    
- <%--  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-    <!-- 이전페이지 -->
-    <c:if test="${pm.prev }">
-        <li class="page-item">
-            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-</c:if>
-		<!-- 페이지번호처리  -->
-        <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
-            <c:if test="${pm.cri.page != pageNum}">
-                <li class="page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
-            </c:if>
-            <c:if test="${pm.cri.page == pageNum}">
-                <li class="active page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
-            </c:if>
-        </c:forEach>
-
-<!-- 다음페이지 -->
-<c:if test="${pm.next }">
-        <li class="page-item">
-            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-        </c:if>
-    </ul>
-</nav> --%>
-
+	<!-- 페이징 정보 저장 -->
 		<form id="pageForm" action="salesAccept" method="post">
 			<input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
 		    <input type="hidden" id="prePageNum" name="perPageNum" value="${pm.cri.perPageNum }"/>
@@ -143,7 +94,8 @@
 		    <input type="hidden"  name="userId" value="${pm.cri.userId }"/>
       		<input type="hidden"  id="instruct" name="instruct" value=""/>
       		<input type="hidden"  id="newO" name="newO" value=""/>
-      	<!--  <select name="type" id="searchType"> -->
+      
+    <!--검색타입 -->  
       	<select name="type" id="searchType" class="form-select" aria-label="Default select example">
           <option value="">검색선택 </option>
           <option value="order_code" ${pm.cri.type=='order_code' ? 'selected' : ''}>주문번호</option>
@@ -159,18 +111,7 @@
 		   <input type="date" aria-label="Last name" class="form-control" name="endDay" value="${pm.cri.endDay }"/>
 	    </div>
 		
-        <!--<div>
-          <span class="search-font">검색시작일</span>
-          <input  type="date" min="2023-12-01" name="startDay" />
-
-          <span class="search-font">검색종료일</span>
-          <input type="date" max="2030-12-31" name="endDay" />
-        </div> -->
-		
-
-       <!--<input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" value="${pm.cri.search }"/>
-        <input type="submit" value="검색"  /> -->
-        
+       
            <!-- 검색타입 -->
         <div class="input-group searchSub">
 	        <input type="text" name="search" id="putSearch" class="form-control" placeholder="검색어를 입력하세요" value="${pm.cri.search }" 
@@ -184,11 +125,10 @@
       <div class="list">
         <div class="list-btn">
        <c:if test="${not empty pm.cri.userId}">
-       <button type="button" class="btn btn-primary" onclick="showStatus()">처리</button>
-      	 
-      	 </c:if>
+       <button type="button" class="btn btn-primary" onclick="showStatus()">처리</button> 	 
+      </c:if>
       	 <div class="btn-group">
-			  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
+			  <button type="button" class="btn dark-green-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
 			    <ul class="dropdown-menu">
 			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesAccept'">등록수주</li>
 			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesAccept?instructions=Y'">처리완료 ${status.completeCnt }건</li>
@@ -196,8 +136,7 @@
 			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesAccept?newOrder=true'">신규 ${status.newCnt }건</li>
 			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesAccept?user=true'">등록확인</li>
 			   </ul>
-			</div>
-             
+			</div>             
         </div>
 
         <div class="list-box">
@@ -229,7 +168,7 @@
                   	<td><div class="green-circle"/></div>  완료</td>
                   </c:if>
                    <c:if test="${dto.instructions eq 'N'}">
-                  	<td><div class="red-circle"/></div>  대기 </td>
+                  	<td><div class="gray-circle"/></div>  대기 </td>
                   </c:if>
                  
 					

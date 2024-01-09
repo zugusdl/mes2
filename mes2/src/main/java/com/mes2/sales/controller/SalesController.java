@@ -55,26 +55,7 @@ public class SalesController {
 		return "/sales/salesPlan";
 	}
 	
-//	@RequestMapping(value = "/newSalesPlan")
-//	public String newSalesPlan(HttpSession session, Model model) {	
-//		//--------------------------------------//
-//		String id ="sawon4";
-//		session.setAttribute("id",id );
-//		//--------------------------------------//
-//		
-//		List<SalesDTO> list = sService.getNewSales();
-//		model.addAttribute("list", list);
-//		return "/sales/salesPlan";
-//	}
-//	
-	
-	
-//	@RequestMapping(value = "salesPlanList", method=RequestMethod.GET)
-//	public @ResponseBody List<SalesDTO> PlanListGet(Criteria cri) {
-//		//String sales_status = "requested";
-//		List<SalesDTO> list = sService.salesList(cri);	
-//		return list;
-//	}
+
 	
 	@RequestMapping(value ="planContent")
 	public @ResponseBody List<SalesDTO> planContent(String order_code){
@@ -96,27 +77,7 @@ public class SalesController {
 		return dto;
 	}
 	
-//	@RequestMapping(value="searchPlan")
-//	public String searchPlan(SearchDTO sed, Model model){
-//		
-//		String sales_status = "requested";
-//		sed.setSales_status(sales_status);
-//		List<SalesDTO> list =sService.searchListPlan(sed);
-//		model.addAttribute("list", list);
-//		return "/sales/salesPlan";
-//	}
-	
-//	@RequestMapping(value="searchAccept")
-//	public String searchAccept(SearchDTO sed, Model model){
-//		
-//		String sales_status = "accept";
-//		sed.setSales_status(sales_status);
-//		List<SalesDTO> list =sService.searchListPlan(sed);
-//		SalesDTO status = sService.proCnt();
-//		model.addAttribute("status", status);
-//		model.addAttribute("list", list);
-//		return "/sales/salesAccept";
-//	}
+
 	
 	@RequestMapping(value="planRegister", method = RequestMethod.POST)
 	public String planRegister(PlanRegisterDTO pdto ) {
@@ -169,54 +130,16 @@ public class SalesController {
 		
 		model.addAttribute("status", status);
 		model.addAttribute("list", list);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+cri);
+		
 		return "/sales/salesAccept";
 	}
 	
-//	@RequestMapping (value = "/completePro" )
-//	public String completePro(Model model) {			
-//		
-//		SalesDTO status = sService.proCnt();
-//		List<SalesDTO> list = sService.instructionList("Y");
-//		model.addAttribute("status", status);
-//		model.addAttribute("list", list);
-//		
-//		return "/sales/salesAccept";
-//	}
-	
-//	@RequestMapping (value = "/waitPro" )
-//	public String waitPro(Model model) {			
-//		//List<SalesDTO> list = sService.waitList();
-//		SalesDTO status = sService.proCnt();
-//		List<SalesDTO> list = sService.instructionList("N");
-//		model.addAttribute("status", status);
-//		model.addAttribute("list", list);
-//		return "/sales/salesAccept";
-//	}
-	
-//	@RequestMapping (value = "/newPro" )
-//	public String newPro(Model model) {			
-//		List<SalesDTO> list = sService.newAcceptList();
-//		SalesDTO status = sService.proCnt();
-//		model.addAttribute("status", status);
-//		model.addAttribute("list", list);
-//		return "/sales/salesAccept";
-//	}
-//	
-//	@RequestMapping (value = "/userPro" )
-//	public String userPro(HttpSession session, Model model) {			
-//		String id = (String)session.getAttribute("id");		
-//		List<SalesDTO> list = sService.UserAccept(id);
-//		SalesDTO status = sService.proCnt();
-//		model.addAttribute("status", status);
-//		model.addAttribute("list", list);
-//		return "/sales/salesAccept";
-//	}
+
 	@RequestMapping(value ="acceptContent")
 	public @ResponseBody List<SalesDTO> acceptContent(String order_code){
 		
 		List<SalesDTO> list = sService.acceptContent(order_code);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+list);
+		
 		return list;
 	}
 	

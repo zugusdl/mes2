@@ -68,16 +68,23 @@ function showStatus() {
 	}
 
 function complete(order_code,ship_date){
+	
 	 var shipDate = moment(ship_date, "ddd MMM DD HH:mm:ss Z YYYY").format("YYYY-MM-DD");
 	    var today = moment(); 
-
 	    if (moment(shipDate).isAfter(today)) {
-	        $("#mo-close").trigger('click');
-	       // 출하지시일이 아직 남은 경우 지시일 먼저 변경해주기 
+	
+	        Swal.fire({
+			    title: "대기상태",
+			    text: "배송을 지시할 수 없습니다.",
+			    icon: "error"
+			}).then(() => {
+				$("#mo-close").trigger('click');
+				
+			});
 	        return false;
 	    } 
 	  else{ 
-
+		  
   
 
 	 Swal.fire({
@@ -86,8 +93,8 @@ function complete(order_code,ship_date){
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#3085d6",
-		  cancelButtonColor: "#d33",
+		  confirmButtonColor: "#6e9888",
+		  cancelButtonColor: "#666666",
 		  confirmButtonText: "확인"
 		}).then((result) => {
 		
@@ -119,7 +126,7 @@ function deliverReg(data,order_code){
 	 var listHtml = "<div>담당자 아이디 : <input type='text' id='deliver_id' value='"+data.user_id+"' disabled/> </div>";
 	 listHtml += "<div>담당자 이름 : <input type='text' id='deliver_name' value='"+data.user_name+"' disabled/> </div>";
 	 listHtml += "<div>비밀번호: <input type='password' id='deliver_pw'/></div>"
-	 listHtml += "<button type='button' class='btn btn-secondary' onclick='return deliverPw(\"" + order_code + "\")'>비밀번호 확인</button>";
+	 listHtml += "<button type='button' class='btn dark-green-btn' onclick='return deliverPw(\"" + order_code + "\")'>비밀번호 확인</button>";
 
 		 $("#shippng-modal").html(listHtml);
 }
@@ -163,7 +170,7 @@ function deliverCheck(data,order_code){
 					    text: data,
 					    icon: "success"
 					}).then(() => {
-						//location.href='/shipping/shipping'
+						
 						$("#pageForm").submit();
 					});
 			  }, 
@@ -192,8 +199,8 @@ function deliverCheck(data,order_code){
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#3085d6",
-		  cancelButtonColor: "#d33",
+		  confirmButtonColor: "#6e9888",
+		  cancelButtonColor: "#666666",
 		  confirmButtonText: "진행"
 		}).then((result) => {
 		  if (result.isConfirmed) {
@@ -225,7 +232,7 @@ function deliverCheck(data,order_code){
 	 var listHtml = "<div>담당자 아이디 : <input type='text' id='reg_id' value='"+data.user_id+"' disabled/> </div>";
 	 listHtml += "<div>담당자 이름 : <input type='text' id='reg_name' value='"+data.user_name+"' disabled/> </div>";
 	 listHtml += "<div>비밀번호: <input type='password' id='reg_pw'/></div>"
-	 listHtml += "<button type='button' class='btn btn-secondary' onclick='return regPw(\"" + order_code + "\")'>비밀번호 확인</button>";
+	 listHtml += "<button type='button' class='btn dark-green-btn' onclick='return regPw(\"" + order_code + "\")'>비밀번호 확인</button>";
 
 		 $("#shippng-modal").html(listHtml);
  }
@@ -272,8 +279,8 @@ function deliverCheck(data,order_code){
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#3085d6",
-		  cancelButtonColor: "#d33",
+		  confirmButtonColor: "#6e9888",
+		  cancelButtonColor: "#666666",
 		  confirmButtonText: "등록"
 		}).then((result) => {
 		  if (result.isConfirmed) {
@@ -290,7 +297,7 @@ function deliverCheck(data,order_code){
 					    icon: "success"
 					}).then(() => {
 						$("#pageForm").submit();
-						//location.href="shipPlan";
+						
 					});
 
 					
@@ -315,6 +322,47 @@ function deliverCheck(data,order_code){
 	 var ckArr = $(".ck");
 	 var count = ckArr.filter(":checked").length; 
 	 
+	// 선택된 라디오 버튼의 값을 가져옴
+	 var selectedOrderCode = $("input[name='order_code']:checked").val();
+
+	 // 선택된 행에서 클래스가 'pf'인 td 엘리먼트의 텍스트를 가져옴
+	 var pfText = $("input[name='order_code'][value='" + selectedOrderCode + "']").closest('tr').find('.pf').text().trim();
+
+	 // 텍스트가 '대기'인 경우 처리
+	 if (pfText === '완료') {
+	     Swal.fire({
+			  title: "수정 불가능",
+			  text:"이미 출하처리되었습니다.",
+			  icon: "error"
+			}).then((result) => {
+	 			  if (result.isConfirmed) {
+	 				
+	 				 
+	 				$("#mo-close").trigger('click');
+	 		 
+	 	 }
+	 });
+	     return false;
+	 } 
+	 if (pfText === '배송') {
+	     // 처리 로직 추가
+	    
+	     Swal.fire({
+			  title: "수정 불가능",
+			  text:"배송 중입니다.",
+			  icon: "error"
+			}).then((result) => {
+	 			  if (result.isConfirmed) {
+	 				 $("#mo-close").trigger('click');
+	 				
+	 		 
+	 	 }
+	 });
+	     return false;
+	 }
+	 
+	 
+	 
 	 if(count==0){	 	
 		 Swal.fire({
 			  title: "선택된 항목이 없습니다.",
@@ -333,11 +381,12 @@ function deliverCheck(data,order_code){
 	 			  text: "이미 예약출하가 지시된 상태입니다. 출하일정을 수정을 진행하시겠습니까?",
 	 			  icon: "warning",
 	 			  showCancelButton: true,
-	 			  confirmButtonColor: "#3085d6",
-	 			  cancelButtonColor: "#d33",
+	 			  confirmButtonColor: "#6e9888",
+	 			  cancelButtonColor: "#666666",
 	 			  confirmButtonText: "진행"
 	 			}).then((result) => {
 	 			  if (result.isConfirmed) {
+	 				
 	 				  $.ajax({
 	 					 url:"updateIdCheck", 
 			 			  type:"get",
@@ -354,20 +403,30 @@ function deliverCheck(data,order_code){
 	 				  }	 
 	 				 });
 	 		 
-	 	 }
+	 	 }else if (result.isDismissed) {
+	 		moClear();
+	 		$("#mo-close").trigger('click');
+	        }
 	 });
  }
  
 	 }
  
  }
+ 
+function moClear(){
+ var listHtml = "";
+ $("#shippng-modal").html(listHtml);
+}
+
+ 
  function moUpdate(data){
 	
 	 $("#exampleModalLabel").html('비밀번호 확인');
 	 var listHtml = "<div>담당자 아이디 : <input type='text' id='user_id' value='"+data.user_id+"' disabled/> </div>";
 	 listHtml += "<div>담당자 이름 : <input type='text' id='user_name' value='"+data.user_name+"' disabled/> </div>";
 	 listHtml += "<div>비밀번호: <input type='password' id='user_pw'/></div>"
-	 listHtml += "<button type='button' class='btn btn-secondary' onclick='return updatePw()'>비밀번호 확인</button>";
+	 listHtml += "<button type='button' class='btn dark-green-btn' onclick='return updatePw()'>비밀번호 확인</button>";
 		 $("#shippng-modal").html(listHtml);
 		
  }
@@ -395,7 +454,7 @@ function deliverCheck(data,order_code){
  
  function moUpdateCheck(data){
 	 var ship_date = data.ship_date;
-	 //alert("출하일자"+ship_date);
+	
 	 
 	 if(data.check == "true"){	
 		 $("#mo-close").trigger('click');
@@ -408,7 +467,7 @@ function deliverCheck(data,order_code){
 		 	//var minDate = new Date();
 		 	//alert(minDate);
 		 	var minDate = new Date(requestDate);
-		    //minDate.setDate(requestDate.getDate() + 14);
+		    minDate.setDate(requestDate.getDate() + 1);
 		    //alert(minDate);
 		    
 		// 마지막일 설정 (납품요청일 4일전)    
@@ -422,15 +481,15 @@ function deliverCheck(data,order_code){
 		// 오늘 기준 B가 미래면 B가 min
 //		    var startDate;
 //		    
-		    if (today >= maxDate) {
-		    	  Swal.fire({
-		    	    title: "일정을 변경할 수 없습니다. ",
-		    	    text: "이미 출하되었습니다.",
-		    	    icon: "error"
-		    	  }).then((result) => {
-		    	    return; 
-		    	  });
-		    	}
+//		    if (today >= maxDate) {
+//		    	  Swal.fire({
+//		    	    title: "일정을 변경할 수 없습니다. ",
+//		    	    text: "이미 출하되었습니다.",
+//		    	    icon: "error"
+//		    	  }).then((result) => {
+//		    	    return; 
+//		    	  });
+//		    	}
 		    	
 
 		    //else if (today >minDate) {
@@ -495,8 +554,8 @@ function deliverCheck(data,order_code){
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#3085d6",
-		  cancelButtonColor: "#d33",
+		  confirmButtonColor: "#6e9888",
+		  cancelButtonColor: "#666666",
 		  confirmButtonText: "확인"
 		}).then((result) => {
 		  if (result.isConfirmed) {
@@ -506,8 +565,8 @@ function deliverCheck(data,order_code){
 					  icon: "info",
 					  showCancelButton: true,
 					  cancelButtonText: "취소",
-					  confirmButtonColor: "#3085d6",
-					  cancelButtonColor: "#d33",
+					  confirmButtonColor: "#6e9888",
+					  cancelButtonColor: "#666666",
 					  confirmButtonText: "확인"
 					}).then((result) => {
 					  if (result.isConfirmed) {
@@ -538,14 +597,10 @@ function scheduledUpdateSuccess(data){
 	    icon: "success"
 	}).then(() => {
 		$("#pageForm").submit();
-		//location.href='/shipping/shipping'
-	   // $("#loadPage").trigger('click');
+		
 	});
 }
-// function registration(user_id){
-//	 $("#u_id").val(user_id).prop("disabled", false);
-//	 $('#planListForm').submit();
-// }
+
 
 
 function checkSearchSub(e){

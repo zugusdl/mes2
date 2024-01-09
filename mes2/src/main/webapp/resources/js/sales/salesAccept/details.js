@@ -1,4 +1,15 @@
 var intNum = 0;
+$(document).ready(function() {
+    var pageFrm = $("#pageForm");
+
+    $(".page-item a").on("click", function(e) {
+        
+        e.preventDefault(); //a태그기능막기
+        var page = $(this).attr("href"); //페이지번호
+        pageFrm.find("#page").val(page);
+        pageFrm.submit();
+    });
+}); 
 
 function goContent(order_code){
        
@@ -34,14 +45,15 @@ function goContent(order_code){
 		  dataType:"json",
 		  data: {"product_code": product_code , "order_code" : order_code}, 
 		  success: function (data) {
+			  $("#salesModal").modal("show");
 		      moStock(data, sales_quantity);
 		    },
 		  error: function(){
-			  $("#salesModalLabel").html('재고조회');
-			  var listHtml = "<div>창고에 보유 재고 없음</div>";			
-			  listHtml += "<div>부족수량 : <input type='text' value='"+sales_quantity+"' readonly/></div>"; 
-			  listHtml += "<button type='button' class='btn btn-danger'>재고부족</button>";
-			  $("#sales-modal").html(listHtml);
+			  Swal.fire({
+				  title: "창고확인 필요",
+				  text: "해당 상품은 현재 창고에 보유재고가 없습니다.",
+				  icon: "warning"
+				});
 				
 		  }
 	  });
@@ -215,10 +227,13 @@ function goContent(order_code){
 			  
 		      moInfo(data,order_code); 
 		    },
-		  error: function(){
-			  alert("정보겟오류");
-				
-		  }
+		    error: function(){
+				  Swal.fire({
+					  title: "관계자에게 문의하십시오.",
+					  icon: "warning"
+					});
+					
+			  }
 	  });
  }
  
@@ -247,19 +262,11 @@ function goContent(order_code){
   function content(data, order_code){ 
 	  var listHtml = "<div class='content-box'>"
 		  listHtml += "<div class='content-container'>"
-	 listHtml += "<div class='content-title'>"
-		 
-		  //listHtml += "<div class='list-btn'>";
-		
-		  //listHtml += "<div class='content-title'>" 
+	      listHtml += "<div class='content-title'>"	
 		  listHtml += "<div>"
-		  listHtml += "<p class='list-font' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  
-		  //listHtml += "<button type='button' class='btn btn-warning info-btn'  onclick='info(\""+order_code+"\")'>상세</button>";	
-		  listHtml += "</div>"
-		
+		  listHtml += "<p class='list-font' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  		 
+		  listHtml += "</div>"		
 		  listHtml += " <button type='button' class='btn-close' aria-label='Close' onclick='cancle()'></button>"
-		  //listHtml += "</div>"
-	  
 		  listHtml += "</div>";
 		  if(data[0].instructions=='N'){
 			  
@@ -267,7 +274,7 @@ function goContent(order_code){
 		  }
 	  listHtml += "<div class='list-box'>";
  
-	 // listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
+	
 	  
 	  listHtml += "<table class='table table-hover'>";
 	  
@@ -304,14 +311,18 @@ function goContent(order_code){
 		  listHtml +="<input type='hidden' name='product_code' class='product_code' value='"+obj.product_code+"'>";
 		  listHtml += "<td>"+obj.sales_quantity+"</td>";
 		  listHtml +="<input type='hidden' name='product_code' class='sales_quantity' value='"+obj.sales_quantity+"'>";
-		  listHtml += "<td><button type='button' class='btn stock-info-btn' data-bs-toggle='modal' data-bs-target='#salesModal' onclick=\"mo('" + obj.product_code + "','"+obj.order_code+"','"+obj.sales_quantity+"')\">재고조회</button></td>";
-		 /* listHtml += "<td>"+obj.product_status+"</td>"; */
+		  listHtml += "<td><button type='button' class='btn mint-btn' onclick=\"mo('" + obj.product_code + "','"+obj.order_code+"','"+obj.sales_quantity+"')\">재고조회</button></td>";
+		 
           if(obj.product_status == 'waiting'){
-        	  listHtml += "<td>대기</td>";
+        	  listHtml += "<td><div class='gray-circle'/></div>  대기</td>";
           }
           if(obj.product_status == 'progressing'){
-        	  listHtml += "<td><div class='green-circle'/></div>  진행중</td>";
+        	  listHtml += "<td><div class='yellow-circle'/></div>  진행중</td>";
           }
+          if(obj.product_status == 'complete'){
+        	  listHtml += "<td><div class='green-circle'/></div>  완료</td>";
+          }
+          
 		  if(obj.processing_reg == 'N'){
 			  listHtml += "<td class='back'><select name='processing_reg' aria-label='Default select example' class='form-select product-processing'>";
 			  listHtml += "<option value='N' class='check-processing'>N</option>";
@@ -331,7 +342,7 @@ function goContent(order_code){
 			  if(obj.processing_reg == 'multi'){
 				  listHtml += "<td><div class='green-circle'/></div>  복합처리</td>";
 			  }
-			 // listHtml += "<td><button type='button' class='btn btn-success product-processing'>" + obj.processing_reg + "</button></td>";
+			
 			
 
 		  }

@@ -59,31 +59,7 @@ public class ShippingController {
 		return "/shipping/shipPlan";
 	}
 	
-//	@RequestMapping(value = "/shipCheck" , method = RequestMethod.GET) //**
-//	public String salesPlanPost(HttpSession session, Model model, String ship_status) {	
-//		//--------------------------------------//
-//		String user_id ="sawon4";
-//		session.setAttribute("user_id",user_id );
-//		//--------------------------------------//	
-//		
-//		List<ShippingDTO> list = pService.statusList(ship_status);
-//		ShippingDTO sdto = pService.countShipStatus();
-//		model.addAttribute("status", sdto);
-//		model.addAttribute("list", list);
-//		return "/shipping/shipPlan";
-//	}
-	
-//	@RequestMapping(value = "userShipPlanList" , method = RequestMethod.GET)//**
-//	public String userShipPlanList(HttpSession session, Model model){
-//		
-//		String user_id = (String)session.getAttribute("user_id");
-//		List<ShippingDTO> list = pService.UserShipPlanList(user_id);
-//		ShippingDTO sdto = pService.countShipStatus();
-//		model.addAttribute("status", sdto);
-//		model.addAttribute("list", list);
-//		return "/shipping/shipPlan";
-//	}
-	
+
 	
 	@RequestMapping(value ="/planContent")
 	public @ResponseBody List<ShippingDTO> planContent(String order_code){
@@ -91,15 +67,6 @@ public class ShippingController {
 		return list;
 	}
 	
-//	@RequestMapping(value="/searchPlan")
-//	public String searchPlan(SearchDTO sed, Model model){
-//		
-//		List<ShippingDTO> list = pService.planSearch(sed);
-//		ShippingDTO sdto = pService.countShipStatus();
-//		model.addAttribute("status", sdto);
-//		model.addAttribute("list", list);
-//		return "/shipping/shipPlan";
-//	}
 	
 	@RequestMapping(value = "updateIdCheck")
 	public @ResponseBody ShippingDTO regIdCheck(String order_code) {		
@@ -169,33 +136,10 @@ public class ShippingController {
 		model.addAttribute("status", sdto);
 		model.addAttribute("list", list);
 		
+		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+cri);
 		return "/shipping/shipping";
 	}
-	
-//	@RequestMapping(value = "userShipList" , method = RequestMethod.GET)
-//	public String userShipList(HttpSession session, Model model){
-//		
-//		String user_id = (String)session.getAttribute("user_id");
-//		List<ShippingDTO> list = pService.userInstructionList(user_id);
-//		ShippingDTO sdto = pService.countShipStatus();
-//		model.addAttribute("status", sdto);
-//		model.addAttribute("list", list);
-//		return "/shipping/shipping";
-//	}
-//	
-
-//	@RequestMapping(value = "/shippingCheck")
-//	public String shippingCheck(HttpSession session, Model model, String progress_status) {	
-//		//--------------------------------------//
-//		String user_id ="sawon4";
-//		session.setAttribute("user_id",user_id );
-//		//--------------------------------------//	
-//		List<ShippingDTO> list = pService.progressList(progress_status);
-//		ShippingDTO sdto = pService.countShipProgressing();
-//		model.addAttribute("status", sdto);
-//		model.addAttribute("list", list);
-//		return "/shipping/shipping";
-//	}
 	
 
 	@RequestMapping(value ="/shipContent")
@@ -213,16 +157,7 @@ public class ShippingController {
 		return order_code;
 		
 	} 
-	
-//	@RequestMapping(value = "/searchShipping" , method = RequestMethod.POST)
-//	public String searchShipping(SearchDTO sed, Model model) {	
-//        	
-//		List<ShippingDTO> list = pService.shippingSearch(sed);
-//		ShippingDTO sdto = pService.countShipProgressing();
-//		model.addAttribute("status", sdto);
-//		model.addAttribute("list", list);
-//		return "/shipping/shipping";
-//	}
+
 	
 	@RequestMapping(value = "/outComplete", method = RequestMethod.POST)
 	public @ResponseBody String outComplete(String order_code) {			

@@ -57,8 +57,8 @@ function showStatus() {
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#3085d6",
-		  cancelButtonColor: "#d33",
+		  confirmButtonColor: "#6e9888",
+		  cancelButtonColor: "#666666",
 		  confirmButtonText: "진행"
 		}).then((result) => {
 		  if (result.isConfirmed) {
@@ -83,13 +83,13 @@ function showStatus() {
 		});
  }
  
- 
+
  function moReg(data,order_code){
 	 $("#exampleModalLabel").html('비밀번호 확인');
 	 var listHtml = "<div>담당자 아이디 : <input type='text' id='reg_id' value='"+data.user_id+"' disabled/> </div>";
 	 listHtml += "<div>담당자 이름 : <input type='text' id='reg_name' value='"+data.user_name+"' disabled/> </div>";
 	 listHtml += "<div>비밀번호: <input type='password' id='reg_pw'/></div>"
-	 listHtml += "<button type='button' class='btn btn-secondary' onclick='return regPw(\"" + order_code + "\")'>비밀번호 확인</button>";
+	 listHtml += "<button type='button' class='btn dark-green-btn' onclick='return regPw(\"" + order_code + "\")'>비밀번호 확인</button>";
 
 		 $("#shippngPlan-modal").html(listHtml);
  }
@@ -136,8 +136,8 @@ function showStatus() {
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#3085d6",
-		  cancelButtonColor: "#d33",
+		  confirmButtonColor: "#6e9888",
+		  cancelButtonColor: "#666666",
 		  confirmButtonText: "등록"
 		}).then((result) => {
 		  if (result.isConfirmed) {
@@ -154,7 +154,7 @@ function showStatus() {
 					    icon: "success"
 					}).then(() => {
 						$("#pageForm").submit();
-						//location.href="shipPlan";
+						
 					});
 
 					
@@ -189,14 +189,18 @@ function showStatus() {
 			    $("#mo-close").trigger("click");
 			});
 	 	
-	 }else{
+	 }
 	 	 if(count==1){
 	 		 $.ajax({
 	 			  url:"updateIdCheck", 
 	 			  type:"get",
 	 			  dataType:"json",
 	 			  data: {"order_code":selectedOrder},
-	 			  success:moUpdate,
+	 			  success: function(data) {
+	 				
+	 				moUpdate(data);
+	 		      },
+	 			
 	 			  error: function(){
 	 				 Swal.fire({
 						  title: "관계자에게 문의하세요",
@@ -206,18 +210,19 @@ function showStatus() {
 	 		  });
 	 		 
 	 	 }
-	 }
+	 
  }
  
 
  
  
  function moUpdate(data){
+	
 	 $("#exampleModalLabel").html('비밀번호 확인');
 	 var listHtml = "<div>담당자 아이디 : <input type='text' id='user_id' value='"+data.user_id+"' disabled/> </div>";
 	 listHtml += "<div>담당자 이름 : <input type='text' id='user_name' value='"+data.user_name+"' disabled/> </div>";
 	 listHtml += "<div>비밀번호: <input type='password' id='user_pw'/></div>"
-	 listHtml += "<button type='button' class='btn btn-secondary' onclick='return updatePw()'>비밀번호 확인</button>";
+	 listHtml += "<button type='button' class='btn dark-green-btn' onclick='return updatePw()'>비밀번호 확인</button>";
 		 $("#shippngPlan-modal").html(listHtml);
  }
  
@@ -312,8 +317,8 @@ function showStatus() {
 		  icon: "info",
 		  showCancelButton: true,
 		  cancelButtonText: "취소",
-		  confirmButtonColor: "#3085d6",
-		  cancelButtonColor: "#d33",
+		  confirmButtonColor: "#6e9888",
+		  cancelButtonColor: "#666666",
 		  confirmButtonText: "확인"
 		}).then((result) => {
 		  if (result.isConfirmed) {
@@ -346,17 +351,6 @@ function scheduledUpdateSuccess(data){
 	});
 }
 
-// function registration(user_id){
-//	 $("#u_id").val(user_id).prop("disabled", false);
-//	 $('#planListForm').submit();
-// }
-
-
-
-//function load(){
-//	
-//	location.href="shipPlan";
-//}
 
 function checkSearchSub(e){
 	if(radioCnt>=1){
@@ -365,7 +359,7 @@ function checkSearchSub(e){
 
 	if($("#searchType").val() === ""){
 		 Swal.fire({
-		        title: "검색타입을 선택하세요.",
+		        title: "검색어를 입력하세요.",
 		        icon: "warning"
 		    }).then((result) => {
 		        if (result.isConfirmed) {

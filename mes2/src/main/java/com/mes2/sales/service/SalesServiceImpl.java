@@ -57,15 +57,7 @@ public class SalesServiceImpl implements SalesService {
 		return sdao.getStockQuantity(sd);
 	}
 	
-//	@Override
-//	public List<SalesDTO> searchListPlan(SearchDTO sed) {
-//		logger.debug(" S : searchListPlan(SearchDTO sed) ");
-//		
-//		List<SalesDTO> list = sdao.planSearch(sed);
-//
-//		return list;
-//		
-//	}
+
 	
 	@Override
 	public void registerPlan(PlanRegisterDTO pdto) {
@@ -104,11 +96,7 @@ public class SalesServiceImpl implements SalesService {
 		sdao.makeSalesCode(sd);
 	}
 	
-//	@Override
-//	public List<SalesDTO> salesAcceptList() {
-//		logger.debug(" S : salesAcceptList() ");
-//		return sdao.getSalesAcceptList();
-//	}
+
 	
 	@Override
 	public List<SalesDTO> acceptContent(String order_code) {
@@ -132,8 +120,7 @@ public class SalesServiceImpl implements SalesService {
 		// 상태값 변경
 		sdao.changeProductStatus(sd);
 		
-		// 창고에서 빼기
-		//sdao.updateStockQuan(sd);
+		
 	}
 	
 	@Override
@@ -175,11 +162,7 @@ public class SalesServiceImpl implements SalesService {
 		
 	}
 	
-//	@Override
-//	public List<SalesDTO> getNewSales() {
-//		
-//		return sdao.getNewSales();
-//	}
+
 	
 	@Override
 	public SalesDTO salesPlanCnt() {
@@ -194,74 +177,7 @@ public class SalesServiceImpl implements SalesService {
 	}
 	
 	
-//	@Override
-//	public List<SalesDTO> instructionList() {
-//		List<SalesDTO> list = salesList("accept");
-//		//List<SalesDTO> completeList = new ArrayList<>();
-//		
-////		for(SalesDTO sdt : list) {
-////			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-////			int size = olist.size();
-////			int count =0;
-////			for(SalesDTO pdt : olist) {
-////				if(!pdt.getProcessing_reg().equals("N")) {
-////					count ++;
-////				}
-////			}
-////			
-////			if(count == size) {
-////				sdt.setOrderStatus("complete");
-////				completeList.add(sdt);
-////			}
-////	
-////		}
-//		
-//		return null;
-//	}
-	
-//	@Override
-//	public List<SalesDTO> instructionList(String instrucions) {
-//		sdao.getInstructionsList(instrucions);
-//		return null;
-//	}
-	
-//	@Override
-//	public List<SalesDTO> waitList() {
-//		
-//		List<SalesDTO> list = salesList("accept");		
-//		List<SalesDTO> waitList = new ArrayList<>();
-//		for(SalesDTO sdt : list) {
-//			List<SalesDTO> olist = sdao.makeOrderStates(sdt.getOrder_code());
-//			int size = olist.size();
-//			int count =0;
-//			for(SalesDTO pdt : olist) {
-//				if(!pdt.getProcessing_reg().equals("N")) {
-//					count ++;
-//				}
-//			}
-//			
-//			if(count != size) {
-//				sdt.setOrderStatus("waiting");
-//				waitList.add(sdt);
-//			}
-//	
-//		}
-//		
-//		return waitList;
-//	}
-	
-//	@Override
-//	public List<SalesDTO> acceptList() {
-//		List<SalesDTO> list = salesList("accept");	
-//		
-//		return list;
-//	}
-	
-//	@Override
-//	public List<SalesDTO> newAcceptList() {
-//		
-//		return sdao.getNewAccept();
-//	}
+
 	
 	@Override
 	public SalesDTO proCnt() {
@@ -284,15 +200,8 @@ public class SalesServiceImpl implements SalesService {
 		return dto;
 	}
 	
-//	@Override
-//	public List<SalesDTO> UserAccept(String user_id) {
-//		
-//		List<SalesDTO> list = sdao.getUserAccept(user_id);
-//
-//		return list;
-//		
-//	}
-//	
+
+	
 	@Override
 	public AcceptSaveDTO orderInfo(String order_code) {
 		
@@ -303,7 +212,7 @@ public class SalesServiceImpl implements SalesService {
 	public String instructSales(List<SalesDTO> list) {
 		
 		
-		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+list);
+		
 		SalesDTO sdt = list.get(0);
 
         String order_code = sdt.getOrder_code();
@@ -311,13 +220,13 @@ public class SalesServiceImpl implements SalesService {
 		
 		for(SalesDTO dto : list) {
 			
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@!!!"+dto);
+			
 			if (dto != null) {
 		        if ("stock".equals(dto.getProcessing_reg())) {
 		            dto.setProduct_status("progressing");
 		            stockReg(dto);
 		        } else if ("production".equals(dto.getProcessing_reg())) {
-		            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@!!!" + dto);
+		            
 		            dto.setProduct_status("progressing");
 		            dto.setLack_quantity(dto.getSales_quantity());
 		            productInst(dto);
@@ -334,9 +243,7 @@ public class SalesServiceImpl implements SalesService {
 		        }
 		    }
 			
-			if(dto==null) {
-				logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@null");
-			}
+			
 		}
 		
 		return order_code;
@@ -348,7 +255,6 @@ public class SalesServiceImpl implements SalesService {
 	  
 	List<SalesDTO> list =sdao.listCount(cri);
 	 int totalCount =  list.size();
-	 System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+totalCount);
 	 return totalCount;
 	}
 

@@ -35,13 +35,7 @@
 		      moStock(data, sales_quantity); 
 		    },
 		  error: function(){
-//			  $("#salesModal").modal("show");
-//			  $("#salesModalLabel").html('재고조회');
-//			  var listHtml = "<div>창고에 보유 재고 없음</div>";			
-//			  listHtml += "<div>부족수량 : <input type='text' value='"+sales_quantity+"' readonly/></div>"; 
-//			  listHtml += "<button type='button' class='btn btn-danger'>재고부족</button>";
-//			  $("#sales-modal").html(listHtml);
-				
+			
 			  Swal.fire({
 				  title: "창고확인 필요",
 				  text: "해당 상품은 현재 창고에 보유재고가 없습니다.",
@@ -110,21 +104,15 @@ function info(order_code){
   function content(data, order_code){ 
 	  var listHtml = "<div class='content-box'>"
 		  listHtml += "<div class='content-container'>"
-	 listHtml += "<div class='content-title'>"
-		 
-		  //listHtml += "<div class='list-btn'>";
-		
-		  //listHtml += "<div class='content-title'>" 
+	      listHtml += "<div class='content-title'>"	
 		  listHtml += "<div>"
-		  listHtml += "<p class='list-font' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  
-		  //listHtml += "<button type='button' class='btn btn-warning info-btn'  onclick='info(\""+order_code+"\")'>상세</button>";	
+		  listHtml += "<p class='list-font' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  		  
 		  listHtml += "</div>"
-		  listHtml += " <button type='button' class='btn-close' aria-label='Close' onclick='cancle()'></button>"
-		  //listHtml += "</div>"
+		  listHtml += " <button type='button' class='btn-close' aria-label='Close' onclick='cancle()'></button>"		 
 		  listHtml += "</div>";
-	  listHtml += "<div class='list-box'>";
+	      listHtml += "<div class='list-box'>";
  
-	 // listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
+	
 	  
 	  listHtml += "<table class='table table-hover'>";
 	  listHtml += "<thead>";
@@ -142,7 +130,7 @@ function info(order_code){
 		  listHtml += "<td>"+obj.product_code+"</td>";				  
 		  listHtml += "<td>"+obj.product_name+"</td>";
 		  listHtml += "<td>"+obj.sales_quantity+"</td>";
-		  listHtml += "<td><button type='button' class='btn stock-info-btn'  onclick=\"mo('" + obj.product_code + "','"+obj.order_code+"','"+obj.sales_quantity+"')\">재고조회</button></td>";
+		  listHtml += "<td><button type='button' class='btn mint-btn'  onclick=\"mo('" + obj.product_code + "','"+obj.order_code+"','"+obj.sales_quantity+"')\">재고조회</button></td>";
 		  listHtml += "</tr>";
 	  });
     

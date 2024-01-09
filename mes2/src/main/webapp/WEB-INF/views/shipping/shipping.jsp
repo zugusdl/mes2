@@ -53,7 +53,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        
       </div>
       <div class="modal-body mo" id="shippng-modal">
        
@@ -68,45 +68,26 @@
 </div>
 
 
-	<!-- 진행현황 바  -->
-  <!--   <div class="box" onclick="location.href='/shipping/shipping'">
-      <span >출하</span>
-    </div>
-    <div class="box3" onclick="location.href='/shipping/shipping?progressStatus=waiting'">
-      <span >대기 ${status.waitingCnt }건</span>
-    </div>
-    <div class="box3" onclick="location.href='/shipping/shipping?progressStatus=shipping'">
-      <span >배송중  ${status.instructionCnt }건</span>
-    </div>
-     <div class="box3" onclick="location.href='/shipping/shipping?progressStatus=complete'">
-      <span >완료  ${status.completeCnt }건</span>
-    </div>
-    <div class="box2" onclick="location.href='/shipping/shipping?user=true'">
-      <i class="fa-solid fa-user" ></i>
-    </div> -->
-
- 
-
+		<!-- 페이징 정보 저장 -->
 		<form id="pageForm" action="shipping" method="post">
 			<input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
 		    <input type="hidden" id="prePageNum" name="perPageNum" value="${pm.cri.perPageNum }"/>
 		    <input type="hidden" id="type" name="type" value="${pm.cri.type }"/>
 		    <input type="hidden" id="search" name="search" value="${pm.cri.search }"/>
 		    <input type="hidden" id="userId" name="userId" value="${pm.cri.userId }"/>
-		    <input type="hidden"  name="progressStatus" value="${pm.cri.progressStatus }"/>
-		    <input type="hidden"  name="progressSta" value="${pm.cri.progressSta }"/>
+		    <input type="hidden" id="fProStatus" name="progressStatus" value="${pm.cri.progressStatus }"/>
+		    <input type="hidden" id="fProSta" name="progressSta" value="${pm.cri.progressSta }"/>
 		</form>
     
+    <!-- 검색창 -->
     <div class="container" >
     <section class="section1">
-      <form action="shipping" method="post" id="sfrm" class="search" onsubmit="return checkSearchSub()">
-      	
-      	
-      	 <input type="hidden"  id="frmId" name="userId" value="${pm.cri.userId }"/>
-      	 <input type="hidden" id="progressStatus" name="progressStatus" value="${pm.cri.progressStatus }"/>
-      	  <input type="hidden" id="progressSta" name="progressSta" value=""/>
+         <form action="shipping" method="post" id="sfrm" class="search" onsubmit="return checkSearchSub()">     	
+      	  <input type="hidden"  id="frmId" name="userId" value="${pm.cri.userId }"/>
+      	  <input type="hidden" id="progressStatus" name="progressStatus" value="${pm.cri.progressStatus }"/>
+      	  <input type="hidden" id="progressSta" name="progressSta" value="${pm.cri.progressSta }"/>
       	 
-      	  
+    <!--검색타입 -->   	  
       	 <select name="type" id="searchType" class="form-select" aria-label="Default select example">
           <option value="">검색선택</option>
           <option value="ship_code" ${pm.cri.type=='ship_code' ? 'selected' : ''}>출하코드</option>
@@ -133,16 +114,21 @@
         </div>
       </form>
 
+      
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
         <c:if test="${not empty pm.cri.userId}">
-       <button type="button" class="btn btn-primary" onclick="showStatus()">처리</button>     	 
+       <button type="button" class="btn fg-btn" onclick="showStatus()">처리</button>     	 
       	 </c:if>
+      	 
          <button type='button' class='btn dark-green-btn' data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return update()">수정</button>   
-               <!-- Example single danger button -->
+      	 
+      	 
+      	 
+               <!-- 현황 -->
 			<div class="btn-group">
-			  <button type="button" class="btn stock-info-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
+			  <button type="button" class="btn mint-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
 			    <ul class="dropdown-menu">
 			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipping'">출하</li>
 			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipping?progressStatus=waiting'">대기 ${status.waitingCnt }건</span></li>
@@ -154,9 +140,7 @@
         </div>
 
         <div class="list-box">
-          <form class="list-form"  >
-          <!-- <input type="hidden" id="u_id" name="user_id" value="dd" disabled/> -->
-          <!-- <input type="hidden" id="odi" name="order_code" value="dd" disabled/> -->
+          <form class="list-form"  >         
             <table class="table table-hover">
               <thead>
                 <tr class="table-success">
@@ -177,13 +161,13 @@
                   <td>${data.company_name }</td>       
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${data.order_date}"/></td>            
                   <c:if test="${data.progress_status eq 'complete'}">
-                  <td><div class="green-circle"/></div>  완료</td>
+                  <td class="pf"><div class="green-circle"/></div>  완료</td>
                   </c:if>
                  	 <c:if test="${data.progress_status eq 'waiting'}">
-   				 	<td><button type="button" class="btn btn-secondary waite-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return complete(\'' + data.order_code + '\', \'' + data.ship_date + '\')">대기</button></td>
+   				 	<td class="pf"><button type="button" class="btn btn-secondary waite-btn btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return complete('${data.order_code}','${data.ship_date}')">대기</button></td>
 					</c:if> 
 					 <c:if test="${data.progress_status eq 'shipping'}">
-   				 	<td><div class="yellow-circle"/></div>  배송</td>
+   				 	<td class="pf"><div class="yellow-circle"/></div>  배송</td>
 					</c:if>                                      
                 </tr>
              </c:forEach> 
@@ -193,6 +177,8 @@
           </form>
         </div>
       </div>
+      
+      
      <!-- 페이징  -->
 		  <div class="page-nav">
 		  <nav aria-label="Page navigation example">

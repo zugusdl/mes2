@@ -112,31 +112,25 @@ function goContent(order_code){
 
 	  var listHtml = "<div class='content-box'>"
 		  listHtml += "<div class='content-container'>"
-	 listHtml += "<div class='content-title'>"
-		 
-		  //listHtml += "<div class='list-btn'>";
-		
-		  //listHtml += "<div class='content-title'>" 
+	      listHtml += "<div class='content-title'>"		 		 
 		  listHtml += "<div>"
-		  listHtml += "<p class='list-font' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  
-		  //listHtml += "<button type='button' class='btn btn-warning info-btn'  onclick='info(\""+order_code+"\")'>상세</button>";	
+		  listHtml += "<p class='list-font' data-bs-toggle='modal' data-bs-target='#exampleModal' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  		 
 		  listHtml += "</div>"
 		  listHtml += " <button type='button' class='btn-close' aria-label='Close' onclick='cancle()'></button>"
-		  //listHtml += "</div>"
 		  listHtml += "</div>";
-	  listHtml += "<div class='list-box'>";
-	  listHtml += "<table class='table table-hover'>";
-	  listHtml += "<thead>";
-	  listHtml += "<tr class='table-success' >";
-	  listHtml += "<th scope='col'>수주번호</th>";
-	  listHtml += "<th scope='col'>제품명</th>";
-	  listHtml += "<th scope='col'>출하량</th>";
-	  listHtml += "<th scope='col'>처리등록</th>";
-	  listHtml += "<th scope='col'></th>";
-	  listHtml += "</tr>";
-	  listHtml += "</thead>";
+		  listHtml += "<div class='list-box'>";
+		  listHtml += "<table class='table table-hover'>";
+		  listHtml += "<thead>";
+		  listHtml += "<tr class='table-success' >";
+		  listHtml += "<th scope='col'>수주번호</th>";
+		  listHtml += "<th scope='col'>제품명</th>";
+		  listHtml += "<th scope='col'>출하량</th>";
+		  listHtml += "<th scope='col'>처리등록</th>";
+		  listHtml += "<th scope='col'></th>";
+		  listHtml += "</tr>";
+		  listHtml += "</thead>";
 	  
-	  listHtml += "<tbody>";
+		  listHtml += "<tbody>";
 	  
 	  $.each(data,function(index,obj){
 		  listHtml += "<tr>";
@@ -152,7 +146,7 @@ function goContent(order_code){
 		  listHtml += "복합처리";  
 		  }
 		  listHtml += "</td>"
-		  listHtml += "<td><button type='button' class='btn stock-info-btn' onclick='productInfo(\""+obj.order_code+"\", \""+obj.sales_code+"\")'>상세</button></td>";
+		  listHtml += "<td><button type='button' class='btn mint-btn'  onclick='productInfo(\""+obj.order_code+"\", \""+obj.sales_code+"\")'>상세</button></td>";
 		  listHtml += "</tr>";
 	  });
     

@@ -60,21 +60,26 @@
   group by S.ship_code, S.order_code, S.ship_date, S.progress_status, I.order_date, B.name
   </sql>
   
-  <sql id="searchDate">
+   <sql id="searchDate">
     <choose>
         <when test="startDay != null and endDay != null">
-            and S.scheduled_date between #{startDay} and #{endDay}
+            and S.scheduled_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59')  
         </when>
         <when test="startDay != null and endDay == null">
-            and S.scheduled_date = #{startDay}
+           AND S.scheduled_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{startDay}, '%Y-%m-%d 23:59:59')  
         </when>
         <when test="startDay == null and endDay != null">
-            and S.scheduled_date between now() and #{endDay}
+            and S.scheduled_date BETWEEN DATE(NOW()) AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59')  
         </when>  
     </choose>
   </sql>
   
+
+
+	
+
    <sql id="searchList">
+   
 	<if test="type == 'order_code'">
 	    and I.order_code like concat('%',#{search},'%')
 	    <include refid="searchDate"/>
@@ -84,10 +89,10 @@
   	<include refid="searchDate"/> 
   	</if>  	
   	<if test="type == 'order_date'">
-  	and I.order_date between #{startDay} and #{endDay} 
+  	and I.order_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59')   
   	</if> 	
   	<if test="type == 'scheduled_date'">
-  	and S.scheduled_date between #{startDay} and #{endDay}
+  	and S.scheduled_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59')  
   	</if>	 	
   	<if test="type == 'ship_code'">
   	and S.ship_code like concat('%',#{search},'%') 
@@ -95,7 +100,7 @@
   	</if>
   	
   	<if test="type == 'ship_date'">
-  	 and S.ship_code between #{startDay} and #{endDay}
+  	 and S.ship_date BETWEEN DATE_FORMAT(#{startDay}, '%Y-%m-%d 00:00:00') AND DATE_FORMAT(#{endDay}, '%Y-%m-%d 23:59:59')  
   	 <include refid="searchDate"/>
   	</if>	
  
@@ -111,17 +116,22 @@
 		and I.user_id =#{userId}
 	</if>
 	
+
+	  <if test="type == 'user_id'">
+	  	and I.user_id like concat('%',#{search},'%') 
+	  	 <include refid="searchDate"/> 
+	</if>
+	
 	<if test="progressStatus != null and progressStatus != ''">
 		and S.progress_status = #{progressStatus} 
 	</if>
 	<if test="progressSta != null and progressSta != ''">
 		and S.progress_status = #{progressSta} 
 	</if>
-	  <if test="type == 'user_id'">
-	  	and I.user_id like concat('%',#{search},'%') 
-	  	 <include refid="searchDate"/> 
-	</if>
+
+	
   </sql>
+  
   
   <sql id="statusList">
     <if test="shipStatus != null and shipStatus != ''">
@@ -227,7 +237,7 @@
   
   <update id="makeShipCode">
   update shipping 
-  set ship_code =  concat_ws('-',(select code_group from common_code where code_group_name='출하'),order_code,DATE_FORMAT(ship_date, '%Y%m%d')), 
+  set ship_code =  concat_ws('-',(select code_group from common_code where code_group_name='출하'),order_code), 
   instruction_date = now(), 
   progress_status = 'waiting' 
   where order_code = #{order_code} 
@@ -237,11 +247,12 @@
   select scheduled_date from shipping where order_code=#{order_code} 
   </select>
   
-  <select id="instructionList" resultMap="ShippingDTO">
+    <select id="instructionList" resultMap="ShippingDTO">
   select S.ship_code, S.order_code, S.ship_date, S.progress_status, I.order_date, B.name as company_name  
   <include refid="shippingJoin"/>
-  where S.ship_code is not null and I.sales_status IN ('accept','deliver','complete')  
-  <include refid="searchList"/>  
+  where S.ship_code is not null and 
+  I.sales_status IN ('accept','deliver','complete') 
+  <include refid="searchList"/> 
   <include refid="instructionGroup"/>  
   LIMIT #{pageStart}, #{perPageNum} 
   </select>
@@ -250,12 +261,12 @@
   <select id="shippingTotalCount" resultMap="ShippingDTO">
   select S.ship_code, S.order_code, S.ship_date, S.progress_status, I.order_date, B.name as company_name  
   <include refid="shippingJoin"/>
-  where S.ship_code is not null and I.sales_status IN ('accept','deliver','complete')  
+  where S.ship_code is not null and 
+  I.sales_status IN ('accept','deliver','complete')
   <include refid="searchList"/>  
   <include refid="instructionGroup"/>   
   </select>
   
-
   
   <select id="countShipProgressing" resultType="Integer">
   select count(progress_status) from shipping 

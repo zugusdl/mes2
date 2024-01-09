@@ -1,28 +1,23 @@
 
-// function regCheck(){
-//	 var ckArr = $(".ck");
-//	 var count = ckArr.filter(":checked").length; 
-//
-//	 if(count==0){
-//		 Swal.fire({
-//			  title: "선택된 항목이 없습니다.",
-//			  icon: "warning"
-//			});
-//	 	return false;
-//	 	
-//	 }else{
-//	 	var result = confirm('삭제하시겠습니까?');	
-//	 	 if(result){
-//	 		$('#salesForm').submit();
-//	 	 }else{
-//	 		return false;
-//	 	 }
-//	 }
-// }
- 
+ $(document).ready(function() {
+        var pageFrm = $("#pageForm");
 
- 
- function register(){
+        $(".page-action a").on("click", function(e) {
+            
+            e.preventDefault(); //a태그기능막기
+            var page = $(this).attr("href"); //페이지번호
+            pageFrm.find("#page").val(page);
+            pageFrm.submit();
+        });
+       
+        
+    }); 
+
+
+
+
+
+function register(){
 	 var ckArr = $(".ck");
 	 var count = ckArr.filter(":checked").length; 
 	 
@@ -115,8 +110,7 @@
 			 $("#u_id").val(user_id).prop("disabled", false);
 			 $('#planListForm').submit();
 		});
-	// $("#u_id").val(user_id).prop("disabled", false);
-	// $('#planListForm').submit();
+	
  }
 
  function reject() {   
