@@ -44,7 +44,7 @@
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
 		<div class="son_serch">
-			<img src="../../../../resources/img/metadata/reset.png" width="30px" height="30px" onclick="redirectToFirstPage()" style="cursor: pointer;">
+			
 			<form action="/product/firstpage" method="POST">
 				<span>등록기간</span>
 				<input type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
@@ -52,7 +52,7 @@
 				<input type="text" name="search" placeholder="검색어를 입력하세요" />
 				<input type="submit" value="검색"/>
 			</form>
-			
+			<a><i class="fa-solid fa-rotate-right" onclick="redirectToFirstPage()" style="cursor: pointer; font-size: 20px;"></i></a>
 			
 			
 			<div class="son_list-btn">			
