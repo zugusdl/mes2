@@ -41,7 +41,7 @@ public class OutController {
 
 	// 출고 목록 리스트 - GET
 	@GetMapping(value = "/outList")
-	public void outListGET(Model model, OutDTO odto, OutSearchDTO osDTO , Criteria cri ) throws Exception {
+	public void outListGET(Model model, OutDTO odto, OutSearchDTO osDTO, Criteria cri ) throws Exception {
 		logger.debug("outListGET() 호출 ");
 		logger.debug("@@osDTO: " + osDTO);
 		cri.setPageSize(7);
@@ -77,9 +77,9 @@ public class OutController {
 	}
 	
 	// 출고 품목 재고 조회 - GET
-	@GetMapping(value = "/stockList")
-	public void stockListGET(@RequestParam("product_code") String product_code, Model model) throws Exception {
-		logger.debug("stockListGET() 호출");
+	@GetMapping(value = "/stockInsert")
+	public void stockInsertGET(@RequestParam("product_code") String product_code, Model model) throws Exception {
+		logger.debug("stockInsertGET() 호출");
 		List<StockDTO> stockList = oService.getStockList(product_code);
 		model.addAttribute("stockList", stockList);
 	}
@@ -104,10 +104,7 @@ public class OutController {
 			stockList.add(sDTO);
 		}
 		
-		logger.debug("@@stockList : " + stockList);
-		
 		int quantitySum = oService.insertOut(out_index, stockList);
-		logger.debug("@@@@quantitySum: " + quantitySum);
 
 		if(product_code.contains("PS")) {
 			if(quantitySum <= 2000) {

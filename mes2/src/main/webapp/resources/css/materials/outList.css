@@ -79,5 +79,10 @@ td{
 
 #button-addon2 {
 	width: 150px;
+}
+
+#reset {
 	margin-right: 200px;
+	font-size: 20px;
+	color: black;
 }

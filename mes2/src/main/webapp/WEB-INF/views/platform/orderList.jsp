@@ -44,6 +44,7 @@
 					</div>
 	<!-- 				<button type="button" class="btn btn-secondary" onclick="searchList();">검색</button> -->
 					<button class="btn btn-secondary" type="submit" id="button-addon2">검색</button>
+					<a href="/platform/orderList"><i class="fa-solid fa-rotate-right" id="reset"></i></a>
 			</form>
 
 			<!-- 표 -->
@@ -77,10 +78,10 @@
 													<i class="fa-solid fa-circle fa-2xs" style="color: #ff9924;"></i> 신청중
 												</c:when>
 												<c:when test="${soiDTO.sales_status eq 'accept' }">
-													<i class="fa-solid fa-circle fa-2xs" style="color: #577D71;"></i> 생산중
+													<i class="fa-solid fa-circle fa-2xs" style="color: #439f1d;"></i> 생산중
 												</c:when>
 												<c:when test="${soiDTO.sales_status eq 'deliver' }">
-													<i class="fa-solid fa-circle fa-2xs" style="color: #416ca4;"></i> 배송중
+													<i class="fa-solid fa-circle fa-2xs" style="color: #4486ff;"></i> 배송중
 												</c:when>
 												<c:when test="${soiDTO.sales_status eq 'complete' }">
 													<i class="fa-solid fa-circle fa-2xs" style="color: #6b6b6b;"></i> 완료
@@ -98,6 +99,7 @@
 				</div>
 			</div>
 			
+		</section>
 			<!-- 페이징 -->
 			<div class="box-footer clearfix">
 				<div style="margin: 0 auto; width: fit-content;">
@@ -118,7 +120,6 @@
 				</div>
 			</div>
 			<!-- 페이징 끝 -->
-		</section>
 
 		<div id="bottomContent"></div>
 	</div>

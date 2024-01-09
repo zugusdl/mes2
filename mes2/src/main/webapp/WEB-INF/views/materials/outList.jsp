@@ -41,6 +41,7 @@
 					</div>
 					
 					<button class="btn btn-secondary" type="submit" id="button-addon2">검색</button>
+					<a href="/materials/outList"><i class="fa-solid fa-rotate-right" id="reset"></i></a>
 			</form>
 			<!-- 표 -->
 			<div class="list">
@@ -85,7 +86,7 @@
 					</form>
 				</div>
 			</div>
-			
+		</section>
 			<!-- 페이징 -->
 			<div class="box-footer clearfix">
 				<div style="margin: 0 auto; width: fit-content;">
@@ -106,7 +107,6 @@
 				</div>
 			</div>
 			<!-- 페이징 끝 -->
-		</section>
 
 		<div id="bottomContent"></div>
 	</div>

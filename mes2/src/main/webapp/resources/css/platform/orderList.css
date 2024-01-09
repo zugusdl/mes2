@@ -53,7 +53,6 @@ td{
 
 #button-addon2 {
 	width: 150px;
-	margin-right: 200px;
 }
 
 .search-font {
@@ -80,4 +79,10 @@ td{
 
 #product_code {
 	width: 300px;
+}
+
+#reset {
+	margin-right: 200px;
+	font-size: 20px;
+	color: black;
 }

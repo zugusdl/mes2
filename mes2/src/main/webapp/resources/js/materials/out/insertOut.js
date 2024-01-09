@@ -1,5 +1,5 @@
 function insertOutProduct(product_code) {
-	var productList = window.open("/materials/stockList?product_code=" + product_code, "_blank","height=600, width=600");
+	var productList = window.open("/materials/stockInsert?product_code=" + product_code, "_blank","height=600, width=600");
 }
 
 //출고 등록

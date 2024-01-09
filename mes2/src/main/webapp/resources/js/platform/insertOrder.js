@@ -1,11 +1,6 @@
 // 팝업창 중간으로
-var _width = '600';
-var _height = '1000';
-var _left = Math.ceil(( window.screen.width - 600 )/2);
-var _top = Math.ceil(( window.screen.height - 1000 )/2);
-
 function openProductList() {
-	var productList = window.open("/platform/searchList", "_blank", "width=600, height=1000, left=" + _left + ", top="+ _top);
+	var productList = window.open("/platform/searchList", "_blank", "width=1000, height=600");
 }
 
 function cal(ths) {
