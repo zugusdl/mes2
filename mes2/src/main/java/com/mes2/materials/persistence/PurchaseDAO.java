@@ -28,4 +28,5 @@ public interface PurchaseDAO {
 	public List<PurchaseDTO> searchMaterial(String searchType, String keyword, Criteria cri) throws Exception;
 
 	public List<PurchaseDTO> getAllPurchaseData(PurchaseDTO pdto) throws Exception;
+
 }

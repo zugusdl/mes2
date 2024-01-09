@@ -29,6 +29,7 @@ public class InController {
 	@Inject
 	private InService iService;
 
+	// http://localhost:8080/materials/inlist
 	@GetMapping(value = "/in")
 	public void insertInGET() throws Exception {
 	}
@@ -36,9 +37,11 @@ public class InController {
 	@RequestMapping(value = "/updateInStatus", method = RequestMethod.POST)
 	public String insertInPOST(@RequestParam("in_pd_lot") String pd_lot, Model model) throws Exception {
 
-		InDTO idto = iService.listIncomingProductCodes(pd_lot);
+			InDTO idto = iService.listIncomingProductCodes(pd_lot);
+			if (!idto.getStatus().equals("complete")) {
 
-		if (idto.getStatus().equals("waiting") || (idto.getStatus().equals("requested"))) {
+
+			iService.insertStock(idto.getQuantity(), idto.getProduct_code(), idto.getCategory(), idto.getPd_lot());
 
 			idto.setPd_lot(iService.selectMaxMaterialsLot(pd_lot));
 
@@ -47,14 +50,6 @@ public class InController {
 			iService.updateIncomingRequest(in_code, pd_lot);
 			model.addAttribute("in_code", in_code);
 
-			if (iService.selectStock(idto.getProduct_code()).isEmpty()) {
-
-				iService.insertStock(idto.getQuantity(), idto.getProduct_code(), idto.getCategory());
-
-			} else {
-				iService.updateStockOnIncoming(idto.getQuantity(), idto.getProduct_code());
-
-			}
 
 		}
 
@@ -78,6 +73,8 @@ public class InController {
 
 	}
 
+
+	// http://localhost:8080/materials/inDetailList
 	@GetMapping(value = "/inDetailList")
 	public void inDetailListGET(Model model, SearchDTO sdto, Criteria cri,
 			@RequestParam(value = "searchType", required = false) String searchType,

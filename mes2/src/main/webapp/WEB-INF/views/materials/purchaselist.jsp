@@ -43,7 +43,7 @@
 			<div class="col-md-13" style="text-align: right;">
 				<button type="button" class="btn submitOrderButton"
 					onclick="openInputOrder();">발주신청</button>
-				<a href="/materials/materials" class="btn submitOrderButton">엑셀파일다운</a>
+				<a href="/materials/materials" class="btn submitOrderButton">Excel Download</a>
 			</div>
 
 

@@ -36,8 +36,10 @@
 					<button class="btn btn-secondary" type="submit" id="button-addon2">검색</button>
 				</div>
 			</form>
-			
-
+			<div class="col-md-13" style="text-align: right;">
+				<a href="/materials/inventory" class="btn submitDetailButton"
+					style="text-align: right;">Excel Download</a>
+			</div>
 
 			<div class="list-box">
 				<table class="table table-hover">

@@ -13,7 +13,7 @@ public interface InDAO {
 	
 	public List<InDTO> getAllInboundInfo(String searchType, String keyword, Criteria cri, SearchDTO sdto) throws Exception;
 	
-	public void insertStock(int quantity, String product_code, String category) throws Exception;
+	public void insertStock(int quantity, String product_code, String category, String pd_lot) throws Exception;
 
 	public void updateStockOnIncoming(int quantity, String product_code) throws Exception;
 	

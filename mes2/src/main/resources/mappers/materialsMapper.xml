@@ -136,6 +136,8 @@
 	</update>
 
 
+
+
 	<select id="getStatus" parameterType="String"
 		resultType="com.mes2.materials.domain.PurchaseDTO">
 		SELECT status FROM material_order WHERE
@@ -236,8 +238,9 @@
 
 	<insert id="insertStock" parameterType="java.util.Map">
 		INSERT INTO stock
-		(quantity, product_code, category) values (#{quantity},
-		#{product_code} ,#{category})
+		(quantity, product_code, category, pd_lot) 
+		values 
+		(#{quantity}, #{product_code}, (select category from meta_data_product where product_code = #{product_code}) ,#{pd_lot})
 	</insert>
 
 
@@ -318,7 +321,7 @@
 
 
 	<select id="getAllInData"
-		resultType="com.mes2.materials.domain.PurchaseDTO">
+		resultType="com.mes2.materials.domain.InDTO">
 		select iw.in_code, mdp.name, mdp.product_code, mdp.cost,
 		mdp.category,
 		iw.pd_lot, iw.quantity, mdp.unit, in_regdate, iw.status

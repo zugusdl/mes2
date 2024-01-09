@@ -29,4 +29,5 @@ public interface PurchaseService {
 	
 	public List<PurchaseDTO> getAllPurchaseData(PurchaseDTO pdto) throws Exception;
 	
+	
 }

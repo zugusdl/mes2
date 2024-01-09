@@ -118,5 +118,6 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		return sqlSession.selectList(NAMESPACE + ".getAllPurchaseData" , pdto);
 	}
 
+
 	
 }

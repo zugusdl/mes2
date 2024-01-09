@@ -47,8 +47,8 @@ public class InServiceImpl implements InService {
 	}
 
 	@Override
-	public void insertStock(int quantity, String product_code, String category) throws Exception {
-		idao.insertStock(quantity, product_code, category);
+	public void insertStock(int quantity, String product_code, String category, String pd_lot) throws Exception {
+		idao.insertStock(quantity, product_code, category, pd_lot);
 
 	}
 

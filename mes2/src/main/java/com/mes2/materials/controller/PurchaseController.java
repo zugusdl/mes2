@@ -36,6 +36,7 @@ public class PurchaseController {
 	@Inject
 	private InService iService;
 	
+	// http://localhost:8080/materials/purchaselist
 	@GetMapping(value = "/purchase")
 	public void insertPurchaseGET() throws Exception {
 	}
@@ -101,10 +102,8 @@ public class PurchaseController {
 	}
 
 	@PostMapping(value = "/updateStatus")
-	public String updateStatus(@RequestParam(value = "orders_index", required = false) int orders_index)
-			throws Exception {
+	public String updateStatus(@RequestParam(value = "orders_index", required = false) int orders_index) throws Exception {
 		int purchaselist = pService.updateOrderStatus("complete", orders_index);
-
 		return "redirect:/materials/purchaselist";
 
 	}

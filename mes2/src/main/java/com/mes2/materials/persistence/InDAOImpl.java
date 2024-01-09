@@ -75,11 +75,12 @@ public class InDAOImpl implements InDAO {
 
 
 	@Override
-	public void insertStock(int quantity, String product_code, String category) throws Exception {
+	public void insertStock(int quantity, String product_code, String category, String pd_lot) throws Exception {
 		Map<String, Object> paramap = new HashMap<>();
 		paramap.put("quantity", quantity);
 		paramap.put("product_code", product_code);
 		paramap.put("category", category);
+		paramap.put("pd_lot", pd_lot);
 		sqlSession.insert(NAMESPACE + ".insertStock", paramap);
 	}
 

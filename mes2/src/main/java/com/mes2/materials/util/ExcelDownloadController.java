@@ -16,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mes2.materials.domain.InDTO;
 import com.mes2.materials.domain.PurchaseDTO;
+import com.mes2.materials.service.InService;
 import com.mes2.materials.service.PurchaseService;
 
 @Controller
@@ -26,16 +28,24 @@ public class ExcelDownloadController {
 	@Inject
 	private PurchaseService pService;
 	
+	
+	@Inject
+	private InService iService;
+	
+	@Inject
+	private ExcelUtils exService;
+	
+	
 	@GetMapping(value = "/materials")
 	public ResponseEntity<byte[]> materials(HttpServletResponse response, PurchaseDTO pdto) throws Exception {
-	    Workbook workbook = ExcelUtils.createWorkbook();
+	   
 	    List<PurchaseDTO> data = pService.getAllPurchaseData(pdto);
-	    ExcelUtils.addDataToWorkbook(workbook, data);
+	     Workbook work = exService.addDataToWorkbook(data);
 
 	    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-	    workbook.write(byteArrayOutputStream);
+	    work.write(byteArrayOutputStream);
 	    byte[] excelBytes = byteArrayOutputStream.toByteArray();
-	    workbook.close();
+	    work.close();
 
 	    String filename = URLEncoder.encode("자재_리스트.xlsx", StandardCharsets.UTF_8);
 
@@ -46,5 +56,28 @@ public class ExcelDownloadController {
 
 	    return ResponseEntity.ok().headers(headers).contentLength(excelBytes.length).body(excelBytes);
 	}
+	
+	@GetMapping(value = "/inventory")
+	   public ResponseEntity<byte[]> inventory(HttpServletResponse response, InDTO idto) throws Exception {
+	  
+	       List<InDTO> data2 = iService.getAllInData(idto);
+	       Workbook work =  exService.addDataToWorkbook2(data2);
+
+	       ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+	       work.write(byteArrayOutputStream2);
+	       byte[] excelBytes2 = byteArrayOutputStream2.toByteArray();
+	       work.close();
+
+	       String filename2 = URLEncoder.encode("입고_리스트.xlsx", StandardCharsets.UTF_8);
+
+	       HttpHeaders headers2 = new HttpHeaders();
+	       headers2.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	       headers2.setContentDispositionFormData("attachment", filename2);
+	       headers2.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+	       return ResponseEntity.ok().headers(headers2).contentLength(excelBytes2.length).body(excelBytes2);
+	   }
+
+	
 
 }
