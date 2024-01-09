@@ -23,7 +23,7 @@
 
 <body>
 	<div class="container2">
-		<%@ include file="../sidehead/sidehead.jsp" %>
+		<%@ include file="../system/sidehead.jsp" %>
 		<section class="section1">
 			<form class="search" id="searchForm">
 				<select name="searchType" id="searchType" class="form-select" aria-label="Default select example">
