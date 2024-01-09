@@ -357,4 +357,10 @@ public SalesDTO getRegUser(String order_code) {
 	
 	return sdao.getRegUser(order_code);
 }
+
+@Override
+public AcceptSaveDTO orderPlanInfo(String order_code) {
+	
+	return sdao.getOrderPlanInfo(order_code);
+}
 }

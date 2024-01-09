@@ -34,15 +34,21 @@
             pageFrm.submit();
         });
        
-      /*  
-        $('.sp-table td').on('click', 'a', function() {
-        	  $(this).closest('td').css('background-color', '#ff5c33');
-        	});
- */
         
     });
 </script>
 
+<style>
+a {
+  text-decoration: none; /* 밑줄 제거 */
+  color:#000000; /* 원하는 텍스트 색상으로 변경 */
+}
+
+a:hover {
+  
+  color: #95c4a2; /* 마우스 호버 시에는 다른 텍스트 색상으로 변경 */
+}
+</style>
 
   </head>
   
@@ -59,7 +65,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="salesModalLabel"></h1>
-       <!--  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      
       </div>
       <div class="modal-body mo" id="sales-modal">
        
@@ -73,65 +79,23 @@
 </div>
 </div>
 
-   <!-- 진행현황 바  -->
-  <%--    <div class="box" onclick="location.href='/sales/salesPlan'">
-      <span>신청수주</span>
-    </div>
-    <div class="box3" onclick="location.href='/sales/salesPlan'">
-      <span >대기 ${status.waitingCnt }건</span>
-    </div>
-    <div class="box2" onclick="location.href='/sales/salesPlan?newOrder=true'">
-      <span >신규 ${status.newCnt }건</span>
-    </div> --%>
-    
-    <!-- 페이징 -->
-<%--     
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-    <!-- 이전페이지 -->
-    <c:if test="${pm.prev }">
-        <li class="page-item page-action">
-            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-</c:if>
-		<!-- 페이지번호처리  -->
-        <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
-            <c:if test="${pm.cri.page != pageNum}">
-                <li class="page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
-            </c:if>
-            <c:if test="${pm.cri.page == pageNum}">
-                <li class="active page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
-            </c:if>
-        </c:forEach>
-
-<!-- 다음페이지 -->
-<c:if test="${pm.next }">
-        <li class="page-item">
-            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-        </c:if>
-    </ul>
-</nav> --%>
-
-		<form id="pageForm" action="salesPlan" method="post">
-			<input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
-		    <input type="hidden" id="prePageNum" name="perPageNum" value="${pm.cri.perPageNum }"/>
-		    <input type="hidden" id="type" name="type" value="${pm.cri.type }"/>
-		    <input type="hidden" id="search" name="search" value="${pm.cri.search }"/>
-		    <input type="hidden" id="newOrder" name="newOrder" value="${pm.cri.newOrder }"/>
-		</form>
+<!-- 페이징 정보 저장 -->
+   <form id="pageForm" action="salesPlan" method="post">
+	 <input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
+	 <input type="hidden" id="prePageNum" name="perPageNum" value="${pm.cri.perPageNum }"/>
+	 <input type="hidden" id="type" name="type" value="${pm.cri.type }"/>
+     <input type="hidden" id="search" name="search" value="${pm.cri.search }"/>
+     <input type="hidden" id="newOrder" name="newOrder" value="${pm.cri.newOrder }"/>
+	</form>
 
 
     <!-- 검색창 -->
     <div class="container">
     <section class="section1">
-      <form action="salesPlan" method="post" class="search" onsubmit="return checkSearchSub()">
-       
+      <form action="salesPlan" method="post" class="search" onsubmit="return checkSearchSub()">      
       	 <input type="hidden"  name="newOrder" value="${pm.cri.newOrder }"/>
+      	 
+      	 <!-- 검색타입 -->
       	 <select name="type" id="searchType" class="form-select" aria-label="Default select example">
           <option value="">검색선택 </option>
           <option value="order_code" ${pm.cri.type=='order_code' ? 'selected' : ''}>주문번호</option>
@@ -140,22 +104,14 @@
           <option value="request_date" ${pm.cri.type=='request_date' ? 'selected' : ''}>수주신청일</option>
         </select>
        
-   
-		
-       <%--  <div>
-          <span class="search-font">검색시작일</span>
-          <input  type="date" value="${pm.cri.startDay }" name="startDay" />
-          <span class="search-font">검색종료일</span>
-          <input type="date" name="endDay" value="${pm.cri.endDay }"/>
-        </div> --%>
-			<div class="input-group">
-			  <span class="input-group-text">기간</span>
-			  <input type="date" aria-label="First name" class="form-control" value="${pm.cri.startDay }" name="startDay" />
-			  <input type="date" aria-label="Last name" class="form-control" name="endDay" value="${pm.cri.endDay }"/>
-	        </div>
-<%-- 
-        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" value="${pm.cri.search }" />
-        <input type="submit" value="검색"  /> --%>
+        <!-- 기간검색 -->
+		<div class="input-group">
+		   <span class="input-group-text">기간</span>
+		   <input type="date" aria-label="First name" class="form-control" value="${pm.cri.startDay }" name="startDay" />
+		   <input type="date" aria-label="Last name" class="form-control" name="endDay" value="${pm.cri.endDay }"/>
+	    </div>
+	    
+        <!-- 검색타입 -->
         <div class="input-group searchSub">
 	        <input type="text" name="search" id="putSearch" class="form-control" placeholder="검색어를 입력하세요" value="${pm.cri.search }" 
 	        aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -163,25 +119,25 @@
         </div>
       </form>
  
-      <!-- 표 -->
-      <div class="list">
+ 
+   <!-- 표 시작 -->
+   <div class="list">
+       <!-- 표 버튼 -->
         <div class="list-btn">
          <button type='button' class='btn'  id="reg-mo-btn" onclick="return register()">등록</button>
           <button type='button' class='btn btn-secondary' formaction='rejectSales' id="rej-mo-btn" onclick='return reject()'>거절</button>
           <!-- Example single danger button -->
-<div class="btn-group">
-  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    현황
-  </button>
-  <ul class="dropdown-menu">
-    
-    <li class="dropdown-item stat-item" onclick="location.href='/sales/salesPlan'">신청수주</li>
-    <li class="dropdown-item stat-item" onclick="location.href='/sales/salesPlan'">대기 ${status.waitingCnt }건</li>
-    <li class="dropdown-item stat-item" onclick="location.href='/sales/salesPlan?newOrder=true'">신규 ${status.newCnt }건</li>
-  </ul>
-</div>
+			<div class="btn-group">
+			  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
+			    <ul class="dropdown-menu">
+			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesPlan'">신청수주</li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesPlan'">대기 ${status.waitingCnt }건</li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/sales/salesPlan?newOrder=true'">신규 ${status.newCnt }건</li>
+			   </ul>
+			</div>
         </div>
 
+		<!-- 표 반복 -->
         <div class="list-box">
           <form class="list-form" id="planListForm" action="planRegister" method="post">
           <input type="hidden" id="u_id" name="user_id" value="dd" disabled/>
@@ -191,6 +147,7 @@
 		  <input type="hidden"  name="type" value="${pm.cri.type }"/>
 		  <input type="hidden"  name="search" value="${pm.cri.search }"/>
 		  <input type="hidden"  name="newOrder" value="${pm.cri.newOrder }"/>
+            
             <table class="table table-hover sp-table">
               <thead>
                 <tr class="table-success">
@@ -203,39 +160,42 @@
                 </tr>
               </thead>
               <tbody>
-              <c:forEach var="dto" items="${list }">
-                <tr>
-                  
+             <c:forEach var="dto" items="${list }">
+                <tr>                  
                   <td scope="row"><input type="checkbox" class="ck" value="${dto.order_code }" name="order_code"/></td>
-                  <td><a href="javascript:goContent('${dto.order_code }')"> ${dto.order_code } </a></td> 
+                 <%--  <td><a href="javascript:goContent('${dto.order_code }')"> ${dto.order_code } </a></td>  --%>
+                  <td onclick="goContent('${dto.order_code }')"><span class="od-content">${dto.order_code }</span></td>
                   <td>${dto.company_name }</td>         
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.order_date}"/></td>
-                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.request_date }"/></td>
-                
+                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.request_date }"/></td>                
                 </tr>
-               </c:forEach> 
-                
+              </c:forEach>               
               </tbody>
             </table>
           </form>
         </div>
              
-      </div>
+   </div>
       
       
-          <!-- 페이징 -->
-    
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-    <!-- 이전페이지 -->
-    <c:if test="${pm.prev }">
-        <li class="page-item page-action">
-            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-</c:if>
-		<!-- 페이지번호처리  -->
+          
+		  <!-- 페이징  -->
+		  <div class="page-nav">
+		  <nav aria-label="Page navigation example">
+		    <ul class="pagination">
+		    
+		    <!-- 이전페이지 -->
+		    <c:if test="${pm.prev }">
+		        <li class="page-item page-action">
+		            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
+		                <span aria-hidden="true">&laquo;</span>
+		            </a>
+		        </li>
+		    </c:if>
+		    
+		    
+		<!-- 페이지 번호 -->
+		
         <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
             <c:if test="${pm.cri.page != pageNum}">
                 <li class="page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
@@ -245,16 +205,17 @@
             </c:if>
         </c:forEach>
 
-<!-- 다음페이지 -->
-<c:if test="${pm.next }">
-        <li class="page-item">
-            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-        </c:if>
-    </ul>
-</nav>
+		<!-- 다음페이지 -->
+		<c:if test="${pm.next }">
+		        <li class="page-item">
+		            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
+		                <span aria-hidden="true">&raquo;</span>
+		            </a>
+		        </li>
+		        </c:if>
+		    </ul>
+		</nav>
+		</div>
     </section>
 
     <section class="section1" >

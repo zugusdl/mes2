@@ -41,8 +41,9 @@ public interface SalesDAO {
 	public List<SalesDTO>makeOrderStates(String order_code);
 	//public List<SalesDTO>getNewAccept();
 	//public List<SalesDTO>getUserAccept(String user_id);
-	
-	public AcceptSaveDTO getOrderInfo(String oreder_code);
+
+	public AcceptSaveDTO getOrderPlanInfo(String order_code);
+	public AcceptSaveDTO getOrderInfo(String order_code);
 	public void updateInstruction(String order_code);
 	
 	//public List<SalesDTO>getInstructionsList(String instructions);

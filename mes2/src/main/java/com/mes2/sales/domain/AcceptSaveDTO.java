@@ -9,10 +9,6 @@ import lombok.Data;
 public class AcceptSaveDTO {
 
 	 private String order_code;
-//	 private List<String> product_code;
-//	 private List<String> processing_reg;
-//	 private List<String> sales_code;
-//	 private List<String> sales_quantity;
 	 private String company_name;
 	 private String company_code;
 	 private Date request_date;

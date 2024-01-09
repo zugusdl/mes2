@@ -11,34 +11,96 @@ a:hover {
   color: #95c4a2; /* 마우스 호버 시에는 다른 텍스트 색상으로 변경 */
 }
 
+p {
+	margin:0;
+}
+.od-content{
+	cursor: pointer;
+	
+}
 
+.od-content:hover {
+  color: #6E9888;
+}
 
  .search {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 30px;
-      padding: 2px;
-      margin-top: 40px;
+      padding: 20px;
+      border: solid 2px #a2c6a8; 
+      margin-top: 40px; 
+     
     }
 
     .section1 {
-      padding: 1px;
-     /*  background-color: #e6e6e6; */
+      padding: 1px;   
       width: 1500px;
-      height: 500px;
-      margin: 0 auto;
-      margin-top: 30px;
+      height: 500px;     
+      /* margin-top: 30px; */
+      margin:30px;
+      margin-left:60px;
 
       
     }
 
-    .list-box {
-      width: 800px;
-      height: 300px;
+	.info-btn{
+	background-color:#6e9888;
+	}
+	
+	.list-font{
+	font-size: 25px;
+	 cursor: pointer; 
+	 margin-top:10px;
+	 margin-bottom: 20px;
+	
+	}
+	.content-container{
+	  margin-right:5px;
+	 margin-left:5px;
+	
+	}
+	.content-box{
+	outline: 3px solid #A2C6A8;
+	 background-color: #e6e6e6;
+	 height: 300px;
       margin: 0 auto;
-      overflow-y: auto; 
-      overflow-x: hidden; 
+      overflow-y: auto;  /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@스크롤  */
+      overflow-x: hidden;  /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@스크롤  */
+      
+	}
+	.content-title {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	}
+/* 	.content-order {
+	display:flex;
+	gap:5px;
+	} */
+	button.stock-info-btn {
+  background-color: #A2C6A8;
+  color: white;
+}
+button.stock-info-btn:hover {
+  background-color: #A2C6A8 ;
+}
+
+	button.dark-green-btn {
+  background-color:  #6e9888;
+  color: white;
+}
+
+button.dark-green-btn:hover {
+  background-color: #6e9888 ;
+}
+    .list-box {
+      
+      height: 300px;
+      margin: 0 auto; 
+      overflow-y: auto;  /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@스크롤  */
+      overflow-x: hidden;  /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@스크롤  */
     }
 
     .list-btn {
@@ -61,9 +123,28 @@ a:hover {
       align-items: center;
       gap: 20px;
       flex-direction: column;
-      clear: both;
+     
     }
-    
+  
+    .page-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* 원하는 간격 조절 */
+}
+
+.page-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-nav li {
+  margin: 0 5px; /* 각 목록 항목 간격 조절 */
+}
+
      .mo {
     display: flex;
     flex-direction: column;
@@ -133,15 +214,10 @@ a:hover {
    .pagination .page-item.active .page-link {
     background-color: #95c4a2; /* 활성화된 페이지 번호의 배경색상 변경 */
     color: #ffffff; /* 활성화된 페이지 번호 텍스트 색상 (흰색) */
-    border-color: #ffffff;
+    border-color: #81b189;
   }
   
- /*   .pagination .page-item.disabled .page-link {
-    비활성화된 페이지 번호의 스타일을 변경하려면 추가적인 스타일을 지정할 수 있습니다.
-    color: #6c757d; 비활성화된 페이지 번호 텍스트 색상 (회색)
-    background-color: #f8f9fa; 비활성화된 페이지 번호 배경색상 (연한 회색)
-  } */
-  
+
   #reg-mo-btn {
    background-color: #95c4a2;
    border-color: #bfbfbf;
@@ -153,25 +229,61 @@ a:hover {
   cursor: pointer;
   }
   
+  .red-circle {
+  width: 10px; /* 원의 지름 */
+  height: 10px; /* 원의 지름 */
+  background-color: red; /* 배경 색상 */
+  border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다 */
+   display: inline-block;
+   gap: 5px;
+}
+
+  .green-circle {
+  width: 10px; /* 원의 지름 */
+  height: 10px; /* 원의 지름 */
+  background-color: green; /* 배경 색상 */
+  border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다 */
+   display: inline-block;
+   gap: 5px;
+}
+
+  .gray-circle {
+  width: 10px; /* 원의 지름 */
+  height: 10px; /* 원의 지름 */
+  background-color: gray; /* 배경 색상 */
+  border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다 */
+   display: inline-block;
+   gap: 5px;
+}
+
+  .yellow-circle {
+  width: 10px; /* 원의 지름 */
+  height: 10px; /* 원의 지름 */
+  background-color: rgb(250, 210, 134); /* 배경 색상 */
+  border-radius: 50%; /* 50%로 설정하여 원 모양으로 만듭니다 */
+   display: inline-block;
+   gap: 5px;
+}
+  
   /* ------------------------------------------------------------------- */
   
-  .search {
+/*   .search {
    display: flex;
    justify-content: center;
    align-items: center;
    gap: 30px;
-   padding: 20px; /* 원래 2px */
+   padding: 20px; 원래 2px
    margin-top: 40px;
-   border: solid 2px #a2c6a8; /* 원래 없었음 */
+   border: solid 2px #a2c6a8; 원래 없었음
    border-radius: 10px;
 }
 
 .section1 {
    padding: 1px;
-   /*       background-color: #e6e6e6; */
+         background-color: #e6e6e6;
    width: 1500px;
    height: 500px;
-   /* margin: 0 auto; */
+   margin: 0 auto;
    margin-top: 30px;
 }
 
@@ -203,4 +315,4 @@ a:hover {
    align-items: center;
    gap: 20px;
    flex-direction: column;
-}
+} */

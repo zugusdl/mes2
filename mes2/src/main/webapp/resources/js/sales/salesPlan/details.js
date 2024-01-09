@@ -72,9 +72,9 @@
  }
 function info(order_code){
 	 
-	 alert(order_code);
+	 
 	  $.ajax({
-		  url:"getOrderInfo", 
+		  url:"orderPlanInfo", 
 		  type:"post",
 		  dataType:"json", 
 		  data: {"order_code" : order_code}, 
@@ -104,39 +104,37 @@ function info(order_code){
 	     listHtml += "<div>회사명 : <input type='text' value='"+data.company_name+"' readonly/></div>";
 		 listHtml += "<div>회사코드 : <input type='text' value='"+data.company_code+"' readonly/></div>";
 		 listHtml += "<div>회사주소 : <input type='text' value='"+data.company_address+"' readonly/></div>";
-		 listHtml += "<div>회사전화번호 : <input type='text' value='"+data.company_call+"' readonly/></div>";
-		 listHtml += "<hr>"
-		 listHtml += "<p>&lt;담당자정보></p>"
-		 listHtml += "<div>담당자id : <input type='text' value='"+data.user_id+"' readonly/></div>";
-		 listHtml += "<div>담당자이름 : <input type='text' value='"+data.user_name+"' readonly/></div>";
-		 listHtml += "<div>담당자부서 : <input type='text' value='"+data.user_department+"' readonly/></div>";
-		 listHtml += "<div>담당자직책: <input type='text' value='"+data.user_position+"' readonly/></div>";
-		 listHtml += "<div>담당자부서 : <input type='text' value='"+data.user_auth+"' readonly/></div>";	 
-		 
-		 
+		 listHtml += "<div>회사전화번호 : <input type='text' value='"+data.company_call+"' readonly/></div>";	 
 		 $("#sales-modal").html(listHtml);
  }
-  function content(data, order_code){  
-	
-	  var listHtml = "<div class='list-box'>";
-	  listHtml += "<div>";
-	  listHtml += "<p>주문번호: "+order_code+"</p>";
+  function content(data, order_code){ 
+	  var listHtml = "<div class='content-box'>"
+		  listHtml += "<div class='content-container'>"
+	 listHtml += "<div class='content-title'>"
+		 
+		  //listHtml += "<div class='list-btn'>";
+		
+		  //listHtml += "<div class='content-title'>" 
+		  listHtml += "<div>"
+		  listHtml += "<p class='list-font' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  
+		  //listHtml += "<button type='button' class='btn btn-warning info-btn'  onclick='info(\""+order_code+"\")'>상세</button>";	
+		  listHtml += "</div>"
+		  listHtml += " <button type='button' class='btn-close' aria-label='Close' onclick='cancle()'></button>"
+		  //listHtml += "</div>"
+		  listHtml += "</div>";
+	  listHtml += "<div class='list-box'>";
+ 
+	 // listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
 	  
-	  listHtml += "<button type='button' class='btn btn-danger'   onclick='info(\""+order_code+"\")'>상세</button>";
-	
-	  listHtml += "</div>";
-	//  var listHtml ="<div class='list-box'>";
-	  listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
 	  listHtml += "<table class='table table-hover'>";
 	  listHtml += "<thead>";
 	  listHtml += "<tr class='table-success' >";
 	  listHtml += "<th scope='col'>제품코드</th>";
 	  listHtml += "<th scope='col'>제품명</th>";
 	  listHtml += "<th scope='col'>수량</th>";
-	  listHtml += "<th scope='col'>재고조회</th>";
+	  listHtml += "<th scope='col'></th>";
 	  listHtml += "</tr>";
-	  listHtml += "</thead>";
-	  
+	  listHtml += "</thead>";  
 	  listHtml += "<tbody>";
 	  
 	  $.each(data,function(index,obj){
@@ -144,14 +142,15 @@ function info(order_code){
 		  listHtml += "<td>"+obj.product_code+"</td>";				  
 		  listHtml += "<td>"+obj.product_name+"</td>";
 		  listHtml += "<td>"+obj.sales_quantity+"</td>";
-		  listHtml += "<td><button type='button' class='btn btn-primary'  onclick=\"mo('" + obj.product_code + "','"+obj.order_code+"','"+obj.sales_quantity+"')\">재고조회</button></td>";
+		  listHtml += "<td><button type='button' class='btn stock-info-btn'  onclick=\"mo('" + obj.product_code + "','"+obj.order_code+"','"+obj.sales_quantity+"')\">재고조회</button></td>";
 		  listHtml += "</tr>";
 	  });
     
 
 	  listHtml += "</tbody>";
 	  listHtml += "</table>";
-	 
+	  listHtml += "</div>";
+	  listHtml += "</div>";
 	
 	  $("#salesPlanContent").html(listHtml);
   }

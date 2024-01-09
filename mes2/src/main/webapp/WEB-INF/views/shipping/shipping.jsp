@@ -19,67 +19,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/38bf29a217.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <link rel="stylesheet" href="/resources/css/contents/contents.css">  
+    <link rel="stylesheet" href="/resources/css/sales/salesPlan.css">
     
-    <style>
-    .mo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-   }
-   .box {
-        background-color: #95c4a2;
-        border: 1px black solid;
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        float: left;
-        border-top-left-radius: 10px;  /* 왼쪽 위 둥근 테두리 */
-        border-bottom-left-radius: 10px;  /* 왼쪽 아래 둥근 테두리 */
-      }
-
-      .box2 {
-        background-color: white;
-        border: 1px black solid;
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        font-size: 25px;
-        font-weight: bold;
-        text-align: center;
-        float: left;
-        border-top-right-radius: 10px; /* 오른쪽 위 둥근 테두리 */
-        border-bottom-right-radius: 10px; /* 오른쪽 아래 둥근 테두리 */
-      }
-
-      .box3 {
-        background-color: white;
-        border: 1px black solid;
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        float: left;
-        
-      }
-      
-    .box2:hover, .box3:hover, .box:hover {
-     color: #ffcccc;
-    cursor: pointer; 
   
-    }
-
-  .container {
-    clear: both;
-   
-  }
-    </style>
     
     <script type="text/javascript">
     //페이지번호클릭시이동하기 
@@ -99,7 +41,7 @@
   </head>
   
   <body>
-  
+  <%@ include file="../sidehead/sidehead.jsp" %>
   <script src="/resources/js/shipping/ship/btn.js"></script>
   <script src="/resources/js/shipping/ship/details.js"></script>
   
@@ -127,7 +69,7 @@
 
 
 	<!-- 진행현황 바  -->
-     <div class="box" onclick="location.href='/shipping/shipping'">
+  <!--   <div class="box" onclick="location.href='/shipping/shipping'">
       <span >출하</span>
     </div>
     <div class="box3" onclick="location.href='/shipping/shipping?progressStatus=waiting'">
@@ -141,40 +83,9 @@
     </div>
     <div class="box2" onclick="location.href='/shipping/shipping?user=true'">
       <i class="fa-solid fa-user" ></i>
-    </div>
+    </div> -->
 
-   <!-- 페이징 -->
-    
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-    <!-- 이전페이지 -->
-    <c:if test="${pm.prev }">
-        <li class="page-item">
-            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-</c:if>
-		<!-- 페이지번호처리  -->
-        <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
-            <c:if test="${pm.cri.page != pageNum}">
-                <li class="page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
-            </c:if>
-            <c:if test="${pm.cri.page == pageNum}">
-                <li class="active page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
-            </c:if>
-        </c:forEach>
-
-<!-- 다음페이지 -->
-<c:if test="${pm.next }">
-        <li class="page-item">
-            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-        </c:if>
-    </ul>
-</nav>
+ 
 
 		<form id="pageForm" action="shipping" method="post">
 			<input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
@@ -183,6 +94,7 @@
 		    <input type="hidden" id="search" name="search" value="${pm.cri.search }"/>
 		    <input type="hidden" id="userId" name="userId" value="${pm.cri.userId }"/>
 		    <input type="hidden"  name="progressStatus" value="${pm.cri.progressStatus }"/>
+		    <input type="hidden"  name="progressSta" value="${pm.cri.progressSta }"/>
 		</form>
     
     <div class="container" >
@@ -195,8 +107,8 @@
       	  <input type="hidden" id="progressSta" name="progressSta" value=""/>
       	 
       	  
-      	 <select name="type" id="searchType">
-          <option value="">-- 검색선택 --</option>
+      	 <select name="type" id="searchType" class="form-select" aria-label="Default select example">
+          <option value="">검색선택</option>
           <option value="ship_code" ${pm.cri.type=='ship_code' ? 'selected' : ''}>출하코드</option>
           <option value="ship_date" ${pm.cri.type=='ship_date' ? 'selected' : ''}>출하일자</option>
           <option value="company_name" ${pm.cri.type=='company_name' ? 'selected' : ''}>수주처</option>
@@ -206,27 +118,39 @@
         
    
 		
-        <div>
-          <span class="search-font">검색시작일</span>
-          <input  type="date" min="2023-12-01" name="startDay" />
-
-          <span class="search-font">검색종료일</span>
-          <input type="date" name="endDay"/>
+        <!-- 기간검색 -->
+		<div class="input-group">
+		   <span class="input-group-text">기간</span>
+		   <input type="date" aria-label="First name" class="form-control" value="${pm.cri.startDay }" name="startDay" />
+		   <input type="date" aria-label="Last name" class="form-control" name="endDay" value="${pm.cri.endDay }"/>
+	    </div>
+	    
+        <!-- 검색타입 -->
+        <div class="input-group searchSub">
+	        <input type="text" name="search" id="putSearch" class="form-control" placeholder="검색어를 입력하세요" value="${pm.cri.search }" 
+	        aria-label="Recipient's username" aria-describedby="button-addon2">
+	        <button class="btn btn-secondary" type="submit" onclick="return checkSearchSub()" id="button-addon2">검색</button>
         </div>
-		
-
-        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" value="${pm.cri.search }" />
-        <input type="submit" value="검색"  />
       </form>
 
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
         <c:if test="${not empty pm.cri.userId}">
-      	 <i class="fa-solid fa-truck" onclick="showStatus()"></i>
+       <button type="button" class="btn btn-primary" onclick="showStatus()">처리</button>     	 
       	 </c:if>
-         <button type='button' class='btn btn-secondary' data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return update()">수정</button>   
-          <button type="button" class="btn btn-secondary" id="loadPage" onclick="load()">로드</button>         
+         <button type='button' class='btn dark-green-btn' data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return update()">수정</button>   
+               <!-- Example single danger button -->
+			<div class="btn-group">
+			  <button type="button" class="btn stock-info-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
+			    <ul class="dropdown-menu">
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipping'">출하</li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipping?progressStatus=waiting'">대기 ${status.waitingCnt }건</span></li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipping?progressStatus=shipping'">배송중  ${status.instructionCnt }건</li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipping?progressStatus=complete'">완료  ${status.completeCnt }건</li>
+			      <li class="dropdown-item stat-item"onclick="location.href='/shipping/shipping?user=true'">등록확인</li>
+			   </ul>
+			</div>        
         </div>
 
         <div class="list-box">
@@ -245,21 +169,21 @@
                 </tr>
               </thead>
               <tbody>
-              <c:forEach var="data" items="${list }">
+              <c:forEach var="data" items="${list }"> 
                 <tr>
                   <td><input type="radio" class="ck" value="${data.order_code }" name="order_code"/></td>  
-                  <td><a href="javascript:goContent('${data.order_code }')"> ${data.ship_code } </a></td> 
+                  <td onclick="goContent('${data.order_code }')"><span class="od-content">${data.ship_code }</span></td>
                   <td class="ship-date"><fmt:formatDate pattern="yyyy-MM-dd" value="${data.ship_date }"/></td>  
                   <td>${data.company_name }</td>       
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${data.order_date}"/></td>            
                   <c:if test="${data.progress_status eq 'complete'}">
-                  <td><button type="button" class="btn btn-primary" >완료</button></td>
+                  <td><div class="green-circle"/></div>  완료</td>
                   </c:if>
                  	 <c:if test="${data.progress_status eq 'waiting'}">
-   				 	<td><button type="button" class="btn btn-secondary waite-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return complete('${data.order_code}', '${data.ship_date}')">대기</button></td>
+   				 	<td><button type="button" class="btn btn-secondary waite-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="return complete(\'' + data.order_code + '\', \'' + data.ship_date + '\')">대기</button></td>
 					</c:if> 
 					 <c:if test="${data.progress_status eq 'shipping'}">
-   				 	<td><button type="button" class="btn btn-secondary" >배송</button></td>
+   				 	<td><div class="yellow-circle"/></div>  배송</td>
 					</c:if>                                      
                 </tr>
              </c:forEach> 
@@ -269,16 +193,53 @@
           </form>
         </div>
       </div>
+     <!-- 페이징  -->
+		  <div class="page-nav">
+		  <nav aria-label="Page navigation example">
+		    <ul class="pagination">
+		    
+		    <!-- 이전페이지 -->
+		    <c:if test="${pm.prev }">
+		        <li class="page-item page-action">
+		            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
+		                <span aria-hidden="true">&laquo;</span>
+		            </a>
+		        </li>
+		    </c:if>
+		    
+		    
+		<!-- 페이지 번호 -->
+		
+        <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+            <c:if test="${pm.cri.page != pageNum}">
+                <li class="page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+            <c:if test="${pm.cri.page == pageNum}">
+                <li class="active page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+        </c:forEach>
+
+		<!-- 다음페이지 -->
+		<c:if test="${pm.next }">
+		        <li class="page-item">
+		            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
+		                <span aria-hidden="true">&raquo;</span>
+		            </a>
+		        </li>
+		        </c:if>
+		    </ul>
+		</nav>
+		</div>
     </section>
 
     <section class="section1" id="view2">
    
       </section>
       </div>
-    <script
+<!--     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
-    ></script>
+    ></script> -->
   </body>
 </html>

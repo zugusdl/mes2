@@ -233,6 +233,11 @@ public class SalesController {
 		return  sService.orderInfo(order_code);
 	}
 	
+	@RequestMapping(value = "orderPlanInfo", method = RequestMethod.POST)
+	public @ResponseBody AcceptSaveDTO orderPlanInfo(String order_code ){
+		return  sService.orderPlanInfo(order_code);
+	}
+	
 	@RequestMapping(value = "getRegUser", method = RequestMethod.POST)
 	public @ResponseBody SalesDTO  getRegUser(String order_code ){
 		

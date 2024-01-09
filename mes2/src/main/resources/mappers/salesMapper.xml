@@ -274,6 +274,13 @@
   where I.order_code = #{order_code} 
   </select>
   
+  <select id="getOrderPlanInfo" resultMap="AcceptSaveDTO">
+  select B.company_code, B.name, B.address, B.call 
+  from meta_data_business B 
+  join sales_order_info I on B.company_code = I.company_code 
+  where I.order_code = #{order_code} 
+  </select>
+  
   
  <update id="updateInstruction">
  update sales_order_info 

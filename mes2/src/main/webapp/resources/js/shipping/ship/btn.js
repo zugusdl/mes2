@@ -8,17 +8,18 @@ $(document).ready(function() {
 		  var shipDate = moment(shipDateValue, 'YYYY-MM-DD');
 		  var today = moment();
 
-		  if (shipDate.isSame(today, 'day')) {
+	  if (shipDate.isSame(today, 'day')) {
 		    // 오늘과 일치하는 경우 처리할 작업 수행
 		    // 대기 버튼 클래스 변경
-		    $(element).removeClass('btn-secondary').addClass('btn-warning');
+		   $(element).removeClass('btn-secondary').addClass('btn-warning');
 
 		    
 		  }
 		  
 		});
 
-	
+
+
   
   $('.ck').on('change', function() {
    // 라디오버튼에 저장된 주문번호 가져오기
@@ -50,7 +51,7 @@ function showStatus() {
 	    inputOptions,
 	    inputValidator: (value) => {
 	      if (!value) {
-	        return "아무것도 선택하지 않았습니다.";
+	        return "선택한 항목이 없습니다. ";
 	      }
 	    }
 	  }).then((result) => {
@@ -402,13 +403,13 @@ function deliverCheck(data,order_code){
 		 var today = new Date();
 
 		 // 시작일 설정 (신청일 3주후)
-		 	//var requestDate = new Date(data.request_date);
+		 	var requestDate = new Date(data.request_date);
 		 	// alert(requestDate);
-		 	var minDate = new Date();
+		 	//var minDate = new Date();
 		 	//alert(minDate);
-		 	//var minDate = new Date(requestDate);
+		 	var minDate = new Date(requestDate);
 		    //minDate.setDate(requestDate.getDate() + 14);
-		    alert(minDate);
+		    //alert(minDate);
 		    
 		// 마지막일 설정 (납품요청일 4일전)    
 		    var orderDate = new Date(data.order_date);
@@ -421,10 +422,18 @@ function deliverCheck(data,order_code){
 		// 오늘 기준 B가 미래면 B가 min
 //		    var startDate;
 //		    
-//		    if (today < minDate) {
-//		        startDate = minDate;
-//		        alert("오늘이 과거");
-//		    } else if (today >minDate) {
+		    if (today >= maxDate) {
+		    	  Swal.fire({
+		    	    title: "일정을 변경할 수 없습니다. ",
+		    	    text: "이미 출하되었습니다.",
+		    	    icon: "error"
+		    	  }).then((result) => {
+		    	    return; 
+		    	  });
+		    	}
+		    	
+
+		    //else if (today >minDate) {
 //		    	startDate = today; //오늘이 이후 
 //		    	alert("오늘이 미래");
 //		    } else {

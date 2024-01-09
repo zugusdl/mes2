@@ -221,4 +221,11 @@ public class SalesDAOImpl implements SalesDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+".getRegUser", order_code);
 	}
+	
+	@Override
+	public AcceptSaveDTO getOrderPlanInfo(String order_code) {
+		
+		return sqlSession.selectOne(NAMESPACE+".getOrderPlanInfo", order_code);
+	}
+	
 }

@@ -71,14 +71,24 @@ function goContent(order_code){
 
   function content(data,order_code){
 
-	  var listHtml = "<div class='list-box'>";
-	  listHtml += "<div>";
-	  listHtml += "<p>주문번호: "+order_code+"</p>";
-	  listHtml += "<button type='button' class='btn btn-danger'  data-bs-toggle='modal' data-bs-target='#shippngPlanModal' onclick='info(\""+order_code+"\")'>상세</button>";
-	  listHtml += "</div>";
-	  listHtml += "<div>";
-	  listHtml +="<button type='button' class='btn btn-secondary' id='closeBtn' onclick='cancle()'>닫기</button>";
-	  listHtml += "</div>";
+	  var listHtml = "<div class='content-box'>"
+		  listHtml += "<div class='content-container'>"
+	 listHtml += "<div class='content-title'>"
+		 
+		  //listHtml += "<div class='list-btn'>";
+		
+		  //listHtml += "<div class='content-title'>" 
+		  listHtml += "<div>"
+		  listHtml += "<p class='list-font' onclick='info(\""+order_code+"\")'>주문번호: "+order_code+"</p>";	  
+		  //listHtml += "<button type='button' class='btn btn-warning info-btn'  onclick='info(\""+order_code+"\")'>상세</button>";	
+		  listHtml += "</div>"
+		  listHtml += " <button type='button' class='btn-close' aria-label='Close' onclick='cancle()'></button>"
+		  //listHtml += "</div>"
+		  listHtml += "</div>";
+	  listHtml += "<div class='list-box'>";
+ 
+	 // listHtml += " <i class='fa-solid fa-rectangle-xmark' id='closeBtn' onclick='cancle()'></i>"
+	  
 	  listHtml += "<table class='table table-hover'>";
 	  listHtml += "<thead>";
 	  listHtml += "<tr class='table-success' >";
@@ -100,11 +110,11 @@ function goContent(order_code){
 		  listHtml += "<td>"+obj.sales_quantity+"</td>";
 		  listHtml += "<td>"
 		  if(obj.product_status == "waiting"){
-		  listHtml += "대기";
+		  listHtml += "<div class='gray-circle'/></div>  대기";
 		  } else if(obj.product_status == "progressing"){
-		  listHtml += "진행";  
+		  listHtml += "<div class='yellow-circle'/></div>  진행";  
 		  }else if(obj.product_status == "complete"){
-		  listHtml += "완료";  
+		  listHtml += "<div class='green-circle'/></div>  완료";  
 		  }
 		  listHtml += "</td>"
 		  listHtml += "<td>"
@@ -112,7 +122,7 @@ function goContent(order_code){
 			  listHtml += "재고출하"; 
 		  }else if(obj.processing_reg=="production"){
 		  listHtml += "생산처리";  
-		  }else if(obj.processing_reg==" mult"){
+		  }else if(obj.processing_reg==" multi"){
 		  listHtml += "복합처리";  
 		  }else {
 			 listHtml += "미정";
@@ -120,9 +130,9 @@ function goContent(order_code){
 		  listHtml += "</td>"
 		  listHtml += "<td>"
 		  if(obj.product_status == "waiting" || obj.product_status == "progressing"){
-			  listHtml += "대기";    
+			  listHtml += "<div class='gray-circle'/></div>  대기";    
 		  }else if(obj.product_status == "complete"){
-		  listHtml += "완료";  
+		  listHtml += "<div class='green-circle'/></div>  완료";  
 		  }
 		  listHtml += "</td>"
 		  listHtml += "</tr>";

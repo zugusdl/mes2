@@ -18,66 +18,9 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/38bf29a217.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/resources/css/contents/contents.css">  
+    <link rel="stylesheet" href="/resources/css/sales/salesPlan.css">
     
-    <style>
-    .mo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-   }
-   .box {
-        background-color: #95c4a2;
-        border: 1px black solid;
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        float: left;
-        border-top-left-radius: 10px;  /* 왼쪽 위 둥근 테두리 */
-        border-bottom-left-radius: 10px;  /* 왼쪽 아래 둥근 테두리 */
-      }
-
-      .box2 {
-        background-color: white;
-        border: 1px black solid;
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        font-size: 25px;
-        font-weight: bold;
-        text-align: center;
-        float: left;
-        border-top-right-radius: 10px; /* 오른쪽 위 둥근 테두리 */
-        border-bottom-right-radius: 10px; /* 오른쪽 아래 둥근 테두리 */
-      }
-
-      .box3 {
-        background-color: white;
-        border: 1px black solid;
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        float: left;
-        
-      }
-      
-    .box2:hover, .box3:hover, .box:hover {
-     color: #ffcccc;
-    cursor: pointer; 
-  
-    }
-    
-  .container {
-    clear: both;
    
-  }
 
     </style>
     
@@ -99,7 +42,7 @@
   </head>
   
   <body>
-  
+   <%@ include file="../sidehead/sidehead.jsp" %>
   <script src="/resources/js/shipping/shipPlan/btn.js"></script>
   <script src="/resources/js/shipping/shipPlan/details.js"></script>
   
@@ -125,7 +68,7 @@
 </div>
 </div>
 
-
+<%-- 
 	<!-- 진행현황 바  -->
      <div class="box" onclick="location.href='/shipping/shipPlan'">
       <span >출하</span>
@@ -141,9 +84,9 @@
     </div>
     <div class="box2" onclick="location.href='/shipping/shipPlan?user=true'">
       <i class="fa-solid fa-user" ></i>
-    </div>
+    </div> --%>
 
-   <!-- 페이징 -->
+  <%--  <!-- 페이징 -->
     
   <nav aria-label="Page navigation example">
     <ul class="pagination">
@@ -174,7 +117,7 @@
         </li>
         </c:if>
     </ul>
-</nav>
+</nav> --%>
 
 		<form id="pageForm" action="shipPlan" method="post">
 			<input type="hidden" id="page" name="page" value="${pm.cri.page }"/>
@@ -183,6 +126,7 @@
 		    <input type="hidden" id="search" name="search" value="${pm.cri.search }"/>
 		    <input type="hidden" id="userId" name="userId" value="${pm.cri.userId }"/>
 		    <input type="hidden" id="shipStatus" name="shipStatus" value="${pm.cri.shipStatus }"/>
+		    <input type="hidden" id="shipSta" name="shipSta" value="${pm.cri.shipSta }"/>
 		</form>
     
     <div class="container">
@@ -191,8 +135,8 @@
       	   <input type="hidden"  id="frmId" name="userId" value="${pm.cri.userId }"/>
       	   <input type="hidden"  name="shipStatus" value="${pm.cri.shipStatus }"/>      	  
       	   <input type="hidden" id="shipSta" name="shipSta" value=""/>
-      	 <select name="type" id="searchType">
-          <option value="">-- 검색선택 --</option>
+      	 <select name="type" id="searchType" class="form-select" aria-label="Default select example">
+          <option value="">검색선택</option>
           <option value="order_code" ${pm.cri.type=='order_code' ? 'selected' : ''}>주문번호</option>
           <option value="company_name" ${pm.cri.type=='company_name' ? 'selected' : ''}>수주처</option>
           <option value="order_date" ${pm.cri.type=='order_date' ? 'selected' : ''}>납품요청일</option>
@@ -201,26 +145,39 @@
         
    
 		
-        <div>
-          <span class="search-font">검색시작일</span>
-          <input  type="date" min="2023-12-01" name="startDay" />
-
-          <span class="search-font">검색종료일</span>
-          <input type="date" name="endDay" />
+        <!-- 기간검색 -->
+		<div class="input-group">
+		   <span class="input-group-text">기간</span>
+		   <input type="date" aria-label="First name" class="form-control" value="${pm.cri.startDay }" name="startDay" />
+		   <input type="date" aria-label="Last name" class="form-control" name="endDay" value="${pm.cri.endDay }"/>
+	    </div>
+	    
+        <!-- 검색타입 -->
+        <div class="input-group searchSub">
+	        <input type="text" name="search" id="putSearch" class="form-control" placeholder="검색어를 입력하세요" value="${pm.cri.search }" 
+	        aria-label="Recipient's username" aria-describedby="button-addon2">
+	        <button class="btn btn-secondary" type="submit" onclick="return checkSearchSub()" id="button-addon2">검색</button>
         </div>
-		
-
-        <input type="text" name="search" id="putSearch" placeholder="검색어를 입력하세요" value="${pm.cri.search }" />
-        <input type="submit" value="검색"  />
       </form>
 
       <!-- 표 -->
       <div class="list">
         <div class="list-btn">
          <c:if test="${not empty pm.cri.userId}">
-      	 <i class="fa-solid fa-truck" onclick="showStatus()"></i>
+       <button type="button" class="btn btn-primary" onclick="showStatus()">처리</button>     	 
       	 </c:if>
-         <button type='button' class='btn btn-secondary'  data-bs-toggle='modal' data-bs-target='#shippngPlanModal' onclick="return update()">수정</button>        
+         <button type='button' class='btn dark-green-btn'  data-bs-toggle='modal' data-bs-target='#shippngPlanModal' onclick="return update()">수정</button>  
+         <!-- Example single danger button -->
+			<div class="btn-group">
+			  <button type="button" class="btn stock-info-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">현황</button>
+			    <ul class="dropdown-menu">
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipPlan'">출하</li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipPlan?shipStatus=plan'">계획 ${status.planCnt }건</li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipPlan?shipStatus=waiting'">대기 ${status.waitingCnt }건</li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipPlan?shipStatus=instruction'">가능  ${status.instructionCnt }건</li>
+			      <li class="dropdown-item stat-item" onclick="location.href='/shipping/shipPlan?user=true'">등록확인</li>
+			   </ul>
+			</div>      
         </div>
 
         <div class="list-box">
@@ -243,21 +200,21 @@
               <c:forEach var="dto" items="${list }">
                 <tr>
                   <td><input type="radio" class="ck" value="${dto.order_code }" name="order_code"/></td>  
-                  <td><a href="javascript:goContent('${dto.order_code }')"> ${dto.order_code } </a></td> 
+                  <td onclick="goContent('${dto.order_code }')"><span class="od-content">${dto.order_code }</span></td>
                   <td>${dto.company_name }</td>         
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.order_date}"/></td>            
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${dto.scheduled_date }"/></td>                                              
                   <c:if test="${dto.ship_status eq 'plan'}">
-                  <td>계획</td>
-                  <td><button type='button' class='btn btn-secondary' >불가능</button></td>
+                  <td><div class="gray-circle"/></div>  계획</td>
+                  <td><div class="gray-circle"/></div>  불가능</button></td>
                   </c:if>
                   <c:if test="${dto.ship_status eq 'waiting'}">
-                  <td>대기</td>
-                  <td><button type='button' class='btn btn-secondary' >불가능</button></td>
+                  <td><div class="yellow-circle"/></div>  대기</td>
+                  <td><div class="gray-circle"/></div>  불가능</button></td>
                   </c:if> 
                   <c:if test="${dto.ship_status eq 'instruction'}">
-                  <td>준비완료</td>
-                  <td><button type='button' class='btn btn-primary'  onclick="return reg('${dto.order_code }')">가능</button></td>
+                  <td><div class="green-circle"/></div>  준비완료</td>
+                  <td><button type='button' class='btn stock-info-btn'  onclick="return reg('${dto.order_code }')">가능</button></td>
                   </c:if>               
                 </tr>
              </c:forEach> 
@@ -267,16 +224,53 @@
           </form>
         </div>
       </div>
+      <!-- 페이징  -->
+		  <div class="page-nav">
+		  <nav aria-label="Page navigation example">
+		    <ul class="pagination">
+		    
+		    <!-- 이전페이지 -->
+		    <c:if test="${pm.prev }">
+		        <li class="page-item page-action">
+		            <a class="page-link" href="${pm.startPage-1 }" aria-label="Previous">
+		                <span aria-hidden="true">&laquo;</span>
+		            </a>
+		        </li>
+		    </c:if>
+		    
+		    
+		<!-- 페이지 번호 -->
+		
+        <c:forEach var="pageNum" begin="${pm.startPage}" end="${pm.endPage}">
+            <c:if test="${pm.cri.page != pageNum}">
+                <li class="page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+            <c:if test="${pm.cri.page == pageNum}">
+                <li class="active page-item page-action"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
+            </c:if>
+        </c:forEach>
+
+		<!-- 다음페이지 -->
+		<c:if test="${pm.next }">
+		        <li class="page-item">
+		            <a class="page-link" href="${pm.endPage+1}" aria-label="Next">
+		                <span aria-hidden="true">&raquo;</span>
+		            </a>
+		        </li>
+		        </c:if>
+		    </ul>
+		</nav>
+		</div>
     </section>
 
     <section class="section1" id="view2">
    
       </section>
       </div>
-    <script
+   <!--  <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
-    ></script>
+    ></script> -->
   </body>
 </html>
