@@ -3,7 +3,6 @@ package com.mes2.materials.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +42,7 @@ public class InController {
 
 			iService.insertStock(idto.getQuantity(), idto.getProduct_code(), idto.getCategory(), idto.getPd_lot());
 
-			idto.setPd_lot(iService.selectMaxMaterialsLot(pd_lot));
+			idto.setPd_lot(iService.createRmLOT(idto.getProduct_code()));
 
 			String in_code = ("IN-" + pd_lot);
 			idto.setIn_code(in_code);

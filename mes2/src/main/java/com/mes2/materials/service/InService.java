@@ -32,7 +32,7 @@ public interface InService {
 
 	public int inDetailCount(Criteria cri, String searchType, String keyword) throws Exception;
 
-	public String createRmLOT(String productCode) throws Exception;
+	public String createRmLOT(String product_code) throws Exception;
 	
 	public List<InDTO> getAllInData(InDTO idto) throws Exception;
 }

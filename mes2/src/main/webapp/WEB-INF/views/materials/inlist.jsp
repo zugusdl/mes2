@@ -21,7 +21,7 @@
 
 </head>
 <body>
-	<%@ include file="../sidehead/sidehead.jsp"%>
+	<%@ include file="../system/sidehead.jsp" %>
 
 	<div class="container">
 		<section class="section1">
@@ -39,14 +39,14 @@
 					<button class="btn btn-secondary" type="submit" id="button-addon2">검색</button>
 				</div>
 			</form>
-
+	
 
 
 			<div class="list-box">
 				<a href="/materials/in"></a>
 				<table class="table table-hover">
 					<thead>
-						<tr>
+						<tr class="table-success" style="font-weight: bold">
 							<td></td>
 							<td>품목코드</td>
 							<td>로트번호</td>
@@ -55,7 +55,7 @@
 							<td>단위</td>
 							<td>자재유형</td>
 							<td>입고등록일</td>
-							<td>진행상황</td>
+							<td colspan="2">진행상황</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -74,7 +74,7 @@
 										<c:when test="${in.status.equals('waiting')}">
 											<form action="/materials/updateInStatus" method="post">
 												<input type="hidden" value="${in.pd_lot}" name="in_pd_lot">
-												<button type="submit" class="btn statusButton waiting">대기</button>
+												<button type="submit" class="btn statusButton waiting btn">대기</button>
 											</form>
 										</c:when>
 										<c:when test="${in.status.equals('requested')}">

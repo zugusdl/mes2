@@ -10,7 +10,8 @@
    padding: 20px; 
    margin-top: 40px;
    border: solid 2px #a2c6a8; 
-   border-radius: 10px;
+   border-radius: 10px;  
+   margin-bottom : 10px;
 }
 
 .section1 {

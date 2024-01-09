@@ -20,7 +20,7 @@
         <select id="category" name="category">
 			<option >자재유형</option>	
 			<option value="원재료">원자재</option>	
-			<option value="부재료">부재료</option>	
+			<option value="부자재">부재료</option>	
 		</select>
 		
 		<label for="product_code">품목코드</label>

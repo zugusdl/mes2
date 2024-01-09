@@ -17,9 +17,10 @@
 	href="${pageContext.request.contextPath}/resources/css/materials/searchList.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/materials/inDetailList.css">
+	<script src="https://kit.fontawesome.com/11da345fca.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<%@ include file="../sidehead/sidehead.jsp"%>
+	<%@ include file="../system/sidehead.jsp" %>
 
 	<div class="container">
 		<section class="section1">
@@ -38,13 +39,13 @@
 			</form>
 			<div class="col-md-13" style="text-align: right;">
 				<a href="/materials/inventory" class="btn submitDetailButton"
-					style="text-align: right;">Excel Download</a>
+					style="text-align: right;"> <i class="fa-solid fa-file-arrow-down"></i> </a>
 			</div>
 
 			<div class="list-box">
 				<table class="table table-hover">
 					<thead>
-						<tr>
+						<tr class="table-success" style="font-weight: bold">
 							<td></td>
 							<td>입고코드</td>
 							<td>로트번호</td>
