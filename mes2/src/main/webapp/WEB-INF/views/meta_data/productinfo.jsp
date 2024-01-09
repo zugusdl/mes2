@@ -7,6 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>품목기준정보</title>
+
+<!--  sweetalert cdn입니다. -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
+
+
 <!-- jqery cdn입니다-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -29,6 +35,7 @@
 
 <!-- 추가 js 입니다. -->
 <script src="/resources/js/metadata/product.js"></script>
+
 </head>
 
 <body>
@@ -37,6 +44,7 @@
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
 		<div class="son_serch">
+			<img src="../../../../resources/img/metadata/reset.png" width="30px" height="30px" onclick="redirectToFirstPage()" style="cursor: pointer;">
 			<form action="/product/firstpage" method="POST">
 				<span>등록기간</span>
 				<input type="date" name="startDate" min="2023-12-01" max="2024-12-31" />
@@ -44,6 +52,8 @@
 				<input type="text" name="search" placeholder="검색어를 입력하세요" />
 				<input type="submit" value="검색"/>
 			</form>
+			
+			
 			
 			<div class="son_list-btn">			
 				<button type="button" class="btn btn-secondary" id="addbtn" onclick="replaceButton()">추가</button>							
@@ -117,7 +127,10 @@
                     </c:choose>					
 					</td>
 					<td class="a">${plist.regdate }</td>
-					<td class="a"><img src="../../../../resources/img/metadata/${plist.ofileName }" width="200px"></td>
+					<td class="a">
+					<img src="../../../../resources/img/metadata/${plist.ofileName }" width="130px" height="100px"
+					onerror="this.onerror=null; this.src='../../../../resources/img/metadata/default.png';">
+					</td>
 					<td class="a" style="content: '\00a0'"></td>
 									
 									

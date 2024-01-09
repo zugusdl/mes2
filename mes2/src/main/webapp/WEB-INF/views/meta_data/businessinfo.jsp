@@ -7,6 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>거래처기준정보</title>
+
+<!--  sweetalert cdn입니다. -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
+
+
 <!-- jqery cdn입니다-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -31,12 +37,14 @@
 <script src="/resources/js/metadata/business.js"></script>
 </head>
 
+
 <body>
 <%@ include file="../system/sidehead.jsp" %>
 	<!-- 내용 칸 -->
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
 		<div class="son_serch">
+			<img src="../../../../resources/img/metadata/reset.png" width="30px" height="30px" onclick="redirectToFirstPage()" style="cursor: pointer;">
 			<form action="/business/firstpage" method="POST">
 				<span></span>			
 				<input type="text" name="search" placeholder="거래처명을 입력하세요" />

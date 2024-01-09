@@ -129,7 +129,15 @@ function submitData() {
 
     // 추가 행에서 완제품코드, 원재료 코드, 단위 확인 alert 창
     if (productCode === "완제품코드" || materialCode == "원재료코드" || amountUnit == "단위") {
-        alert('카테고리와 단위를 다시 확인해주세요.');            
+                
+        Swal.fire({
+            text: "드롭박스 옵션을 선택해주세요",
+            confirmButtonColor: "#577D71",
+            icon: "warning"
+         })
+         .then(function(){
+      	   
+         });
         
         return;
     }
@@ -145,8 +153,17 @@ function submitData() {
        
       },
       success: function(response) {
-        alert('추가완료');
-        location.reload();
+    	  
+    	  Swal.fire({
+              text: "BOM정보가 추가되었습니다.",
+              confirmButtonColor: "#577D71",
+              icon: "success"
+           })
+           .then(function(){
+        	   location.reload();
+           });
+    	
+        
       },
       error: function(error) {
         // 오류 처리
@@ -176,9 +193,17 @@ function submitData2(submitbtn2) {
         
     };
     
-    // 수정 행에서 완제품코드, 원재료 코드, 단위 확인 alert 창
+ // 추가 행에서 완제품코드, 원재료 코드, 단위 확인 alert 창
     if (productCode === "완제품코드" || materialCode == "원재료코드" || amountUnit == "단위") {
-        alert('카테고리와 단위를 다시 확인해주세요.');            
+                
+        Swal.fire({
+            text: "드롭박스 옵션을 선택해주세요",
+            confirmButtonColor: "#577D71",
+            icon: "warning"
+         })
+         .then(function(){
+      	   
+         });
         
         return;
     }
@@ -188,8 +213,14 @@ function submitData2(submitbtn2) {
         type: 'POST',
         data: data,
         success: function(response) {
-            alert('수정완료');
-            location.reload();
+        	Swal.fire({
+                text: "BOM정보가 수정되었습니다.",
+                confirmButtonColor: "#577D71",
+                icon: "success"
+             })
+             .then(function(){
+          	   location.reload();
+             });
         },
         error: function(error) {
             // 에러 시 처리
@@ -212,8 +243,14 @@ function submitData3(submitbtn3) {
             index: index,
         },
         success: function(response) {
-            alert('삭제완료');
-            location.reload();
+        	Swal.fire({
+                text: "BOM정보가 삭제되었습니다.",
+                confirmButtonColor: "#577D71",
+                icon: "success"
+             })
+             .then(function(){
+          	   location.reload();
+             });
         },
         error: function(error) {
             console.error(error);

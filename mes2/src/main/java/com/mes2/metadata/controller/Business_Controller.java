@@ -81,7 +81,7 @@ public class Business_Controller {
 			
 			return "redirect:/business/firstpage";			
 		}
-		
+			
 				
 	
 	
