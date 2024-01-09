@@ -367,7 +367,9 @@ public class controller1 {
 		logger.debug("수정할 정보 :" + dto);
 		
 		
-	
+		String address = request.getParameter("zip-code") +")" + request.getParameter("address") + request.getParameter("address_detail");
+		dto.setUser_address(address);
+
 
 		//파일업로드처리
 		Map paramMap = new HashMap();
@@ -767,8 +769,11 @@ public class controller1 {
 		
 		
 		
+		
 		// http://localhost:8088/system/listAll2
 		// http://localhost:8088/system/login
+	
+		
 		
 		// 게시판 LISTALL get
 		@RequestMapping(value="/listAll2",method = RequestMethod.GET)
@@ -799,11 +804,6 @@ public class controller1 {
 		
 		
 		
-		
-		
-		
-		
-		
 		// 사원검색출력 GET
 
 		@RequestMapping(value = "/searchmemberlist", method = RequestMethod.GET)
@@ -821,6 +821,7 @@ public class controller1 {
 		
 		
 		
+		
 		// 코드검색출력 GET
 		
 		@RequestMapping(value = "/searchcodelist", method = RequestMethod.GET)
@@ -835,6 +836,8 @@ public class controller1 {
 
 		    return "/system/commoncodelist";
 		}
+		
+		
 		
 		
 	    
@@ -874,7 +877,8 @@ public class controller1 {
 		
 		
 		
-		
+		// http://localhost:8088/system/login
+
 		//게시판 글 쓰기
 		
 		// 글쓰기 - POST
