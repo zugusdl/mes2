@@ -771,6 +771,8 @@ public class controller1 {
 		
 		// http://localhost:8088/system/listAll2
 		// http://localhost:8088/system/login
+	
+		
 		
 		// 게시판 LISTALL get
 		@RequestMapping(value="/listAll2",method = RequestMethod.GET)
