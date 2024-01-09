@@ -178,7 +178,7 @@ function submitData2(submitbtn2) {
     	Swal.fire({
             text: "거래상황을 다시 확인해주세요.",
             confirmButtonColor: "#577D71",
-            icon: "success"
+            icon: "warning"
          })
          .then(function(){
       	   

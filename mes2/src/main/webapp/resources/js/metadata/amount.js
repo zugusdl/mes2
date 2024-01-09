@@ -133,7 +133,7 @@ function submitData() {
         Swal.fire({
             text: "드롭박스 옵션을 선택해주세요",
             confirmButtonColor: "#577D71",
-            icon: "success"
+            icon: "warning"
          })
          .then(function(){
       	   
@@ -199,7 +199,7 @@ function submitData2(submitbtn2) {
         Swal.fire({
             text: "드롭박스 옵션을 선택해주세요",
             confirmButtonColor: "#577D71",
-            icon: "success"
+            icon: "warning"
          })
          .then(function(){
       	   
