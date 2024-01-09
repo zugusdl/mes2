@@ -38,8 +38,8 @@ public class SalesController {
 	@RequestMapping(value = "/salesPlan")
 	public String salesPlan(HttpSession session, Model model, Criteria cri) {	
 		//--------------------------------------//
-		String id ="sawon8";
-		session.setAttribute("id",id );
+		//String id ="admin";
+		//session.setAttribute("id",id );
 		//--------------------------------------//
 		cri.setSales_status("requested");
 		List<SalesDTO> list = sService.salesList(cri);	
@@ -110,8 +110,8 @@ public class SalesController {
 	@RequestMapping (value = "/salesAccept" )
 	public String salesAccept(HttpSession session, Model model,Criteria cri,@RequestParam(name = "user", required = false) String user) {	
 		//--------------------------------------//
-				String id ="sawon8";
-				session.setAttribute("id",id );
+				//String id ="sawon8";
+				//session.setAttribute("id",id );
 				//--------------------------------------//
 				String user_id = cri.getUserId();
 				if (user != null && user.equals("true")) {

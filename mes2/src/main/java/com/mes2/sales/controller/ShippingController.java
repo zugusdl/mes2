@@ -39,8 +39,8 @@ public class ShippingController {
 	@RequestMapping(value = "/shipPlan")
 	public String salesPlan(HttpSession session, Model model, Criteria cri, @RequestParam(name = "user", required = false) String user) {	
 		//--------------------------------------//
-		String id ="sawon8";
-		session.setAttribute("id",id );
+		//String id ="sawon8";
+		//session.setAttribute("id",id );
 		//--------------------------------------//
 		String user_id = cri.getUserId();
 		if (user != null && user.equals("true")) {
@@ -118,8 +118,8 @@ public class ShippingController {
 	@RequestMapping(value = "/shipping")
 	public String shipping(HttpSession session, Model model, Criteria cri, @RequestParam(name = "user", required = false) String user)  {	
 		//--------------------------------------//
-		String id ="sawon8";
-		session.setAttribute("id",id );
+		//String id ="sawon8";
+		//session.setAttribute("id",id );
 		//--------------------------------------//
 		String user_id = cri.getUserId();
 		if (user != null && user.equals("true")) {
@@ -137,7 +137,7 @@ public class ShippingController {
 		model.addAttribute("list", list);
 		
 		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+cri);
+		
 		return "/shipping/shipping";
 	}
 	
