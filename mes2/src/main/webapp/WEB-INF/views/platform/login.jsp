@@ -22,12 +22,17 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/login.css">
+<!-- 글씨체 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<!-- 글씨체 -->
 </head>
 
 <body>
 	<header class="header">
 		<nav class="nav">
-			<a href="#" class="logo" style="text-decoration: none;">Awsometic</a>
+			<a href="#" class="logo" style="text-decoration: none;">AWSOMETIC</a>
 			<button class="btn" id="show-form">Login</button>
 		</nav>
 	</header>
@@ -41,14 +46,13 @@
 						src="${pageContext.request.contextPath}/resources/img/icons/awesometic2.jpg"
 						id="login-icon">
 					<div class="input-box">
-						<input type="text" id="id" name="company_code"
-							placeholder="아이디를 입력하세요" /> <i class="fas fa-envelope email"></i>
+						<input type="text" id="id" name="company_code" placeholder="아이디를 입력하세요" /> <i class="fas fa-envelope email"></i>
 					</div>
 
 					<div class="input-box">
-						<input type="password" name="pw" placeholder="패스워드를 입력하세요" /> <i
-							class="fas fa-lock password"></i> <i
-							class="fas fa-eye-slash pass-hide"></i>
+						<input type="password" name="pw" placeholder="패스워드를 입력하세요" />
+						<i class="fas fa-lock password"></i>
+						<i class="fas fa-eye-slash pass-hide"></i>
 					</div>
 
 					<input type="hidden" name="${_csrf.parameterName }"

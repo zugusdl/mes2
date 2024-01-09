@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
-body {
-	font-family: 'Nanum Myeongjo', serif;
+* {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 17px;
 }
