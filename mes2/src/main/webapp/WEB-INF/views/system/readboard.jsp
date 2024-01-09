@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-<title>CommoncodeList</title>
+<title>ReadBoard</title>
 
 <style text="text/css">
 
@@ -156,7 +156,7 @@
 		 <div class="modal-dialog" style="max-width: 1100px;">
 		  <div class="modal-content" style="max-width: 1100px;">
 		   <div class="modal-header">
-		   	<h4 class="modal-title">코드수정</h4>
+		   	<h4 class="modal-title">공지글수정</h4>
 		   	 <button type="button" class="close" data-dismiss="modal">
 		   	 	&times;
 		   	 </button>
@@ -167,7 +167,7 @@
 		    		  <div class="card mb-3" style="max-width: 1100px;"> 
 		    		  	 <div class="row g-0">
 		    		   				<div class="col-md-4">
-            						    <img src="${pageContext.request.contextPath}/resources/img/joining.jpg" class="img-fluid rounded-start" alt="...">
+            						    <img src="${pageContext.request.contextPath}/resources/img/join/joining.jpg" class="img-fluid rounded-start" alt="...">
           							</div>
 				    		          <div class="col-md-8">
 				    		               <div class="card-body">

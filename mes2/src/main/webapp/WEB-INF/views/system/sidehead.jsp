@@ -165,8 +165,8 @@
     <ul class="nav-links">
     
     <c:choose>
-     <c:when test="${auth.equals('시스템관리')}">
-       <c:if test="${status eq 'Y' }">
+     <c:when test="${auth.equals('시스템관리') && id.equals('admin')}">
+       <c:if test="${status eq 'Y'&& id.equals('admin') }">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -200,9 +200,10 @@
     </c:otherwise>
   </c:choose> 
       
+      
    <c:choose>
-     <c:when test="${auth.equals('기준정보관리')}">
-      <c:if test="${status eq 'Y' }">
+  	<c:when test="${auth.equals('기준정보관리') || id.equals('admin') }">
+    	<c:if test="${status eq 'Y' || id.equals('admin') }">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -212,10 +213,10 @@
           <i class="fa-solid fa-chevron-down"></i> <!--드롭다운 아이콘 클래스명 지정하는 곳-->
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Category</a></li>
-          <li><a href="#">HTML & CSS</a></li>
-          <li><a href="#">JavaScript</a></li>
-          <li><a href="#">PHP & MySQL</a></li>
+          <li><a class="link_name" href="#">기준정보관리</a></li>
+          <li><a href="http://localhost:8088/product/firstpage">품목정보</a></li>
+          <li><a href="http://localhost:8088/amount/firstpage">BOM정보</a></li>
+          <li><a href="http://localhost:8088/business/firstpage">거래처정보</a></li>
         </ul>
       </li>
      </c:if>
@@ -233,24 +234,31 @@
               </script>
       	</c:if>
      </c:when>
-    <c:otherwise>
-     <li>
+ <c:otherwise>
+    <li>
       <div class="iocn-link">
-        <a href="#" onclick="Deny()">
-          <i class="fa-solid fa-database"></i>
-          <span class="link_name">기준정보관리</span>
-        </a>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-     </li>
-    </c:otherwise>
-   </c:choose> 
+        <c:choose>
+          <c:when test="${not id.equals('admin')}">
+            <a href="#" onclick="Deny()">
+          </c:when>
+          <c:otherwise>
+            <a href="#">
+          </c:otherwise>
+        </c:choose>
+        <i class="fa-solid fa-database"></i>
+        <span class="link_name">기준정보관리</span>
+      </a>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </li>
+ </c:otherwise>
+</c:choose> 
    
    
    
   <c:choose>
-     <c:when test="${auth.equals('영업관리')}">
-      <c:if test="${status eq 'Y' }">
+     <c:when test="${auth.equals('영업관리') || id.equals('admin')}">
+      <c:if test="${status eq 'Y' || id.equals('admin')}">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -281,23 +289,30 @@
               </script>
       	</c:if>
      </c:when>
-    <c:otherwise>
-     <li>
-      <div class="iocn-link">
-        <a href="#" onclick="Deny()">
-			<i class="fa-solid fa-building"></i>
-          <span class="link_name">영업관리</span>
-        </a>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-     </li>
-    </c:otherwise>
-  </c:choose> 
+	<c:otherwise>
+	    <li>
+	      <div class="iocn-link">
+	        <c:choose>
+	          <c:when test="${not id.equals('admin')}">
+	            <a href="#" onclick="Deny()">
+	          </c:when>
+	          <c:otherwise>
+	            <a href="#">
+	          </c:otherwise>
+	        </c:choose>
+	        <i class="fa-solid fa-database"></i>
+	        <span class="link_name">영업관리</span>
+	      </a>
+	      <i class="fa-solid fa-chevron-down"></i>
+	    </div>
+	  </li>
+	 </c:otherwise>
+	</c:choose> 
       
       
    <c:choose>
-     <c:when test="${auth.equals('생산관리')}">
-      <c:if test="${status eq 'Y' }">
+     <c:when test="${auth.equals('생산관리') || id.equals('admin')}">
+      <c:if test="${status eq 'Y' || id.equals('admin')}">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -328,22 +343,31 @@
               </script>
       	</c:if>
      </c:when>
-    <c:otherwise>
-     <li>
-      <div class="iocn-link">
-        <a href="#" onclick="Deny()">
-			<i class="fa-solid fa-industry"></i>
-          <span class="link_name">생산관리</span>
-        </a>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-     </li>
-    </c:otherwise>
-  </c:choose> 
+     
+      <c:otherwise>
+	    <li>
+	      <div class="iocn-link">
+	        <c:choose>
+	          <c:when test="${not id.equals('admin')}">
+	            <a href="#" onclick="Deny()">
+	          </c:when>
+	          <c:otherwise>
+	            <a href="#">
+	          </c:otherwise>
+	        </c:choose>
+	        <i class="fa-solid fa-database"></i>
+	        <span class="link_name">생산관리</span>
+	      </a>
+	      <i class="fa-solid fa-chevron-down"></i>
+	    </div>
+	  </li>
+	 </c:otherwise>
+	</c:choose> 
+  
   
    <c:choose>
-     <c:when test="${auth.equals('자재관리')}">
-      <c:if test="${status eq 'Y' }">
+     <c:when test="${auth.equals('자재관리') || id.equals('admin')}">
+      <c:if test="${status eq 'Y' || id.equals('admin')}">
       <li>
         <div class="iocn-link">
           <a href="#">
@@ -374,17 +398,26 @@
               </script>
       	</c:if>
      </c:when>
-    <c:otherwise>
-     <li>
-      <div class="iocn-link">
-        <a href="#" onclick="Deny()">
-			<i class="fa-solid fa-warehouse"></i>
-          <span class="link_name">자재관리</span>
-        </a>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
-     </li>
-    </c:otherwise>
+     
+     
+     <c:otherwise>
+	    <li>
+	      <div class="iocn-link">
+	        <c:choose>
+	          <c:when test="${not id.equals('admin')}">
+	            <a href="#" onclick="Deny()">
+	          </c:when>
+	          <c:otherwise>
+	            <a href="#">
+	          </c:otherwise>
+	        </c:choose>
+	        <i class="fa-solid fa-database"></i>
+	        <span class="link_name">자재관리</span>
+	      </a>
+	      <i class="fa-solid fa-chevron-down"></i>
+	    </div>
+	  </li>
+	 </c:otherwise>
   </c:choose> 
   
   
@@ -414,7 +447,7 @@
 	  <li>
 	    <div class="profile-details">
 	      <div class="profile-content">
-	        <img src="${pageContext.request.contextPath}/resources/img/${img}" class="user-img">
+	        <img src="${pageContext.request.contextPath}/resources/img/members/${img}" class="user-img">
 	      </div>
 	      	<div class="name-job">
 		        <div class="profile_name">${name}(${department})</div>
@@ -430,10 +463,10 @@
   
   <section class="home-section">
     <div class="home-content">
-      <span class="text-header"><img src="${pageContext.request.contextPath}/resources/img/logo2.jpg" style="width : 40px; height:32px;">&nbsp;AWESOMETIC</span>
+      <span class="text-header"><img src="${pageContext.request.contextPath}/resources/img/icons/logo2.jpg" style="width : 40px; height:32px;">&nbsp;AWESOMETIC</span>
       	  <div class="user-greeting">
 	      	  <div class="user-img-container">
-	      	  	<img src="${pageContext.request.contextPath}/resources/img/${img}" class="user-img">
+	      	  	<img src="${pageContext.request.contextPath}/resources/img/members/${img}" class="user-img">
 	      	  </div>
 			<p class="id-greeting">${id } 님 안녕하세요</p>
 			
@@ -456,7 +489,7 @@
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
-	                <jsp:include page="info.jsp"/>
+	                <jsp:include page="/WEB-INF/views/system/info.jsp"/>
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>

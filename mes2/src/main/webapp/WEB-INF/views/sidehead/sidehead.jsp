@@ -16,6 +16,9 @@
     <!-- Font Awesome 라이브러리 추가 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
+   
    </head>
 <body>
   <div class="sidebar close">
@@ -77,6 +80,7 @@
           <li><a href="/instructions/search">작업지시관리</a></li>
           <li><a href="/productionLine/search">라인관리</a></li>
           <li><a href="/product/search">생산제품</a></li>
+          <li><a href="/validation/search">품질검사</a></li>
         </ul>
       </li>
       <li>

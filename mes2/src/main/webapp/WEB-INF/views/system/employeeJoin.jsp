@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>EmployeesJoin</title>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
@@ -39,7 +39,7 @@
 		    		  <div class="card mb-3" style="max-width: 1100px;"> 
 		    		  	 <div class="row g-0">
 		    		   				<div class="col-md-4">
-            						    <img src="${pageContext.request.contextPath}/resources/img/joining.jpg" class="img-fluid rounded-start" alt="...">
+            						    <img src="${pageContext.request.contextPath}/resources/img/join/joining.jpg" class="img-fluid rounded-start" alt="...">
           							</div>
 		    		          <div class="col-md-8">
 		    		               <div class="card-body">
@@ -140,6 +140,6 @@
 
 
 
- <script src="${pageContext.request.contextPath}/resources/img/address.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/join/address.js"></script>
 </body>
 </html>
