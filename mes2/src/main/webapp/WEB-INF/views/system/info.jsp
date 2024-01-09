@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>InfoEmployees</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
 
@@ -26,7 +26,7 @@
 <div class="card mb-3" style="max-width: 540px;">
   <div class="row g-0">
     <div class="col-md-4">
-		<img src="${pageContext.request.contextPath}/resources/img/${memberDTO.user_img}" class="info-profile-img">    
+		<img src="${pageContext.request.contextPath}/resources/img/members/${memberDTO.user_img}" class="info-profile-img">    
 	</div>
     <div class="col-md-8">
       <div class="card-body">

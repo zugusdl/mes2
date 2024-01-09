@@ -86,11 +86,41 @@ public interface MemberDAO {
 	public Integer totalOut();
 	
 	
+	//합산 양품갯수출력
+	public Integer totalOk();
 	
 	
+	//합산 불량품갯수출력
+	public Integer totalNo();
 	
 	
+	//1번라인 완료율 
+	public Integer firstLine();
 	
+	
+	//2번라인 완료율 
+	public Integer secondLine();
+	
+	
+	//3번라인 완료율 
+	public Integer thirdLine();
+		
+	
+	//4번라인 완료율 
+	public Integer forthLine();
+		
+	
+	//5번라인 완료율 
+	public Integer fifthLine();
+		
+	
+	//6번라인 완료율 
+	public Integer sixthLine();
+		
+	
+	//7번라인 완료율 
+	public Integer sevenLine();
+		
 	
 	
 	

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>UpdateForm</title>
 <!-- jqery js입니다. (ajax랑 js에 있는 여러가지 js라이브러리 쓸려고)-->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -41,7 +41,7 @@
 		    		   <div class="card mb-3" style="max-width: 1100px;"> 
 		    		   	  <div class="row g-0">
 								<div class="col-md-4">
-            					    <img src="${pageContext.request.contextPath}/resources/img/joining.jpg" class="img-fluid rounded-start" alt="...">
+            					    <img src="${pageContext.request.contextPath}/resources/img/join/joining.jpg" class="img-fluid rounded-start" alt="...">
           						</div>
 						  <div class="col-md-8">
            						 <div class="card-body">					
@@ -90,21 +90,31 @@
 										<option value="플랫폼관리" ${memberDTO.user_auth eq '플랫폼관리' ? 'selected' : ''}>플랫폼관리</option>
 							    </select>
 							  </div>
-							  </div>	
-							  	<div class="mb-3">
-									 <label for="user_auth" class="form-label">권한메뉴상태</label>
-										<select  name="menu_status" id="menu_status">
-											<option value="Y">Y</option>  
-									  		<option value="N">N</option> 
-									   </select>
-								</div>		 
-  
-					  			<div class="mb-3">
-								  <div class="input-box">
-									<p>프로필사진</p>
-					             	 <input type="file" name="userimg" required/>
-					               </div>
-					             </div>
+							  
+								  <div class="mb-3">
+									    <label for="exampleInputPassword1" class="form-label">주소</label><br>
+									    <input type="text"  id="update_postcode" placeholder="우편번호" name="zip-code">
+									    <input type="button" class="btn btn-secondary"  id="join_button"  onclick="sample4_execDaumPostcode()" value="주소 검색"><br>
+									    <input type="text"  id="update_address" placeholder="주소" name="address">
+									    <input type="text"  id="update_detailAddress" placeholder="상세주소" name="address_detail">
+								  </div>
+							  
+			
+								  	<div class="mb-3">
+										 <label for="user_auth" class="form-label">권한메뉴상태</label>
+											<select  name="menu_status" id="menu_status">
+												<option value="Y">Y</option>  
+										  		<option value="N">N</option> 
+										   </select>
+									</div>		 
+	  
+						  			<div class="mb-3">
+									  <div class="input-box">
+										<p>프로필사진</p>
+						             	 <input type="file" name="userimg" required/>
+						               </div>
+						             </div>
+							     </div>	
   							  </div>	
   						   </div>
   					  	</div>
@@ -128,6 +138,6 @@
 
 
 
-<script src="${pageContext.request.contextPath}/resources/img/address2.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/update/address2.js"></script>
 </body>
 </html>

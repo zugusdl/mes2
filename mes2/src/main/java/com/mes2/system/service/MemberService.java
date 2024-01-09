@@ -70,6 +70,51 @@ public interface MemberService {
 	public Integer totalOut();
 	
 	
+	//총양품
+	public Integer totalOk();
+	
+	
+	
+	//총불량품
+	public Integer totalNo();
+	
+	
+	
+	
+	
+	//1번라인 완료율 
+	public Integer firstLine();
+		
+		
+	//2번라인 완료율 
+	public Integer secondLine();
+		
+		
+	//3번라인 완료율 
+	public Integer thirdLine();
+			
+		
+	//4번라인 완료율 
+	public Integer forthLine();
+			
+		
+	//5번라인 완료율 
+	public Integer fifthLine();
+			
+		
+	//6번라인 완료율 
+	public Integer sixthLine();
+			
+		
+	//7번라인 완료율 
+	public Integer sevenLine();
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
