@@ -38,7 +38,7 @@
 			<div class="form login-form">
 				<form method="post">
 					<img
-						src="${pageContext.request.contextPath}/resources/img/awesometic2.jpg"
+						src="${pageContext.request.contextPath}/resources/img/icons/awesometic2.jpg"
 						id="login-icon">
 					<div class="input-box">
 						<input type="text" id="id" name="company_code"

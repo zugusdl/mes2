@@ -15,6 +15,11 @@
 	rel="stylesheet"
 	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
 	crossorigin="anonymous" />
+<!-- 글씨체 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<!-- 글씨체 -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/searchList.css">
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
@@ -23,7 +28,7 @@
 
 <body>
 	<div class="container2">
-		<h3 id="h3">발주 품목 등록</h3>
+<!-- 		<h3 id="h3">발주 품목 등록</h3> -->
 		<section class="section1">
 			<form class="search" id="searchForm">
 				<select name="searchType" id="searchType" class="form-select" aria-label="Default select example">

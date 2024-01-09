@@ -48,7 +48,7 @@
 														-
 													</c:if>
 													<c:if test="${!empty stockDTO.pd_lot}">
-														${mdpDTO.product_code}
+														${stockDTO.pd_lot}
 													</c:if>
 												</td>
 												<td>${stockDTO.regdate }</td>
