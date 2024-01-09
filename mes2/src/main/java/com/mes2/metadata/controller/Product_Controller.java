@@ -66,11 +66,15 @@ public class  Product_Controller{
 	public String productinsertPOST(md_productDTO dto, MultipartHttpServletRequest multiRequest,
             Model model) throws Exception{
 		
+		
+		
 		// 파일 정보를 저장
 		String ofileName = fileProcess(multiRequest);
 		dto.setOfileName(ofileName);
+		
 		mService.productinsert(dto);
-
+		
+		
 		return "redirect:/product/firstpage";
 		
 		

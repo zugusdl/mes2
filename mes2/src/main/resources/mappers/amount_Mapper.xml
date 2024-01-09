@@ -51,10 +51,12 @@
 	  		and product_code like '%${search }%'
 	  		</if>
   		</where>
-  		
+  		order by product_code
   		<if test="cri != null">
   		limit #{cri.startPage},#{cri.pageSize} 	
   		</if>
+  		
+  		
   		
   	</select>
   	

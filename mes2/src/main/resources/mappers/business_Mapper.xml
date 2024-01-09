@@ -76,7 +76,7 @@
 	  		and name like '%${search }%'
 	  		</if>
   		</where>
-  		
+  		order by contract_status desc
   		<if test="cri != null">
   		limit #{cri.startPage},#{cri.pageSize} 	
   		</if>

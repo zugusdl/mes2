@@ -294,7 +294,7 @@ $(document).ready(function() {
 	$("#file_insert, #file_update").on("change", handleImgFileSelect);
 
 });
- 
+
 function handleImgFileSelect(e) {
 	var files = e.target.files;
     var filesArr = Array.prototype.slice.call(files);
@@ -311,11 +311,14 @@ function handleImgFileSelect(e) {
  
         var reader = new FileReader();
         reader.onload = function(e) {
+        	
         	$("#img, #img2").attr("src", e.target.result);
-	    }
+        	        	
+        }
 	    	reader.readAsDataURL(f);
     });
 }
+
 
 
 // 카테고리 공통코드 가져오는 ajax -->

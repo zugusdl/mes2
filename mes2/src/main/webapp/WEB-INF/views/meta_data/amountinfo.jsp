@@ -42,7 +42,8 @@
 	<!-- 내용 칸 -->
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
-		<div class="son_serch">
+		<div class="son_serch" style="width: 70%; margin: 0 auto;">
+			<img src="../../../../resources/img/metadata/reset.png" width="30px" height="30px" onclick="redirectToFirstPage()" style="cursor: pointer;">
 			<form action="/amount/firstpage" method="POST">
 				<span></span>			
 				<input type="text" name="search" placeholder="완제품 코드를 입력하세요" />
@@ -59,7 +60,7 @@
 			
 
 		<!-- 테이블 -->									
-		<table class="table table-hover">
+		<table class="table table-hover" style="width: 70%; margin: 0 auto;">
 			
 			<!--테이블 헤드 -->
 			<thead>

@@ -44,6 +44,7 @@
 	<div class="son_container">
 		<!-- 검색창,추가 버튼,취소 버튼 -->	
 		<div class="son_serch">
+			<img src="../../../../resources/img/metadata/reset.png" width="30px" height="30px" onclick="redirectToFirstPage()" style="cursor: pointer;">
 			<form action="/business/firstpage" method="POST">
 				<span></span>			
 				<input type="text" name="search" placeholder="거래처명을 입력하세요" />

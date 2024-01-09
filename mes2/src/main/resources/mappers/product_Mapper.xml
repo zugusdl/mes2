@@ -79,7 +79,7 @@
 	  		and name like '%${search }%'
 	  		</if>
   		</where>
-  		
+  		order by regdate desc
   		<if test="cri != null">
   		limit #{cri.startPage},#{cri.pageSize} 	
   		</if>
