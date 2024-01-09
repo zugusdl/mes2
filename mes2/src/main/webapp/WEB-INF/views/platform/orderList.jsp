@@ -18,6 +18,8 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/platform/orderList.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -60,15 +62,17 @@
 									<th scope="col">주문번호</th>
 									<th scope="col">발주일자</th>
 									<th scope="col">납품요청일</th>
+									<th scope="col">물품수령일</th>
 									<th scope="col">진행상태</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="soiDTO" items="${soiDTO }">
-									<tr>
-										<td onclick="getOrderDetail('${soiDTO.order_code }','${soiDTO.order_date }')" class="selectOrder">${soiDTO.order_code }</td>
+									<tr onclick="getOrderDetail('${soiDTO.order_code }','${soiDTO.order_date }')" class="selectOrder">
+										<td>${soiDTO.order_code }</td>
 										<td>${soiDTO.request_date }</td>
 										<td>${soiDTO.order_date }</td>
+										<td>${soiDTO.complete_date }</td>
 										<td>
 											<c:choose>
 												<c:when test="${soiDTO.sales_status eq 'requested' }">

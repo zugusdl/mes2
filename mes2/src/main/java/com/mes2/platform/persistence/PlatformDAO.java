@@ -42,7 +42,7 @@ public interface PlatformDAO {
 	public int getTotalOrderCount(SearchDTO sDTO) throws Exception;
 	
 	// 주문 상세 조회
-	public List<SoiDTO> getOrderDetail(String order_code) throws Exception;
+	public SoiDTO getOrderDetail(String order_code) throws Exception;
 
 	// 기존 주문 주문번호, 품목코드 가져오기
 	public List<SopDTO> getOrderProduct(String order_code) throws Exception;
@@ -62,5 +62,11 @@ public interface PlatformDAO {
 	
 	// 비밀번호 변경
 	public void modifyPw(ModifyPwDTO mdDTO) throws Exception;
+	
+	// 수령 완료(출하 테이블 업데이트)
+	public void completeShipping(SoiDTO sdto) throws Exception;
+	
+	// 수령 완료(수주 테이블 업데이트)
+	public void completeOrder(SoiDTO sdto) throws Exception;
 	
 }

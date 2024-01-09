@@ -129,7 +129,7 @@ public class PlatformServiceImpl implements PlatformService {
 
 	// 주문 상세 조회
 	@Override
-	public List<SoiDTO> getOrderDetail(String order_code) throws Exception {
+	public SoiDTO getOrderDetail(String order_code) throws Exception {
 		logger.debug("S: getOrderDetail() 호출");
 		return pdao.getOrderDetail(order_code);
 	}
@@ -183,5 +183,20 @@ public class PlatformServiceImpl implements PlatformService {
 		pdao.modifyPw(mpDTO);
 	}
 	
+	// 수령 완료(서명으로)
+	@Override
+	public void completeOrder(SoiDTO sdto) throws Exception {
+		logger.debug("S: completeOrder() 호출");
+		pdao.completeShipping(sdto); // 출하 테이블 업데이트(progress_status는 complete로, confirm_status는 파일명으로)
+		pdao.completeOrder(sdto); // 수주 테이블 업데이트(order_status는 complete로, sign_file_name은 파일명으로)
+	}
+	
+//	// 수령 완료(버튼으로)
+//	@Override
+//	public void receiveDelivery(String order_code) throws Exception {
+//		logger.debug("S: receiveDelivery() 호출");
+//		pdao.receiveDelivery(order_code);
+//		pdao.changeOrderStatus(order_code);
+//	}
 	
 }

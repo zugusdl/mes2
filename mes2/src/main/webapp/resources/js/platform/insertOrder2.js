@@ -8,12 +8,20 @@ function insertOrder2() {
 
 	// 날짜 선택 제어
 	if(order_date == undefined || order_date === null || order_date === '') {
-		alert('납품 요청일을 선택하세요');
+		Swal.fire({
+			text: "납품 요청일을 선택하세요",
+			confirmButtonColor: "#577D71",
+			icon: "warning"
+		});
 		return false;
 	}
 	// 품목 1개 이상 선택 제어
 	if(allProduct_code.length === 0) {
-		alert('품목추가 버튼을 통해 품목을 1개 이상 선택하세요');
+		Swal.fire({
+			text: "품목추가 버튼을 통해 품목을 1개 이상 선택하세요",
+			confirmButtonColor: "#577D71",
+			icon: "warning"
+		});
 		return false;
 	}
 	
@@ -49,11 +57,24 @@ function insertOrder2() {
 			},
 			async: false,
 			success : function(data) {
-				alert('발주 신청이 완료되었습니다.');
-				location.reload();
+				Swal.fire({
+					text: "발주 신청이 완료되었습니다.",
+					confirmButtonColor: "#577D71",
+					icon: "success"
+				})
+				.then(function(){
+					location.reload();
+				});
 			},
 			error : function() {
-				alert("fail");
+				Swal.fire({
+					text: "발주 신청에 실패했습니다.",
+					confirmButtonColor: "#577D71",
+					icon: "error"
+				})
+				.then(function(){
+					location.reload();
+				});
 			}
 		});
 	}
