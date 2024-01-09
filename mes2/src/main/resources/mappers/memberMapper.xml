@@ -147,6 +147,133 @@
   
   
   
+  
+  
+   <!-- 1번라인 완료율 -->
+   <select id ="firstLine" resultType="Integer">
+   		SELECT 
+			 CAST((COUNT(CASE WHEN status = 'complete' THEN 1 END) / 
+			 COUNT(CASE WHEN status IN ('complete', 'waiting') THEN 1 END)) * 100 AS SIGNED) AS completion_rate
+		FROM 
+			 production_line
+		WHERE 
+			 line = 1
+		GROUP BY 
+			 line;  
+   </select> 	
+  
+  <!-- 2번라인 완료율 -->
+   <select id ="secondLine" resultType="Integer">
+   		SELECT 
+			 CAST((COUNT(CASE WHEN status = 'complete' THEN 1 END) / 
+			 COUNT(CASE WHEN status IN ('complete', 'waiting') THEN 1 END)) * 100 AS SIGNED) AS completion_rate
+		FROM 
+			 production_line
+		WHERE 
+			 line = 2
+		GROUP BY 
+			 line;  
+   </select> 	
+  
+   <!-- 3번라인 완료율 -->
+   <select id ="thirdLine" resultType="Integer">
+   		SELECT 
+			 CAST((COUNT(CASE WHEN status = 'complete' THEN 1 END) / 
+			 COUNT(CASE WHEN status IN ('complete', 'waiting') THEN 1 END)) * 100 AS SIGNED) AS completion_rate
+		FROM 
+			 production_line
+		WHERE 
+			 line = 3
+		GROUP BY 
+			 line;  
+   </select> 	
+  
+     <!-- 4번라인 완료율 -->
+   <select id ="forthLine" resultType="Integer">
+   		SELECT 
+			 CAST((COUNT(CASE WHEN status = 'complete' THEN 1 END) / 
+			 COUNT(CASE WHEN status IN ('complete', 'waiting') THEN 1 END)) * 100 AS SIGNED) AS completion_rate
+		FROM 
+			 production_line
+		WHERE 
+			 line = 4
+		GROUP BY 
+			 line;  
+   </select> 
+  
+  
+       <!-- 5번라인 완료율 -->
+   <select id ="fifthLine" resultType="Integer">
+   		SELECT 
+			 CAST((COUNT(CASE WHEN status = 'complete' THEN 1 END) / 
+			 COUNT(CASE WHEN status IN ('complete', 'waiting') THEN 1 END)) * 100 AS SIGNED) AS completion_rate
+		FROM 
+			 production_line
+		WHERE 
+			 line = 5
+		GROUP BY 
+			 line;  
+   </select>
+  
+  
+  
+         <!-- 6번라인 완료율 -->
+   <select id ="sixthLine" resultType="Integer">
+   		SELECT 
+			 CAST((COUNT(CASE WHEN status = 'complete' THEN 1 END) / 
+			 COUNT(CASE WHEN status IN ('complete', 'waiting') THEN 1 END)) * 100 AS SIGNED) AS completion_rate
+		FROM 
+			 production_line
+		WHERE 
+			 line = 6
+		GROUP BY 
+			 line;  
+   </select>
+  
+  
+  
+         <!-- 7번라인 완료율 -->
+   <select id ="sevenLine" resultType="Integer">
+   		SELECT 
+			 CAST((COUNT(CASE WHEN status = 'complete' THEN 1 END) / 
+			 COUNT(CASE WHEN status IN ('complete', 'waiting') THEN 1 END)) * 100 AS SIGNED) AS completion_rate
+		FROM 
+			 production_line
+		WHERE 
+			 line = 7
+		GROUP BY 
+			 line;  
+   </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
  
 	 <!-- 페이징처리 메퍼1 --> 
 	 <select id="listMember" resultType="com.mes2.system.domain.MemberDTO">
