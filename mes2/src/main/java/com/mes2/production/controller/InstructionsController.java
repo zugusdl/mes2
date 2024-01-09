@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,10 +81,8 @@ public class InstructionsController {
 	//http://localhost:8088/instructions/search
 	@GetMapping("/search")
 	public String searchGET(Model model,
-			@RequestParam(value="searchStartDate", required = false) Date searchStartDateV2,
-			@RequestParam(value="searchEndDate", required = false) Date searchEndDateV2,
-			@ModelAttribute(value = "searchStartDate") String searchStartDate,
-			@ModelAttribute(value="searchEndDate") String searchEndDate, 
+			@RequestParam(value="searchStartDate", required = false) Date searchStartDate,
+			@RequestParam(value="searchEndDate", required = false) Date searchEndDate,
 			@ModelAttribute(value = "searchCode") String searchCode,
 			@ModelAttribute(value="searchType") String searchType,
 			@RequestParam(value="searchState", required = false) String searchState ,
@@ -95,67 +94,26 @@ public class InstructionsController {
 		log.debug("isController : 넘겨받은 code : " + searchCode);
 		log.debug("isController : 넘겨받은 searchState : " + searchState);
 		
+		if(searchStartDate==null) {
+		searchStartDate = Date.valueOf(LocalDate.now());
+		}
+		if(searchEndDate==null) {
+		searchEndDate = Date.valueOf(LocalDate.now().plusWeeks(1));
+		}
+		
 		
 		InstructionsSearchParam param = new InstructionsSearchParam();
-		if(!searchStartDate.equals("")) {
-			param.setStartDate(Date.valueOf(searchStartDate));
-		}
-		if(!searchEndDate.equals("")) {
-			param.setEndDate(Date.valueOf(searchEndDate));
-		}
-		
-		String defaultTime = " 00:00:00";
-		
-		//SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		
-		
-		
-		
-	
-		//@@@@@@@@@@@@@@@@@@날려버릴까 생각중인 것@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-		if(searchStartDate==null || searchStartDate.equals("")) {
-			  param.setStartTime(null);
-		}else {
-			searchStartDate += defaultTime;
-			
-			log.debug("instruction Controller : 변환전 startDate의 값 : " +  searchStartDate);
-			
-			param.setStartTime(Timestamp.valueOf(searchStartDate));
-		}
-		
-		if(searchEndDate==null || searchEndDate.equals("")) {
-			 param.setEndTime(null);
-		}else {
-			searchEndDate += defaultTime;
-			
-			log.debug("instruction Controller : 변환전 endDate의 값 : " + searchEndDate);
-			
-			param.setEndTime(Timestamp.valueOf(searchEndDate));
-		}
-		
-		log.debug("instruction Controller : startDate의 값 : " + param.getStartTime());
-		log.debug("instruction Controller : endDate의 값 : " + param.getEndTime());
-		//@@@@@@@@@@@@@@@@@@날려버릴까 생각중인 것@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-		
 		
 		if(searchState==null ||searchState.equals("")) {
-			log.debug("@@@@@@@@@@@@@@뭐가 호출되는지 한번 보자 (위)@@@@@@@@@@@@@@@@@@@@");
 			param.setState(null);
 		}else {
 			param.setState(searchState);
 		}
+		
 		param.setCode(searchCode);
 		param.setSearchType(searchType);
-		
-		
-//		for(InstructionsDTO dto : instructions) {
-//			log.debug("" + dto.toString());
-//		}
-		
-		if(searchStartDate!=null && !searchStartDate.equals("")) {
-			model.addAttribute("startDate", searchStartDateV2);
-			model.addAttribute("endDate", searchEndDateV2);
-		}
+		param.setStartDate(searchStartDate);
+		param.setEndDate(searchEndDate);
 		
 		
 		PageVO pageVO = new PageVO();
@@ -167,14 +125,9 @@ public class InstructionsController {
 		param.setPageSize(cri.getPageSize());
 		
 		List<InstructionsDTO> instructions =   instructionsService.findBySearchParam(param);
-//		if(searchEndDate!=null && !searchEndDate.equals("")) {
-//			model.addAttribute("endDate", Date.valueOf(searchEndDate));
-//		}
-		
-		//log.debug("입력받은 state"+state.getClass());
-		
-		//model.addAttribute("startDate", searchStartDate);
-		//model.addAttribute("endDate", searchEndDate);
+
+		model.addAttribute("searchStartDate", searchStartDate);
+		model.addAttribute("searchEndDate", searchEndDate);
 		model.addAttribute("instructions", instructions);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("searchState", searchState);
@@ -323,7 +276,7 @@ public class InstructionsController {
 		try {
 			response.setContentType("text/html; charset=utf-8");
 			String msg = "<script>alert('작업요청이 수락되었습니다');</script>";
-			msg+="<script>location.href='/instructions/close';";
+			msg+="<script>location.href='/instructions/close';</script>";
 			PrintWriter writer = response.getWriter();
 			
 			writer.print(msg);

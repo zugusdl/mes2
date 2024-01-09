@@ -14,6 +14,7 @@ public class InstructionsDTO {
 	private Timestamp startTime;
 	private Timestamp endTime;
 	private int empNum;
+	private String empId;
 	private String empName;
 	private String state; //상태 ( 요청 REQUESTED, 
 	private int quantity;
@@ -23,6 +24,13 @@ public class InstructionsDTO {
 	private String materialStatus;
 	
 	
+	
+	public String getEmpId() {
+		return empId;
+	}
+	public void setEmpId(String empId) {
+		this.empId = empId;
+	}
 	public String getCode() {
 		return code;
 	}

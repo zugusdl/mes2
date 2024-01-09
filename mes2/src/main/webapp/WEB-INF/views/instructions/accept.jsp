@@ -9,6 +9,8 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/css/production/accept.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 <style>
 	.container {
     width: 50%;
@@ -85,13 +87,8 @@ select {
 			<span id="salesQuantity">수주물량 : ${instructionDTO.salesQuantity}</span><br>
 			<span id="quantity">
 			생산 목표량 : 
-			<c:if test="${instructionDTO.type.equals('O')}">
 			<fmt:formatNumber value="${instructionDTO.salesQuantity + (instructionDTO.salesQuantity/10) }" pattern=""/>			
 			[수주물량 + 예비물량(10%)]
-			</c:if>
-			<c:if test="${instructionDTO.type.equals('O')}">
-			<fmt:formatNumber value="${instructionDTO.salesQuantity}" pattern=""/>			
-			</c:if>
 			
 			</span><br>
 

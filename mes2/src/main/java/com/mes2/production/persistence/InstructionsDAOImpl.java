@@ -144,6 +144,7 @@ public class InstructionsDAOImpl implements InstructionsDAO {
 	@Override
 	public int updateAccept(InstructionsDTO instructionsDTO) {
 		log.debug("instructionsDAO : updateAccept 호출");
+		log.debug("instructionsDAO : 목표 생산 개수 : "+ instructionsDTO.getTargetQuantity());
 		int result = sqlSession.update(NAMESAPCE+".updateAccept",instructionsDTO);
 		log.debug("@@@@@@@@@@@@Update 결과값 : "+ result);
 		

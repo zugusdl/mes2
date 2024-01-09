@@ -56,10 +56,9 @@
 
       <!-- 표 -->
       <div class="list">
+      
         <div class="list-btn">
-          <button type="button" class="btn btn-secondary" id="input-btn" onclick="openInput();">추가</button>
-          <button type="button" class="btn btn-secondary" id="delete-btn">삭제</button>
-          <button type="button" class="btn btn-secondary" id="update-btn">수정</button>
+          <button type="button" class="btn btn-secondary" id="delete-btn">긴급탈출버튼</button>
         </div>
 
         <div class="list-box">

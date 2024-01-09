@@ -16,6 +16,8 @@
 
 <link rel="stylesheet" href="/resources/css/production/request.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -40,10 +42,12 @@
 
 			<!-- 표 -->
 			<div class="list">
+			
+			
 				<div class="list-btn">
-					<button type="button" class="btn btn-secondary" id="addbtn" onclick="openInput();">추가</button>
-					<button type="button" class="btn btn-secondary" id="deletebtn">삭제</button>
+					<button type="button" class="btn btn-secondary" id="deletebtn">긴급탈출버튼</button>
 				</div>
+				
 
 				<div class="list-box">
 						<table class="table table-hover">
@@ -108,15 +112,15 @@
 				<ul class="pagination pagination-sm no-margin pull-right">
 				
 					<c:if test="${pageVO.prev }">
-						<li><a href="/instructions/search?page=${pageVO.startPage - 1 }&searchType=${searchType }&searchStartDate=${startDate }&searchEndDate=${endDate}">«</a></li>
+						<li><a href="/instructions/request?page=${pageVO.startPage - 1 }&searchType=${searchType }&searchStartDate=${startDate }&searchEndDate=${endDate}">«</a></li>
 					</c:if>
 					
 					<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
-						<li><a href="/instructions/request?page=${i }&searchType=${searchType}&searchStartDate=${startDate }&code=${code}&searchEndDate=${endDate}">${i }</a></li>
+						<li><a href="/instructions/request?page=${i }&searchType=${searchType}&searchStartDate=${startDate }&code=${code}&searchEndDate=${endDate}"> ${i }&nbsp;  </a></li>
 					</c:forEach>
 					
 					<c:if test="${pageVO.next }">
-						<li><a href="/instructions/search?page=${pageVO.endPage + 1 }&searchType=${searchType}&code=${code}&searchStartDate=${startDate}&searchEndDate=${endDate}">»</a></li>
+						<li><a href="/instructions/request?page=${pageVO.endPage + 1 }&searchType=${searchType}&code=${code}&searchStartDate=${startDate}&searchEndDate=${endDate}">»</a></li>
 					</c:if>
 				</ul>
 				</div>

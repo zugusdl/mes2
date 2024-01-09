@@ -52,6 +52,8 @@ input[type="number"] {
     margin-bottom: 20px;
 }
 </style>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.1/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
 
@@ -70,7 +72,9 @@ input[type="number"] {
 		<br>
 		<label id="sopCode">수주번호 : ${instruction.sopCode}</label>
 		<br>
-		<label id="emp">대표작업자 : ${instruction.empNum}</label>
+		<label id="emp">대표작업자 : ${instruction.empId}</label>
+		<br>
+		<label id="emp">생산목표량 : ${instruction.targetQuantity}</label>
 		<br>
 		<br>
 		<label id="quantityLabel">양품 수량 입력 <input type="number" name ="quantity" id="quantity"></label>
